@@ -24,34 +24,40 @@ public class PictureToMat {
 		System.out.println("\nRunning FaceDetector");
 
 		// Mat image = Highgui.imread("test.JPG"); // ge BGR
-		Mat m = Highgui.imread("test2.bmp"); // ge BGR
+		Mat m = Highgui.imread("EmilTest.bmp"); // ge BGR
 		System.out.println("The picture has a total of " + m.total()
 				+ " pixels");
 		// System.out.println(m.dump());
-		/*
-		 * int cols = m.cols(); int rows = m.rows(); int elemSize =
-		 * (int)m.elemSize(); byte[] data = new byte[cols * rows * elemSize];
-		 */
-		// double[] rgb = m.get(0, 0);
-
-		// System.out.println(m.dump());
-
+		
+		
 		for (int j = 0; j < m.rows(); j++) {
 			for (int b = 0; b < m.cols(); b++) {
 				double[] rgb = m.get(j, b);
 				for (int i = 0; i < rgb.length; i = i + 3) {
-					System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i+2]
-							+ " green:" + rgb[i + 1] + " blue:" + rgb[i]);
-					if(rgb[i]+rgb[i+1]+rgb[i+2]>500){
-						m.put(b, j, 255,255,255);
-					 	System.out.println("NEW koordinate = ");
+					//System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i+2]
+					//		+ " green:" + rgb[i + 1] + " blue:" + rgb[i]);
+					
+					if(rgb[i]+rgb[i+1]+rgb[i+2]<200){				
+						m.put(j, b, 0,0,0); // Sort
+					}
+					if(rgb[i+1]>140){				
+						m.put(j, b, 255,0,0); //blå
+					 }
+					if(rgb[i+2]>140){				
+						m.put(j, b, 0,0,255); // rød
+					 }
+					if(rgb[i]+rgb[i+1]+rgb[i+2]>500){ 				
+						m.put(j, b, 255,255,255);/// hvid
+					 	//System.out.println("NEW koordinate = (" +rgb[i+2]+","+rgb[i+1]+","+rgb[i]+")");
 					}
 				}
 			}
 		}
 
 		Mat frame = new Mat();
+		frame = m.clone();
 		Highgui.imwrite("test2Afterconvert.bmp", frame);
+		System.out.println("DONE");
 		// System.out.println(image.dump());
 
 	}
