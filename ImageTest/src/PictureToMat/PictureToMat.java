@@ -36,15 +36,15 @@ public class PictureToMat {
 
 		// System.out.println(m.dump());
 
-		for (int j = 0; j < m.cols(); j++) {
-			for (int b = 0; b < m.rows(); b++) {
+		for (int j = 0; j < m.rows(); j++) {
+			for (int b = 0; b < m.cols(); b++) {
 				double[] rgb = m.get(j, b);
 				for (int i = 0; i < rgb.length; i = i + 3) {
 					System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i]
 							+ " green:" + rgb[i + 1] + " blue:" + rgb[i + 2]);
-					if(rgb[i+2]==255){
-						m.put(b, j, 100,100,100);
-					 	System.out.println("hej");
+					if(rgb[i]+rgb[i+1]+rgb[i+2]>500){
+						m.put(b, j, 255,255,255);
+					 	System.out.println("NEW koordinate = ");
 					}
 				}
 			}
