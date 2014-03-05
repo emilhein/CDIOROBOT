@@ -42,15 +42,16 @@ public class PictureToMat {
 				for (int i = 0; i < rgb.length; i = i + 3) {
 					System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i]
 							+ " green:" + rgb[i + 1] + " blue:" + rgb[i + 2]);
-					if(rgb[i]==255){
-						m.put(b, j, 10.0);
-						System.out.println("hej");
+					if(rgb[i+2]==255){
+						m.put(b, j, 100,100,100);
+					 	System.out.println("hej");
 					}
 				}
 			}
 		}
 
-		
+		Mat frame = new Mat();
+		Highgui.imwrite("test2Afterconvert.bmp", frame);
 		// System.out.println(image.dump());
 
 	}
