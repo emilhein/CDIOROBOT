@@ -40,8 +40,8 @@ public class PictureToMat {
 			for (int b = 0; b < m.cols(); b++) {
 				double[] rgb = m.get(j, b);
 				for (int i = 0; i < rgb.length; i = i + 3) {
-					System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i]
-							+ " green:" + rgb[i + 1] + " blue:" + rgb[i + 2]);
+					System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i+2]
+							+ " green:" + rgb[i + 1] + " blue:" + rgb[i]);
 					if(rgb[i]+rgb[i+1]+rgb[i+2]>500){
 						m.put(b, j, 255,255,255);
 					 	System.out.println("NEW koordinate = ");
