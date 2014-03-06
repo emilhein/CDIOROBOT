@@ -4,7 +4,7 @@ package PictureToMat;
 //import java.io.ByteArrayInputStream;
 //import java.io.IOException;
 //import java.io.InputStream;
-
+import org.opencv.objdetect.*;
 //import javax.imageio.ImageIO;
 
 import org.opencv.core.*;//Mat
@@ -50,6 +50,8 @@ public class PictureToMat {
 						m.put(j, b, 255,255,255);/// hvid
 					 	//System.out.println("NEW koordinate = (" +rgb[i+2]+","+rgb[i+1]+","+rgb[i]+")");
 					}
+					
+					
 				}
 			}
 		}
@@ -59,7 +61,7 @@ public class PictureToMat {
 		Highgui.imwrite("test2Afterconvert.bmp", frame);
 		System.out.println("DONE");
 		// System.out.println(image.dump());
-
+		
 	}
 
 }
