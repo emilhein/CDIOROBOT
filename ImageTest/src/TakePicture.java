@@ -6,7 +6,7 @@ public class TakePicture {
     public static void main (String args[]){
     	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     	VideoCapture camera = new VideoCapture(0);
-    	
+    	for (int i = 0; i<10;i++){
     	if(!camera.isOpened()){
     		System.out.println("Error");
     	}
@@ -18,7 +18,10 @@ public class TakePicture {
     	    		System.out.println("Captured Frame Width " + 
     	    		frame.width() + " Height " + frame.height());
     	    		
-    	    		Highgui.imwrite("camera.bmp", frame);
+    	    		
+    	    		
+    	    			Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/camera"+i+".bmp", frame);
+    	    		}
     	    		System.out.println("OK");
     	    		
     	    		
