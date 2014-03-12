@@ -4,8 +4,8 @@ package PictureToMat;
 //import java.io.ByteArrayInputStream;
 //import java.io.IOException;
 //import java.io.InputStream;
-import org.opencv.objdetect.*;
 //import javax.imageio.ImageIO;
+
 
 import org.opencv.core.*;//Mat
 //import org.opencv.core.MatOfRect;
@@ -13,7 +13,6 @@ import org.opencv.core.*;//Mat
 //import org.opencv.core.Rect;
 //import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
-
 //import org.opencv.objdetect.CascadeClassifier;
 
 public class PictureToMat {
