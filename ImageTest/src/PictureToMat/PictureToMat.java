@@ -22,8 +22,8 @@ public class PictureToMat {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		System.out.println("\nRunning FaceDetector");
 
-		// Mat image = Highgui.imread("test.JPG"); // ge BGR
-		Mat m = Highgui.imread("baneJpg.jpg"); // ge BGR
+		// Mat image = Highgui.imread("test.JPG"); //  BGR
+		Mat m = Highgui.imread("WIN_20140219_112417.bmp"); //  BGR
 		System.out.println("The picture has a total of " + m.total()
 				+ " pixels");
 		// System.out.println(m.dump());
@@ -57,7 +57,7 @@ public class PictureToMat {
 
 		Mat frame = new Mat();
 		frame = m.clone();
-		Highgui.imwrite("test2Afterconvert.jpg", frame);
+		Highgui.imwrite("test2Afterconvert.bmp", frame);
 		System.out.println("DONE");
 		// System.out.println(image.dump());
 		
