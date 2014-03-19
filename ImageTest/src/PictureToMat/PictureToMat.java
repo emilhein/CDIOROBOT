@@ -20,7 +20,7 @@ public class PictureToMat {
 	public static void main(String[] args) {
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		System.out.println("\nRunning FaceDetector");
+		
 
 		// Mat image = Highgui.imread("test.JPG"); //  BGR
 		Mat m = Highgui.imread("baneJpg.jpg"); //  BGR
@@ -45,7 +45,9 @@ public class PictureToMat {
 					 }
 					
 					else if(rgb[i]<150 && rgb[i+1] > 25 && rgb[i+2] > 50){				
-						m.put(j, b, 63,133,205); // Brun
+						
+						//m.put(j, b, 63,133,205); // brun
+						m.put(j, b, 0,0,255);
 						break;
 					}
 				 
@@ -53,15 +55,16 @@ public class PictureToMat {
 						m.put(j, b, 0,0,255); // rød
 						break;
 					}
-					else if(rgb[i]+rgb[i+1]+rgb[i+2]>580){ 				
+					else if(rgb[i]+rgb[i+1]+rgb[i+2]>580 || rgb[i]+rgb[i+1]+rgb[i+2]<2){ 	//filrer			
 						//drawrect(j,b,m);
-						//m.put(j, b, 255,255,255);/// hvid
+						m.put(j, b, 255,255,255);/// hvid
 						//count++;
 						//if(count > 1000) 
 						//System.out.println("GOTO " + j +"," +b);
 						break;
 					} else{
-						m.put(j, b, 63,133,205);
+						//m.put(j, b, 63,133,205);
+						m.put(j, b, 0,0,255);
 					}
 					
 					
@@ -80,6 +83,7 @@ public class PictureToMat {
 	 for(int i = a; i<a+6;i++){			
 			for(int j = b; j<b+16;j++){
 				m.put(i, j, 0,10,0);
+				System.out.println("HEEEJ");
 		 }
 	 }
 	}
