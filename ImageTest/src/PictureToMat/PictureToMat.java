@@ -5,6 +5,10 @@ package PictureToMat;
 //import java.io.IOException;
 //import java.io.InputStream;
 //import javax.imageio.ImageIO;
+import javax.imageio.IIOImage;
+
+import com.googlecode.javacv.*;
+import static com.googlecode.javacv.cpp.opencv_objdetect.*;
 
 import org.opencv.core.*;//Mat
 //import org.opencv.core.MatOfRect;
@@ -13,6 +17,7 @@ import org.opencv.core.*;//Mat
 //import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 
+
 //import org.opencv.objdetect.CascadeClassifier;
 
 public class PictureToMat {
@@ -20,7 +25,7 @@ public class PictureToMat {
 	public static void main(String[] args) {
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
+		
 		// Mat image = Highgui.imread("test.JPG"); // BGR
 		Mat m = Highgui.imread("robotFarve.jpg"); // BGR
 		System.out.println("The picture has a total of " + m.total()
