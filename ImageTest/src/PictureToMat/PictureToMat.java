@@ -55,6 +55,7 @@ public class PictureToMat {
 						m.put(j, b, 0,0,255); // rød
 						break;
 					}
+					
 					else if(rgb[i]+rgb[i+1]+rgb[i+2]>580 || rgb[i]+rgb[i+1]+rgb[i+2]<2){ 	//filrer			
 						//drawrect(j,b,m);
 						m.put(j, b, 255,255,255);/// hvid
