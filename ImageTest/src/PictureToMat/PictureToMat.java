@@ -5,10 +5,9 @@ package PictureToMat;
 //import java.io.IOException;
 //import java.io.InputStream;
 //import javax.imageio.ImageIO;
-import javax.imageio.IIOImage;
 
-import com.googlecode.javacv.*;
-import static com.googlecode.javacv.cpp.opencv_objdetect.*;
+
+
 
 import org.opencv.core.*;//Mat
 //import org.opencv.core.MatOfRect;
@@ -26,8 +25,11 @@ public class PictureToMat {
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
+
+
+		
 		// Mat image = Highgui.imread("test.JPG"); // BGR
-		Mat m = Highgui.imread("robotFarve.jpg"); // BGR
+		Mat m = Highgui.imread("camera0.jpg"); // BGR
 		System.out.println("The picture has a total of " + m.total()
 				+ " pixels");
 		// System.out.println(m.dump());
@@ -39,44 +41,38 @@ public class PictureToMat {
 			for (int b = 0; b < m.cols(); b++) {
 				double[] rgb = m.get(j, b);
 				for (int i = 0; i < rgb.length; i = i + 3) {
-					// rgb[i] == blå
-					// rgb[i+1] == grøn
-					// rgb[i+2] == rød
-					if (rgb[i] < 170 && rgb[i + 1] > 140 && rgb[i + 2] < 150) { // finder
-																				// grøne
-																				// farver
-						m.put(j, b, 0, 255, 0); // grøn
+					double blue = rgb[i];
+					double green = rgb[i+1];
+					double red = rgb[i+2];
+					
+					if (blue < 120 && green > 25  && red > 75) { // finder brune farver
+						m.put(j, b, 63, 133, 205); // brun
+						// m.put(j, b, 0,0,0);
+						break;
+					}
+					else if (blue > 12 && blue < 170 && green > 90 && red < 120) { // finder grønne farver															// farver
+						m.put(j, b, 0, 255, 0); 
 						break;
 					}
 
-					// rgb[i] == blå
-					// rgb[i+1] == grøn
-					// rgb[i+2] == rød
-					else if (rgb[i + 2] > 165 && rgb[i + 1] > 20
-							&& rgb[i + 1] < 130 && rgb[i] > 30 && rgb[i] < 180) { // finder
-																					// røde
-																					// farver
+					else if (red > 140 && green < 130 && blue < 120) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
-					} else if (rgb[i] < 150 && rgb[i + 1] > 25
-							&& rgb[i + 2] > 50) { // finder brune farver
+					} 
+					
 
-						m.put(j, b, 63, 133, 205); // brun
-						// m.put(j, b, 0,0,255);
-						break;
-					}
-
-					else if (rgb[i] + rgb[i + 1] + rgb[i + 2] > 585
-							|| rgb[i] > 160 && rgb[i+1] > 160 && rgb[i+2] > 160) { // filrer
+					else if (blue + red + green > 400
+							|| blue > 100 && green > 100 && red > 100) { // finder hvid 
 						// drawrect(j,b,m);
+						
 						m.put(j, b, 255, 255, 255);// / hvid
 						// count++;
 						// if(count > 1000)
 						// System.out.println("GOTO " + j +"," +b);
 						break;
 					} else {
-						m.put(j, b, 63, 133, 205);
-						// m.put(j, b, 0,0,255);
+						//m.put(j, b, 63, 133, 205); // resten bliver brun
+						m.put(j, b, 0,0,0);
 					}
 
 				}
@@ -91,12 +87,5 @@ public class PictureToMat {
 
 	}
 
-	public static void drawrect(int a, int b, Mat m) {
-		for (int i = a; i < a + 6; i++) {
-			for (int j = b; j < b + 16; j++) {
-				m.put(i, j, 0, 10, 0);
-				System.out.println("HEEEJ");
-			}
-		}
-	}
+
 }
