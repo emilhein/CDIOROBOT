@@ -8,6 +8,11 @@ public class FictiveCoordinates {
 	public static void main (int[] args) {
 
 
+
+			}
+	
+	public int [] GetFictiveCoordi (){
+
 		int[] Coordi;
 		Coordi = new int[19];
 
@@ -34,7 +39,7 @@ public class FictiveCoordinates {
 		Coordi[17] = 444;	//y
 		Coordi[18] = 332;	//x
 		Coordi[19] = 223;	//y
-	
+		return Coordi;
 	}
 
 }
