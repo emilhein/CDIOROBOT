@@ -14,16 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>connect</name>
-			<type>2</type>
-			<location>C:/Users/Oliver/workspace/NXT_PC/src/connect</location>
-		</link>
-		<link>
-			<name>dist</name>
-			<type>2</type>
-			<location>C:/Users/Oliver/workspace/NXT_PC/src/dist</location>
-		</link>
-	</linkedResources>
 </projectDescription>
