@@ -20,7 +20,7 @@ public class TakePicture {
     	    		
     	    		
     	    		
-    	    			Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/camera"+i+".bmp", frame);
+    	    			Highgui.imwrite("C:/camera"+i+".bmp", frame);
     	    		}
     	    		System.out.println("OK");
     	    		
