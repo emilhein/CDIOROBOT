@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV- 2-4-6"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV- 2-4-6"/>
 	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacpp.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-android-arm.jar"/>
@@ -13,6 +13,6 @@
 	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-windows-x86.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Emil/Downloads/jna-3.0.4.jar"/>
-	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
+	<classpathentry exported="true" kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
