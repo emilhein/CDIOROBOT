@@ -45,24 +45,28 @@ public class PictureToMat {
 					double green = rgb[i+1];
 					double red = rgb[i+2];
 					
-					if (blue < 120 && green > 25  && red > 75) { // finder brune farver
+					if (blue < 50 && green > 25  && red > 100 && red < 180) { // finder brune farver
 						m.put(j, b, 63, 133, 205); // brun
 						// m.put(j, b, 0,0,0);
 						break;
 					}
-					else if (blue > 12 && blue < 170 && green > 90 && red < 120) { // finder grønne farver															// farver
+					else if (blue > 12 && blue < 110 && green > 140 && red < 150) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
-
-					else if (red > 140 && green < 130 && blue < 120) { // finder røde farver																
+					
+					else if (red > 180 && green < 130 && blue < 120) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
 					
+					
+					
 
-					else if (blue + red + green > 400
-							|| blue > 100 && green > 100 && red > 100) { // finder hvid 
+					
+					
+
+					else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid 
 						// drawrect(j,b,m);
 						
 						m.put(j, b, 255, 255, 255);// / hvid
@@ -72,7 +76,7 @@ public class PictureToMat {
 						break;
 					} else {
 						//m.put(j, b, 63, 133, 205); // resten bliver brun
-						m.put(j, b, 0,0,0);
+						m.put(j, b, 0,0,0); // resten bliver sort
 					}
 
 				}
