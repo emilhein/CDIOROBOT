@@ -31,9 +31,11 @@ public class RouteTest {
 		//tegner firkant på koordinatplads i sort
 		for (int i = 0; i < 10; i++) {
 			for (int g = 0; g < 10; g++) {
-				frame.put(((Coordi[c]) + i), ((Coordi[c+1]) + g),0, 0, 0);
+				frame.put(((Coordi[c+1]) + i), ((Coordi[c]) + g),0, 0, 0);
+				
 			}
 		}
+		System.out.println("Punkt nr: " + c);
 		}
 		Highgui.imwrite("RouteTest.jpg", frame);
 		System.out.println("DONE");
