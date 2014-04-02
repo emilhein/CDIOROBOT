@@ -5,22 +5,36 @@ import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture; 
 
 public class FictiveCoordinates {
+	public static void main (int[] args) {
 
 
-	int[][] coordinates = new int [9][];
-	coordinates[0] = new int [];
-	coordinates[1] = new int [];
-	coordinates[2] = new int [];
-	coordinates[3] = new int [];
-	coordinates[4] = new int [];
-	coordinates[5] = new int [];
-	coordinates[6] = new int [];
-	coordinates[7] = new int [];
-	coordinates[8] = new int [];
-	coordinates[9] = new int [];
+		int[] Coordi;
+		Coordi = new int[19];
 
-			
+		//maks 640 (x) - de lige + 0
+		//maks 480 (y) - de ulige
 
+		Coordi[0] = 590;	//x
+		Coordi[1] = 362;	//y
+		Coordi[2] = 610;   	//x
+		Coordi[3] = 420;	//y
+		Coordi[4] = 355;	//x
+		Coordi[5] = 211;	//y
+		Coordi[6] = 598;	//x
+		Coordi[7] = 398;	//y
+		Coordi[8] = 222;	//x
+		Coordi[9] = 222;	//y
+		Coordi[10] = 544;	//x
+		Coordi[11] = 478;	//y
+		Coordi[12] = 123;	//x
+		Coordi[13] = 321;	//y
+		Coordi[14] = 600;	//x
+		Coordi[15] = 400;	//y
+		Coordi[16] = 555;	//x
+		Coordi[17] = 444;	//y
+		Coordi[18] = 332;	//x
+		Coordi[19] = 223;	//y
+	
+	}
 
-}
 }
