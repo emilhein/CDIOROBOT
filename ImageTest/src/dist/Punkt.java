@@ -1,15 +1,15 @@
 package dist;
 
 public class Punkt {
-    double x, y;
-    Punkt (double xkoord, double ykoord) {
+    int x, y;
+    Punkt (int xkoord, int ykoord) {
         this.x = xkoord;
         this.y = ykoord;
     }
-    public double getX() {
+    public int getX() {
         return x;
     }
-    public double getY() {
+    public int getY() {
         return y;
     }
 }
