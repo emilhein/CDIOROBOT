@@ -19,8 +19,8 @@ public class TakePicture {
     	    		frame.width() + " Height " + frame.height());
     	    		
     	    		
-    	    		
-    	    			Highgui.imwrite("C:/camera"+i+".bmp", frame);
+   
+    	    			Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/camera"+i+".jpg", frame);
     	    		}
     	    		System.out.println("OK");
     	    		
