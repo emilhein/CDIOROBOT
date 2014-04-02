@@ -12,7 +12,7 @@ public class FictiveCoordinates {
 	public int [] GetFictiveCoordi (){
 
 		int[] Coordi;
-		Coordi = new int[19];
+		Coordi = new int[20];
 
 		//maks 640 (x) - de lige + 0
 		//maks 480 (y) - de ulige
