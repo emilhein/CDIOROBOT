@@ -18,8 +18,6 @@ public class TakePicture {
     	    		System.out.println("Captured Frame Width " + 
     	    		frame.width() + " Height " + frame.height());
     	    		
-    	    		
-   
     	    			Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/camera"+i+".jpg", frame);
     	    		}
     	    		System.out.println("OK");
