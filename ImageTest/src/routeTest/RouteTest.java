@@ -31,12 +31,13 @@ public class RouteTest {
 		//tegner firkant på koordinatplads i sort
 		for (int i = 0; i < 10; i++) {
 			for (int g = 0; g < 10; g++) {
-				frame.put(((Coordi[c]) + g), ((Coordi[c]+1) + i),0, 0, 0);
+				frame.put(((Coordi[c]) + i), ((Coordi[c+1]) + g),0, 0, 0);
 			}
 		}
 		}
 		Highgui.imwrite("RouteTest.jpg", frame);
 		System.out.println("DONE");
+		System.out.println(Coordi.length);
 
 	}
 }

@@ -14,13 +14,13 @@ public class FictiveCoordinates {
 		int[] Coordi;
 		Coordi = new int[20];
 
-		//maks 640 (x) - de lige + 0
-		//maks 480 (y) - de ulige
+		//maks 630 (x) - de lige + 0
+		//maks 470 (y) - de ulige
 
-		Coordi[0] = 590;	//x
-		Coordi[1] = 362;	//y
-		Coordi[2] = 610;   	//x
-		Coordi[3] = 420;	//y
+		Coordi[0] = 10;	//x
+		Coordi[1] = 500;	//y
+		Coordi[2] = 470;   	//x
+		Coordi[3] = 10;	//y
 		Coordi[4] = 355;	//x
 		Coordi[5] = 211;	//y
 		Coordi[6] = 598;	//x
@@ -28,7 +28,7 @@ public class FictiveCoordinates {
 		Coordi[8] = 222;	//x
 		Coordi[9] = 222;	//y
 		Coordi[10] = 544;	//x
-		Coordi[11] = 478;	//y
+		Coordi[11] = 469;	//y
 		Coordi[12] = 123;	//x
 		Coordi[13] = 321;	//y
 		Coordi[14] = 600;	//x
