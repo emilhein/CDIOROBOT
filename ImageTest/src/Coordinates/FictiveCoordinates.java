@@ -7,10 +7,8 @@ import org.opencv.highgui.VideoCapture;
 public class FictiveCoordinates {
 	public static void main (int[] args) {
 
+	}
 
-
-			}
-	
 	public int [] GetFictiveCoordi (){
 
 		int[] Coordi;
