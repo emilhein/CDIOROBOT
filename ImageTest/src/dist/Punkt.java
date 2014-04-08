@@ -2,7 +2,7 @@ package dist;
 
 public class Punkt {
     int x, y;
-    Punkt (int xkoord, int ykoord) {
+    public Punkt (int xkoord, int ykoord) {
         this.x = xkoord;
         this.y = ykoord;
     }

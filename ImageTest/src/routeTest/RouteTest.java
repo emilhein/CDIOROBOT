@@ -1,9 +1,12 @@
 package routeTest;
-
+import dist.Calc;
+import dist.Punkt;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import Coordinates.FictiveCoordinates;
+
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -14,7 +17,7 @@ import org.opencv.highgui.Highgui;
 public class RouteTest {
 	static List<Integer> xCoor = new ArrayList<>();
 	static List<Integer> yCoor = new ArrayList<>();
-	
+	static int total = 0;
 	public static void main(String[] args) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -45,17 +48,23 @@ public class RouteTest {
 		yCoor.add(Coordi[c+1]);
 		}
 		for(int i=0;i<xCoor.size()-1;i++){
+			int temp = 0;
 			Core.line(frame, new Point(xCoor.get(i)+5,yCoor.get(i)+5), new Point(xCoor.get(i+1)+5, yCoor.get(i+1)+5), new Scalar(i*200,i*20,i*30), 2);	
-			
+			Calc dist = new Calc();
+			Punkt punkt1 = new Punkt(xCoor.get(i)+5, yCoor.get(i)+5);
+			Punkt punkt2 = new Punkt(xCoor.get(i+1)+5, yCoor.get(i+1)+5);
+			temp = dist.Calcdist(punkt1,punkt2);
+			total = total + temp;
 		}
 		
 		Highgui.imwrite("RouteTest.jpg", frame);
 		System.out.println("DONE");
+		System.out.println("Total line = " + total);
 	
-		
+		/*
 		System.out.println("Koordinater til første prik er ("+xCoor.get(0)+","+yCoor.get(0)+")");
 		System.out.println("Koordinater til anden prik er ("+xCoor.get(1)+","+yCoor.get(1)+")");
 		System.out.println("Koordinater til tredje prik er ("+xCoor.get(2)+","+yCoor.get(2)+")");
-	
+		*/
 	}
 }
