@@ -63,22 +63,25 @@ public class RouteTest {
 			ballNumber++;
 			Core.line(frame, new Point(xCoor.get(i)+5,yCoor.get(i)+5), new Point(xCoor.get(i+1)+5, yCoor.get(i+1)+5), new Scalar(i*200,i*20,i*30), 2);	
 			CalcDist dist = new CalcDist();
-			Punkt punkt1 = new Punkt(xCoor.get(i)+5, yCoor.get(i)+5);
+			Punkt roboPunkt = new Punkt(1, 1);
 			Punkt punkt2 = new Punkt(xCoor.get(i+1)+5, yCoor.get(i+1)+5);
-			tempLength = dist.Calcdist(punkt1,punkt2);
+			tempLength = dist.Calcdist(roboPunkt,punkt2);
 			total = total + tempLength;
 			
 			if(tempLength < minLength){
 				minLength = tempLength;
 				Punkt minPunkt = punkt2;
-			}			
+			}	
+		
 			
 		}
-		int angle = Calcangle(roboPunkt, minPunkt);
+		//int angle = Calcangle(roboPunkt, minPunkt);
 
-		
+	
 		Highgui.imwrite("RouteTest.jpg", frame);
 		System.out.println("DONE");
+		System.out.println("Hej");
+		System.out.println("Closest to robo is (" +minPunkt.getX()+","+minPunkt.getY()+")");
 		System.out.println("Total line = " + total);
 	
 		/*
