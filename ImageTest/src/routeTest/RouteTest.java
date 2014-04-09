@@ -74,7 +74,7 @@ public class RouteTest {
 			}			
 			
 		}
-		int angle = dist.CalcAngle(roboPunkt, minPunkt);
+		int angle = Calcangle(roboPunkt, minPunkt);
 
 		
 		Highgui.imwrite("RouteTest.jpg", frame);
