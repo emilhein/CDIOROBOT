@@ -18,6 +18,10 @@ public class RouteTest {
 	static List<Integer> xCoor = new ArrayList<>();
 	static List<Integer> yCoor = new ArrayList<>();
 	static int total = 0;
+	static Punkt goal = new Punkt(0, 240);
+	static int ballNumber = 0;
+	
+	
 	public static void main(String[] args) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -48,13 +52,19 @@ public class RouteTest {
 		yCoor.add(Coordi[c+1]);
 		}
 		for(int i=0;i<xCoor.size()-1;i++){
-			int temp = 0;
+			if(ballNumber == 2){
+				Core.line(frame, new Point(xCoor.get(i+1)+5,yCoor.get(i+1)+5), new Point(goal.getX(), goal.getY()), new Scalar(0,255,0, 7));	
+				ballNumber = 0;
+			}
+			int tempLength = 0;
+			ballNumber++;
 			Core.line(frame, new Point(xCoor.get(i)+5,yCoor.get(i)+5), new Point(xCoor.get(i+1)+5, yCoor.get(i+1)+5), new Scalar(i*200,i*20,i*30), 2);	
 			Calc dist = new Calc();
 			Punkt punkt1 = new Punkt(xCoor.get(i)+5, yCoor.get(i)+5);
 			Punkt punkt2 = new Punkt(xCoor.get(i+1)+5, yCoor.get(i+1)+5);
-			temp = dist.Calcdist(punkt1,punkt2);
-			total = total + temp;
+			tempLength = dist.Calcdist(punkt1,punkt2);
+			total = total + tempLength;
+			
 		}
 		
 		Highgui.imwrite("RouteTest.jpg", frame);

@@ -26,7 +26,7 @@ public class FictiveCoordinates {
 		Coordi[6] = 198;	//x
 		Coordi[7] = 398;	//y
 		Coordi[8] = 222;	//x
-		Coordi[9] = 222;	//y
+		Coordi[9] = 122;	//y
 		Coordi[10] = 544;	//x
 		Coordi[11] = 369;	//y
 		Coordi[12] = 123;	//x
