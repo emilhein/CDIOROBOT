@@ -22,7 +22,7 @@ public class RouteTest {
 	static int ballNumber = 0;
 	static int minLength = 1000000;
 	static Punkt minPunkt;
-	static Punkt roboPunkt;
+	static Punkt roboPunkt = new Punkt (1,1);
 	
 	
 	public static void main(String[] args) {
@@ -56,32 +56,37 @@ public class RouteTest {
 		}
 		for(int i=0;i<xCoor.size()-1;i++){
 			if(ballNumber == 2){
-				Core.line(frame, new Point(xCoor.get(i+1)+5,yCoor.get(i+1)+5), new Point(goal.getX(), goal.getY()), new Scalar(0,255,0, 7));	
+				Core.line(frame, new Point(xCoor.get(i)+5,yCoor.get(i)+5), new Point(goal.getX(), goal.getY()), new Scalar(0,255,0, 7));	
 				ballNumber = 0;
 			}
 			int tempLength = 0;
 			ballNumber++;
 			Core.line(frame, new Point(xCoor.get(i)+5,yCoor.get(i)+5), new Point(xCoor.get(i+1)+5, yCoor.get(i+1)+5), new Scalar(i*200,i*20,i*30), 2);	
 			CalcDist dist = new CalcDist();
-			Punkt roboPunkt = new Punkt(1, 1);
-			Punkt punkt2 = new Punkt(xCoor.get(i+1)+5, yCoor.get(i+1)+5);
+			Punkt punkt2 = new Punkt(xCoor.get(i)+5, yCoor.get(i)+5);
 			tempLength = dist.Calcdist(roboPunkt,punkt2);
 			total = total + tempLength;
+			System.out.println(tempLength);
 			
 			if(tempLength < minLength){
 				minLength = tempLength;
-				Punkt minPunkt = punkt2;
+				minPunkt = punkt2;
+		
 			}	
 		
 			
 		}
 		//int angle = Calcangle(roboPunkt, minPunkt);
-
-	
+		// farver punkt rødt
+		for (int a = 0; a < 10; a++) {
+			for (int b = 0; b < 10; b++) {
+				frame.put(((minPunkt.getX()-5)+a), ((minPunkt.getY()+b)-5),0, 0, 255);
+				
+			}
+		}
+		
 		Highgui.imwrite("RouteTest.jpg", frame);
-		System.out.println("DONE");
-		System.out.println("Hej");
-		System.out.println("Closest to robo is (" +minPunkt.getX()+","+minPunkt.getY()+")");
+		System.out.println("Closest to robo is (" + minPunkt.getX() +","+minPunkt.getY()+")");
 		System.out.println("Total line = " + total);
 	
 		/*

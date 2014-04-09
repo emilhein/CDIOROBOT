@@ -25,16 +25,16 @@ public class FictiveCoordinates {
 		Coordi[5] = 211;	//y
 		Coordi[6] = 198;	//x
 		Coordi[7] = 398;	//y
-		Coordi[8] = 222;	//x
-		Coordi[9] = 122;	//y
+		Coordi[8] = 20;	//x
+		Coordi[9] = 20;	//y
 		Coordi[10] = 544;	//x
 		Coordi[11] = 369;	//y
 		Coordi[12] = 123;	//x
 		Coordi[13] = 321;	//y
 		Coordi[14] = 220;	//x
 		Coordi[15] = 400;	//y
-		Coordi[16] = 455;	//x
-		Coordi[17] = 444;	//y
+		Coordi[16] = 50;	//x
+		Coordi[17] = 50;	//y
 		Coordi[18] = 332;	//x
 		Coordi[19] = 223;	//y
 		return Coordi;
