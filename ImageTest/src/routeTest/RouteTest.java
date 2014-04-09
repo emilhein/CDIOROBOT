@@ -71,19 +71,15 @@ public class RouteTest {
 			if(tempLength < minLength){
 				minLength = tempLength;
 				minPunkt = punkt2;
-		
-			}	
-		
-			
-		}
-		//int angle = Calcangle(roboPunkt, minPunkt);
-		// farver punkt rødt
-		for (int a = 0; a < 10; a++) {
-			for (int b = 0; b < 10; b++) {
-				frame.put(((minPunkt.getX()-5)+a), ((minPunkt.getY()+b)-5),0, 0, 255);
-				
 			}
 		}
+		for(int i=0;i<xCoor.size()-1;i++){
+		
+		}
+		//int angle = Calcangle(roboPunkt, minPunkt);
+		
+		// farver punkt rødt
+		paintPoint(frame, minPunkt,0,0,255);
 		
 		Highgui.imwrite("RouteTest.jpg", frame);
 		System.out.println("Closest to robo is (" + minPunkt.getX() +","+minPunkt.getY()+")");
@@ -94,5 +90,14 @@ public class RouteTest {
 		System.out.println("Koordinater til anden prik er ("+xCoor.get(1)+","+yCoor.get(1)+")");
 		System.out.println("Koordinater til tredje prik er ("+xCoor.get(2)+","+yCoor.get(2)+")");
 		*/
+	}
+	
+	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl){
+		for (int a = 0; a < 10; a++) {
+			for (int b = 0; b < 10; b++) {
+				frame.put(((p.getX()-5)+a), ((p.getY()+b)-5),bl, gr, re);
+				
+			}
+		}
 	}
 }
