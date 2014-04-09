@@ -17,7 +17,7 @@ public class FictiveCoordinates {
 		//maks 630 (x) - de lige + 0
 		//maks 470 (y) - de ulige
 
-		Coordi[0] = 10;	//x
+		Coordi[0] = 15;	//x
 		Coordi[1] = 170;	//y
 		Coordi[2] = 430;   	//x
 		Coordi[3] = 10;	//y
@@ -27,14 +27,14 @@ public class FictiveCoordinates {
 		Coordi[7] = 398;	//y
 		Coordi[8] = 20;	//x
 		Coordi[9] = 20;	//y
-		Coordi[10] = 544;	//x
+		Coordi[10] = 444;	//x
 		Coordi[11] = 369;	//y
 		Coordi[12] = 123;	//x
 		Coordi[13] = 321;	//y
 		Coordi[14] = 220;	//x
 		Coordi[15] = 400;	//y
-		Coordi[16] = 50;	//x
-		Coordi[17] = 50;	//y
+		Coordi[16] = 420;	//x
+		Coordi[17] = 230;	//y
 		Coordi[18] = 332;	//x
 		Coordi[19] = 223;	//y
 		return Coordi;
