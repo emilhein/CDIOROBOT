@@ -55,18 +55,18 @@ public class RouteTest {
 			xCoor.add(Coordi[c + 1]);
 		}
 		for (int i = 0; i < xCoor.size()-1; i++) {
-			if (ballNumber == 2) {
-				Core.line(frame, new Point(xCoor.get(i) + 5, yCoor.get(i) + 5),
+			/*if (ballNumber == 2) {
+				Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),
 						new Point(goal.getX(), goal.getY()), new Scalar(0, 255,
 								0, 7));
 				ballNumber = 0;
-			}
+			}*/
 			int tempLength = 0;
 			ballNumber++;
 			
 			
 			///ARARGGDSG
-			Core.line(frame, new Point(xCoor.get(i) + 5, yCoor.get(i) + 5),	new Point(xCoor.get(i + 1) + 5, yCoor.get(i + 1) + 5),	new Scalar((i*2) * 200, i * 20, i * 30), 3);
+			Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 200, i * 20, i * 30), 3);
 			///sdgsdgsdg
 			
 			
