@@ -1,5 +1,5 @@
 package routeTest;
-import dist.Calc;
+import dist.CalcDist;
 import dist.Punkt;
 import java.util.ArrayList;
 
@@ -20,6 +20,9 @@ public class RouteTest {
 	static int total = 0;
 	static Punkt goal = new Punkt(0, 240);
 	static int ballNumber = 0;
+	static int minLength = 1000000;
+	static Punkt minPunkt;
+	static Punkt roboPunkt;
 	
 	
 	public static void main(String[] args) {
@@ -59,13 +62,20 @@ public class RouteTest {
 			int tempLength = 0;
 			ballNumber++;
 			Core.line(frame, new Point(xCoor.get(i)+5,yCoor.get(i)+5), new Point(xCoor.get(i+1)+5, yCoor.get(i+1)+5), new Scalar(i*200,i*20,i*30), 2);	
-			Calc dist = new Calc();
+			CalcDist dist = new CalcDist();
 			Punkt punkt1 = new Punkt(xCoor.get(i)+5, yCoor.get(i)+5);
 			Punkt punkt2 = new Punkt(xCoor.get(i+1)+5, yCoor.get(i+1)+5);
 			tempLength = dist.Calcdist(punkt1,punkt2);
 			total = total + tempLength;
 			
+			if(tempLength < minLength){
+				minLength = tempLength;
+				Punkt minPunkt = punkt2;
+			}			
+			
 		}
+		int angle = dist.CalcAngle(roboPunkt, minPunkt);
+
 		
 		Highgui.imwrite("RouteTest.jpg", frame);
 		System.out.println("DONE");

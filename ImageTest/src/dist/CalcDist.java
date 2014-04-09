@@ -1,6 +1,6 @@
 package dist;
 
-public class Calc {
+public class CalcDist {
 	Punkt p1, p2;
 	public int Calcdist(Punkt punkt1, Punkt punkt2)
 	{

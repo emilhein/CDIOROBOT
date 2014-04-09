@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Emil/Downloads/jna-3.0.4.jar"/>
 	<classpathentry exported="true" kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/NXT_PC"/>
 	<classpathentry kind="lib" path="C:/Users/Oliver/Downloads/opencv/build/java/opencv-248.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NXT_PC"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
