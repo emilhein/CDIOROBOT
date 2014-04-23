@@ -2,7 +2,7 @@ package dist;
 
 public class CalcAngle {
 	Punkt p1, p2;
-	public int Calcangel(Punkt punkt1, Punkt punkt2)
+	public int Calcangle(Punkt punkt1, Punkt punkt2)
 	{
 		this.p1 = punkt1;
 		this.p2 = punkt2;

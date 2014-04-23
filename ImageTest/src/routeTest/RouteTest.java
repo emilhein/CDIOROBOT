@@ -1,6 +1,7 @@
 package routeTest;
 
 import dist.CalcDist;
+import dist.CalcAngle;
 import dist.Punkt;
 
 import java.util.ArrayList;
@@ -26,8 +27,9 @@ public class RouteTest {
 	static int minLength2 = 1000000;
 	static Punkt minPunkt;
 	static Punkt minPunkt2;
-	static Punkt roboPunkt = new Punkt(1, 1);
-
+	static Punkt roboBagPunkt = new Punkt(1, 1);
+	static Punkt roboFrontPunkt = new Punkt(2, 2);
+	
 	public static void main(String[] args) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -74,7 +76,7 @@ public class RouteTest {
 			
 			CalcDist dist = new CalcDist();
 			Punkt punkt2 = new Punkt(xCoor.get(i) + 5, yCoor.get(i) + 5);
-			tempLength = dist.Calcdist(roboPunkt, punkt2);
+			tempLength = dist.Calcdist(roboBagPunkt, punkt2);
 			total = total + tempLength;
 			System.out.println(tempLength);
 
@@ -95,7 +97,11 @@ public class RouteTest {
 				minPunkt2 = punkt3;
 			}
 		}
-		// int angle = Calcangle(roboPunkt, minPunkt);
+		CalcAngle Angle = new CalcAngle();
+		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
+		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
+		int TurnAngle = BallAngle - RoboAngle;
+		//TODO brug til at dreje robot
 
 		
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste rød
