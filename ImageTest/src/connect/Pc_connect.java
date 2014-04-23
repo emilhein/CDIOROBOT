@@ -21,19 +21,31 @@ public class Pc_connect {
 			OutputStream dos = connt.getOutputStream();
 			scan = new Scanner(System.in);
 			while(true){
-			int input = scan.nextInt();
-			System.out.println("input = " + input);
-			int i = input;
+//			int input = scan.nextInt();
+//			System.out.println("input = " + input);
+//			int i = input;
+//			dos.write(i);
+//			dos.flush();
+//			System.out.println("send " + i);
+			
+			int i;
+			int Case;
+			int angle = TurnAngle/5;
+			if(angle < 0) Case = 11;
+			else Case = 22;
+			i = Case;
 			dos.write(i);
 			dos.flush();
-			System.out.println("send " + i);
+			i = angle;
+			dos.write(i);
+			dos.flush();
 			
-			//int Case;
-			//int angle = TurnAngle/5;
-			//if(angle < 0) Case = 11;
-			//else Case = 22;
+			//wait
 			
-			//int dist = minLength * 3;
+			int dist = minLength * 3;
+			i = dist;
+			dos.write(i);
+			dos.flush();
 			
 			}
 		}

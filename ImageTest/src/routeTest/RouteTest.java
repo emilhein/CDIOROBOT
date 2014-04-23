@@ -69,9 +69,9 @@ public class RouteTest {
 			ballNumber++;
 			
 			
-			///ARARGGDSG
-			Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 200, i * 20, i * 30), 3);
-			///sdgsdgsdg
+	
+			// Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 200, i * 20, i * 30), 3);
+			
 			
 			
 			CalcDist dist = new CalcDist();
@@ -97,6 +97,8 @@ public class RouteTest {
 				minPunkt2 = punkt3;
 			}
 		}
+		
+		
 		CalcAngle Angle = new CalcAngle();
 		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
 		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
@@ -110,7 +112,8 @@ public class RouteTest {
 		
 		
 		
-		Highgui.imwrite("RouteTest.jpg", frame);
+		Highgui.imwrite("RouteTest2.jpg", frame); // Gemmer billedet i roden
+		
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
 		System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
 		System.out.println("Total line = " + total);
