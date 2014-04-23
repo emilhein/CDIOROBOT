@@ -2,9 +2,11 @@ package routeTest;
 
 import dist.CalcDist;
 import dist.Punkt;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import Coordinates.FictiveCoordinates;
 
@@ -98,6 +100,8 @@ public class RouteTest {
 		
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste rød
 		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste blå
+		
+		
 		
 		
 		Highgui.imwrite("RouteTest.jpg", frame);
