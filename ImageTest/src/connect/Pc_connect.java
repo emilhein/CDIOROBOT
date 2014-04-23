@@ -3,6 +3,7 @@ package connect;
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
+
 import java.io.*;
 import java.util.*;
 
@@ -19,20 +20,22 @@ public class Pc_connect {
 			System.out.println("connected");
 
 			OutputStream dos = connt.getOutputStream();
-			scan = new Scanner(System.in);
-			while(true){
+//			scan = new Scanner(System.in);
+//			while(true){
 //			int input = scan.nextInt();
 //			System.out.println("input = " + input);
 //			int i = input;
 //			dos.write(i);
 //			dos.flush();
 //			System.out.println("send " + i);
-			
+		public static void runRobot(int minLength, int TurnAngle){
 			int i;
 			int Case;
 			int angle = TurnAngle/5;
-			if(angle < 0) Case = 11;
+			if(angle < 0) 
+				Case = 11;
 			else Case = 22;
+			
 			i = Case;
 			dos.write(i);
 			dos.flush();
@@ -40,15 +43,19 @@ public class Pc_connect {
 			dos.write(i);
 			dos.flush();
 			
-			//wait
+			Thread.sleep(1000);
 			
 			int dist = minLength * 3;
+			dos.write(51);
+			dos.flush();
 			i = dist;
 			dos.write(i);
 			dos.flush();
 			
 			}
-		}
-		catch(Exception ex){System.out.println(ex);}
-	}
+			
+//			}
+//		}
+//		catch(Exception ex){System.out.println(ex);}
+//	}
 }

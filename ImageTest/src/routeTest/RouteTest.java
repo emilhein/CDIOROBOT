@@ -104,7 +104,7 @@ public class RouteTest {
 		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
 		int TurnAngle = BallAngle - RoboAngle;
 		//TODO brug til at dreje robot
-
+		
 		
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste rød
 		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste blå
