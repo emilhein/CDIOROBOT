@@ -12,7 +12,6 @@ public class Pc_connect {
 	public static void main(String [] args)
 	{ 
 		try{ 
-
 			NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
 			NXTConnector connt = new NXTConnector();
 			System.out.println("trying to connect");
@@ -28,6 +27,14 @@ public class Pc_connect {
 			dos.write(i);
 			dos.flush();
 			System.out.println("send " + i);
+			
+			//int Case;
+			//int angle = TurnAngle/5;
+			//if(angle < 0) Case = 11;
+			//else Case = 22;
+			
+			//int dist = minLength * 3;
+			
 			}
 		}
 		catch(Exception ex){System.out.println(ex);}
