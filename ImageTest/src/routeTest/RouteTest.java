@@ -52,7 +52,7 @@ public class RouteTest {
 
 				}
 			}
-			// lægger alle koordinater ind i en liste a x og en liste af y
+			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
 			yCoor.add(Coordi[c]);
 			xCoor.add(Coordi[c + 1]);
 		}
