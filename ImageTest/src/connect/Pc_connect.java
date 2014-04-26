@@ -51,7 +51,6 @@ public class Pc_connect {
 			i = dist;
 			dos.write(i);
 			dos.flush();
-			
 			}
 			
 //			}

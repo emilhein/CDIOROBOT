@@ -1,4 +1,4 @@
-package routeTest;
+package pictureToMat;
 
 import dist.CalcDist;
 import dist.CalcAngle;
@@ -30,8 +30,43 @@ public class RouteTest {
 	static Punkt roboBagPunkt = new Punkt(1, 1);
 	static Punkt roboFrontPunkt = new Punkt(2, 2);
 	
+	
 	public static void main(String[] args) {
+		int[] Coordi;
+		Coordi = new int[38];
+		Coordi[0] = 15;	//x
+		Coordi[1] = 170;	//y
+		Coordi[2] = 430;   	//x
+		Coordi[3] = 10;	//y
+		Coordi[4] = 355;	//x
+		Coordi[5] = 211;	//y
+		Coordi[6] = 198;	//x
+		Coordi[7] = 398;	//y
+		Coordi[8] = 20;	//x
+		Coordi[9] = 20;	//y
+		Coordi[10] = 444;	//x
+		Coordi[11] = 369;	//y
+		Coordi[12] = 123;	//x
+		Coordi[13] = 321;	//y
+		Coordi[14] = 220;	//x
+		Coordi[15] = 400;	//y
+		Coordi[16] = 420;	//x
+		Coordi[17] = 230;	//y
+		Coordi[18] = 332;	//x
+		Coordi[19] = 223;	//y
+	//	drawBallMap(Coordi);
 
+		/*
+		 * System.out.println("Koordinater til første prik er ("+xCoor.get(0)+","
+		 * +yCoor.get(0)+")");
+		 * System.out.println("Koordinater til anden prik er ("
+		 * +xCoor.get(1)+","+yCoor.get(1)+")");
+		 * System.out.println("Koordinater til tredje prik er ("
+		 * +xCoor.get(2)+","+yCoor.get(2)+")");
+		 */
+	}
+
+	public static void drawBallMap(float[] Coordi) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat frame = Highgui.imread("camera0.jpg");
 
@@ -43,20 +78,28 @@ public class RouteTest {
 			}
 		}
 
-		FictiveCoordinates test = new FictiveCoordinates();
-		int[] Coordi = test.GetFictiveCoordi();
+		//FictiveCoordinates test = new FictiveCoordinates();
+		
+		//int[] Coordi = test.GetFictiveCoordi();
+	
 
+		//maks 630 (x) - de lige + 0
+		//maks 470 (y) - de ulige
+/*
+	
+		*/
+		
 		for (int c = 0; c < Coordi.length; c = c + 2) {
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 10; i++) {
 				for (int g = 0; g < 10; g++) {
-					frame.put(((Coordi[c + 1]) + i), ((Coordi[c]) + g), 0, 0, 0);
+					frame.put(((Math.round(Coordi[c + 1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
 
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
-			yCoor.add(Coordi[c]);
-			xCoor.add(Coordi[c + 1]);
+			yCoor.add(Math.round(Coordi[c]));
+			xCoor.add(Math.round(Coordi[c + 1]));
 		}
 		for (int i = 0; i < xCoor.size()-1; i++) {
 			/*if (ballNumber == 2) {
@@ -117,15 +160,6 @@ public class RouteTest {
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
 		System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
 		System.out.println("Total line = " + total);
-
-		/*
-		 * System.out.println("Koordinater til første prik er ("+xCoor.get(0)+","
-		 * +yCoor.get(0)+")");
-		 * System.out.println("Koordinater til anden prik er ("
-		 * +xCoor.get(1)+","+yCoor.get(1)+")");
-		 * System.out.println("Koordinater til tredje prik er ("
-		 * +xCoor.get(2)+","+yCoor.get(2)+")");
-		 */
 	}
 
 	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl) {
