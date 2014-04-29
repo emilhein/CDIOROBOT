@@ -20,41 +20,47 @@ public class Pc_connect {
 			System.out.println("connected");
 
 			OutputStream dos = connt.getOutputStream();
-//			scan = new Scanner(System.in);
-//			while(true){
-//			int input = scan.nextInt();
-//			System.out.println("input = " + input);
-//			int i = input;
+			InputStream dis = connt.getInputStream();
+			scan = new Scanner(System.in);
+			while(true){
+			int input = scan.nextInt();
+			System.out.println("input = " + input);
+			int i = input;
+			dos.write(i);
+			dos.flush();
+			int u = dis.read();
+			System.out.println("send " + i);
+			System.out.println("recived " + u);
+//		public static void runRobot(int minLength, int TurnAngle){
+//			int i;
+//			int Case;
+//			int angle = TurnAngle/5;
+//			if(angle < 0) 
+//				Case = 11;
+//			else Case = 22;
+//			
+//			i = Case;
 //			dos.write(i);
 //			dos.flush();
-//			System.out.println("send " + i);
-		public static void runRobot(int minLength, int TurnAngle){
-			int i;
-			int Case;
-			int angle = TurnAngle/5;
-			if(angle < 0) 
-				Case = 11;
-			else Case = 22;
+//			i = angle;
+//			dos.write(i);
+//			dos.flush();
 			
-			i = Case;
-			dos.write(i);
-			dos.flush();
-			i = angle;
-			dos.write(i);
-			dos.flush();
-			
-			Thread.sleep(1000);
-			
-			int dist = minLength * 3;
-			dos.write(51);
-			dos.flush();
-			i = dist;
-			dos.write(i);
-			dos.flush();
+//			int u = dis.read();
+//			while(u=1){
+//			u = dis.read();
+//			}
+//			
+//			int dist = minLength * 3;
+//			dos.write(51);
+//			dos.flush();
+//			i = dist;
+//			dos.write(i);
+//			dos.flush();
 			}
 			
 //			}
-//		}
-//		catch(Exception ex){System.out.println(ex);}
-//	}
+		}
+		catch(Exception ex){System.out.println(ex);}
+	}
 }
