@@ -27,14 +27,14 @@ public class RouteTest {
 	static int minLength2 = 1000000;
 	static Punkt minPunkt;
 	static Punkt minPunkt2;
-	static Punkt roboBagPunkt = new Punkt(1, 1);
-	static Punkt roboFrontPunkt = new Punkt(2, 2);
+	static Punkt roboBagPunkt = new Punkt(200, 300);
+	static Punkt roboFrontPunkt = new Punkt(240, 340);
 	
 	
 	public static void main(String[] args) {
 		int[] Coordi;
 		Coordi = new int[38];
-		Coordi[0] = 15;	//x
+		/*Coordi[0] = 15;	//x
 		Coordi[1] = 170;	//y
 		Coordi[2] = 430;   	//x
 		Coordi[3] = 10;	//y
@@ -54,7 +54,7 @@ public class RouteTest {
 		Coordi[17] = 230;	//y
 		Coordi[18] = 332;	//x
 		Coordi[19] = 223;	//y
-	//	drawBallMap(Coordi);
+		drawBallMap(Coordi);*/
 
 		/*
 		 * System.out.println("Koordinater til første prik er ("+xCoor.get(0)+","
@@ -113,7 +113,7 @@ public class RouteTest {
 			
 			
 	
-			// Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 200, i * 20, i * 30), 3);
+			 Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 45, i * 10, i * 20), 3);
 			
 			
 			
