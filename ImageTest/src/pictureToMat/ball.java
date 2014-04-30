@@ -116,7 +116,7 @@ public class ball {
 			// Apply the Hough Transform to find the circles  
 			Imgproc.GaussianBlur(thresholded, thresholded, new Size(9,9),0,0);
 			// STANDARD: Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, thresholded.height()/4, 500, 50, 0, 0);
-			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, 4, 8);   // to sidste argumenter er radiusmin og max
+			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, 30, 40);   // to sidste argumenter er radiusmin og max
 			//sæt til 4 og 8, for at finde bolde og 30 og 40 for at finde roboten,
 			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
 			//-- 4. Add some info to the image  
@@ -134,7 +134,7 @@ public class ball {
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
 			if (data2.length>0){ 
-					for(int c=0; c<19; c++)//antal bolde der skal findes.
+					for(int c=0; c<2; c++)//antal bolde der skal findes.
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
 						Point center= new Point(data2[0], data2[1]);  
@@ -150,9 +150,8 @@ public class ball {
 						System.out.println(Coordi[ballnr]+","+Coordi[ballnr+1]);
 						ballnr = ballnr+2;
 						
+						
 					}
-					
-				
 			}  
 			
 			RouteTest.drawBallMap(Coordi);
