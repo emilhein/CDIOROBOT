@@ -28,9 +28,11 @@ public class Pc_connect {
 			int i = input;
 			dos.write(i);
 			dos.flush();
+			Thread.sleep(500);
 			int u = dis.read();
 			System.out.println("send " + i);
 			System.out.println("recived " + u);
+			System.out.println("done ");
 //		public static void runRobot(int minLength, int TurnAngle){
 //			int i;
 //			int Case;
