@@ -24,8 +24,8 @@ public class RouteTest {
 	static int minLength2 = 1000000;
 	static Punkt minPunkt;
 	static Punkt minPunkt2;
-	static Punkt roboBagPunkt = new Punkt(478, 638); // y,x
-	static Punkt roboFrontPunkt = new Punkt(479, 639); // y,x
+	static Punkt roboBagPunkt = new Punkt(0, 0); // y,x
+	static Punkt roboFrontPunkt = new Punkt(0, 0); // y,x
 	
 
 	public static void main(String[] args) {

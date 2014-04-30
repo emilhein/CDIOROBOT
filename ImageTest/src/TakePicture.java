@@ -20,7 +20,7 @@ public class TakePicture {
     	    		
     	    			Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/Billed"+i+".jpg", frame);
     	    		}
-    	    		System.out.println("OK");
+    	    		System.out.println("Picture saved");
     	    		
     	    		
     	    		System.out.println();

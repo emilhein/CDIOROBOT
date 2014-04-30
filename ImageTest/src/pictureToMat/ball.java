@@ -61,7 +61,7 @@ public class ball {
 		frame4.setVisible(false);
 		//-- 2. Read the video stream
 //		VideoCapture capture =new VideoCapture(0);  
-		Mat webcam_image = pictureToMat("camera0.1.jpg");  
+		Mat webcam_image = pictureToMat("Billed0.jpg");  
 		Mat hsv_image=new Mat();  
 		Mat thresholded=new Mat();  
 		Mat thresholded2=new Mat();  
@@ -116,7 +116,8 @@ public class ball {
 			// Apply the Hough Transform to find the circles  
 			Imgproc.GaussianBlur(thresholded, thresholded, new Size(9,9),0,0);
 			// STANDARD: Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, thresholded.height()/4, 500, 50, 0, 0);
-			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, 4, 8);   
+			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, 4, 8);   // to sidste argumenter er radiusmin og max
+			//sæt til 4 og 8, for at finde bolde og 30 og 40 for at finde roboten,
 			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
 			//-- 4. Add some info to the image  
 			Core.line(webcam_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10)*/, 3);  
@@ -133,7 +134,7 @@ public class ball {
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
 			if (data2.length>0){ 
-					for(int c=0; c<19; c++)
+					for(int c=0; c<19; c++)//antal bolde der skal findes.
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
 						Point center= new Point(data2[0], data2[1]);  
