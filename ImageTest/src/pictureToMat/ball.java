@@ -12,7 +12,6 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;  
 import org.opencv.core.Size;  
 import org.opencv.highgui.Highgui;
-
 import org.opencv.imgproc.Imgproc;  
 import org.opencv.core.CvType; 
 
@@ -149,11 +148,12 @@ public class ball {
 						Coordi[ballnr+1] = data2[1];
 						System.out.println(Coordi[ballnr]+","+Coordi[ballnr+1]);
 						ballnr = ballnr+2;
+							
 						
 						
 					}
 			}  
-			
+
 			RouteTest.drawBallMap(Coordi);
 
 			
