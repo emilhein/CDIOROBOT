@@ -1,13 +1,10 @@
 package pictureToMat;
 
 
-import java.awt.Graphics;  
-import java.awt.image.BufferedImage;  
 import java.util.ArrayList;  
 import java.util.List;  
 
 import javax.swing.JFrame;  
-import javax.swing.JPanel;  
 
 import org.opencv.core.Core;  
 import org.opencv.core.Mat;   
@@ -15,7 +12,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;  
 import org.opencv.core.Size;  
 import org.opencv.highgui.Highgui;
-import org.opencv.highgui.VideoCapture;  
+
 import org.opencv.imgproc.Imgproc;  
 import org.opencv.core.CvType; 
 
@@ -39,6 +36,7 @@ public class ball {
 		Panel panel1 = new Panel();  
 		frame1.setContentPane(panel1);  
 		frame1.setVisible(true);  
+		
 		JFrame frame2 = new JFrame("HSV");  
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 		frame2.setSize(640,480);  
@@ -53,7 +51,8 @@ public class ball {
 		Panel panel3 = new Panel();  
 		frame3.setContentPane(panel3);  
 		frame3.setVisible(false);  
-		JFrame frame4 = new JFrame("Threshold");  
+		
+		JFrame frame4 = new JFrame("Route");  
 		frame4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 		frame4.setSize(640,480);  
 		frame4.setBounds(900,300, frame3.getWidth()+900, 300+frame3.getHeight());  
@@ -225,11 +224,7 @@ public class ball {
 						break;
 					} 
 					
-					
-					
-
-					
-					
+	
 
 					else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid 
 						// drawrect(j,b,m);

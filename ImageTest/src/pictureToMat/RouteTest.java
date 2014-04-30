@@ -7,9 +7,6 @@ import dist.Punkt;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-
-import Coordinates.FictiveCoordinates;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
