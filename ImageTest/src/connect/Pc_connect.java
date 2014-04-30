@@ -17,8 +17,7 @@ public class Pc_connect {
 			NXTConnector connt = new NXTConnector();
 			System.out.println("trying to connect");
 			connt.connectTo(nxtInfo, NXTComm.LCP);
-			System.out.println("connected");
-
+			System.out.println("connected");	
 			OutputStream dos = connt.getOutputStream();
 			InputStream dis = connt.getInputStream();
 			scan = new Scanner(System.in);
@@ -28,11 +27,14 @@ public class Pc_connect {
 			int i = input;
 			dos.write(i);
 			dos.flush();
-			Thread.sleep(500);
-			int u = dis.read();
 			System.out.println("send " + i);
+			input = scan.nextInt();
+			System.out.println("input = " + input);
+			i = input;
+			dos.write(i);
+			dos.flush();
+			int u = dis.read();
 			System.out.println("recived " + u);
-			System.out.println("done ");
 //		public static void runRobot(int minLength, int TurnAngle){
 //			int i;
 //			int Case;
