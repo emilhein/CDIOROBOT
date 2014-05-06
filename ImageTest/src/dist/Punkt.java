@@ -6,7 +6,16 @@ public class Punkt {
         this.x = xkoord;
         this.y = ykoord;
     }
-    public int getX() {
+   
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getX() {
         return x;
     }
     public int getY() {

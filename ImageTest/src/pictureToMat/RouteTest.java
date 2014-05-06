@@ -24,24 +24,11 @@ public class RouteTest {
 	static int minLength2 = 1000000;
 	static Punkt minPunkt;
 	static Punkt minPunkt2;
-	static Punkt roboBagPunkt = new Punkt(0, 0); // y,x
-	static Punkt roboFrontPunkt = new Punkt(0, 0); // y,x
 	
-
-	public static void main(String[] args) {
-				/*
-		 * System.out.println("Koordinater til første prik er ("+xCoor.get(0)+","
-		 * +yCoor.get(0)+")");
-		 * System.out.println("Koordinater til anden prik er ("
-		 * +xCoor.get(1)+","+yCoor.get(1)+")");
-		 * System.out.println("Koordinater til tredje prik er ("
-		 * +xCoor.get(2)+","+yCoor.get(2)+")");
-		 */
-	}
-
-	public static void drawBallMap(float[] Coordi) {
+	
+	public static void drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat frame = Highgui.imread("camera0.jpg");
+		Mat frame = Highgui.imread("Billed0.jpg"); /// SKal bruges til at lave et blank lærred..
 
 		// farver hele matricen hvid
 		for (int j = 0; j < frame.rows(); j++) {
@@ -51,23 +38,12 @@ public class RouteTest {
 			}
 		}
 
-		//FictiveCoordinates test = new FictiveCoordinates();
-		
-		//int[] Coordi = test.GetFictiveCoordi();
 	
-
-		//maks 630 (x) - de lige + 0
-		//maks 470 (y) - de ulige
-/*
-	
-		*/
-		
-		for (int c = 0; c < Coordi.length; c = c + 2) {
+		for (int c = 0; c < Coordi.length; c = c + 3) {
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 10; i++) {
 				for (int g = 0; g < 10; g++) {
 					frame.put(((Math.round(Coordi[c + 1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
-
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
@@ -80,14 +56,11 @@ public class RouteTest {
 						new Point(goal.getX(), goal.getY()), new Scalar(0, 255,
 								0, 7));
 				ballNumber = 0;
-			}*/
+			}*///det her skal bruges, hvis vi vil tælle 2 bolde op og køre tilbage
 			int tempLength = 0;
 			ballNumber++;
 			
-			
-	
 			 Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
-			
 			
 			
 			CalcDist dist = new CalcDist();
@@ -128,7 +101,7 @@ public class RouteTest {
 		
 		
 		
-		Highgui.imwrite("RouteTest2.jpg", frame); // Gemmer billedet i roden
+		Highgui.imwrite("RouteTest3.jpg", frame); // Gemmer billedet i roden
 		
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
 		System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
