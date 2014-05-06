@@ -3,7 +3,6 @@ package pictureToMat;
 
 import java.util.ArrayList;  
 
-import dist.Punkt;
 
 import java.util.List;  
 
@@ -18,7 +17,6 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;  
 import org.opencv.core.CvType; 
 
-import dist.Punkt;
 
 public class ballMethod {  
 
