@@ -7,9 +7,6 @@ import dist.Punkt;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-
-import Coordinates.FictiveCoordinates;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -27,36 +24,12 @@ public class RouteTest {
 	static int minLength2 = 1000000;
 	static Punkt minPunkt;
 	static Punkt minPunkt2;
-	static Punkt roboBagPunkt = new Punkt(200, 300);
-	static Punkt roboFrontPunkt = new Punkt(240, 340);
+	static Punkt roboBagPunkt = new Punkt(0, 0); // y,x
+	static Punkt roboFrontPunkt = new Punkt(0, 0); // y,x
 	
-	
-	public static void main(String[] args) {
-		int[] Coordi;
-		Coordi = new int[38];
-		/*Coordi[0] = 15;	//x
-		Coordi[1] = 170;	//y
-		Coordi[2] = 430;   	//x
-		Coordi[3] = 10;	//y
-		Coordi[4] = 355;	//x
-		Coordi[5] = 211;	//y
-		Coordi[6] = 198;	//x
-		Coordi[7] = 398;	//y
-		Coordi[8] = 20;	//x
-		Coordi[9] = 20;	//y
-		Coordi[10] = 444;	//x
-		Coordi[11] = 369;	//y
-		Coordi[12] = 123;	//x
-		Coordi[13] = 321;	//y
-		Coordi[14] = 220;	//x
-		Coordi[15] = 400;	//y
-		Coordi[16] = 420;	//x
-		Coordi[17] = 230;	//y
-		Coordi[18] = 332;	//x
-		Coordi[19] = 223;	//y
-		drawBallMap(Coordi);*/
 
-		/*
+	public static void main(String[] args) {
+				/*
 		 * System.out.println("Koordinater til første prik er ("+xCoor.get(0)+","
 		 * +yCoor.get(0)+")");
 		 * System.out.println("Koordinater til anden prik er ("
@@ -113,7 +86,7 @@ public class RouteTest {
 			
 			
 	
-			 Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 45, i * 10, i * 20), 3);
+			 Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
 			
 			
 			

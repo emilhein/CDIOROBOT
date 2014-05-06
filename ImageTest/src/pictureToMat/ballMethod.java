@@ -15,13 +15,12 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;  
 import org.opencv.core.CvType; 
 
-public class ball {  
+public class ballMethod {  
 	
-	
-	public static void main(String arg[]){  
-	
+	public float[] findCircle(int minRadius, int maxRadius, int numberOfCircles){ 
+		
 		float[] Coordi;
-		Coordi = new float[38];
+		Coordi = new float[numberOfCircles*3];
 		int ballnr = 0;
 		
 		// Load the native library.  
@@ -34,7 +33,7 @@ public class ball {
 		frame1.setBounds(0, 0, frame1.getWidth(), frame1.getHeight());  
 		Panel panel1 = new Panel();  
 		frame1.setContentPane(panel1);  
-		frame1.setVisible(true);  
+		frame1.setVisible(false);  
 		
 		JFrame frame2 = new JFrame("HSV");  
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
@@ -60,7 +59,7 @@ public class ball {
 		frame4.setVisible(false);
 		//-- 2. Read the video stream
 //		VideoCapture capture =new VideoCapture(0);  
-		Mat webcam_image = pictureToMat("Billed0.jpg");  
+		Mat webcam_image = pictureToMat("camera0.1.jpg");  
 		Mat hsv_image=new Mat();  
 		Mat thresholded=new Mat();  
 		Mat thresholded2=new Mat();  
@@ -115,8 +114,7 @@ public class ball {
 			// Apply the Hough Transform to find the circles  
 			Imgproc.GaussianBlur(thresholded, thresholded, new Size(9,9),0,0);
 			// STANDARD: Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, thresholded.height()/4, 500, 50, 0, 0);
-			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, 30, 40);   // to sidste argumenter er radiusmin og max
-			//sæt til 4 og 8, for at finde bolde og 30 og 40 for at finde roboten,
+			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, minRadius, maxRadius);   
 			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
 			//-- 4. Add some info to the image  
 			Core.line(webcam_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10)*/, 3);  
@@ -124,7 +122,6 @@ public class ball {
 			data=webcam_image.get(210, 210);  
 			Core.putText(webcam_image,String.format("("+String.valueOf(data[0])+","+String.valueOf(data[1])+","+String.valueOf(data[2])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
 					,1.0,new Scalar(100,10,10,255),3);  
-		//	int cols = circles.cols(); 
 			int rows = circles.rows();
 			
 
@@ -133,28 +130,18 @@ public class ball {
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
 			if (data2.length>0){ 
-					for(int c=0; c<2; c++)//antal bolde der skal findes.
+					for(int c=0; c<19; c++)
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-						Point center= new Point(data2[0], data2[1]);  
-						//Core.ellipse( this, center, new S2ize( rect.width*0.5, rect.height*0.5), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  
-						Core.ellipse( webcam_image, center, new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  
-						System.out.println("-----------------------------");
-						System.out.println("Cirkel nr. " + c);
-						System.out.println("(" + data2[0] + "," + data2[1] + ")");
-						System.out.println("Radius: " + data2[2]);
-						System.out.println("-----------------------------");
 						Coordi[ballnr] = data2[0];
 						Coordi[ballnr+1] = data2[1];
-						System.out.println(Coordi[ballnr]+","+Coordi[ballnr+1]);
-						ballnr = ballnr+2;
-							
-						
-						
+						Coordi[ballnr+2] = data2[2];
+						ballnr = ballnr+3;
 					}
+					
+				
 			}  
-
-			RouteTest.drawBallMap(Coordi);
+			
 
 			
 			
@@ -186,7 +173,7 @@ public class ball {
 			System.out.println(" --(!) No captured frame -- Break!"); 
 		}  
 
-		return;  
+		return Coordi;  
 	}
 
 	public static Mat pictureToMat(String image)
