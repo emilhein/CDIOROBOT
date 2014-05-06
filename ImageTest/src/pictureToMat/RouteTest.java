@@ -50,31 +50,23 @@ public class RouteTest {
 			yCoor.add(Math.round(Coordi[c]));
 			xCoor.add(Math.round(Coordi[c + 1]));
 		}
+		
+		//Dette for-loop finder det tætteste ppunkt på robotens front
 		for (int i = 0; i < xCoor.size()-1; i++) {
-			/*if (ballNumber == 2) {
-				Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),
-						new Point(goal.getX(), goal.getY()), new Scalar(0, 255,
-								0, 7));
-				ballNumber = 0;
-			}*///det her skal bruges, hvis vi vil tælle 2 bolde op og køre tilbage
-			int tempLength = 0;
-			ballNumber++;
-			
-			 Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
-			
+			int tempLength = 0;	
+		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
 			
 			CalcDist dist = new CalcDist();
 			Punkt punkt2 = new Punkt(xCoor.get(i) + 5, yCoor.get(i) + 5);
-			tempLength = dist.Calcdist(roboBagPunkt, punkt2);
+			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
 			total = total + tempLength;
-			System.out.println(tempLength);
 
 			if (tempLength < minLength) {
 				minLength = tempLength;
 				minPunkt = punkt2;
 			}
 		}
-		
+		//Finder nr. 2 punkt
 		for (int i = 0; i < xCoor.size(); i++) {
 			int tempLength2 = 0;
 			CalcDist dist = new CalcDist();
@@ -108,6 +100,7 @@ public class RouteTest {
 		System.out.println("Total line = " + total);
 	}
 
+	
 	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl) {
 		for (int a = 0; a < 10; a++) {
 			for (int b = 0; b < 10; b++) {
