@@ -1,5 +1,4 @@
 package connect;
-
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
@@ -33,36 +32,38 @@ public class Pc_connect {
 			i = input;
 			dos.write(i);
 			dos.flush();
+			System.out.println("send " + i);
 			int u = dis.read();
 			System.out.println("recived " + u);
 //		public static void runRobot(int minLength, int TurnAngle){
-//			int i;
-//			int Case;
-//			int angle = TurnAngle/5;
-//			if(angle < 0) 
-//				Case = 11;
+//			int Case;					
+//			int angle = TurnAngle/5;	//vinkel konvertering
+//			if(angle < 0) 				//vælger retning der skal drejes
+//				Case = 11;				
 //			else Case = 22;
 //			
-//			i = Case;
-//			dos.write(i);
+//			dos.write(Case);			//sender case
 //			dos.flush();
-//			i = angle;
-//			dos.write(i);
+//			dos.write(angle);			//sender vinkel
 //			dos.flush();
 			
-//			int u = dis.read();
+//			int u = dis.read();			//venter på at motorerne ikke kører længere
 //			while(u=1){
 //			u = dis.read();
 //			}
 //			
-//			int dist = minLength * 3;
+//			int dist = (minLength * 3) - 150;	//længde konvertering
 //			dos.write(51);
 //			dos.flush();
 //			i = dist;
 //			dos.write(i);
 //			dos.flush();
+
+//			dos.write(31);				//samler bold op
+//			dos.flush();
+//			dos.write(31);
+//			dos.flush();			
 			}
-			
 //			}
 		}
 		catch(Exception ex){System.out.println(ex);}
