@@ -12,15 +12,18 @@ public class Pc_connect {
 	public static void main(String [] args)
 	{ 
 		try{ 
+//			prøver at forbinde til vores robot
 			NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
 			NXTConnector connt = new NXTConnector();
 			System.out.println("trying to connect");
 			connt.connectTo(nxtInfo, NXTComm.LCP);
-			System.out.println("connected");	
+			System.out.println("connected");		//forbundet
+//			åbner streams
 			OutputStream dos = connt.getOutputStream();
 			InputStream dis = connt.getInputStream();
-			scan = new Scanner(System.in);
-			while(true){
+			scan = new Scanner(System.in);			//scanner til manuel input
+//			test
+			while(true){							
 			int input = scan.nextInt();
 			System.out.println("input = " + input);
 			int i = input;
@@ -47,19 +50,22 @@ public class Pc_connect {
 //			dos.write(angle);			//sender vinkel
 //			dos.flush();
 			
-//			int u = dis.read();			//venter på at motorerne ikke kører længere
+//			venter på at motorerne ikke kører længere
+//			int u = dis.read();			
 //			while(u=1){
 //			u = dis.read();
 //			}
-//			
+			
+//			kører robot frem
 //			int dist = (minLength * 3) - 150;	//længde konvertering
 //			dos.write(51);
 //			dos.flush();
 //			i = dist;
 //			dos.write(i);
 //			dos.flush();
-
-//			dos.write(31);				//samler bold op
+			
+//			samler bold op
+//			dos.write(31);				
 //			dos.flush();
 //			dos.write(31);
 //			dos.flush();			
