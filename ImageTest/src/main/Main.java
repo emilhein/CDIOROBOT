@@ -3,6 +3,8 @@ package main;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
+import dist.CalcAngle;
+import dist.CalcDist;
 import dist.Punkt;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
@@ -16,7 +18,7 @@ import java.io.*;
 public class Main {
 
 	public static void main(String[] args) {
-
+		Punkt minPunkt;
 
 		TakePicture.main(args); //tager et billed og gemmer i roden af projektet.
 
@@ -60,9 +62,23 @@ public class Main {
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
+		minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+
 		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
+
 /*
+=======
+		
+		CalcAngle Angle = new CalcAngle();
+		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
+		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
+		int TurnAngle = BallAngle - RoboAngle;
+		
+		CalcDist dist = new CalcDist();
+		int minLength = dist.Calcdist(roboFrontPunkt, minPunkt);
+		
+>>>>>>> branch 'refs/heads/master' of https://github.com/emilhein/CDIOROBOT.git
 		try{ 
 			//prøver at forbinde til vores robot
 			NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
@@ -73,7 +89,7 @@ public class Main {
 			//åbner streams
 			OutputStream dos = connt.getOutputStream();
 			InputStream dis = connt.getInputStream();
-
+			
 			int Case;
 			int i;
 			int angle = TurnAngle/5;	//vinkel konvertering
@@ -93,10 +109,10 @@ public class Main {
 			}
 
 			//kører robot frem
-			int dist = (minLength * 3) - 150;	//længde konvertering
+			int distance = (minLength * 3) - 150;	//længde konvertering
 			dos.write(51);
 			dos.flush();
-			i = dist;
+			i = distance;
 			dos.write(i);
 			dos.flush();
 

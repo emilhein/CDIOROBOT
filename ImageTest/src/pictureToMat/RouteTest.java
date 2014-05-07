@@ -24,7 +24,7 @@ public class RouteTest {
 	static Punkt minPunkt2;
 	
 	
-	public static void drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
+	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat frame = Highgui.imread("Billed0.jpg"); /// SKal bruges til at lave et blank lærred..
 
@@ -78,11 +78,11 @@ public class RouteTest {
 		}
 		
 		
-		CalcAngle Angle = new CalcAngle();
-		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
-		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
-		int TurnAngle = BallAngle - RoboAngle;
-		//TODO brug til at dreje robot
+//		CalcAngle Angle = new CalcAngle();
+//		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
+//		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
+//		int TurnAngle = BallAngle - RoboAngle;
+
 		
 		
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste rød
@@ -96,6 +96,8 @@ public class RouteTest {
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
 		System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
 		System.out.println("Total line = " + total);
+		
+		return minPunkt;
 	}
 
 	
