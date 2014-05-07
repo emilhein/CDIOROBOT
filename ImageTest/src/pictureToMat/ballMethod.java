@@ -208,12 +208,12 @@ public class ballMethod {
 						// m.put(j, b, 0,0,0);
 						break;
 					}
-					else if (blue > 12 && blue < 110 && green > 140 && red < 150) { // finder grønne farver															// farver
+					else if (blue > 12 && blue < 110 && green > 120 && red < 150) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
 					
-					else if (red > 180 && green < 130 && blue < 120) { // finder røde farver																
+					else if (red > 160 && green < 130 && blue < 120) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
