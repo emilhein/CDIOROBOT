@@ -145,21 +145,7 @@ public class ballMethod {
 						ballnr = ballnr+3; // radius
 						Point center= new Point(data2[0], data2[1]);  
 						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  
-						/*
-						double[] rgb = webcam_image.get(Math.round(data2[0]), Math.round(data2[1]));
-						for (int i = 0; i < rgb.length; i = i + 3) {
-							double green = rgb[i+1];
-							double red = rgb[i+2];
-							
-							if(green == 255){
-								Punkt roboBagPunkt = new Punkt(Math.round(data2[0]),Math.round(data2[1]));
-							}
-							if(red == 255){
-								Punkt roboFrontPunkt = new Punkt(Math.round(data2[0]),Math.round(data2[1]));
-							}
-
-					}*/
-
+						
 					}
 				
 			}  

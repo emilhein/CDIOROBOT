@@ -22,16 +22,17 @@ public class Main {
 		/*
 		*Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		*/
-		float[] RoboCoor = balls.findCircle(17,20, 2);//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(16,20, 2);//minradius, maxrdius, antalbolde
 		
 		Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
 		
 		double[] front = frame.get(Math.round(RoboCoor[0]), Math.round(RoboCoor[1]));
 		double red = front[2]; //henter en rød farver fra den ene cirkel
+		double green = front[1];
 		
 		double[] back = frame.get(Math.round(RoboCoor[3]), Math.round(RoboCoor[4]));
 		double red2 = back[2]; // henter en rød farve fra den anden cirkel
-		
+		double green2 = back[1];
 		
 		Punkt roboFrontPunkt = new Punkt(0,0);
 		Punkt roboBagPunkt = new Punkt(0,0);
@@ -52,11 +53,11 @@ public class Main {
 		
 		
 		
-		float[] ballCoor = balls.findCircle(6, 12, 6); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(4, 10, 5); // finder bolde 6,12,6
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 		
-		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
-		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
+		System.out.println("koordinaterne til bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
+		System.out.println("koordinaterne til frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
 		
 	}
 
