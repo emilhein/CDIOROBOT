@@ -61,9 +61,13 @@ public class Main {
 		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
 		
+		Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
+		Punkt nyRoboBag = new Punkt(0,0);
+		Punkt nyMinPunkt = new Punkt(minPunkt.getX()-roboBagPunkt.getX(),minPunkt.getY()-roboBagPunkt.getY());
+		
 		CalcAngle Angle = new CalcAngle();
-		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
-		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
+		int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
+		int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
 		int TurnAngle = BallAngle - RoboAngle;
 		
 		CalcDist dist = new CalcDist();
