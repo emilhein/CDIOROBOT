@@ -206,6 +206,7 @@ frame1.add(jl1);frame1.add(jl2);frame1.add(jl3);frame1.add(jl4);frame1.add(jl5);
 	
 //Gør rammen synlig
 		frame1.setVisible (true);
+		
 
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}	
 		catch (ClassNotFoundException e) {}
