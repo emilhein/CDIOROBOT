@@ -18,6 +18,8 @@ import java.io.*;
 public class Main {
 
 	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+
 		Punkt minPunkt;
 
 		TakePicture.main(args); //tager et billed og gemmer i roden af projektet.
@@ -71,7 +73,7 @@ public class Main {
 		System.out.println("Dette er rød2 farven = " + red2);
 		*/
 		
-		float[] ballCoor = balls.findCircle(3, 6, 7); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(3, 7, 7); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
@@ -79,7 +81,10 @@ public class Main {
 
 		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-
+		
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("Total running time of procedure is = "+totalTime+" milliseconds("+totalTime/1000 +" second(s))");
 /*
 		
 		CalcAngle Angle = new CalcAngle();

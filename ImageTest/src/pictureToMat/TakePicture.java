@@ -5,7 +5,11 @@ import org.opencv.highgui.VideoCapture;
         
 public class TakePicture {
     public static void main (String args[]){
-    	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    	takePicture();
+    }
+
+	public static void takePicture() {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     	VideoCapture camera = new VideoCapture(0);
     	for (int i = 0; i<1;i++){//flere billeder
     	if(!camera.isOpened()){
@@ -33,6 +37,6 @@ public class TakePicture {
     	    }	
     	}
     	camera.release();
-    }
+	}
 }   
 
