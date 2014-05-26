@@ -175,7 +175,6 @@ public class CallibratorGUI  {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println("TESTSETSET");
 				
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
