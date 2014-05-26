@@ -9,9 +9,9 @@ import dist.Punkt;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
-//import lejos.pc.comm.NXTComm;
-//import lejos.pc.comm.NXTConnector;
-//import lejos.pc.comm.NXTInfo;
+import lejos.pc.comm.NXTComm;
+import lejos.pc.comm.NXTConnector;
+import lejos.pc.comm.NXTInfo;
 
 import java.io.*;
 
@@ -27,7 +27,7 @@ public class Main {
 		/*
 		*Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		*/
-		float[] RoboCoor = balls.findCircle(15,22, 2);//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(17,22, 2);//minradius, maxrdius, antalbolde
 
 		Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
 
@@ -42,13 +42,13 @@ public class Main {
 		Punkt roboFrontPunkt = new Punkt(0,0);
 		Punkt roboBagPunkt = new Punkt(0,0);
 		// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
-		if(red > 250){
+		if(red > 245){
 			roboFrontPunkt.setX(Math.round(RoboCoor[0]));
 			roboFrontPunkt.setY(Math.round(RoboCoor[1]));
 			roboBagPunkt.setX(Math.round(RoboCoor[3]));
 			roboBagPunkt.setY(Math.round(RoboCoor[4]));
 			System.out.println("red");
-		} else if (red2 > 250){
+		} else if (red2 > 245){
 			roboFrontPunkt.setX(Math.round(RoboCoor[3]));
 			roboFrontPunkt.setY(Math.round(RoboCoor[4]));
 			roboBagPunkt.setX(Math.round(RoboCoor[0]));
@@ -58,7 +58,7 @@ public class Main {
 		
 		
 		
-		float[] ballCoor = balls.findCircle(4, 12, 5); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(6, 10, 2); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
@@ -67,8 +67,7 @@ public class Main {
 		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
 
-/*
-=======
+
 		
 		CalcAngle Angle = new CalcAngle();
 		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
@@ -78,7 +77,6 @@ public class Main {
 		CalcDist dist = new CalcDist();
 		int minLength = dist.Calcdist(roboFrontPunkt, minPunkt);
 		
->>>>>>> branch 'refs/heads/master' of https://github.com/emilhein/CDIOROBOT.git
 		try{ 
 			//prøver at forbinde til vores robot
 			NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
@@ -93,6 +91,7 @@ public class Main {
 			int Case;
 			int i;
 			int angle = TurnAngle/5;	//vinkel konvertering
+			System.out.println("angle" + angle);
 			if(angle < 0) 				//vælger retning der skal drejes
 				Case = 11;				
 			else Case = 22;
@@ -110,6 +109,7 @@ public class Main {
 
 			//kører robot frem
 			int distance = (minLength * 3) - 150;	//længde konvertering
+			System.out.println("dist" + distance);
 			dos.write(51);
 			dos.flush();
 			i = distance;
@@ -123,7 +123,7 @@ public class Main {
 			dos.flush();			
 
 		}
-		catch(Exception ex){System.out.println(ex);}*/
+		catch(Exception ex){System.out.println(ex);}
 	}
 }
 

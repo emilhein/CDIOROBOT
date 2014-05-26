@@ -3,18 +3,15 @@ package pictureToMat;
 import dist.CalcDist;
 import dist.CalcAngle;
 import dist.Punkt;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
 public class RouteTest {
-	static List<Integer> xCoor = new ArrayList<>();
-	static List<Integer> yCoor = new ArrayList<>();
+	static List<Integer> xCoor = new ArrayList<Integer>();
+	static List<Integer> yCoor = new ArrayList<Integer>();
 	static int total = 0;
 	static Punkt goal = new Punkt(0, 240);
 	static int ballNumber = 0;

@@ -119,20 +119,21 @@ public class ballMethod {
 			Imgproc.GaussianBlur(thresholded, thresholded, new Size(9,9),0,0);
 			// STANDARD: Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, thresholded.height()/4, 500, 50, 0, 0);
 			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, minRadius, maxRadius);   
+			
+			
+			
 			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
 			
-			
-			//-- 4. Add some info to the image  
-			Core.line(webcam_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10)*/, 3);  
+		/*	
+			 4. Add some info to the image  
+			Core.line(webcam_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10), 3);  
 			Core.circle(webcam_image, new Point(210,210), 10, new Scalar(100,10,10),3);  
 			data=webcam_image.get(210, 210);  
 			Core.putText(webcam_image,String.format("("+String.valueOf(data[0])+","+String.valueOf(data[1])+","+String.valueOf(data[2])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
 					,1.0,new Scalar(100,10,10,255),3);  
+*/
 			int rows = circles.rows();
-			
-
-
-			
+						
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
 			if (data2.length>0){ 
@@ -208,12 +209,12 @@ public class ballMethod {
 						// m.put(j, b, 0,0,0);
 						break;
 					}
-					else if (blue > 12 && blue < 110 && green > 120 && red < 150) { // finder grønne farver															// farver
+					else if (blue > 12 && blue < 110 && green > 100 && red < 100) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
 					
-					else if (red > 160 && green < 130 && blue < 120) { // finder røde farver																
+					else if (red > 150 && green < 130 && blue < 120) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
@@ -226,8 +227,8 @@ public class ballMethod {
 						// System.out.println("GOTO " + j +"," +b);
 						break;
 					} else {
-						//m.put(j, b, 63, 133, 205); // resten bliver brun
-						m.put(j, b, 00,0,0); // resten bliver sort
+					//m.put(j, b, 63, 133, 205); // resten bliver brun
+						m.put(j, b, 0,0,0); // resten bliver sort
 					}
 
 					
