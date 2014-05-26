@@ -101,8 +101,7 @@ public class RouteTest {
 	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl) {
 		for (int a = 0; a < 10; a++) {
 			for (int b = 0; b < 10; b++) {
-				frame.put(((p.getX() - 5) + a), ((p.getY() + b) - 5), bl, gr,
-						re);
+				frame.put(((p.getX() - 5) + a), ((p.getY() + b) - 5), bl, gr, re);
 
 			}
 		}

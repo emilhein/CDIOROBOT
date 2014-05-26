@@ -94,6 +94,7 @@ public class CallibratorGUI  {
 
 		//Gør rammen synlig
 		frame1.setVisible (true);
+		
 
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}	
 		catch (ClassNotFoundException e) {}

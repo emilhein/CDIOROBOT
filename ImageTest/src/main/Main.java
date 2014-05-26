@@ -66,12 +66,12 @@ public class Main {
 			roboBagPunkt.setY(Math.round(RoboCoor[1]));
 			System.out.println("red2");
 		}
-		
+		/*
 		System.out.println("Dette er rød1 farven = " + red);
 		System.out.println("Dette er rød2 farven = " + red2);
+		*/
 		
-		
-		float[] ballCoor = balls.findCircle(3, 6, 2); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(3, 6, 7); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
@@ -80,7 +80,7 @@ public class Main {
 		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
 
-
+/*
 		
 		CalcAngle Angle = new CalcAngle();
 		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
@@ -136,7 +136,7 @@ public class Main {
 			dos.flush();			
 
 		}
-		catch(Exception ex){System.out.println(ex);}
+		catch(Exception ex){System.out.println(ex);}*/
 	}
 }
 
