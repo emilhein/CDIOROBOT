@@ -14,7 +14,7 @@ public class RouteTest {
 	static List<Integer> yCoor = new ArrayList<Integer>();
 	static int total = 0;
 	static Punkt goal = new Punkt(0, 240);
-	static int ballNumber = 0;
+
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
 	static Punkt minPunkt;
@@ -48,6 +48,7 @@ public class RouteTest {
 		
 		//Dette for-loop finder det tætteste ppunkt på robotens front
 		for (int i = 0; i < xCoor.size()-1; i++) {
+			//System.out.println("ROBOFRONTPRUNKT = " + roboFrontPunkt.getX() + "," + roboFrontPunkt.getY());
 			int tempLength = 0;	
 		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
 			
@@ -55,7 +56,6 @@ public class RouteTest {
 			Punkt punkt2 = new Punkt(xCoor.get(i) + 5, yCoor.get(i) + 5);
 			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
 			total = total + tempLength;
-
 			if (tempLength < minLength) {
 				minLength = tempLength;
 				minPunkt = punkt2;
@@ -82,8 +82,8 @@ public class RouteTest {
 
 		
 		
-		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste rød
-		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste blå
+		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste bold rød
+		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste bold blå
 		
 		
 		

@@ -145,14 +145,11 @@ public class ballMethod {
 						Coordi[ballnr+2] = data2[2];
 						ballnr = ballnr+3; // radius
 						Point center= new Point(data2[0], data2[1]);  
-						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  
-						
+						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
 					}
 				
 			}  
 
-			
-			
 			Core.line(hsv_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10)*/, 3);  
 			Core.circle(hsv_image, new Point(210,210), 10, new Scalar(100,10,10),3);  
 			data=hsv_image.get(210, 210);  
@@ -171,8 +168,8 @@ public class ballMethod {
 					//distance.convertTo(distance, CvType.CV_8UC1);  
 					panel3.setimagewithMat(distance);  
 					panel4.setimagewithMat(thresholded); 
-			frame1.repaint();  
-			frame2.repaint();  
+					frame1.repaint();  
+					frame2.repaint();  
 					frame3.repaint();  
 					frame4.repaint();
 		}  
@@ -180,7 +177,7 @@ public class ballMethod {
 		{  
 			System.out.println(" --(!) No captured frame -- Break!"); 
 		}  
-
+		
 		return Coordi;  
 	}
 
@@ -203,18 +200,19 @@ public class ballMethod {
 					double blue = rgb[i];
 					double green = rgb[i+1];
 					double red = rgb[i+2];
-					
+				/*	
 					if (blue < 50 && green > 25  && red > 100 && red < 180) { // finder brune farver
 						m.put(j, b, 63, 133, 205); // brun
 						// m.put(j, b, 0,0,0);
 						break;
 					}
-					else if (blue > 12 && blue < 110 && green > 100 && red < 100) { // finder grønne farver															// farver
+					else*/ 
+					if (blue > 12 && blue < 110 && green > 100 && red < 110) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
 					
-					else if (red > 150 && green < 130 && blue < 120) { // finder røde farver																
+					else if (red > 165 && green < 130 && blue < 120) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
@@ -231,10 +229,6 @@ public class ballMethod {
 						m.put(j, b, 0,0,0); // resten bliver sort
 					}
 
-					
-					
-					
-					
 				}
 			}
 		}
@@ -242,7 +236,7 @@ public class ballMethod {
 		Mat frame = new Mat();
 		frame = m.clone();
 		Highgui.imwrite("AfterColorConvert.jpg", frame); // Gemmer billedet i roden
-
+		
 		return frame;
 		// System.out.println(image.dump());
 	}

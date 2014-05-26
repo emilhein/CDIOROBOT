@@ -27,18 +27,29 @@ public class Main {
 		/*
 		*Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		*/
-		float[] RoboCoor = balls.findCircle(17,22, 2);//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(9,13,2);//minradius, maxrdius, antalbolde
 
 		Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
-
-		double[] front = frame.get(Math.round(RoboCoor[0]), Math.round(RoboCoor[1]));
-		double red = front[2]; //henter en rød farver fra den ene cirkel
-
-
-		double[] back = frame.get(Math.round(RoboCoor[3]), Math.round(RoboCoor[4]));
-		double red2 = back[2]; // henter en rød farve fra den anden cirkel
-
-
+		for(int i = 0; i < RoboCoor.length;i=i+3){
+			System.out.println("Bold nr " + i +" ligger på "+Math.round(RoboCoor[i]) + ","+Math.round(RoboCoor[i+1]));
+			
+		}
+		
+		
+		double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
+		//double red = front[2]; //henter en rød farver fra den ene cirkel
+		double blue = front[0];
+		double green = front[1];
+		double red = front[2];
+		
+		
+		System.out.println("Har farverne = "+(int)blue + (int)red+(int)green);
+		
+		
+		double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
+		double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
+	
+		
 		Punkt roboFrontPunkt = new Punkt(0,0);
 		Punkt roboBagPunkt = new Punkt(0,0);
 		// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
@@ -56,9 +67,11 @@ public class Main {
 			System.out.println("red2");
 		}
 		
+		System.out.println("Dette er rød1 farven = " + red);
+		System.out.println("Dette er rød2 farven = " + red2);
 		
 		
-		float[] ballCoor = balls.findCircle(6, 10, 2); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(3, 6, 2); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
@@ -91,7 +104,7 @@ public class Main {
 			int Case;
 			int i;
 			int angle = TurnAngle/5;	//vinkel konvertering
-			System.out.println("angle" + angle);
+			System.out.println("angle " + angle);
 			if(angle < 0) 				//vælger retning der skal drejes
 				Case = 11;				
 			else Case = 22;
@@ -109,8 +122,8 @@ public class Main {
 
 			//kører robot frem
 			int distance = (minLength * 3) - 150;	//længde konvertering
-			System.out.println("dist" + distance);
-			dos.write(51);
+			System.out.println("dist = " + distance);
+			dos.write(61);
 			dos.flush();
 			i = distance;
 			dos.write(i);
