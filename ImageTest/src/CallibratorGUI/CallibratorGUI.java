@@ -10,13 +10,13 @@ import main.Main;
 
 public class CallibratorGUI  {
 
-	
+
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnRun;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6, lblimg;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6, lblimg, lblafterc, lblfindb, lblbh;
 	static JTextField txtDP, txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
-	static ImageIcon img;
+	static ImageIcon img, afterc, findb, bh;
 	static Insets insets;
 
 
@@ -37,8 +37,14 @@ public class CallibratorGUI  {
 		//tilføj layout for null
 		pane.setLayout (null);
 
+		ImageIcon bh = new ImageIcon("billed0.jpg");
+		lblbh = new JLabel (bh, JLabel.CENTER);
+		ImageIcon findb = new ImageIcon("billed0.jpg");
+		lblfindb = new JLabel (findb, JLabel.CENTER);
+		ImageIcon afterc = new ImageIcon("AfterColorConvert.jpg");
+		lblafterc = new JLabel (afterc, JLabel.CENTER);
 		ImageIcon img = new ImageIcon("billed0.jpg"); 
-		lblimg = new JLabel (img, JLabel.TOP);
+		lblimg = new JLabel (img, JLabel.CENTER);
 		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
@@ -83,12 +89,15 @@ public class CallibratorGUI  {
 		pane.add (btnApply);
 		pane.add (btnRun);
 		pane.add (lblimg);
+		pane.add (lblafterc);
+		pane.add (lblfindb);
+		pane.add (lblbh);
 
 
 		//		//Placerer alle kompoenter
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
 		txtDP.setBounds (txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
-		
+
 
 		txtDP.addActionListener(new ActionListener()
 		{
@@ -173,14 +182,13 @@ public class CallibratorGUI  {
 		frame1.add(jl6);
 
 		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 275, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
-		
+
 		btnApply.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 
 				pictureToMat.TakePicture.takePicture();
-
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
@@ -206,13 +214,17 @@ public class CallibratorGUI  {
 				jl6.setText(input6);
 				jl6.setBounds(150, insets.top + 240, jl6.getX(), jl6.getPreferredSize().height);	
 
-				lblimg.setBounds (500, insets.top + 3, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
-				
+				lblimg.setBounds (500, insets.top + 6, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
+				lblafterc.setBounds(1150, insets.top + 6, lblafterc.getPreferredSize().width, lblafterc.getPreferredSize().height);
+				lblfindb.setBounds(500, insets.top + 500, lblfindb.getPreferredSize().width, lblfindb.getPreferredSize().height);
+				lblbh.setBounds(1150, insets.top + 500, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);
+
+		
 			}
 
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);//;frame1.add(lblimg)
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(lblafterc);frame1.add(lblbh);
 
 		btnRun.setBounds (btnRun.getX() + btnRun.getWidth() + 75, insets.top + 275, btnRun.getPreferredSize().width, btnRun.getPreferredSize().height);
 
@@ -238,8 +250,6 @@ public class CallibratorGUI  {
 		catch (IllegalAccessException e) {}
 		catch (UnsupportedLookAndFeelException e) {}		
 
-
-		
 	}
 
 
