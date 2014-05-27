@@ -79,7 +79,7 @@ public class Main {
 
 		System.out.println("koordinaterne til frontpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til bagpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-
+ 
 /*
 		
 		CalcAngle Angle = new CalcAngle();
