@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import pictureToMat.*;
 import main.Main;
 
 public class CallibratorGUI  {
@@ -13,14 +12,14 @@ public class CallibratorGUI  {
 
 	static JFrame frame1;
 	static Container pane;
-	static JButton btnApply, btnRun;
+	static JButton btnApply;
 	static JLabel lblDP, lblCirkleDIst, lblParameter1, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6;
 	static JTextField txtDP, txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
 	static Insets insets;
 
 	
 	public static void main (String args[]){
-		
+
 		//Opretter rammen
 
 		frame1 = new JFrame ("CallibratorGUI");
@@ -37,7 +36,7 @@ public class CallibratorGUI  {
 		pane.setLayout (null);
 
 
-		btnRun = new JButton ("Run Program");
+
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
 		lblCirkleDIst = new JLabel ("Cirkle Dist:");
@@ -82,7 +81,6 @@ public class CallibratorGUI  {
 		pane.add (txtMinradius);
 		pane.add (txtMaxradius);
 		pane.add (btnApply);
-		pane.add (btnRun);
 	
 
 		//		//Placerer alle kompoenter
@@ -177,8 +175,6 @@ public class CallibratorGUI  {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
-				TakePicture.takePicture();
 				
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
