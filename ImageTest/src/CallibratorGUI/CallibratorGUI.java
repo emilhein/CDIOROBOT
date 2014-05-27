@@ -14,8 +14,9 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnRun;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6, lblimg;
 	static JTextField txtDP, txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
+	static ImageIcon img;
 	static Insets insets;
 
 
@@ -36,7 +37,8 @@ public class CallibratorGUI  {
 		//tilføj layout for null
 		pane.setLayout (null);
 
-
+		ImageIcon img = new ImageIcon("billed0.jpg"); 
+		lblimg = new JLabel ("", img, JLabel.CENTER);
 		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
@@ -83,6 +85,7 @@ public class CallibratorGUI  {
 		pane.add (txtMaxradius);
 		pane.add (btnApply);
 		pane.add (btnRun);
+		pane.add (lblimg);
 
 
 		//		//Placerer alle kompoenter
@@ -204,11 +207,14 @@ public class CallibratorGUI  {
 				String input6 = txtMaxradius.getText();
 				jl6.setText(input6);
 				jl6.setBounds(jl6.getX() + jl6.getWidth() + 120, insets.top + 240, jl6.getPreferredSize().width, jl6.getPreferredSize().height);	
+				
+				lblimg.setBounds (lblimg.getX() + lblimg.getWidth() + 200, insets.top + 150, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
+				
 			}
 
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl3);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl3);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(lblimg);
 
 		btnRun.setBounds (btnRun.getX() + btnRun.getWidth() + 75, insets.top + 275, btnRun.getPreferredSize().width, btnRun.getPreferredSize().height);
 
