@@ -163,6 +163,8 @@ public class ballMethod {
 					,1.0,new Scalar(100),3);   
 			//-- 5. Display the image  
 			panel1.setimagewithMat(webcam_image);  
+			Highgui.imwrite("Find things.jpg", webcam_image); // Gemmer billedet i roden
+
 			panel2.setimagewithMat(hsv_image);  
 			//panel2.setimagewithMat(S);  
 					//distance.convertTo(distance, CvType.CV_8UC1);  
