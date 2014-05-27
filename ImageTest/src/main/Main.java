@@ -68,7 +68,7 @@ public class Main {
 			roboBagPunkt.setY(Math.round(RoboCoor[1]));
 			System.out.println("red2");
 		}
-		/*
+		/* 
 		System.out.println("Dette er rød1 farven = " + red);
 		System.out.println("Dette er rød2 farven = " + red2);
 		*/
