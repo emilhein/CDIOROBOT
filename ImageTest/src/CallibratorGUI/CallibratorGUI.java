@@ -1,6 +1,9 @@
 package CallibratorGUI;
 
 import javax.swing.*;
+
+import pictureToMat.TakePicture;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,12 +15,12 @@ public class CallibratorGUI  {
 
 	static JFrame frame1;
 	static Container pane;
-	static JButton btnApply;
+	static JButton btnApply, btnRun;
 	static JLabel lblDP, lblCirkleDIst, lblParameter1, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6;
 	static JTextField txtDP, txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
 	static Insets insets;
 
-	
+
 	public static void main (String args[]){
 
 		//Opretter rammen
@@ -25,7 +28,7 @@ public class CallibratorGUI  {
 		frame1 = new JFrame ("CallibratorGUI");
 
 		//Sætter størrelsen af rammen i pixelx 
-		frame1.setSize (1200,500);
+		frame1.setSize (1000,500);
 
 		//Prepare panel
 		pane = frame1.getContentPane();
@@ -81,12 +84,15 @@ public class CallibratorGUI  {
 		pane.add (txtMinradius);
 		pane.add (txtMaxradius);
 		pane.add (btnApply);
-	
+
+		pane.add (btnRun);
+
+
 
 		//		//Placerer alle kompoenter
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
 		txtDP.setBounds (txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
-		
+
 		txtDP.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -97,8 +103,8 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl1);
-		
-		
+
+
 		lblCirkleDIst.setBounds (lblCirkleDIst.getX() + lblCirkleDIst.getWidth() + 5, insets.top + 50, lblCirkleDIst.getPreferredSize().width, lblCirkleDIst.getPreferredSize().height);
 		txtCirkleDIst.setBounds (txtCirkleDIst.getX() + txtCirkleDIst.getWidth() + 5, insets.top + 65, txtCirkleDIst.getPreferredSize().width, txtCirkleDIst.getPreferredSize().height);
 
@@ -112,7 +118,7 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl2);
-		
+
 		lblParameter1.setBounds (lblParameter1.getX() + lblParameter1.getWidth() + 5, insets.top + 95, lblParameter1.getPreferredSize().width, lblParameter1.getPreferredSize().height);
 		txtParameter1.setBounds (txtParameter1.getX() + txtParameter1.getWidth() + 5, insets.top + 110, txtParameter1.getPreferredSize().width, txtParameter1.getPreferredSize().height);
 
@@ -126,7 +132,7 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl3);
-		
+
 		lblParameter2.setBounds (lblParameter2.getX() + lblParameter2.getWidth() + 5, insets.top + 140, lblParameter2.getPreferredSize().width, lblParameter2.getPreferredSize().height);
 		txtParameter2.setBounds (txtParameter2.getX() + txtParameter2.getWidth() + 5, insets.top + 155, txtParameter2.getPreferredSize().width, txtParameter2.getPreferredSize().height);
 
@@ -140,7 +146,7 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl4);
-		
+
 		lblMinradius.setBounds (lblMinradius.getX() + lblMinradius.getWidth() + 5, insets.top + 185, lblMinradius.getPreferredSize().width, lblMinradius.getPreferredSize().height);
 		txtMinradius.setBounds (txtMinradius.getX() + txtMinradius.getWidth() + 5, insets.top + 200, txtMinradius.getPreferredSize().width, txtMinradius.getPreferredSize().height);
 
@@ -154,7 +160,7 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl5);
-		
+
 		lblMaxradius.setBounds (lblMaxradius.getX() + lblMaxradius.getWidth() + 5, insets.top + 230, lblMaxradius.getPreferredSize().width, lblMaxradius.getPreferredSize().height);
 		txtMaxradius.setBounds (txtMaxradius.getX() + txtMaxradius.getWidth() + 5, insets.top + 245, txtMaxradius.getPreferredSize().width, txtMaxradius.getPreferredSize().height);
 
@@ -175,39 +181,57 @@ public class CallibratorGUI  {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
+
+
+				TakePicture.takePicture();
+
+
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
 				jl1.setBounds(jl1.getX() + jl1.getWidth() + 120, insets.top + 20, jl1.getPreferredSize().width, jl1.getPreferredSize().height);
-				
+
 				String input2 = txtCirkleDIst.getText();
 				jl2.setText(input2);
 				jl2.setBounds(jl2.getX() + jl2.getWidth() + 120, insets.top + 65, jl2.getPreferredSize().width, jl2.getPreferredSize().height);	
-				
+
 				String input3 = txtParameter1.getText();
 				jl3.setText(input3);
 				jl3.setBounds(jl3.getX() + jl3.getWidth() + 120, insets.top + 110, jl3.getPreferredSize().width, jl3.getPreferredSize().height);	
-				
+
 				String input4 = txtParameter2.getText();
 				jl4.setText(input4);
 				jl4.setBounds(jl4.getX() + jl4.getWidth() + 120, insets.top + 155, jl4.getPreferredSize().width, jl4.getPreferredSize().height);	
-				
+
 				String input5 = txtMinradius.getText();
 				jl5.setText(input5);
 				jl5.setBounds(jl5.getX() + jl5.getWidth() + 120, insets.top + 200, jl5.getPreferredSize().width, jl5.getPreferredSize().height);	
-				
+
 				String input6 = txtMaxradius.getText();
 				jl6.setText(input6);
 				jl6.setBounds(jl6.getX() + jl6.getWidth() + 120, insets.top + 240, jl6.getPreferredSize().width, jl6.getPreferredSize().height);	
 			}
-		
+
 		});
-		
-frame1.add(jl1);frame1.add(jl2);frame1.add(jl3);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);
-	
-//Gør rammen synlig
+
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl3);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);
+
+		btnRun.setBounds (btnRun.getX() + btnRun.getWidth() + 75, insets.top + 275, btnRun.getPreferredSize().width, btnRun.getPreferredSize().height);
+
+		btnRun.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+
+
+				//Indsæt her noget, der kalder main kladsen.
+
+			}
+		});
+
+
+		//Gør rammen synlig
 		frame1.setVisible (true);
-		
+
 
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}	
 		catch (ClassNotFoundException e) {}
