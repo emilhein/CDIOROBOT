@@ -1,13 +1,11 @@
 package CallibratorGUI;
 
 import javax.swing.*;
-
-import pictureToMat.TakePicture;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import pictureToMat.*;
 import main.Main;
 
 public class CallibratorGUI  {
@@ -39,7 +37,7 @@ public class CallibratorGUI  {
 		pane.setLayout (null);
 
 
-
+		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
 		lblCirkleDIst = new JLabel ("Cirkle Dist:");
@@ -84,9 +82,7 @@ public class CallibratorGUI  {
 		pane.add (txtMinradius);
 		pane.add (txtMaxradius);
 		pane.add (btnApply);
-
 		pane.add (btnRun);
-
 
 
 		//		//Placerer alle kompoenter
@@ -182,9 +178,7 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
-
 				TakePicture.takePicture();
-
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
