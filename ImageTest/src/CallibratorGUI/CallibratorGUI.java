@@ -178,7 +178,8 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
-				TakePicture.takePicture();
+//				TakePicture.takePicture();
+
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);

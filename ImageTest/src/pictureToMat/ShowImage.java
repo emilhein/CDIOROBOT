@@ -9,7 +9,7 @@ public class ShowImage extends Panel {
   BufferedImage  image;
   public ShowImage() {
   try {
-  System.out.println("Enter image name\n"); //"test.jpg" if in directory. otherwise full location
+  System.out.println("Enter image name\n"); //"test.jpg" if in diractory. otherwise full location
   BufferedReader bf=new BufferedReader(new 
 InputStreamReader(System.in));
  String imageName=bf.readLine();
