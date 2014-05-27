@@ -123,7 +123,15 @@ public class ballMethod {
 			
 			
 			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
-
+			
+		/*	
+			 4. Add some info to the image  
+			Core.line(webcam_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10), 3);  
+			Core.circle(webcam_image, new Point(210,210), 10, new Scalar(100,10,10),3);  
+			data=webcam_image.get(210, 210);  
+			Core.putText(webcam_image,String.format("("+String.valueOf(data[0])+","+String.valueOf(data[1])+","+String.valueOf(data[2])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
+					,1.0,new Scalar(100,10,10,255),3);  
+*/
 			int rows = circles.rows();
 						
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
