@@ -27,7 +27,7 @@ public class Main {
 		/*
 		*Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		*/
-		float[] RoboCoor = balls.findCircle(9,13,2);//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(6,12,2);//minradius, maxrdius, antalbolde
 
 		Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
 		for(int i = 0; i < RoboCoor.length;i=i+3){
@@ -71,7 +71,7 @@ public class Main {
 		System.out.println("Dette er rød2 farven = " + red2);
 		*/
 		
-		float[] ballCoor = balls.findCircle(3, 6, 7); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(4, 8, 5); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
