@@ -7,9 +7,9 @@ public class TakePicture {
     public static void main (String args[]){
     	takePicture();
     }
-
+//XXX
 	public static void takePicture() {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); 
     	VideoCapture camera = new VideoCapture(0);
     	for (int i = 0; i<1;i++){//flere billeder
     	if(!camera.isOpened()){
