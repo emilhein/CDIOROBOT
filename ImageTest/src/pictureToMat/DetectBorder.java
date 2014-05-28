@@ -39,7 +39,7 @@ public class DetectBorder {
 		{		
 			//CanvasFrame cnvs=new CanvasFrame("Polygon");
 	        //cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-	        
+	         
 	        IplImage img = IplImage.createFrom(src);
 	        
 		    CvSize cvSize = cvSize(img.width(), img.height());
