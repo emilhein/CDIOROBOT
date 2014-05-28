@@ -67,7 +67,7 @@ public class Main {
 		System.out.println("Dette er rød2 farven = " + red2);
 		 */
 
-		float[] ballCoor = balls.findCircle(4, 8, 5); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(2, 6, 13); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 

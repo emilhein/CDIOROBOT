@@ -43,7 +43,7 @@ public class CallibratorGUI  {
 		lblfindb = new JLabel (findb, JLabel.CENTER);
 		ImageIcon afterc = new ImageIcon("AfterColorConvert.jpg");
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
-		ImageIcon img = new ImageIcon("billed0.jpg"); 
+		ImageIcon img = new ImageIcon("billed0.jpg");
 		lblimg = new JLabel (img, JLabel.CENTER);
 		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
@@ -213,8 +213,10 @@ public class CallibratorGUI  {
 				String input6 = txtMaxradius.getText();
 				jl6.setText(input6);
 				jl6.setBounds(150, insets.top + 240, jl6.getX(), jl6.getPreferredSize().height);	
-
-				lblimg.setBounds (500, insets.top + 6, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
+				
+				lblimg.setAutoscrolls(true);
+				//lblimg.set
+				//lblimg.setBounds (500, insets.top + 6, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
 				lblafterc.setBounds(1150, insets.top + 6, lblafterc.getPreferredSize().width, lblafterc.getPreferredSize().height);
 				lblfindb.setBounds(500, insets.top + 500, lblfindb.getPreferredSize().width, lblfindb.getPreferredSize().height);
 				lblbh.setBounds(1150, insets.top + 500, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);

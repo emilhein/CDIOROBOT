@@ -209,16 +209,16 @@ public class ballMethod {
 						break;
 					}
 					else*/ 
-					if (blue > 12 && blue < 110 && green > 100 && red < 110) { // finder grønne farver															// farver
+					if (blue > 12 && blue < 110 && green > 150 && red < 180) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
 					
-					else if (red > 165 && green < 130 && blue < 120) { // finder røde farver																
+					else if (red > 195 && green < 130 && blue < 120) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
-					else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid 
+					else if (blue + red + green > 600 && blue > 120 && green > 120 && red > 120) { // finder hvid 
 						// drawrect(j,b,m);
 						
 						m.put(j, b, 255, 255, 255);// / hvid
