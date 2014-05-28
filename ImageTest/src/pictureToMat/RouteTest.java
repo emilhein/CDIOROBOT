@@ -23,7 +23,7 @@ public class RouteTest {
 	
 	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat frame = Highgui.imread("Billed0.jpg"); /// SKal bruges til at lave et blank lærred..
+		Mat frame = Highgui.imread("Billed0.png"); /// SKal bruges til at lave et blank lærred..
 
 		// farver hele matricen hvid
 		for (int j = 0; j < frame.rows(); j++) {
@@ -88,7 +88,7 @@ public class RouteTest {
 		
 		
 		
-		Highgui.imwrite("RouteTest3.jpg", frame); // Gemmer billedet i roden
+		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 		
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
 		System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
