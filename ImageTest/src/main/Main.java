@@ -27,7 +27,7 @@ public class Main {
 
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
-		
+
 		/*
 		try {
 			BufferedImage src = ImageIO.read(new File("Billed0.jpg"));
@@ -36,8 +36,8 @@ public class Main {
 		} catch (IOException e) {
 			System.out.println("WIHIIHIHHIIH");
 		}
-		*/
-		
+		 */
+
 		ballMethod balls = new ballMethod();
 
 		/*
@@ -91,7 +91,7 @@ public class Main {
 		int tempy=minPunkt.getX();
 		minPunkt.setX(tempx);
 		minPunkt.setY(tempy);
-		
+
 		System.out.println("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 		System.out.println("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
 		System.out.println("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
@@ -133,50 +133,60 @@ public class Main {
 				System.out.println("TurnAngle = " + TurnAngle);
 				int angle = TurnAngle*2;	//vinkel konvertering
 				System.out.println("angle " + angle);
-				if(angle > 0) 				//vælger retning der skal drejes
-					Case = 11;				
-				else Case = 22;
+				if(Math.abs(angle) < 250){
+					if(angle > 0) 				//vælger retning der skal drejes
+						Case = 11;				
+					else Case = 22;
 
-				dos.write(Case);			//sender case
-				dos.flush();
-				dos.write(angle);			//sender vinkel
-				dos.flush();
+					dos.write(Case);			//sender case
+					dos.flush();
+					dos.write(angle);			//sender vinkel
+					dos.flush();
+				}
+				else{
+					if(angle > 0) 				//vælger retning der skal drejes
+						Case = 31;				
+					else Case = 42;
 
-				//				//venter på at motorerne ikke kører længere
-				//				int u = dis.read();			
-				//				while(u==1){
-				//					u = dis.read();
-				//				}
+					dos.write(Case);			//sender case
+					dos.flush();
+					dos.write(angle);			//sender vinkel
+					dos.flush();
+				}
 
-				Thread.sleep(2000);
-				//kører robot frem
-				int distance = (minLength * 2) - 250;	//længde konvertering
-				System.out.println("dist = " + distance);
-				dos.write(81);
-				dos.flush();
-				i = distance;
-				dos.write(i);
-				dos.flush();
+			//				//venter på at motorerne ikke kører længere
+			//				int u = dis.read();			
+			//				while(u==1){
+			//					u = dis.read();
+			//				}
 
-				//				//venter på at motorerne ikke kører længere
-				//				int j = dis.read();			
-				//				while(j==1){
-				//					j = dis.read();
-				//				}
+			Thread.sleep(2000);
+			//kører robot frem
+			int distance = (minLength * 2) - 250;	//længde konvertering
+			System.out.println("dist = " + distance);
+			dos.write(81);
+			dos.flush();
+			i = distance;
+			dos.write(i);
+			dos.flush();
 
-				Thread.sleep(2000);
+			//				//venter på at motorerne ikke kører længere
+			//				int j = dis.read();			
+			//				while(j==1){
+			//					j = dis.read();
+			//				}
 
-				//samler bold op
-				dos.write(51);				
-				dos.flush();
-				dos.write(51);
-				dos.flush();	
-				Thread.sleep(2000);
-			}
-		}
-		catch(Exception ex){System.out.println(ex);}
+			Thread.sleep(2000);
+
+			//samler bold op
+			dos.write(51);				
+			dos.flush();
+			dos.write(51);
+			dos.flush();	
+			Thread.sleep(2000);
+			}}
+	catch(Exception ex){System.out.println(ex);}
 	}
-
 }
 
 
