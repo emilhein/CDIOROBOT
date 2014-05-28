@@ -1,6 +1,7 @@
 package CallibratorGUI;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,7 @@ public class CallibratorGUI  {
 		frame1 = new JFrame ("CallibratorGUI");
 
 		//Sætter størrelsen af rammen i pixelx 
-		frame1.setSize (2000,1000);
+		frame1.setSize (976,718);
 
 		//Prepare panel
 		pane = frame1.getContentPane();
@@ -37,14 +38,33 @@ public class CallibratorGUI  {
 		//tilføj layout for null
 		pane.setLayout (null);
 
-		ImageIcon bh = new ImageIcon("billed0.jpg");
-		lblbh = new JLabel (bh, JLabel.CENTER);
-		ImageIcon findb = new ImageIcon("billed0.jpg");
-		lblfindb = new JLabel (findb, JLabel.CENTER);
-		ImageIcon afterc = new ImageIcon("AfterColorConvert.jpg");
+
+		ImageIcon afterc = new ImageIcon("Billed0t.jpg");
+		Image image1 = afterc.getImage(); // transform it
+		Image afimage = image1.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+		afterc = new ImageIcon(afimage);  // transform it back
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
-		ImageIcon img = new ImageIcon("billed0.jpg");
+		
+		ImageIcon img = new ImageIcon("RouteTest3.jpg");
+		Image image2 = img.getImage(); // transform it
+		Image dimage = image2.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+		img = new ImageIcon(dimage);  // transform it back
 		lblimg = new JLabel (img, JLabel.CENTER);
+		
+		
+		ImageIcon findb = new ImageIcon("Robo.jpg");
+		Image image3 = findb.getImage(); // transform it
+		Image abimage = image3.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+		findb = new ImageIcon(abimage);  // transform it back
+		lblfindb = new JLabel (findb, JLabel.CENTER);
+		
+		ImageIcon bh = new ImageIcon("balls.jpg");
+		Image image4 = bh.getImage(); // transform it
+		Image acimage = image4.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+		bh = new ImageIcon(acimage);  // transform it back
+		lblbh = new JLabel (bh, JLabel.CENTER);
+		
+		
 		
 		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
@@ -189,9 +209,8 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
-				TakePicture takepic = new TakePicture();
-				takepic.takePicture();
 				
+
 				
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
@@ -218,12 +237,43 @@ public class CallibratorGUI  {
 				jl6.setBounds(150, insets.top + 240, jl6.getX(), jl6.getPreferredSize().height);	
 				
 				
-				lblimg.setBounds (500, insets.top + 6, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
-				lblafterc.setBounds(1150, insets.top + 6, lblafterc.getPreferredSize().width, lblafterc.getPreferredSize().height);
-				lblfindb.setBounds(500, insets.top + 500, lblfindb.getPreferredSize().width, lblfindb.getPreferredSize().height);
-				lblbh.setBounds(1150, insets.top + 500, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);
+				ImageIcon afterc = new ImageIcon("Billed0.jpg");
+				Image image1 = afterc.getImage(); // transform it
+				Image afimage = image1.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				afterc = new ImageIcon(afimage);  // transform it back
 
-		
+				ImageIcon img = new ImageIcon("RouteTest3.jpg");
+				Image image2 = img.getImage(); // transform it
+				Image dimage = image2.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				img = new ImageIcon(dimage);  // transform it back
+				
+				ImageIcon findb = new ImageIcon("Robo.jpg");
+				Image image3 = findb.getImage(); // transform it
+				Image abimage = image3.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				findb = new ImageIcon(abimage);  // transform it back
+
+				ImageIcon bh = new ImageIcon("balls.jpg");
+				Image image4 = bh.getImage(); // transform it
+				Image acimage = image4.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				bh = new ImageIcon(acimage);  // transform it back
+				
+				lblimg.setIcon(img);
+				lblafterc.setIcon(afterc);
+				lblfindb.setIcon(findb);
+				lblbh.setIcon(bh);
+				
+				lblimg.setBounds (200, insets.top + 6, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
+				lblafterc.setBounds(525, insets.top + 6, lblafterc.getPreferredSize().width, lblafterc.getPreferredSize().height);
+				lblfindb.setBounds(200, insets.top + 250, lblfindb.getPreferredSize().width, lblfindb.getPreferredSize().height);
+				lblbh.setBounds(525, insets.top + 250, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);
+
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
+				
+				ballMethod balls = new ballMethod();
+				
+				float[] RoboCoor = balls.findCircle(Integer.parseInt(jl1.getText()),12,2,"Robo");//minradius, maxrdius, antalbolde
+				float[] ballCoor = balls.findCircle(2, 8, 13,"balls"); // finder bolde 6,12,6
 			}
 
 		});

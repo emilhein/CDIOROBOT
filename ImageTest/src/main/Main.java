@@ -27,6 +27,7 @@ public class Main {
 
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
+		
 		/*
 		try {
 			BufferedImage src = ImageIO.read(new File("Billed0.jpg"));
@@ -34,13 +35,15 @@ public class Main {
 			findEdge.getRectCoordis(src);
 		} catch (IOException e) {
 			System.out.println("WIHIIHIHHIIH");
-		}*/
+		}
+		*/
+		
 		ballMethod balls = new ballMethod();
 
 		/*
 		 *Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		 */
-		float[] RoboCoor = balls.findCircle(6,12,2);//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(8,12,2,"Robo");//minradius, maxrdius, antalbolde
 
 		Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
 		for(int i = 0; i < RoboCoor.length;i=i+3){
@@ -79,7 +82,7 @@ public class Main {
 		System.out.println("Dette er rød2 farven = " + red2);
 		 */
 
-		float[] ballCoor = balls.findCircle(2, 6, 13); // finder bolde 6,12,6
+		float[] ballCoor = balls.findCircle(2, 8, 13,"balls"); // finder bolde 6,12,6
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 

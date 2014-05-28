@@ -21,7 +21,7 @@ import org.opencv.core.CvType;
 public class ballMethod {  
 
 
-	public float[] findCircle(int minRadius, int maxRadius, int numberOfCircles){ 
+	public float[] findCircle(int minRadius, int maxRadius, int numberOfCircles, String picturename){ 
 		
 		float[] Coordi;
 		Coordi = new float[numberOfCircles*3];
@@ -37,7 +37,7 @@ public class ballMethod {
 		frame1.setBounds(0, 0, frame1.getWidth(), frame1.getHeight());  
 		Panel panel1 = new Panel();  
 		frame1.setContentPane(panel1);  
-		frame1.setVisible(true);  
+		frame1.setVisible(false);  
 		
 		JFrame frame2 = new JFrame("HSV");  
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
@@ -163,7 +163,7 @@ public class ballMethod {
 					,1.0,new Scalar(100),3);   
 			//-- 5. Display the image  
 			panel1.setimagewithMat(webcam_image);  
-			Highgui.imwrite("Find things.jpg", webcam_image); // Gemmer billedet i roden
+			Highgui.imwrite(picturename+".jpg", webcam_image); // Gemmer billedet i roden
 
 			panel2.setimagewithMat(hsv_image);  
 			//panel2.setimagewithMat(S);  
@@ -209,7 +209,7 @@ public class ballMethod {
 						break;
 					}
 					else*/ 
-					if (blue > 12 && blue < 110 && green > 150 && red < 180) { // finder grønne farver															// farver
+					if (blue > 12 && blue < 110 && green > 140 && red < 180) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
@@ -218,7 +218,7 @@ public class ballMethod {
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
-					else if (blue + red + green > 600 && blue > 120 && green > 120 && red > 120) { // finder hvid 
+					else if (blue + red + green > 550 && blue > 120 && green > 120 && red > 120) { // finder hvid 
 						// drawrect(j,b,m);
 						
 						m.put(j, b, 255, 255, 255);// / hvid
