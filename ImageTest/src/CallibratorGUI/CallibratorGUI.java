@@ -2,6 +2,11 @@ package CallibratorGUI;
 
 import javax.swing.*;
 
+import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
+
+import dist.Punkt;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +46,7 @@ public class CallibratorGUI  {
 		pane.setLayout (null);
 
 
-		ImageIcon afterc = new ImageIcon("Billed0t.jpg");
+		ImageIcon afterc = new ImageIcon("Billed0.jpg");
 		Image image1 = afterc.getImage(); // transform it
 		Image afimage = image1.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 		afterc = new ImageIcon(afimage);  // transform it back
@@ -70,12 +75,13 @@ public class CallibratorGUI  {
 		
 		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
-		lblDP = new JLabel ("DP:");
-		lblCirkleDIst = new JLabel ("Cirkle Dist:");
-		lblParameter1 = new JLabel ("Parameter 1:");
-		lblParameter2 = new JLabel ("Parameter 2:");
-		lblMinradius = new JLabel ("Min radius:");
-		lblMaxradius = new JLabel ("Max radius:");
+		lblDP = new JLabel ("Minimum radius til bolde:");
+		lblCirkleDIst = new JLabel ("max radius til bolde:");
+		lblParameter1 = new JLabel ("antal bolde:");
+		lblParameter2 = new JLabel ("Robo min radius:");
+		lblMinradius = new JLabel ("Robo min radius:");
+		lblMaxradius = new JLabel ("Robo Max radius:");
+		
 		jl1 = new JLabel ();
 		jl2 = new JLabel ();
 		jl3 = new JLabel ();
@@ -89,7 +95,9 @@ public class CallibratorGUI  {
 		txtMinradius = new JTextField  (10);
 		txtMaxradius = new JTextField  (10);
 		lblimg.setIcon(img);
-
+		txtDP.setText("2");
+		txtCirkleDIst.setText("8");	
+		txtParameter1.setText("13");
 		//Tilføjer alle komponenter
 		pane.add (jl1);
 		pane.add (jl2);
@@ -274,8 +282,47 @@ public class CallibratorGUI  {
 				
 				ballMethod balls = new ballMethod();
 				
-				float[] RoboCoor = balls.findCircle(Integer.parseInt(jl1.getText()),12,2,"Robo");//minradius, maxrdius, antalbolde
-				float[] ballCoor = balls.findCircle(2, 8, 13,"balls"); // finder bolde 6,12,6
+				float[] RoboCoor = balls.findCircle(8,12,2,"Robo");//minradius, maxrdius, antalbolde
+				float[] ballCoor = balls.findCircle(Integer.parseInt(jl1.getText()), Integer.parseInt(jl2.getText()), Integer.parseInt(jl3.getText()),"balls"); // finder bolde 6,12,6
+			
+				
+				
+				Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
+				for(int i = 0; i < RoboCoor.length;i=i+3){
+					System.out.println("Bold nr " + i +" ligger på "+Math.round(RoboCoor[i]) + ","+Math.round(RoboCoor[i+1]));
+				}
+
+				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
+				//double red = front[2]; //henter en rød farver fra den ene cirkel
+				
+				double red = front[2];
+
+				
+
+				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
+				double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
+
+				Punkt roboFrontPunkt = new Punkt(0,0);
+				Punkt roboBagPunkt = new Punkt(0,0);
+				// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
+				if(red > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
+					roboBagPunkt.setX(Math.round(RoboCoor[3]));
+					roboBagPunkt.setY(Math.round(RoboCoor[4]));
+					System.out.println("red");
+				} else if (red2 > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
+					roboBagPunkt.setX(Math.round(RoboCoor[0]));
+					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+					System.out.println("red2");
+				}
+				
+				
+				RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+
+			
 			}
 
 		});
