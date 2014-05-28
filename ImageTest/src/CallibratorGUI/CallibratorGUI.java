@@ -28,7 +28,9 @@ public class CallibratorGUI  {
 		frame1 = new JFrame ("CallibratorGUI");
 
 		//Sætter størrelsen af rammen i pixelx 
-		frame1.setSize (976,718);
+
+		frame1.setSize (975,718);
+
 
 		//Prepare panel
 		pane = frame1.getContentPane();
