@@ -4,11 +4,11 @@ import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;        
         
 public class TakePicture {
-    public static void main (String args[]){
-    	takePicture();
+    public void main (String args[]){
+    	
     }
 //XXX
-	public static void takePicture() {
+	public void takePicture() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); 
     	VideoCapture camera = new VideoCapture(0);
     	for (int i = 0; i<1;i++){//flere billeder

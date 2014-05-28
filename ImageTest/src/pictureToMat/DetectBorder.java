@@ -1,7 +1,6 @@
 package pictureToMat;
 
-import static com.googlecode.javacv.cpp.opencv_core.cvCreateImage;
-import static com.googlecode.javacv.cpp.opencv_core.cvSize;
+import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_ADAPTIVE_THRESH_MEAN_C;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_CHAIN_APPROX_NONE;
@@ -18,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import com.googlecode.javacpp.Loader;
+import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.CvContour;
 import com.googlecode.javacv.cpp.opencv_core.CvMemStorage;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
@@ -37,8 +37,8 @@ public class DetectBorder {
 		
 		public CvRect getRectCoordis(BufferedImage src) throws IOException
 		{		
-			//CanvasFrame cnvs=new CanvasFrame("Polygon");
-	        //cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+			CanvasFrame cnvs=new CanvasFrame("Polygon");
+	        cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	         
 	        IplImage img = IplImage.createFrom(src);
 	        
@@ -84,17 +84,21 @@ public class DetectBorder {
 		    innerRect.height(greatest.height() - heightDifference);
 		    innerRect.x(greatest.x() + widthDifference/2);
 		    innerRect.y(greatest.y() + heightDifference/2);
-		    
-		    return innerRect;
-
-	        /*p1.x(innerRect.x());
+		   
+		    p1.x(innerRect.x());
 	        p2.x(innerRect.x()+innerRect.width());
 	        p1.y(innerRect.y());
 	        p2.y(innerRect.y()+innerRect.height());
 		    
 		    cvRectangle(img, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
 		    
-	        cnvs.showImage(img);*/
+	        cnvs.showImage(img);
+		    
+	
+		    
+		    return innerRect;
+
+	        
 		}
 		
 		public float pixPerCm(int pixBorderWidth, int pixBorderHeight)

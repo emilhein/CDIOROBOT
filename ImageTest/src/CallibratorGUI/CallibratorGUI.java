@@ -189,8 +189,10 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
-				pictureToMat.TakePicture.takePicture();
-
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
+				
+				
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
 				jl1.setBounds(150, insets.top + 20, jl1.getPreferredSize().width, jl1.getPreferredSize().height);

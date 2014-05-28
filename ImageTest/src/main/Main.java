@@ -9,20 +9,32 @@ import dist.Punkt;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
+import pictureToMat.DetectBorder;
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Punkt minPunkt;
 
-		TakePicture.main(args); //tager et billed og gemmer i roden af projektet.
-
+		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
+		takepic.takePicture();
+		/*
+		try {
+			BufferedImage src = ImageIO.read(new File("Billed0.jpg"));
+			DetectBorder findEdge = new DetectBorder();
+			findEdge.getRectCoordis(src);
+		} catch (IOException e) {
+			System.out.println("WIHIIHIHHIIH");
+		}*/
 		ballMethod balls = new ballMethod();
 
 		/*
