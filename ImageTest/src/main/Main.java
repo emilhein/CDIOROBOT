@@ -92,10 +92,6 @@ public class Main {
 		minPunkt.setX(tempx);
 		minPunkt.setY(tempy);
 
-		System.out.println("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
-		System.out.println("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-		System.out.println("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
-
 		Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
 		Punkt nyRoboBag = new Punkt(0,0);
 		Punkt nyMinPunkt = new Punkt(minPunkt.getX()-roboBagPunkt.getX(),minPunkt.getY()-roboBagPunkt.getY());
@@ -154,38 +150,39 @@ public class Main {
 					dos.flush();
 				}
 
-			//				//venter på at motorerne ikke kører længere
-			//				int u = dis.read();			
-			//				while(u==1){
-			//					u = dis.read();
-			//				}
+				//				//venter på at motorerne ikke kører længere
+				//				int u = dis.read();			
+				//				while(u==1){
+				//					u = dis.read();
+				//				}
 
-			Thread.sleep(2000);
-			//kører robot frem
-			int distance = (minLength * 2) - 250;	//længde konvertering
-			System.out.println("dist = " + distance);
-			dos.write(81);
-			dos.flush();
-			i = distance;
-			dos.write(i);
-			dos.flush();
+				Thread.sleep(2000);
+				//kører robot frem
+				int distance = (minLength * 2) - 250;	//længde konvertering
+				System.out.println("dist = " + distance);
+				dos.write(81);
+				dos.flush();
+				i = distance;
+				dos.write(i);
+				dos.flush();
 
-			//				//venter på at motorerne ikke kører længere
-			//				int j = dis.read();			
-			//				while(j==1){
-			//					j = dis.read();
-			//				}
+				//				//venter på at motorerne ikke kører længere
+				//				int j = dis.read();			
+				//				while(j==1){
+				//					j = dis.read();
+				//				}
 
-			Thread.sleep(2000);
+				Thread.sleep(2000);
 
-			//samler bold op
-			dos.write(51);				
-			dos.flush();
-			dos.write(51);
-			dos.flush();	
-			Thread.sleep(2000);
-			}}
-	catch(Exception ex){System.out.println(ex);}
+				//samler bold op
+				dos.write(51);				
+				dos.flush();
+				dos.write(51);
+				dos.flush();	
+				Thread.sleep(2000);
+			}
+		}
+		catch(Exception ex){System.out.println(ex);}
 	}
 }
 
