@@ -136,7 +136,7 @@ public class Main {
 
 				Thread.sleep(2000);
 				//kører robot frem
-				int distance = (minLength );	//længde konvertering
+				int distance = (minLength/2);	//længde konvertering
 				System.out.println("dist = " + distance);
 				dos.write(81);
 				dos.flush();
