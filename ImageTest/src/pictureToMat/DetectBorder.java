@@ -95,7 +95,7 @@ public class DetectBorder {
 		    
 	        cnvs.showImage(img);
 		    
-		    cvSaveImage("border.jpg", img);
+		    cvSaveImage("edge.png", img);
 		    
 		    return innerRect;
 
