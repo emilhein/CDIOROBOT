@@ -31,7 +31,7 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 public class ballMethod {  
 
 
-	public float[] findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, int numberOfCircles, String name){ 
+	public float[] findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, int numberOfCircles, String name, Boolean findRobot){ 
 		
 		float[] Coordi;
 		Coordi = new float[numberOfCircles*3];
@@ -74,25 +74,14 @@ public class ballMethod {
 		//-- 2. Read the video stream
 		
 		/**********************TESTKODE********************/
-		Mat webcam_img = pictureToMat2("Billed0.png");
-		Highgui.imwrite("brownThreshold.jpg", webcam_img);
-		
-		//load image
-		IplImage image = cvLoadImage("brownThreshold.jpg");
-
-		//create grayscale IplImage of the same dimensions, 8-bit and 1 channel
-		IplImage imageGray = cvCreateImage(cvSize(image.width(), image.height()), IPL_DEPTH_8U, 1);
-		
-		//convert image to grayscale
-		cvCvtColor(image, imageGray, CV_BGR2GRAY );
-		//cvAdaptiveThreshold(imageGray, imageGray, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 4);
-		
-		// Save
-		cvSaveImage("grayThreshold.jpg", imageGray);
+		if(findRobot == true)
+			pictureToMat("Billed0.png");
+		else
+			pictureToMat("Billed0.png");
 		/************************SLUT**********************/
 		
 //		VideoCapture capture =new VideoCapture(0);  
-		Mat webcam_image = pictureToMat("grayThreshold.jpg");  //billede der skal findes bolde på.
+		Mat webcam_image = Highgui.imread("readyForBallMethod.jpg");  //billede der skal findes bolde på.
 		Mat hsv_image=new Mat();  
 		Mat thresholded=new Mat();  
 		Mat thresholded2=new Mat();  
@@ -215,7 +204,7 @@ public class ballMethod {
 		return Coordi;  
 	}
 	
-	public static Mat pictureToMat2(String image)
+	public static void pictureToMat2(String image)
 	{
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -246,13 +235,23 @@ public class ballMethod {
 
 		Mat frame = new Mat();
 		frame = m.clone();
-		Highgui.imwrite("AfterColorConvert.jpg", frame); // Gemmer billedet i roden
+		Highgui.imwrite("AfterColorConvert.png", frame); // Gemmer billedet i roden
+		
+		//load image
+		IplImage img = cvLoadImage("AfterColorConvert.png");
 
-		return frame;
-		// System.out.println(image.dump());
+		//create grayscale IplImage of the same dimensions, 8-bit and 1 channel
+		IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
+		
+		//convert image to grayscale
+		cvCvtColor(img, imageGray, CV_BGR2GRAY );
+		//cvAdaptiveThreshold(imageGray, imageGray, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 4);
+		
+		// Save
+		cvSaveImage("readyForBallMethod.jpg", imageGray);
 	}
 
-	public static Mat pictureToMat(String image)
+	public static void pictureToMat(String image)
 	{
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -306,10 +305,7 @@ public class ballMethod {
 
 		Mat frame = new Mat();
 		frame = m.clone();
-		Highgui.imwrite("AfterColorConvert.png", frame); // Gemmer billedet i roden
-		
-		return frame;
-		// System.out.println(image.dump());
+		Highgui.imwrite("readyForBallMethod.jpg", frame); // Gemmer billedet i roden
 	}
 	
 
