@@ -13,6 +13,7 @@ import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Scanner;
 
@@ -25,6 +26,9 @@ public class Main {
 		takepic.takePicture();
 		ballMethod balls = new ballMethod();
 
+		
+	
+		
 		/*
 		 *Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		 */

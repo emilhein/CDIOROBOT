@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import pictureToMat.*;
-import main.Main;
 
 public class CallibratorGUI  {
 
@@ -24,12 +23,13 @@ public class CallibratorGUI  {
 	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
 	static ImageIcon img, afterc, findb, bh;
 	static Insets insets;
-
+	static JTextArea txtArea;
 
 	public static void main (String args[]){
 
 		//Opretter rammen
 
+			
 		frame1 = new JFrame ("CallibratorGUI");
 
 		//Sætter størrelsen af rammen i pixelx 
@@ -42,8 +42,9 @@ public class CallibratorGUI  {
 
 		//tilføj layout for null
 		pane.setLayout (null);
+	    frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		ImageIcon afterc = new ImageIcon("Billed0t.png");
+		ImageIcon afterc = new ImageIcon("Billed0.png");
 		Image image1 = afterc.getImage(); // transform it
 		Image afimage = image1.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 		afterc = new ImageIcon(afimage);  // transform it back
@@ -94,6 +95,8 @@ public class CallibratorGUI  {
 		txtMinradius = new JTextField  (10);
 		txtMaxradius = new JTextField  (10);
 		txtBallCount = new JTextField (10);
+		
+		    
 		
 		txtDP.setText("1");
 		txtCirkleDIst.setText("1");
@@ -313,13 +316,13 @@ public class CallibratorGUI  {
 				ballMethod balls = new ballMethod();
 
 				float[] RoboCoor = balls.findCircle(8, 12, 2,1,50,5,2,"robo"); // finder robo
-				
+				for(int j = 0; j<RoboCoor.length;j=j+3){
+					System.out.println("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]));
+
+				}
 				
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
-				for(int i = 0; i < RoboCoor.length;i=i+3){
-					System.out.println("Bold nr " + i +" ligger på "+Math.round(RoboCoor[i]) + ","+Math.round(RoboCoor[i+1]));
-				}
-
+			
 				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
 				double red = front[2];

@@ -3,17 +3,21 @@ package pictureToMat;
 import dist.CalcDist;
 import dist.CalcAngle;
 import dist.Punkt;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 
 public class RouteTest {
 	static List<Integer> xCoor = new ArrayList<Integer>();
 	static List<Integer> yCoor = new ArrayList<Integer>();
 	static int total = 0;
-	static Punkt goal = new Punkt(0, 240);
+//	static Punkt goal = new Punkt(0, 240);
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
@@ -42,8 +46,8 @@ public class RouteTest {
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
-			yCoor.add(Math.round(Coordi[c]));
-			xCoor.add(Math.round(Coordi[c + 1]));
+			xCoor.add(Math.round(Coordi[c]));
+			yCoor.add(Math.round(Coordi[c + 1]));
 		}
 		
 		//Dette for-loop finder det tætteste ppunkt på robotens front
@@ -85,7 +89,12 @@ public class RouteTest {
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste bold rød
 		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste bold blå
 		
+		paintPoint(frame, new Punkt (roboBagPunkt.getX(),roboBagPunkt.getY()), 0, 255, 0); //
+		paintPoint(frame, roboFrontPunkt, 0, 255, 255); //
 		
+		Core.line(frame, new Point(roboBagPunkt.getX() + 5, roboBagPunkt.getY() + 5),	new Point(roboFrontPunkt.getX() + 5, roboFrontPunkt.getY() + 5),	new Scalar(27, 12, 45), 2);
+		
+
 		
 		
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
