@@ -1,5 +1,6 @@
 package CallibratorGUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.opencv.core.Mat;
@@ -10,6 +11,8 @@ import dist.Punkt;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -97,7 +100,7 @@ public class CallibratorGUI  {
 		ImageIcon bh = new ImageIcon("balls.png");
 		lblbh = new JLabel (bh, JLabel.CENTER);
 		
-		ImageIcon edge = new ImageIcon("balls.png");
+		ImageIcon edge = new ImageIcon("edge.png");
 		lbledge = new JLabel (edge, JLabel.CENTER);
 
 
@@ -317,6 +320,15 @@ public class CallibratorGUI  {
 
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
+				
+				try {
+					BufferedImage src = ImageIO.read(new File("Billed0.png"));
+					DetectBorder findEdge = new DetectBorder();
+					findEdge.getRectCoordis(src);
+				} catch (IOException k) {
+					System.out.println("WIHIIHIHHIIH");
+				}
+				
  
 				ballMethod balls = new ballMethod();
 
@@ -391,7 +403,7 @@ public class CallibratorGUI  {
 				bh = new ImageIcon(acimage);  // transform it back
 				//	lblbh = new JLabel (bh, JLabel.CENTER);
 				
-				ImageIcon edge = new ImageIcon("balls.png");
+				ImageIcon edge = new ImageIcon("edge.png");
 				Image image5 = edge.getImage(); // transform it
 				Image edimage = image5.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				edge = new ImageIcon(edimage);  // transform it back
