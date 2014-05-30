@@ -12,10 +12,6 @@ public class TakePicture {
 //XXX
 	public  void takePicture() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); 
-
-    	VideoCapture camera = new VideoCapture(1);
-    	for (int i = 0; i<1;i++){//flere billeder
-
     	VideoCapture camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)
     	boolean wset = camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600);
     	boolean hset = camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900);
