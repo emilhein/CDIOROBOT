@@ -37,6 +37,7 @@ public class Main {
 			System.out.println("WIHIIHIHHIIH");
 		}
 
+		int ppcm = (int) DetectBorder.getPixPerCm(); 
 
 		ballMethod balls = new ballMethod();
 
@@ -154,7 +155,7 @@ public class Main {
 
 				Thread.sleep(2000);
 				//kører robot frem
-				int distance = (minLength/2);	//længde konvertering
+				int distance = (minLength/2)/ppcm;	//længde konvertering
 				System.out.println("dist = " + distance);
 				dos.write(81);
 				dos.flush();

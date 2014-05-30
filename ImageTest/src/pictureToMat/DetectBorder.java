@@ -33,7 +33,7 @@ public class DetectBorder {
 		private float innerHeight = 120;
 		private float innerWidth = 180;
 
-		private float pixPerCm = -1;
+		private static float pixPerCm = -1;
 		
 		public CvRect getRectCoordis(BufferedImage src) throws IOException
 		{		
@@ -110,7 +110,7 @@ public class DetectBorder {
 			return pixPrCm;
 		}
 		
-		public float getPixPerCm()
+		public static float getPixPerCm()
 		{
 			return pixPerCm;
 		}

@@ -1,4 +1,6 @@
 package pictureToMat;
+import java.nio.Buffer;
+
 import org.opencv.core.*;
 import org.opencv.highgui.Highgui;        
 import org.opencv.highgui.VideoCapture;        
@@ -10,14 +12,18 @@ public class TakePicture {
 //XXX
 	public  void takePicture() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME); 
-    	VideoCapture camera = new VideoCapture(0);
-    	for (int i = 0; i<1;i++){//flere billeder
+    	VideoCapture camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)
+    	boolean wset = camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600);
+    	boolean hset = camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900);
+	
     	if(!camera.isOpened()){
     		System.out.println("Error");
     	}
     	else {
+    		
     		Mat frame = new Mat();
     	    while(true){
+    	    	
     	    	if (camera.read(frame)){
     	    		System.out.println("Frame Obtained");
     	    		System.out.println("Captured Frame Width " + 
@@ -35,7 +41,7 @@ public class TakePicture {
     	    		break;
     	    	}
     	    }	
-    	}
+    	
     	camera.release();
 	}
 }   
