@@ -38,8 +38,8 @@ public class DetectBorder {
 		
 		public CvRect getRectCoordis(BufferedImage src) throws IOException
 		{		
-			CanvasFrame cnvs=new CanvasFrame("Polygon");
-	        cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+			//CanvasFrame cnvs=new CanvasFrame("Polygon");
+	        //cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	         
 	        IplImage img = IplImage.createFrom(src);
 	        
@@ -93,7 +93,7 @@ public class DetectBorder {
 		    
 		    cvRectangle(img, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
 		    
-	        cnvs.showImage(img);
+	      // cnvs.showImage(img);
 		    
 		    cvSaveImage("edge.png", img);
 		    

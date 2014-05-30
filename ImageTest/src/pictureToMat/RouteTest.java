@@ -42,7 +42,7 @@ public class RouteTest {
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 20; i++) {
 				for (int g = 0; g < 20; g++) {
-					frame.put(((Math.round(Coordi[c])) + i), ((Math.round(Coordi[c+1])) + g), 0, 0, 0);
+					frame.put(((Math.round(Coordi[c+1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
@@ -51,7 +51,7 @@ public class RouteTest {
 		}
 		
 		//Dette for-loop finder det tætteste ppunkt på robotens front
-		for (int i = 0; i < xCoor.size()-1; i++) {
+		for (int i = 0; i < xCoor.size(); i++) {
 			//System.out.println("ROBOFRONTPRUNKT = " + roboFrontPunkt.getX() + "," + roboFrontPunkt.getY());
 			int tempLength = 0;	
 		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
