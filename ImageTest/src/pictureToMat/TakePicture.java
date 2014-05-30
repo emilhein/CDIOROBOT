@@ -30,13 +30,6 @@ public class TakePicture {
     	    		frame.width() + " Height " + frame.height());
     	    		//	Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/Billed"+i+".jpg", frame);
     	    			Highgui.imwrite("billed0.png", frame);
-    	    			Highgui.imwrite("billed0.bmp", frame);
-    	    			Highgui.imwrite("billed0.jpeg", frame);
-    	    			Highgui.imwrite("billed0.jpg", frame);
-    	    			Highgui.imwrite("billed0.tiff", frame);
-
-
-
     	    		}
     	    		System.out.println("Picture saved");
     	    		
