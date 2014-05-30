@@ -10,6 +10,9 @@ import dist.Punkt;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import pictureToMat.*;
 
@@ -19,21 +22,56 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnRun;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, lblimg, lblafterc, lblfindb, lblbh;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt;
 	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
-	static ImageIcon img, afterc, findb, bh;
+	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
-	static JTextArea txtArea;
+	static JTextArea txtArea1;
 
+//
+//	
+//	private void updateTxtArea1(final String text) {
+//	    SwingUtilities.invokeLater(new Runnable() {
+//	      public void run() {
+//	        txtArea1.append(text);
+//	      }
+//	    });
+//	  }
+//
+//	private void redirectSystemStreams() {
+//	    OutputStream out = new OutputStream() {
+//	      @Override
+//	      public void write(int b) throws IOException {
+//	        updateTxtArea1(String.valueOf((char) b));
+//	      }
+//
+//	      @Override
+//	      public void write(byte[] b, int off, int len) throws IOException {
+//	        updateTxtArea1(new String(b, off, len));
+//	      }
+//
+//	      @Override
+//	      public void write(byte[] b) throws IOException {
+//	        write(b, 0, b.length);
+//	      }
+//	    };
+//	
+//	    System.setOut(new PrintStream(out, true));
+//	    System.setErr(new PrintStream(out, true));
+//	  }
+//
+//	
+	
+	
 	public static void main (String args[]){
 
 		//Opretter rammen
 
-			
+
 		frame1 = new JFrame ("CallibratorGUI");
 
 		//Sætter størrelsen af rammen i pixelx 
-		frame1.setSize (976,718);
+		frame1.setSize (1300,718);
 
 		//Prepare panel
 		pane = frame1.getContentPane();
@@ -42,36 +80,27 @@ public class CallibratorGUI  {
 
 		//tilføj layout for null
 		pane.setLayout (null);
-	    frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    
-	    
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
 
 		ImageIcon afterc = new ImageIcon("Billed0.png");
-//		Image image1 = afterc.getImage(); // transform it
-//		Image afimage = image1.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
-//		afterc = new ImageIcon(afimage);  // transform it back
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
 
 		ImageIcon img = new ImageIcon("RouteTest3.png");
-//		Image image2 = img.getImage(); // transform it
-//		Image dimage = image2.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
-//		img = new ImageIcon(dimage);  // transform it back
 		lblimg = new JLabel (img, JLabel.CENTER);
 
 
 		ImageIcon findb = new ImageIcon("Robo.png");
-//		Image image3 = findb.getImage(); // transform it
-//		Image abimage = image3.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
-//		findb = new ImageIcon(abimage);  // transform it back
 		lblfindb = new JLabel (findb, JLabel.CENTER);
 
 		ImageIcon bh = new ImageIcon("balls.png");
-	//	Image image4 = bh.getImage(); // transform it
-	//	Image acimage = image4.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
-	//	bh = new ImageIcon(acimage);  // transform it back
 		lblbh = new JLabel (bh, JLabel.CENTER);
-
 		
+		ImageIcon edge = new ImageIcon("balls.png");
+		lbledge = new JLabel (edge, JLabel.CENTER);
+
+
 
 		btnRun = new JButton ("Run Program");
 		btnApply = new JButton ("Apply");
@@ -82,7 +111,9 @@ public class CallibratorGUI  {
 		lblMinradius = new JLabel ("Min radius:");
 		lblMaxradius = new JLabel ("Max radius:");
 		lblBallCount = new JLabel ("BallCount:");
-		
+
+		txtArea1 = new JTextArea (1, 1);
+		lbltxt = new JLabel ();
 		jl1 = new JLabel ();
 		jl2 = new JLabel ();
 		jl3 = new JLabel ();
@@ -97,9 +128,9 @@ public class CallibratorGUI  {
 		txtMinradius = new JTextField  (10);
 		txtMaxradius = new JTextField  (10);
 		txtBallCount = new JTextField (10);
-		
-		    
-		
+
+
+
 		txtDP.setText("1");
 		txtCirkleDIst.setText("1");
 		txtParameter1.setText("50");
@@ -107,6 +138,8 @@ public class CallibratorGUI  {
 		txtMinradius.setText("2");
 		txtMaxradius.setText("8");
 		txtBallCount.setText("13");
+		
+		
 		//Tilføjer alle komponenter
 		pane.add (jl1);
 		pane.add (jl2);
@@ -135,7 +168,9 @@ public class CallibratorGUI  {
 		pane.add (lblafterc);
 		pane.add (lblfindb);
 		pane.add (lblbh);
-
+		pane.add (lbltxt);
+		pane.add (txtArea1);
+		pane.add (lbledge);
 
 		//		//Placerer alle kompoenter
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
@@ -224,7 +259,7 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl6);
 
-		
+
 		lblBallCount.setBounds (lblBallCount.getX() + lblBallCount.getWidth() + 5, insets.top + 275, lblBallCount.getPreferredSize().width, lblBallCount.getPreferredSize().height);
 		txtBallCount.setBounds (txtBallCount.getX() + txtBallCount.getWidth() + 5, insets.top + 290, txtBallCount.getPreferredSize().width, txtBallCount.getPreferredSize().height);
 
@@ -239,10 +274,10 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl1);
-		
-		
-		
-		
+
+
+
+
 		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 320, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
 
 		btnApply.addActionListener(new ActionListener()
@@ -250,7 +285,8 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
-							
+				
+				
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
 				jl1.setBounds(150, insets.top + 20, jl1.getPreferredSize().width, jl1.getPreferredSize().height);
@@ -279,9 +315,6 @@ public class CallibratorGUI  {
 				jl7.setText(input7);
 				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 
-				
-				
-				
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
 
@@ -289,12 +322,18 @@ public class CallibratorGUI  {
 
 				float[] RoboCoor = balls.findCircle(8, 12, 2,1,50,5,2,"robo"); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
-					System.out.println("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]));
+
+
+					txtArea1  = new JTextArea ("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]), 1,1);
+					String text1 = txtArea1.getText();
+					lbltxt.setText(text1);
+
+//					System.out.println("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]));
 
 				}
-				
+
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
-			
+
 				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
 				double red = front[2];
@@ -320,11 +359,11 @@ public class CallibratorGUI  {
 
 				RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
-				
-				
+
+
 				ImageIcon afterc = new ImageIcon("Billed0.png");
 				Image image1 = afterc.getImage(); // transform it
-				Image afimage = image1.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				Image afimage = image1.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				afterc = new ImageIcon(afimage);  // transform it back
 				//lblafterc = new JLabel (afterc, JLabel.CENTER);
 
@@ -332,7 +371,7 @@ public class CallibratorGUI  {
 
 				ImageIcon img = new ImageIcon("RouteTest3.png");
 				Image image2 = img.getImage(); // transform it
-				Image dimage = image2.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				Image dimage = image2.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				img = new ImageIcon(dimage);  // transform it back
 				//lblimg = new JLabel (img, JLabel.CENTER);
 
@@ -340,7 +379,7 @@ public class CallibratorGUI  {
 
 				ImageIcon findb = new ImageIcon("Robo.png");
 				Image image3 = findb.getImage(); // transform it
-				Image abimage = image3.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				Image abimage = image3.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				findb = new ImageIcon(abimage);  // transform it back
 				//lblfindb = new JLabel (findb, JLabel.CENTER);
 
@@ -348,31 +387,37 @@ public class CallibratorGUI  {
 
 				ImageIcon bh = new ImageIcon("balls.png");
 				Image image4 = bh.getImage(); // transform it
-				Image acimage = image4.getScaledInstance(320, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				Image acimage = image4.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				bh = new ImageIcon(acimage);  // transform it back
-			//	lblbh = new JLabel (bh, JLabel.CENTER);
-
-
+				//	lblbh = new JLabel (bh, JLabel.CENTER);
 				
+				ImageIcon edge = new ImageIcon("balls.png");
+				Image image5 = edge.getImage(); // transform it
+				Image edimage = image5.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				edge = new ImageIcon(edimage);  // transform it back
 				
 				lblimg.setIcon(img);
 				lblafterc.setIcon(afterc);
 				lblfindb.setIcon(findb);
 				lblbh.setIcon(bh);
+				lbledge.setIcon(edge);
 
 				lblimg.setBounds (200, insets.top + 6, lblimg.getPreferredSize().width, lblimg.getPreferredSize().height);
-				lblafterc.setBounds(525, insets.top + 6, lblafterc.getPreferredSize().width, lblafterc.getPreferredSize().height);
-				lblfindb.setBounds(200, insets.top + 250, lblfindb.getPreferredSize().width, lblfindb.getPreferredSize().height);
-				lblbh.setBounds(525, insets.top + 250, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);
+				lblafterc.setBounds(605, insets.top + 6, lblafterc.getPreferredSize().width, lblafterc.getPreferredSize().height);
+				lblfindb.setBounds(200, insets.top + 236, lblfindb.getPreferredSize().width, lblfindb.getPreferredSize().height);
+				lblbh.setBounds(605, insets.top + 236, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);
+				lbledge.setBounds(1010, insets.top + 6, lbledge.getPreferredSize().width, lbledge.getPreferredSize().height);
 				
-				
+				//lbltxt.setBounds(200, insets.top + 510, lbltxt.getPreferredSize().width, 10);
 
-		
+//				txtArea1.setText(String);
+//				txtArea1.append(String);
+				
 			}
 
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt);
 
 		btnRun.setBounds (btnRun.getX() + btnRun.getWidth() + 75, insets.top + 320, btnRun.getPreferredSize().width, btnRun.getPreferredSize().height);
 
@@ -397,8 +442,8 @@ public class CallibratorGUI  {
 		catch (InstantiationException e) {}
 		catch (IllegalAccessException e) {}
 		catch (UnsupportedLookAndFeelException e) {}		
-
 	}
+
 
 
 }
