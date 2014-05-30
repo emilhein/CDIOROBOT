@@ -72,7 +72,7 @@ public class ballMethod {
 		frame4.setContentPane(panel4);      
 		frame4.setVisible(false);
 		//-- 2. Read the video stream
-		
+		 
 		/**********************TESTKODE********************/
 		if(findRobot == true)
 			pictureToMat("Billed0.png");
