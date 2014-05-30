@@ -1,6 +1,7 @@
 package pictureToMat;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
+import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_ADAPTIVE_THRESH_MEAN_C;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_CHAIN_APPROX_NONE;
@@ -94,7 +95,7 @@ public class DetectBorder {
 		    
 	        cnvs.showImage(img);
 		    
-	
+		    cvSaveImage("border.jpg", img);
 		    
 		    return innerRect;
 
