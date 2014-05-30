@@ -188,7 +188,13 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
+//				lblimg.revalidate();
+//				lblimg.repaint();
+				
+
+				
 				pictureToMat.TakePicture.takePicture();
+				
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
