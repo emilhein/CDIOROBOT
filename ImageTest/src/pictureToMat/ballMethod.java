@@ -1,6 +1,14 @@
 package pictureToMat;
 
 
+import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
+import static com.googlecode.javacv.cpp.opencv_core.cvCreateImage;
+import static com.googlecode.javacv.cpp.opencv_core.cvSize;
+import static com.googlecode.javacv.cpp.opencv_highgui.cvLoadImage;
+import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
+import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
+import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
+
 import java.util.ArrayList;  
 
 
@@ -16,6 +24,8 @@ import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;  
 import org.opencv.core.CvType; 
+
+import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 
 public class ballMethod {  
@@ -62,8 +72,27 @@ public class ballMethod {
 		frame4.setContentPane(panel4);      
 		frame4.setVisible(false);
 		//-- 2. Read the video stream
+		
+		/**********************TESTKODE********************/
+		Mat webcam_img = pictureToMat("Billed0.png");
+		Highgui.imwrite("brownThreshold.jpg", webcam_img);
+		
+		//load image
+		IplImage image = cvLoadImage("brownThreshold.jpg");
+
+		//create grayscale IplImage of the same dimensions, 8-bit and 1 channel
+		IplImage imageGray = cvCreateImage(cvSize(image.width(), image.height()), IPL_DEPTH_8U, 1);
+		
+		//convert image to grayscale
+		cvCvtColor(image, imageGray, CV_BGR2GRAY );
+		//cvAdaptiveThreshold(imageGray, imageGray, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 4);
+		
+		// Save
+		cvSaveImage("grayThreshold.jpg", imageGray);
+		/************************SLUT**********************/
+		
 //		VideoCapture capture =new VideoCapture(0);  
-		Mat webcam_image = pictureToMat("Billed0.png");  //billede der skal findes bolde på.
+		Mat webcam_image = pictureToMat("grayThreshold.jpg");  //billede der skal findes bolde på.
 		Mat hsv_image=new Mat();  
 		Mat thresholded=new Mat();  
 		Mat thresholded2=new Mat();  
@@ -85,10 +114,10 @@ public class ballMethod {
 		List<Mat> lhsv = new ArrayList<Mat>(3);      
 		Mat circles = new Mat(); // No need (and don't know how) to initialize it.  
 		// The function later will do it... (to a 1*N*CV_32FC3)  
-		Scalar hsv_min = new Scalar(0, 0, 0, 0);  
-		Scalar hsv_max = new Scalar(255, 255, 255, 0);  
-		Scalar hsv_min2 = new Scalar(200, 200, 200, 0);  
-		Scalar hsv_max2 = new Scalar(255, 255, 255, 0);  
+		Scalar hsv_min = new Scalar(0, 0, 0, 50);  
+		Scalar hsv_max = new Scalar(60, 60, 255, 0);  
+		Scalar hsv_min2 = new Scalar(0, 0, 100, 0);  
+		Scalar hsv_max2 = new Scalar(70, 70, 255, 0);   
 		double[] data=new double[3];  
 
 		if( !webcam_image.empty() )  
