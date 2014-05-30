@@ -142,7 +142,7 @@ public class CallibratorGUI  {
 
 
 		txtDP.setText("1");
-		txtCirkleDIst.setText("1");
+		txtCirkleDIst.setText("3");
 		txtParameter1.setText("50");
 		txtParameter2.setText("5");
 		txtMinradius.setText("8");
@@ -329,15 +329,14 @@ public class CallibratorGUI  {
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
 				
+				
+				DetectBorder border = new DetectBorder();		
 				try {
-					BufferedImage src = ImageIO.read(new File("Billed0.png"));
-					DetectBorder findEdge = new DetectBorder();
-					findEdge.getRectCoordis(src);
+					border.getRectCoordis("Billed0.png");
 				} catch (IOException k) {
 					System.out.println("WIHIIHIHHIIH");
 				}
-				
-				int ppcm = (int) DetectBorder.getPixPerCm(); 
+				int ppcm = (int)border.getPixPerCm(); 
 
  
 				ballMethod balls = new ballMethod();
@@ -356,13 +355,15 @@ public class CallibratorGUI  {
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
-				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
+				double[] front = frame.get(Math.round(RoboCoor[0]), Math.round(RoboCoor[1])); ///
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
 				double red = front[2];
-
-				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
+				double green = front[0];
+				
+				double[] back = frame.get(Math.round(RoboCoor[3]), Math.round(RoboCoor[4])); ///
 				double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
-
+				double green2 = front[0];
+				
 				Punkt roboFrontPunkt = new Punkt(0,0);
 				Punkt roboBagPunkt = new Punkt(0,0);
 				// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
@@ -376,16 +377,32 @@ public class CallibratorGUI  {
 					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
 					roboBagPunkt.setX(Math.round(RoboCoor[0]));
 					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				}else if (green > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
+					roboBagPunkt.setX(Math.round(RoboCoor[0]));
+					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				}else if (green2 > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
+					roboBagPunkt.setX(Math.round(RoboCoor[3]));
+					roboBagPunkt.setY(Math.round(RoboCoor[4]));
 				}
 				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl6.getText()),"balls");//minradius, maxrdius, antalbolde
-
+			/*	
+				for (int c = 0; c < ballCoor.length; c = c + 3) {
+					System.out.println("Coordi " + c + " = " + ballCoor[c]);
+					System.out.println("Coordi " + c+1 + " = " + ballCoor[c+1]);
+					System.out.println("Coordi " + c+2 + " = " + ballCoor[c+2]);
+				}
+			*/	
 				RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
-				int tempx=minPunkt.getY();
-				int tempy=minPunkt.getX();
-				minPunkt.setX(tempx);
-				minPunkt.setY(tempy);
+//				int tempx=minPunkt.getY();
+//				int tempy=minPunkt.getX();
+//				minPunkt.setX(tempx);
+//				minPunkt.setY(tempy);
 
 				System.out.println("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 				System.out.println("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
@@ -429,9 +446,16 @@ public class CallibratorGUI  {
 						System.out.println("TurnAngle = " + TurnAngle);
 						int angle = TurnAngle*2;	//vinkel konvertering
 						System.out.println("angle " + angle);
-						if(angle > 0) 				//vælger retning der skal drejes
-							Case = 11;				
-						else Case = 22;
+						if(Math.abs(angle) < 250){
+							if(angle > 0) 				//vælger retning der skal drejes
+								Case = 11;				
+							else Case = 22;
+							}
+							else{
+								if(angle > 0) 				//vælger retning der skal drejes
+									Case = 31;				
+								else Case = 42;
+							}
 						angle = Math.abs(angle);
 						dos.write(Case);			//sender case
 						dos.flush();
