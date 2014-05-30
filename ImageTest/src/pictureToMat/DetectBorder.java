@@ -56,8 +56,8 @@ public class DetectBorder {
 		    CvSize cvSize = cvSize(img.width(), img.height());
 		    IplImage gry=cvCreateImage(cvSize, img.depth(), 1);
 		    cvCvtColor(img, gry, CV_BGR2GRAY);
-		    cvThreshold(gry, gry, 75, 98, CV_THRESH_BINARY);
-		    cvAdaptiveThreshold(gry, gry, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 5);
+		    //cvThreshold(gry, gry, 75, 98, CV_THRESH_BINARY);
+		    //cvAdaptiveThreshold(gry, gry, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 5);
 			
 		    CvMemStorage storage = CvMemStorage.create();
 		    CvSeq contours = new CvContour(null);
