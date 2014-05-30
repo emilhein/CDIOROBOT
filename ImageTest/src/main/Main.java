@@ -6,6 +6,7 @@ import org.opencv.highgui.Highgui;
 import dist.CalcAngle;
 import dist.CalcDist;
 import dist.Punkt;
+import pictureToMat.DetectBorder;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
@@ -17,6 +18,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -24,6 +27,17 @@ public class Main {
 
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
+
+		
+		try {
+			BufferedImage src = ImageIO.read(new File("Billed0.png"));
+			DetectBorder findEdge = new DetectBorder();
+			findEdge.getRectCoordis(src);
+		} catch (IOException e) {
+			System.out.println("WIHIIHIHHIIH");
+		}
+
+
 		ballMethod balls = new ballMethod();
 
 		
