@@ -28,20 +28,20 @@ public class Main {
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
 
+		DetectBorder border = new DetectBorder();
 		
-		try {
-			BufferedImage src = ImageIO.read(new File("Billed0.png"));
-			DetectBorder findEdge = new DetectBorder();
-			findEdge.getRectCoordis(src);
-		} catch (IOException e) {
-			System.out.println("WIHIIHIHHIIH");
-		}
-
-		int ppcm = (int) DetectBorder.getPixPerCm(); 
+			try {
+				border.getRectCoordis("BrownThreshold.png");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		//DetectBorder border = new DetectBorder();
+		
+		int ppcm = (int)border.getPixPerCm(); 
  
 		ballMethod balls = new ballMethod();
-
-		
 	
 		
 		/*
@@ -49,7 +49,7 @@ public class Main {
 		 */
 		
 		
-		float[] RoboCoor = balls.findCircle(6,13,2,2,1,50,2,"RoboMain");//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo"); // finder robo
 
 			Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 			for(int i = 0; i < RoboCoor.length;i=i+3){
@@ -84,7 +84,7 @@ public class Main {
 			System.out.println("Dette er rød2 farven = " + red2);
 			 */
 	
-			float[] ballCoor = balls.findCircle(2, 6,2,1,50,5, 3,"ballMain"); // finder bolde 6,12,6
+			float[] ballCoor = balls.findCircle(8, 18,1,5,50,5, 13,"ballMain"); // finder bolde 6,12,6
 	
 			RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
@@ -136,9 +136,16 @@ public class Main {
 				System.out.println("TurnAngle = " + TurnAngle);
 				int angle = TurnAngle*2;	//vinkel konvertering
 				System.out.println("angle " + angle);
+				if(Math.abs(angle) < 250){
 				if(angle > 0) 				//vælger retning der skal drejes
 					Case = 11;				
 				else Case = 22;
+				}
+				else{
+					if(angle > 0) 				//vælger retning der skal drejes
+						Case = 31;				
+					else Case = 42;
+				}
 				angle = Math.abs(angle);
 				dos.write(Case);			//sender case
 				dos.flush();

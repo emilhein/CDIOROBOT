@@ -172,9 +172,9 @@ public class ballMethod {
 					for(int c=0; c<numberOfCircles; c++)
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-						Coordi[ballnr] = data2[0];
-						Coordi[ballnr+1] = data2[1];
-						Coordi[ballnr+2] = data2[2];
+						Coordi[ballnr] = data2[0]; // x -koordinate
+						Coordi[ballnr+1] = data2[1]; //y - koordinate
+						Coordi[ballnr+2] = data2[2]; //radius
 						ballnr = ballnr+3; // radius
 						Point center= new Point(data2[0], data2[1]);  
 						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
@@ -246,7 +246,7 @@ public class ballMethod {
 						break;
 					}
 					
-					else if (red > 155 && green < 60 && blue < 60) { // finder røde farver																
+					else if (red > 130 && green < 60 && blue < 60) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 

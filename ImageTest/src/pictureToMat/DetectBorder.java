@@ -45,19 +45,26 @@ public class DetectBorder {
 		
 		public CvRect getRectCoordis(String src) throws IOException
 		{		
-			CanvasFrame cnvs=new CanvasFrame("Polygon");
-	        cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-	        
+
+			//CanvasFrame cnvs=new CanvasFrame("Polygon");
+	        //cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+	         
+	           
 	        brownThreshold(src);
 	        
-	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.jpg"));
+	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.png"));
 	        IplImage img = IplImage.createFrom(brownThresholded);
 	        
 		    CvSize cvSize = cvSize(img.width(), img.height());
 		    IplImage gry=cvCreateImage(cvSize, img.depth(), 1);
 		    cvCvtColor(img, gry, CV_BGR2GRAY);
+<<<<<<< HEAD
 		    //cvThreshold(gry, gry, 75, 98, CV_THRESH_BINARY);
 		    //cvAdaptiveThreshold(gry, gry, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 5);
+=======
+		  //  cvThreshold(gry, gry, 75, 98, CV_THRESH_BINARY);
+		  //  cvAdaptiveThreshold(gry, gry, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 5);
+>>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 			
 		    CvMemStorage storage = CvMemStorage.create();
 		    CvSeq contours = new CvContour(null);
@@ -103,7 +110,7 @@ public class DetectBorder {
 		    
 		    cvRectangle(img, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
 		    
-	        cnvs.showImage(img);
+	      // cnvs.showImage(img);
 		    
 		    cvSaveImage("edge.png", img);
 		    
@@ -154,6 +161,6 @@ public class DetectBorder {
 				}
 			}
 
-			Highgui.imwrite("BrownThreshold.jpg", img); // Gemmer billedet i roden
+			Highgui.imwrite("BrownThreshold.png", img); // Gemmer billedet i roden
 		}
 }

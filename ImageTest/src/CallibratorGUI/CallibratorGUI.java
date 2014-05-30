@@ -6,6 +6,8 @@ import javax.swing.*;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
+import dist.CalcAngle;
+import dist.CalcDist;
 import dist.Punkt;
 
 import java.awt.*;
@@ -14,9 +16,14 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
+import lejos.pc.comm.NXTComm;
+import lejos.pc.comm.NXTConnector;
+import lejos.pc.comm.NXTInfo;
 import pictureToMat.*;
 
 public class CallibratorGUI  {
@@ -69,7 +76,7 @@ public class CallibratorGUI  {
 	public static void main (String args[]){
 
 		//Opretter rammen
-
+		
 
 		frame1 = new JFrame ("CallibratorGUI");
 
@@ -132,49 +139,22 @@ public class CallibratorGUI  {
 		txtMaxradius = new JTextField  (10);
 		txtBallCount = new JTextField (10);
 
-
-
 		txtDP.setText("1");
-		txtCirkleDIst.setText("1");
+		txtCirkleDIst.setText("3");
 		txtParameter1.setText("50");
 		txtParameter2.setText("5");
-		txtMinradius.setText("2");
-		txtMaxradius.setText("8");
+		txtMinradius.setText("8");
+		txtMaxradius.setText("18");
 		txtBallCount.setText("13");
 		
-		
 		//Tilføjer alle komponenter
-		pane.add (jl1);
-		pane.add (jl2);
-		pane.add (jl3);
-		pane.add (jl4);
-		pane.add (jl5);
-		pane.add (jl6);
-		pane.add (jl7);
-		pane.add (lblDP);
-		pane.add (lblCirkleDIst);
-		pane.add (lblParameter1);
-		pane.add (lblParameter2);
-		pane.add (lblMinradius);
-		pane.add (lblMaxradius);
-		pane.add(lblBallCount);
-		pane.add (txtDP);
-		pane.add (txtCirkleDIst);
-		pane.add (txtParameter1);
-		pane.add (txtParameter2);
-		pane.add (txtMinradius);
-		pane.add (txtMaxradius);
-		pane.add(txtBallCount);
-		pane.add (btnApply);
-		pane.add (btnRun);
-		pane.add (lblimg);
-		pane.add (lblafterc);
-		pane.add (lblfindb);
-		pane.add (lblbh);
-		pane.add (lbltxt);
-		pane.add (txtArea1);
-		pane.add (lbledge);
-
+		pane.add (jl1); pane.add (jl2); pane.add (jl3); pane.add (jl4); pane.add (jl5); pane.add (jl6); pane.add (jl7);
+		pane.add (lblDP); pane.add (lblCirkleDIst); pane.add (lblParameter1); pane.add (lblParameter2); pane.add (lblMinradius);
+		pane.add (lblMaxradius); pane.add(lblBallCount); pane.add (txtDP); pane.add (txtCirkleDIst); pane.add (txtParameter1);
+		pane.add (txtParameter2); pane.add (txtMinradius); pane.add(txtBallCount); pane.add (txtMaxradius); pane.add (btnApply);
+		pane.add (btnRun); pane.add (lblimg); pane.add (lblfindb); pane.add (lblafterc); pane.add (lblbh); pane.add (lbltxt);
+		pane.add (lbltxt); pane.add (txtArea1); pane.add (lbledge);
+		
 		//		//Placerer alle kompoenter
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
 		txtDP.setBounds (txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
@@ -288,7 +268,8 @@ public class CallibratorGUI  {
 			public void actionPerformed(ActionEvent e)
 			{
 
-				
+				Punkt minPunkt;
+
 				
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
@@ -321,22 +302,23 @@ public class CallibratorGUI  {
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
 				
+				
+				DetectBorder border = new DetectBorder();		
 				try {
-					BufferedImage src = ImageIO.read(new File("Billed0.png"));
-					DetectBorder findEdge = new DetectBorder();
-					findEdge.getRectCoordis(src);
+					border.getRectCoordis("Billed0.png");
 				} catch (IOException k) {
 					System.out.println("WIHIIHIHHIIH");
 				}
-				
+				int ppcm = (int)border.getPixPerCm(); 
+
  
 				ballMethod balls = new ballMethod();
 
-				float[] RoboCoor = balls.findCircle(19, 28, 1,1,50,5,2,"robo"); // finder robo
+				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo"); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
-					txtArea1  = new JTextArea ("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]), 1,1);
+					txtArea1  = new JTextArea ("Forholdet mellem pixel og cm er = " + ppcm, 1,1);
 					String text1 = txtArea1.getText();
 					lbltxt.setText(text1);
 
@@ -346,13 +328,15 @@ public class CallibratorGUI  {
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
-				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
+				double[] front = frame.get(Math.round(RoboCoor[0]), Math.round(RoboCoor[1])); ///
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
 				double red = front[2];
-
-				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
+				double green = front[0];
+				
+				double[] back = frame.get(Math.round(RoboCoor[3]), Math.round(RoboCoor[4])); ///
 				double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
-
+				double green2 = front[0];
+				
 				Punkt roboFrontPunkt = new Punkt(0,0);
 				Punkt roboBagPunkt = new Punkt(0,0);
 				// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
@@ -366,11 +350,124 @@ public class CallibratorGUI  {
 					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
 					roboBagPunkt.setX(Math.round(RoboCoor[0]));
 					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				}else if (green > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
+					roboBagPunkt.setX(Math.round(RoboCoor[0]));
+					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				}else if (green2 > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
+					roboBagPunkt.setX(Math.round(RoboCoor[3]));
+					roboBagPunkt.setY(Math.round(RoboCoor[4]));
 				}
 				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl6.getText()),"balls");//minradius, maxrdius, antalbolde
-
+			/*	
+				for (int c = 0; c < ballCoor.length; c = c + 3) {
+					System.out.println("Coordi " + c + " = " + ballCoor[c]);
+					System.out.println("Coordi " + c+1 + " = " + ballCoor[c+1]);
+					System.out.println("Coordi " + c+2 + " = " + ballCoor[c+2]);
+				}
+			*/	
 				RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+				
+				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+//				int tempx=minPunkt.getY();
+//				int tempy=minPunkt.getX();
+//				minPunkt.setX(tempx);
+//				minPunkt.setY(tempy);
 
+				System.out.println("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
+				System.out.println("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
+				System.out.println("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
+
+				Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
+				Punkt nyRoboBag = new Punkt(0,0);
+				Punkt nyMinPunkt = new Punkt(minPunkt.getX()-roboBagPunkt.getX(),minPunkt.getY()-roboBagPunkt.getY());
+				System.out.println("koordinaterne til nyBagpunkt er (" + nyRoboBag.getX() +","+nyRoboBag.getY()+")");
+				System.out.println("koordinaterne til nyFrontpunkt er (" + nyRoboFront.getX() +","+nyRoboFront.getY()+")");
+				System.out.println("koordinaterne til nyMinpunkt er (" + nyMinPunkt.getX() +","+nyMinPunkt.getY()+")");
+				
+				CalcAngle Angle = new CalcAngle();
+				int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
+				System.out.println("BallAngle = " + BallAngle);
+				int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
+				System.out.println("RoboAngle = " + RoboAngle);
+				int TurnAngle = BallAngle - RoboAngle;
+
+				CalcDist dist = new CalcDist();
+				int minLength = dist.Calcdist(roboFrontPunkt, minPunkt);
+
+				try{ 
+					//prøver at forbinde til vores robot
+					NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
+					NXTConnector connt = new NXTConnector();
+					System.out.println("trying to connect");
+					connt.connectTo(nxtInfo, NXTComm.LCP);
+					System.out.println("connected");		//forbundet
+					//åbner streams
+					OutputStream dos = connt.getOutputStream();
+					InputStream dis = connt.getInputStream();
+
+				//	Scanner scan = new Scanner(System.in);
+				//	while(true){
+				//		System.out.println("Waiting for your go!");	
+				//		int input = scan.nextInt();
+
+						int Case;
+						int i;
+						System.out.println("TurnAngle = " + TurnAngle);
+						int angle = TurnAngle*2;	//vinkel konvertering
+						System.out.println("angle " + angle);
+						if(Math.abs(angle) < 250){
+							if(angle > 0) 				//vælger retning der skal drejes
+								Case = 11;				
+							else Case = 22;
+							}
+							else{
+								if(angle > 0) 				//vælger retning der skal drejes
+									Case = 31;				
+								else Case = 42;
+							}
+						angle = Math.abs(angle);
+						dos.write(Case);			//sender case
+						dos.flush();
+						dos.write(angle);			//sender vinkel
+						dos.flush();
+
+						//				//venter på at motorerne ikke kører længere
+						//				int u = dis.read();			
+						//				while(u==1){
+						//					u = dis.read();
+						//				}
+
+						Thread.sleep(2000);
+						//kører robot frem
+						int distance = (minLength/2)/ppcm;	//længde konvertering
+						System.out.println("dist = " + distance);
+						dos.write(81);
+						dos.flush();
+						i = distance;
+						dos.write(i);
+						dos.flush();
+
+						//				//venter på at motorerne ikke kører længere
+						//				int j = dis.read();			
+						//				while(j==1){
+						//					j = dis.read();
+						//				}
+
+						Thread.sleep(2000);
+
+						//samler bold op
+						dos.write(51);				
+						dos.flush();
+						dos.write(51);
+						dos.flush();	
+						Thread.sleep(2000);
+					//}
+				}
+				catch(Exception ex){System.out.println(ex);}
 
 
 				ImageIcon afterc = new ImageIcon("Billed0.png");
