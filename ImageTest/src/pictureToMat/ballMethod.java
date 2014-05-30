@@ -217,7 +217,7 @@ public class ballMethod {
 						break;
 					}
 					
-					else if (red > 165 && green < 130 && blue < 120) { // finder røde farver																
+					else if (red > 155 && green < 60 && blue < 60) { // finder røde farver																
 						m.put(j, b, 0, 0, 255); // rød
 						break;
 					} 
