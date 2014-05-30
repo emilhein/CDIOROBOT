@@ -139,8 +139,6 @@ public class CallibratorGUI  {
 		txtMaxradius = new JTextField  (10);
 		txtBallCount = new JTextField (10);
 
-
-
 		txtDP.setText("1");
 		txtCirkleDIst.setText("3");
 		txtParameter1.setText("50");
@@ -149,39 +147,14 @@ public class CallibratorGUI  {
 		txtMaxradius.setText("18");
 		txtBallCount.setText("13");
 		
-		
 		//Tilføjer alle komponenter
-		pane.add (jl1);
-		pane.add (jl2);
-		pane.add (jl3);
-		pane.add (jl4);
-		pane.add (jl5);
-		pane.add (jl6);
-		pane.add (jl7);
-		pane.add (lblDP);
-		pane.add (lblCirkleDIst);
-		pane.add (lblParameter1);
-		pane.add (lblParameter2);
-		pane.add (lblMinradius);
-		pane.add (lblMaxradius);
-		pane.add(lblBallCount);
-		pane.add (txtDP);
-		pane.add (txtCirkleDIst);
-		pane.add (txtParameter1);
-		pane.add (txtParameter2);
-		pane.add (txtMinradius);
-		pane.add (txtMaxradius);
-		pane.add(txtBallCount);
-		pane.add (btnApply);
-		pane.add (btnRun);
-		pane.add (lblimg);
-		pane.add (lblafterc);
-		pane.add (lblfindb);
-		pane.add (lblbh);
-		pane.add (lbltxt);
-		pane.add (txtArea1);
-		pane.add (lbledge);
-
+		pane.add (jl1); pane.add (jl2); pane.add (jl3); pane.add (jl4); pane.add (jl5); pane.add (jl6); pane.add (jl7);
+		pane.add (lblDP); pane.add (lblCirkleDIst); pane.add (lblParameter1); pane.add (lblParameter2); pane.add (lblMinradius);
+		pane.add (lblMaxradius); pane.add(lblBallCount); pane.add (txtDP); pane.add (txtCirkleDIst); pane.add (txtParameter1);
+		pane.add (txtParameter2); pane.add (txtMinradius); pane.add(txtBallCount); pane.add (txtMaxradius); pane.add (btnApply);
+		pane.add (btnRun); pane.add (lblimg); pane.add (lblfindb); pane.add (lblafterc); pane.add (lblbh); pane.add (lbltxt);
+		pane.add (lbltxt); pane.add (txtArea1); pane.add (lbledge);
+		
 		//		//Placerer alle kompoenter
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
 		txtDP.setBounds (txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
