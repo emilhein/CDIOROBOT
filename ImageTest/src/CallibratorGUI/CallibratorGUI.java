@@ -320,7 +320,7 @@ public class CallibratorGUI  {
 
 				ballMethod balls = new ballMethod();
 
-				float[] RoboCoor = balls.findCircle(8, 12, 2,1,50,5,2,"robo"); // finder robo
+				float[] RoboCoor = balls.findCircle(19, 28, 1,1,50,5,2,"robo"); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
@@ -408,7 +408,7 @@ public class CallibratorGUI  {
 				lblbh.setBounds(605, insets.top + 236, lblbh.getPreferredSize().width, lblbh.getPreferredSize().height);
 				lbledge.setBounds(1010, insets.top + 6, lbledge.getPreferredSize().width, lbledge.getPreferredSize().height);
 				
-				//lbltxt.setBounds(200, insets.top + 510, lbltxt.getPreferredSize().width, 10);
+				lbltxt.setBounds(200, insets.top + 500, lbltxt.getPreferredSize().width, 10);
 
 //				txtArea1.setText(String);
 //				txtArea1.append(String);

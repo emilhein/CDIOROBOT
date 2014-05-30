@@ -40,9 +40,9 @@ public class RouteTest {
 	
 		for (int c = 0; c < Coordi.length; c = c + 3) {
 			// tegner firkant på koordinatplads i sort
-			for (int i = 0; i < 10; i++) {
-				for (int g = 0; g < 10; g++) {
-					frame.put(((Math.round(Coordi[c + 1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
+			for (int i = 0; i < 20; i++) {
+				for (int g = 0; g < 20; g++) {
+					frame.put(((Math.round(Coordi[c])) + i), ((Math.round(Coordi[c+1])) + g), 0, 0, 0);
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
@@ -57,7 +57,7 @@ public class RouteTest {
 		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
 			
 			CalcDist dist = new CalcDist();
-			Punkt punkt2 = new Punkt(xCoor.get(i) + 5, yCoor.get(i) + 5);
+			Punkt punkt2 = new Punkt(xCoor.get(i) + 10, yCoor.get(i) + 10);
 			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
 			total = total + tempLength;
 			if (tempLength < minLength) {
@@ -69,7 +69,7 @@ public class RouteTest {
 		for (int i = 0; i < xCoor.size(); i++) {
 			int tempLength2 = 0;
 			CalcDist dist = new CalcDist();
-			Punkt punkt3 = new Punkt(xCoor.get(i) + 5, yCoor.get(i) + 5);
+			Punkt punkt3 = new Punkt(xCoor.get(i) + 10, yCoor.get(i) + 10);
 			tempLength2 = dist.Calcdist(minPunkt, punkt3);
 			
 			if (tempLength2 < minLength2 && punkt3.getX() != (minPunkt.getX()) && punkt3.getY() != (minPunkt.getY())) {
@@ -89,10 +89,10 @@ public class RouteTest {
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste bold rød
 		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste bold blå
 		
-		paintPoint(frame, new Punkt (roboBagPunkt.getX(),roboBagPunkt.getY()), 0, 255, 0); //
-		paintPoint(frame, roboFrontPunkt, 0, 255, 255); //
+		paintPoint(frame,new Punkt(roboBagPunkt.getY() + 10, roboBagPunkt.getX() + 10), 0, 255, 0); //
+		paintPoint(frame,new Punkt(roboFrontPunkt.getY() + 10, roboFrontPunkt.getX() + 10), 0, 255, 255); //
 		
-		Core.line(frame, new Point(roboBagPunkt.getX() + 5, roboBagPunkt.getY() + 5),	new Point(roboFrontPunkt.getX() + 5, roboFrontPunkt.getY() + 5),	new Scalar(27, 12, 45), 2);
+		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 2);
 		
 
 		
@@ -107,9 +107,9 @@ public class RouteTest {
 
 	
 	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl) {
-		for (int a = 0; a < 10; a++) {
-			for (int b = 0; b < 10; b++) {
-				frame.put(((p.getX() - 5) + a), ((p.getY() + b) - 5), bl, gr, re);
+		for (int a = 0; a < 20; a++) {
+			for (int b = 0; b < 20; b++) {
+				frame.put(((p.getX() - 10) + a), ((p.getY() + b) - 10), bl, gr, re);
 
 			}
 		}

@@ -47,6 +47,8 @@ public class Main {
 		/*
 		 *Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		 */
+		
+		
 		float[] RoboCoor = balls.findCircle(6,13,2,2,1,50,2,"RoboMain");//minradius, maxrdius, antalbolde
 
 			Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
@@ -56,11 +58,7 @@ public class Main {
 	
 			double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
 			//double red = front[2]; //henter en rød farver fra den ene cirkel
-			double blue = front[0];
-			double green = front[1];
 			double red = front[2];
-	
-			System.out.println("Har farverne = "+(int)blue + (int)red+(int)green);
 	
 			double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
 			double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
