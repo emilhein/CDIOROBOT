@@ -38,7 +38,7 @@ public class Main {
 		}
 
 		int ppcm = (int) DetectBorder.getPixPerCm(); 
-
+ 
 		ballMethod balls = new ballMethod();
 
 		
