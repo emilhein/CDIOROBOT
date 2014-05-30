@@ -9,7 +9,7 @@ public class CalcAngle {
 
 		int delta_x = p2.getX() - p1.getX();
 		int delta_y = p2.getY() - p1.getY();
-		int angle = (int) Math.toDegrees(Math.atan2(delta_y, delta_x));
+		int angle = (int) Math.atan2(delta_y, delta_x);
 
 		return angle;
 	}
