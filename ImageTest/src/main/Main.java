@@ -13,6 +13,7 @@ import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Scanner;
 
@@ -21,55 +22,58 @@ public class Main {
 	public static void main(String[] args) {
 		Punkt minPunkt;
 
-		TakePicture.main(args); //tager et billed og gemmer i roden af projektet.
-
+		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
+		takepic.takePicture();
 		ballMethod balls = new ballMethod();
 
+		
+	
+		
 		/*
 		 *Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		 */
-		float[] RoboCoor = balls.findCircle(6,13,2);//minradius, maxrdius, antalbolde
+		float[] RoboCoor = balls.findCircle(6,13,2,2,1,50,2,"RoboMain");//minradius, maxrdius, antalbolde
 
-		Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
-		for(int i = 0; i < RoboCoor.length;i=i+3){
-			System.out.println("Bold nr " + i +" ligger på "+Math.round(RoboCoor[i]) + ","+Math.round(RoboCoor[i+1]));
-		}
-
-		double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
-		//double red = front[2]; //henter en rød farver fra den ene cirkel
-		double blue = front[0];
-		double green = front[1];
-		double red = front[2];
-
-		System.out.println("Har farverne = "+(int)blue + (int)red+(int)green);
-
-		double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
-		double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
-
-		Punkt roboFrontPunkt = new Punkt(0,0);
-		Punkt roboBagPunkt = new Punkt(0,0);
-		// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
-		if(red > 245){
-			roboFrontPunkt.setX(Math.round(RoboCoor[0]));
-			roboFrontPunkt.setY(Math.round(RoboCoor[1]));
-			roboBagPunkt.setX(Math.round(RoboCoor[3]));
-			roboBagPunkt.setY(Math.round(RoboCoor[4]));
-			System.out.println("red");
-		} else if (red2 > 245){
-			roboFrontPunkt.setX(Math.round(RoboCoor[3]));
-			roboFrontPunkt.setY(Math.round(RoboCoor[4]));
-			roboBagPunkt.setX(Math.round(RoboCoor[0]));
-			roboBagPunkt.setY(Math.round(RoboCoor[1]));
-			System.out.println("red2");
-		}
-		/* 
-		System.out.println("Dette er rød1 farven = " + red);
-		System.out.println("Dette er rød2 farven = " + red2);
-		 */
-
-		float[] ballCoor = balls.findCircle(2, 6, 3); // finder bolde 6,12,6
-
-		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+			Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
+			for(int i = 0; i < RoboCoor.length;i=i+3){
+				System.out.println("Bold nr " + i +" ligger på "+Math.round(RoboCoor[i]) + ","+Math.round(RoboCoor[i+1]));
+			}
+	
+			double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
+			//double red = front[2]; //henter en rød farver fra den ene cirkel
+			double blue = front[0];
+			double green = front[1];
+			double red = front[2];
+	
+			System.out.println("Har farverne = "+(int)blue + (int)red+(int)green);
+	
+			double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
+			double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
+	
+			Punkt roboFrontPunkt = new Punkt(0,0);
+			Punkt roboBagPunkt = new Punkt(0,0);
+			// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
+			if(red > 245){
+				roboFrontPunkt.setX(Math.round(RoboCoor[0]));
+				roboFrontPunkt.setY(Math.round(RoboCoor[1]));
+				roboBagPunkt.setX(Math.round(RoboCoor[3]));
+				roboBagPunkt.setY(Math.round(RoboCoor[4]));
+				System.out.println("red");
+			} else if (red2 > 245){
+				roboFrontPunkt.setX(Math.round(RoboCoor[3]));
+				roboFrontPunkt.setY(Math.round(RoboCoor[4]));
+				roboBagPunkt.setX(Math.round(RoboCoor[0]));
+				roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				System.out.println("red2");
+			}
+			/* 
+			System.out.println("Dette er rød1 farven = " + red);
+			System.out.println("Dette er rød2 farven = " + red2);
+			 */
+	
+			float[] ballCoor = balls.findCircle(2, 6,2,1,50,5, 3,"ballMain"); // finder bolde 6,12,6
+	
+			RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
 		minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 		int tempx=minPunkt.getY();

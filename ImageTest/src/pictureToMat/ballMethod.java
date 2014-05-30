@@ -21,7 +21,7 @@ import org.opencv.core.CvType;
 public class ballMethod {  
 
 
-	public float[] findCircle(int minRadius, int maxRadius, int numberOfCircles){ 
+	public float[] findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, int numberOfCircles, String name){ 
 		
 		float[] Coordi;
 		Coordi = new float[numberOfCircles*3];
@@ -37,7 +37,7 @@ public class ballMethod {
 		frame1.setBounds(0, 0, frame1.getWidth(), frame1.getHeight());  
 		Panel panel1 = new Panel();  
 		frame1.setContentPane(panel1);  
-		frame1.setVisible(true);  
+		frame1.setVisible(false);  
 		
 		JFrame frame2 = new JFrame("HSV");  
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
@@ -63,7 +63,7 @@ public class ballMethod {
 		frame4.setVisible(false);
 		//-- 2. Read the video stream
 //		VideoCapture capture =new VideoCapture(0);  
-		Mat webcam_image = pictureToMat("Billed0.jpg");  //billede der skal findes bolde på.
+		Mat webcam_image = pictureToMat("Billed0.png");  //billede der skal findes bolde på.
 		Mat hsv_image=new Mat();  
 		Mat thresholded=new Mat();  
 		Mat thresholded2=new Mat();  
@@ -118,8 +118,11 @@ public class ballMethod {
 			// Apply the Hough Transform to find the circles  
 			Imgproc.GaussianBlur(thresholded, thresholded, new Size(9,9),0,0);
 			// STANDARD: Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, thresholded.height()/4, 500, 50, 0, 0);
-			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 1, 50, 5, minRadius, maxRadius);   
-			
+			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
+			//dp = 2
+			//minDist =1
+			//param1 = 50
+			//param2 = 5
 			
 			
 			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
@@ -162,7 +165,9 @@ public class ballMethod {
 			Core.putText(distance,String.format("("+String.valueOf(data[0])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
 					,1.0,new Scalar(100),3);   
 			//-- 5. Display the image  
-			panel1.setimagewithMat(webcam_image);  
+			panel1.setimagewithMat(webcam_image);
+			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
+
 			panel2.setimagewithMat(hsv_image);  
 			//panel2.setimagewithMat(S);  
 					//distance.convertTo(distance, CvType.CV_8UC1);  
@@ -186,7 +191,7 @@ public class ballMethod {
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-		// Mat image = Highgui.imread("test.JPG"); // BGR
+		// Mat image = Highgui.imread("test.png"); // BGR
 		Mat m = Highgui.imread(image); // BGR
 		// System.out.println(m.dump());
 		// int count = 0;
@@ -207,7 +212,7 @@ public class ballMethod {
 						break;
 					}
 					else*/ 
-					if (blue > 12 && blue < 110 && green > 100 && red < 110) { // finder grønne farver															// farver
+					if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder grønne farver															// farver
 						m.put(j, b, 0, 255, 0); 
 						break;
 					}
@@ -235,7 +240,7 @@ public class ballMethod {
 
 		Mat frame = new Mat();
 		frame = m.clone();
-		Highgui.imwrite("AfterColorConvert.jpg", frame); // Gemmer billedet i roden
+		Highgui.imwrite("AfterColorConvert.png", frame); // Gemmer billedet i roden
 		
 		return frame;
 		// System.out.println(image.dump());
