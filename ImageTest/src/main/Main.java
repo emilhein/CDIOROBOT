@@ -27,14 +27,14 @@ public class Main {
 
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
-		/*
+		
 		try {
 			BufferedImage src = ImageIO.read(new File("Billed0.jpg"));
 			DetectBorder findEdge = new DetectBorder();
 			findEdge.getRectCoordis(src);
 		} catch (IOException e) {
 			System.out.println("WIHIIHIHHIIH");
-		}*/
+		}
 		ballMethod balls = new ballMethod();
 
 		/*

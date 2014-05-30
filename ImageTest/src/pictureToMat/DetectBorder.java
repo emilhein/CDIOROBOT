@@ -73,7 +73,7 @@ public class DetectBorder {
 		        }
 		    }
 
-		    //cvRectangle(img, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
+		    cvRectangle(img, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
 
 		    pixPerCm = pixPerCm(greatest.width(), greatest.height());
 		    
