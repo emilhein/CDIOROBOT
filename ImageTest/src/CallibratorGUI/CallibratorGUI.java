@@ -317,7 +317,7 @@ public class CallibratorGUI  {
 
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
-
+ 
 				ballMethod balls = new ballMethod();
 
 				float[] RoboCoor = balls.findCircle(19, 28, 1,1,50,5,2,"robo"); // finder robo
