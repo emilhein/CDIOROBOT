@@ -1,6 +1,7 @@
 package pictureToMat;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
+import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_ADAPTIVE_THRESH_MEAN_C;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_CHAIN_APPROX_NONE;
@@ -33,7 +34,7 @@ public class DetectBorder {
 		private float innerHeight = 120;
 		private float innerWidth = 180;
 
-		private float pixPerCm = -1;
+		private static float pixPerCm = -1;
 		
 		public CvRect getRectCoordis(BufferedImage src) throws IOException
 		{		
@@ -94,7 +95,7 @@ public class DetectBorder {
 		    
 	        cnvs.showImage(img);
 		    
-	
+		    cvSaveImage("edge.png", img);
 		    
 		    return innerRect;
 
@@ -110,7 +111,7 @@ public class DetectBorder {
 			return pixPrCm;
 		}
 		
-		public float getPixPerCm()
+		public static float getPixPerCm()
 		{
 			return pixPerCm;
 		}
