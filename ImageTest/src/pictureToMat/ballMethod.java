@@ -74,7 +74,7 @@ public class ballMethod {
 		//-- 2. Read the video stream
 		
 		/**********************TESTKODE********************/
-		Mat webcam_img = pictureToMat("Billed0.png");
+		Mat webcam_img = pictureToMat2("Billed0.png");
 		Highgui.imwrite("brownThreshold.jpg", webcam_img);
 		
 		//load image
@@ -213,6 +213,43 @@ public class ballMethod {
 		}  
 		
 		return Coordi;  
+	}
+	
+	public static Mat pictureToMat2(String image)
+	{
+		// int[] test = new int[10];
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+		Mat m = Highgui.imread(image);
+
+		for (int j = 0; j < m.rows(); j++) {
+			for (int b = 0; b < m.cols(); b++) {
+				double[] rgb = m.get(j, b);
+				for (int i = 0; i < rgb.length; i = i + 3) {
+					double blue = rgb[i];
+					double green = rgb[i+1];
+					double red = rgb[i+2];
+					if (blue > 65 && green > 65 && red > 65) { // fandt kanten og farver hvid: blue > 80 && green > 80 && red > 80														// farver
+						//m.put(j, b, 255, 255, 255); 
+						break;
+					}
+					else
+					{
+						m.put(j, b, 0, 0, 0); // farver alt andet sort
+						break;
+					}
+				}
+
+			}
+		}
+
+
+		Mat frame = new Mat();
+		frame = m.clone();
+		Highgui.imwrite("AfterColorConvert.jpg", frame); // Gemmer billedet i roden
+
+		return frame;
+		// System.out.println(image.dump());
 	}
 
 	public static Mat pictureToMat(String image)
