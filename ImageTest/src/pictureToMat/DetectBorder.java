@@ -2,17 +2,13 @@ package pictureToMat;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_ADAPTIVE_THRESH_MEAN_C;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_CHAIN_APPROX_NONE;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_RETR_CCOMP;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_THRESH_BINARY;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_THRESH_BINARY_INV;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvAdaptiveThreshold;
+
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvBoundingRect;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvFindContours;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvThreshold;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,7 +21,6 @@ import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
 import com.googlecode.javacpp.Loader;
-import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.CvContour;
 import com.googlecode.javacv.cpp.opencv_core.CvMemStorage;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;

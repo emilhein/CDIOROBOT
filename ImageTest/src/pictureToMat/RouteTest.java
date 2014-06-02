@@ -1,7 +1,6 @@
 package pictureToMat;
 
 import dist.CalcDist;
-import dist.CalcAngle;
 import dist.Punkt;
 
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public class RouteTest {
 	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat frame = Highgui.imread("billed0.png"); /// SKal bruges til at lave et blank lærred..
+		System.out.println("koordinaterne$ til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
 
 		// farver hele matricen hvid
 		for (int j = 0; j < frame.rows(); j++) {
@@ -83,11 +83,11 @@ public class RouteTest {
 
 		
 		
-		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste bold rød
-		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste bold blå
+		paintPoint(frame, new Punkt(minPunkt.getX(), minPunkt.getY()), 255, 0, 0); // farver tætteste bold rød
+		paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255); // farver næsttætteste bold blå
 		
-		paintPoint(frame,new Punkt(roboBagPunkt.getY() + 10, roboBagPunkt.getX() + 10), 0, 255, 0); //
-		paintPoint(frame,new Punkt(roboFrontPunkt.getY() + 10, roboFrontPunkt.getX() + 10), 0, 255, 255); //
+		paintPoint(frame,new Punkt(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10), 0, 255, 0); //
+		paintPoint(frame,new Punkt(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10), 0, 255, 255); //
 		
 		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 2);
 		
@@ -106,7 +106,7 @@ public class RouteTest {
 	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl) {
 		for (int a = 0; a < 20; a++) {
 			for (int b = 0; b < 20; b++) {
-				frame.put(((p.getX() - 10) + a), ((p.getY() + b) - 10), bl, gr, re);
+				frame.put(((p.getY() - 10) + a), ((p.getX() + b) - 10), bl, gr, re);///KRÆVER Y FØR X
 
 			}
 		}

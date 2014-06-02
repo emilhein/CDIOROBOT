@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-import javax.swing.JFrame;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;

@@ -1,6 +1,5 @@
 package CallibratorGUI;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.opencv.core.Mat;
@@ -13,13 +12,9 @@ import dist.Punkt;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
@@ -326,8 +321,8 @@ public class CallibratorGUI  {
 				jl7.setText(input7);
 				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 
-				//TakePicture takepic = new TakePicture();
-				//takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
  
 				
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
@@ -343,7 +338,7 @@ public class CallibratorGUI  {
 				
 				ballMethod balls = new ballMethod();
 
-				float[] RoboCoor = balls.findCircle(18, 28, 1,1,50,5,2,"robo", true); // finder robo
+				float[] RoboCoor = balls.findCircle(16, 20, 1,1,50,5,2,"robo", true); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
@@ -388,11 +383,7 @@ public class CallibratorGUI  {
 
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
-				int tempx=minPunkt.getY();
-				int tempy=minPunkt.getX();
-				minPunkt.setX(tempx);
-				minPunkt.setY(tempy);
-
+			
 				System.out.println("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
 				System.out.println("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
 				System.out.println("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
