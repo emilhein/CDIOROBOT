@@ -44,12 +44,12 @@ public class ballMethod {
 		Mat webcam_image;
 		if(findRobot == true){
 			pictureToMat("billed0.png");
-			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes bolde på.
+			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes robot på.
 			System.out.println("IN TRUE");
 		}
 		else{
-			pictureToMat2("billed0.png");
-			webcam_image = Highgui.imread("readyForBallMethodGrey.png");  //billede der skal findes bolde på.
+			//pictureToMat2("billed0.png");
+			webcam_image = Highgui.imread("robo.png");  //billede der skal findes bolde på.
 			System.out.println("IN FALSE");
 		}
 		/************************SLUT**********************/
@@ -172,22 +172,18 @@ public class ballMethod {
 
 		Mat m = Highgui.imread(image);
 
-		for (int j = 0; j < m.rows(); j++) {
-			for (int b = 0; b < m.cols(); b++) {
+		for (int j = 0; j < m.rows(); j++) 
+		{
+			for (int b = 0; b < m.cols(); b++) 
+			{
 				double[] rgb = m.get(j, b);
-				for (int i = 0; i < rgb.length; i = i + 3) {
+				for (int i = 0; i < rgb.length; i = i + 3) 
+				{
 					double blue = rgb[i];
 					double green = rgb[i + 1];
 					double red = rgb[i + 2];
-					if (blue > 65 && green > 65 && red > 65) { // fandt kanten
-																// og farver
-																// hvid: blue >
-																// 80 && green >
-																// 80 && red >
-																// 80 // farver
-						// m.put(j, b, 255, 255, 255);
-						break;
-					} else {
+					if (blue <= 65 && green <= 65 && red <= 65) 
+					{
 						m.put(j, b, 0, 0, 0); // farver alt andet sort
 						break;
 					}
@@ -205,8 +201,7 @@ public class ballMethod {
 		IplImage img = cvLoadImage("AfterColorConvert.png");
 
 		// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
-		IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()),
-				IPL_DEPTH_8U, 1);
+		IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
 
 		// convert image to grayscale
 		cvCvtColor(img, imageGray, CV_BGR2GRAY);
