@@ -21,13 +21,13 @@ public class RouteTest {
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
-	static Punkt minPunkt;
-	static Punkt minPunkt2;
+	static Punkt minPunkt = new Punkt(60,100);
+	static Punkt minPunkt2 = new Punkt(400,150);
 	
 	
 	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat frame = Highgui.imread("Billed0.png"); /// SKal bruges til at lave et blank lærred..
+		Mat frame = Highgui.imread("billed0.png"); /// SKal bruges til at lave et blank lærred..
 
 		// farver hele matricen hvid
 		for (int j = 0; j < frame.rows(); j++) {
@@ -78,11 +78,6 @@ public class RouteTest {
 			}
 		}
 		
-		
-//		CalcAngle Angle = new CalcAngle();
-//		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
-//		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
-//		int TurnAngle = BallAngle - RoboAngle;
 
 		
 		
