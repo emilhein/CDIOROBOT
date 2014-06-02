@@ -21,8 +21,8 @@ public class RouteTest {
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
-	static Punkt minPunkt = new Punkt(30,30);
-	static Punkt minPunkt2 = new Punkt(40,40);
+	static Punkt minPunkt = new Punkt(300,150);
+	static Punkt minPunkt2 = new Punkt(10,900);
 	
 	
 	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
