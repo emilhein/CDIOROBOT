@@ -1,5 +1,4 @@
 package pictureToMat;
-import java.nio.Buffer;
 
 import org.opencv.core.*;
 import org.opencv.highgui.Highgui;        
