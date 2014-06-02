@@ -321,8 +321,8 @@ public class CallibratorGUI  {
 				jl7.setText(input7);
 				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 
-				//TakePicture takepic = new TakePicture();
-				//takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
  
 				
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
