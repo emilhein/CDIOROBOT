@@ -169,9 +169,7 @@ public class ballMethod {
 			}
 		}
 
-		Mat frame = new Mat();
-		frame = m.clone();
-		Highgui.imwrite("AfterColorConvert.png", frame); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 
 		// load image
@@ -216,8 +214,6 @@ public class ballMethod {
 			}
 		}
 
-		Mat frame = new Mat();
-		frame = m.clone();
 		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
@@ -277,9 +273,7 @@ public class ballMethod {
 			}
 		}
 
-		Mat frame = new Mat();
-		frame = m.clone();
-		Highgui.imwrite("AfterColorConvert.png", frame); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
 	
