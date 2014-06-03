@@ -1,7 +1,6 @@
 package pictureToMat;
 
 import dist.CalcDist;
-import dist.CalcAngle;
 import dist.Punkt;
 
 import java.util.ArrayList;
@@ -78,14 +77,6 @@ public class RouteTest {
 			}
 		}
 		
-		
-//		CalcAngle Angle = new CalcAngle();
-//		int BallAngle = Angle.Calcangle(roboBagPunkt, minPunkt);
-//		int RoboAngle = Angle.Calcangle(roboBagPunkt, roboFrontPunkt);
-//		int TurnAngle = BallAngle - RoboAngle;
-
-		
-		
 		paintPoint(frame, minPunkt, 255, 0, 0); // farver tætteste bold rød
 		paintPoint(frame, minPunkt2, 0, 0, 255); // farver næsttætteste bold blå
 		
@@ -93,9 +84,6 @@ public class RouteTest {
 		paintPoint(frame,new Punkt(roboFrontPunkt.getY() + 10, roboFrontPunkt.getX() + 10), 0, 255, 255); //
 		
 		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 2);
-		
-
-		
 		
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 		
