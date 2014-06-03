@@ -86,9 +86,6 @@ public class RouteTest {
 		
 		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 2);
 		
-
-		
-		
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 		
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");

@@ -27,7 +27,6 @@ public class Main {
 
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
-
 		DetectBorder findEdge = new DetectBorder();
 		try {
 
@@ -37,7 +36,6 @@ public class Main {
 		}
 
 		float ppcm = (int) findEdge.getPixPerCm(); 
-
 		ballMethod balls = new ballMethod();
 
 
@@ -49,6 +47,7 @@ public class Main {
 
 
 		float[] RoboCoor = balls.findCircle(6,13,2,2,1,50,2,"RoboMain");//minradius, maxrdius, antalbolde
+
 
 		Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 		for(int i = 0; i < RoboCoor.length;i=i+3){
@@ -83,7 +82,9 @@ public class Main {
 			System.out.println("Dette er rød2 farven = " + red2);
 		 */
 
+
 		float[] ballCoor = balls.findCircle(2, 6,2,1,50,5, 3,"ballMain"); // finder bolde 6,12,6
+
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
