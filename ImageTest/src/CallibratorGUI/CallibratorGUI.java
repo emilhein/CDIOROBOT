@@ -385,8 +385,8 @@ public class CallibratorGUI  {
 				jl9.setBounds(150, insets.top + 380, jl9.getPreferredSize().width, jl9.getPreferredSize().height);	
 
 
-				//TakePicture takepic = new TakePicture();
-				//takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
  
 				
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
