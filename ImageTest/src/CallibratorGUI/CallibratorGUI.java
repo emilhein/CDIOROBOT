@@ -348,7 +348,7 @@ public class CallibratorGUI  {
 				
 				ballMethod balls = new ballMethod();
 
-				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo"); // finder robo
+				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
@@ -395,7 +395,7 @@ public class CallibratorGUI  {
 					roboBagPunkt.setY(Math.round(RoboCoor[4]));
 				}
 				
-				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls");//minradius, maxrdius, antalbolde
+				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls",false);//minradius, maxrdius, antalbolde
 
 				
 
