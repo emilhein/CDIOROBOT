@@ -24,7 +24,7 @@ public class RouteTest {
 	static Punkt minPunkt2 = new Punkt(10,233);
 	
 	
-	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
+	public static Punkt drawBallMap(ArrayList<Float> Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
 /*
@@ -36,17 +36,17 @@ public class RouteTest {
 			}
 		}
 */	
-		for (int c = 0; c < Coordi.length; c = c + 3) {
+		for (int c = 0; c < Coordi.size(); c = c + 3) {
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 20; i++) {
 				for (int g = 0; g < 20; g++) {
-					frame.put(((Math.round(Coordi[c+1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
+					frame.put(((Math.round(Coordi.get(c+1))) + i), ((Math.round(Coordi.get(c))) + g), 0, 0, 0);
 
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
-			xCoor.add(Math.round(Coordi[c]));
-			yCoor.add(Math.round(Coordi[c + 1]));
+			xCoor.add(Math.round(Coordi.get(c)));
+			yCoor.add(Math.round(Coordi.get(c + 1)));
 		}
 		
 		//Dette for-loop finder det tætteste ppunkt på robotens front

@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
@@ -151,9 +152,9 @@ public class CallibratorGUI  {
 
 
 		txtDP.setText("1");
-		txtCirkleDIst.setText("5");
+		txtCirkleDIst.setText("20");
 		txtParameter1.setText("50");
-		txtParameter2.setText("5");
+		txtParameter2.setText("20");
 		txtMinradius.setText("8");
 		txtMaxradius.setText("18");
 		txtBallCount.setText("13");
@@ -404,11 +405,11 @@ public class CallibratorGUI  {
 
 
 				
-				float[] RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),2,"robo",true);//minradius, maxrdius, antalbolde
+				ArrayList<Float> RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"robo",true);//minradius, maxrdius, antalbolde
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
-				for(int j = 0; j<RoboCoor.length;j=j+3){
+				for(int j = 0; j<RoboCoor.size();j=j+3){
 
 
 					txtArea1  = new JTextArea ("Forholdet mellem pixel og cm er = " + ppcm, 1,1);
@@ -420,12 +421,12 @@ public class CallibratorGUI  {
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
-				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///Y OG X ER BYTTET OM GConnectDET get-metoden
+				double[] front = frame.get(Math.round(RoboCoor.get(1)), Math.round(RoboCoor.get(0))); ///Y OG X ER BYTTET OM GConnectDET get-metoden
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
 				double green = front[1];
 				double red = front[2];
 
-				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); ///
+				double[] back = frame.get(Math.round(RoboCoor.get(4)), Math.round(RoboCoor.get(3))); ///
 				double green2 = back[1];
 				double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
 
@@ -433,28 +434,28 @@ public class CallibratorGUI  {
 				Punkt roboBagPunkt = new Punkt(20,20);
 				// heConnectder sættes robotpunket, alt efter hvilken cirkel der er rød.
 				if(red > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
-					roboBagPunkt.setX(Math.round(RoboCoor[3]));
-					roboBagPunkt.setY(Math.round(RoboCoor[4]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
 				} else if (red2 > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
-					roboBagPunkt.setX(Math.round(RoboCoor[0]));
-					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
 				} else if(green > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
-					roboBagPunkt.setX(Math.round(RoboCoor[0]));
-					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
 				} else if (green2 > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
-					roboBagPunkt.setX(Math.round(RoboCoor[3]));
-					roboBagPunkt.setY(Math.round(RoboCoor[4]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
 				}
 				
-				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls",false);//minradius, maxrdius, antalbolde
+				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
 
 				
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
@@ -564,7 +565,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.131);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.1309);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes

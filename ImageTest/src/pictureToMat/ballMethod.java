@@ -37,12 +37,13 @@ import org.opencv.core.CvType;
 import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+import java.util.ArrayList;
+
 public class ballMethod {
 
-	public float[] findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, int numberOfCircles, String name, Boolean findRobot){ 
+	public ArrayList<Float> findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 		
-		float[] Coordi;
-		Coordi = new float[numberOfCircles*3];
+		ArrayList<Float> Coordi = new ArrayList<Float>();
 		int ballnr = 0;
 				
 		// Load the native library.  
@@ -113,14 +114,16 @@ public class ballMethod {
 			System.out.println("Cols: " + circles.cols());
 						
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
-			float[] data2 = new float[rows * elemSize/4];  
+			float[] data2 = new float[3];  
 			if (data2.length>0){ 
 					for(int c=0; c<circles.cols(); c++)
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-						Coordi[ballnr] = data2[0]; // x -koordinate
-						Coordi[ballnr+1] = data2[1]; //y - koordinate
-						Coordi[ballnr+2] = data2[2]; //radius
+						System.out.println("ballnr: " + ballnr);
+						System.out.println("data2[0]: " + data2[0]);
+						Coordi.add(data2[0]); // x -koordinate
+						Coordi.add(data2[1]); //y - koordinate
+						Coordi.add(data2[2]); //radius
 						ballnr = ballnr+3; // radius
 						Point center= new Point(data2[0], data2[1]);  
 						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
@@ -203,12 +206,12 @@ public class ballMethod {
 					double green = rgb[i + 1];
 					double red = rgb[i + 2];
 
-					/*if (blue <= 100 && green <= 100 && red <= 100) // for mørkt
+					/*if (blue <= 100 && green <= 100 && red <= 100) // for mï¿½rkt
 					{
 						m.put(j, b, 0, 0, 0);
 						break;
 					}*/
-					if ((blue > 80 || green > 80 || red > 80) && !(blue > 130 && green > 130 && red > 130)) { // for grønt
+					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) { // for grï¿½nt
 						m.put(j, b, 0, 0, 0);
 						break;
 					}
