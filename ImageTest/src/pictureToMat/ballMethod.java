@@ -53,8 +53,8 @@ public class ballMethod {
 				//-- 2. Read the video stream
 		 
 		/**********************TESTKODE********************/
-		CanvasFrame cnvs=new CanvasFrame("Polygon");
-        cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+	//	CanvasFrame cnvs=new CanvasFrame("Polygon");
+    //    cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		
 		
 		Mat webcam_image;
@@ -63,11 +63,15 @@ public class ballMethod {
 			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes robot på.
 			System.out.println("IN TRUE");
 		}
+<<<<<<< HEAD
 		else{
 			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde på.
+=======
+		else{
+			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde p�.
+>>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 
 			// Save
-			Highgui.imwrite("testP3.png", webcam_image);
 			System.out.println("IN FALSE");
 		}
 		/************************SLUT**********************/
@@ -244,7 +248,7 @@ public class ballMethod {
 
 		Mat frame = new Mat();
 		frame = m.clone();
-		Highgui.imwrite("readyForBallMethod.png", frame); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", frame); // Gemmer billedet i
 															// roden
 	}
 	
