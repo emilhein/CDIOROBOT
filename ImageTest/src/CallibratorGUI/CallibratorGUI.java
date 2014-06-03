@@ -402,15 +402,12 @@ public class CallibratorGUI  {
 				
 				ballMethod balls = new ballMethod();
 
-<<<<<<< HEAD
-				float[] RoboCoor = balls.findCircle(19, 28, 1,10,50,5,2,"robo", true); // finder robo
-=======
+
 				
 				float[] RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),2,"robo",true);//minradius, maxrdius, antalbolde
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
