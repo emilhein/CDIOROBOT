@@ -514,7 +514,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (TurnAngle*2)-2;	//vinkel konvertering
+						int angle = (TurnAngle*2);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -542,7 +542,7 @@ public class CallibratorGUI  {
 						Thread.sleep(2000);
 						//kører robot frem
 						System.out.println("minlength " + minLength);
-						int distance = (int)((minLength*2.5)/ppcm);	//længde konvertering
+						int distance = (int)((minLength*2.8)/ppcm);	//længde konvertering
 						System.out.println("dist = " + distance);
 						dos.write(81);
 						dos.flush();
