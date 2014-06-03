@@ -63,13 +63,8 @@ public class ballMethod {
 			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes robot på.
 			System.out.println("IN TRUE");
 		}
-<<<<<<< HEAD
 		else{
 			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde på.
-=======
-		else{
-			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde p�.
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 
 			// Save
 			System.out.println("IN FALSE");
@@ -113,6 +108,8 @@ public class ballMethod {
 			System.out.println("lll");
 			
 			int rows = circles.rows();
+			
+			System.out.println("ROWS: " + rows);
 						
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
