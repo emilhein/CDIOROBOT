@@ -64,11 +64,7 @@ public class ballMethod {
 			System.out.println("IN TRUE");
 		}
 		else{
-<<<<<<< HEAD
-			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde på.
-=======
 			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde pÃ¥.
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 
 			// Save
 			Highgui.imwrite("testP3.png", webcam_image);
