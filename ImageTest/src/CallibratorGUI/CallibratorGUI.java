@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
@@ -27,45 +28,12 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnConnect, btnSend;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lblromin, lblromax;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
 	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax;
 	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
 	static JTextArea txtArea1;
-
-//
-//	
-//	private void updateTxtArea1(final String text) {
-//	    SwingUtilities.invokeLater(new Connectnable() {
-//	      public void Connect() {
-//	        txtArea1.append(text);
-//	      }
-//	    });
-//	  }
-//
-//	private void redirectSystemStreams() {
-//	    OutputStream out = new OutputStream() {
-//	      @Override
-//	      public void write(int b) throws IOException {
-//	        updateTxtArea1(String.valueOf((char) b));
-//	      }
-//
-//	      @Override
-//	      public void write(byte[] b, int off, int len) throws IOException {
-//	        updateTxtArea1(new String(b, off, len));
-//	      }
-//
-//	      @Override
-//	      public void write(byte[] b) throws IOException {
-//	        write(b, 0, b.length);
-//	      }
-//	    };
-//	
-//	    System.setOut(new PrintStream(out, true));
-//	    System.setErr(new PrintStream(out, true));
-//	  }
-//
-//	
+	
 	static int TurnAngle = 0;
 	static int minLength = 0;
 	static float ppcm = 0;
@@ -73,13 +41,8 @@ public class CallibratorGUI  {
 	
 	
 	public static void main (String args[]){
-
-		
-
 		
 		//Opretter rammen
-
-
 		frame1 = new JFrame ("CallibratorGUI");
 
 		//Sætter størrelsen af rammen i pixelx 
@@ -93,8 +56,6 @@ public class CallibratorGUI  {
 		//tilføj layout for null
 		pane.setLayout (null);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
 
 		ImageIcon afterc = new ImageIcon("billed0.png");
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
@@ -113,7 +74,6 @@ public class CallibratorGUI  {
 		lbledge = new JLabel (edge, JLabel.CENTER);
 
 
-
 		btnConnect = new JButton ("Connect");
 		btnSend = new JButton ("Send");
 		btnApply = new JButton ("Apply");
@@ -129,6 +89,9 @@ public class CallibratorGUI  {
 
 		txtArea1 = new JTextArea (1, 1);
 		lbltxt = new JLabel ();
+		lbltxt2 = new JLabel ();
+		lbltxt3 = new JLabel ();
+		lbltxt4 = new JLabel ();
 		jl1 = new JLabel ();
 		jl2 = new JLabel ();
 		jl3 = new JLabel ();
@@ -148,12 +111,11 @@ public class CallibratorGUI  {
 		txtromin = new JTextField (10);
 		txtromax = new JTextField (10);
 
-
-
+		
 		txtDP.setText("1");
-		txtCirkleDIst.setText("5");
+		txtCirkleDIst.setText("20");
 		txtParameter1.setText("50");
-		txtParameter2.setText("5");
+		txtParameter2.setText("20");
 		txtMinradius.setText("8");
 		txtMaxradius.setText("18");
 		txtBallCount.setText("13");
@@ -194,12 +156,15 @@ public class CallibratorGUI  {
 		pane.add (lblfindb);
 		pane.add (lblbh);
 		pane.add (lbltxt);
+		pane.add (lbltxt2);
+		pane.add (lbltxt2);
+		pane.add (lbltxt4);
 		pane.add (txtArea1);
 		pane.add (lbledge);
-		pane.add(lblromin);
-		pane.add(lblromax);
-		pane.add(txtromin);
-		pane.add(txtromax);
+		pane.add (lblromin);
+		pane.add (lblromax);
+		pane.add (txtromin);
+		pane.add (txtromax);
 		
 		
 		//		//Placerer alle kompoenter
@@ -404,11 +369,11 @@ public class CallibratorGUI  {
 
 
 				
-				float[] RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),2,"robo",true);//minradius, maxrdius, antalbolde
+				ArrayList<Float> RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"robo",true);//minradius, maxrdius, antalbolde
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
-				for(int j = 0; j<RoboCoor.length;j=j+3){
+				for(int j = 0; j<RoboCoor.size();j=j+3){
 
 
 					txtArea1  = new JTextArea ("Forholdet mellem pixel og cm er = " + ppcm, 1,1);
@@ -420,12 +385,12 @@ public class CallibratorGUI  {
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
-				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///Y OG X ER BYTTET OM GConnectDET get-metoden
+				double[] front = frame.get(Math.round(RoboCoor.get(1)), Math.round(RoboCoor.get(0))); ///Y OG X ER BYTTET OM GConnectDET get-metoden
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
 				double green = front[1];
 				double red = front[2];
 
-				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); ///
+				double[] back = frame.get(Math.round(RoboCoor.get(4)), Math.round(RoboCoor.get(3))); ///
 				double green2 = back[1];
 				double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
 
@@ -433,36 +398,37 @@ public class CallibratorGUI  {
 				Punkt roboBagPunkt = new Punkt(20,20);
 				// heConnectder sættes robotpunket, alt efter hvilken cirkel der er rød.
 				if(red > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
-					roboBagPunkt.setX(Math.round(RoboCoor[3]));
-					roboBagPunkt.setY(Math.round(RoboCoor[4]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
 				} else if (red2 > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
-					roboBagPunkt.setX(Math.round(RoboCoor[0]));
-					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
 				} else if(green > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
-					roboBagPunkt.setX(Math.round(RoboCoor[0]));
-					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
 				} else if (green2 > 245){
-					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
-					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
-					roboBagPunkt.setX(Math.round(RoboCoor[3]));
-					roboBagPunkt.setY(Math.round(RoboCoor[4]));
+					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
 				}
 				
-				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls",false);//minradius, maxrdius, antalbolde
+				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
 
 				
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
-			
-				System.out.println("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");
-				System.out.println("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-				System.out.println("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
+				
+				lbltxt2.setText("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");	
+				lbltxt3.setText("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
+				lbltxt4.setText ("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
+						
 
 				Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
 				Punkt nyRoboBag = new Punkt(0,0);
@@ -494,13 +460,11 @@ public class CallibratorGUI  {
 				//lblimg = new JLabel (img, JLabel.CENTER);
 
 
-
 				ImageIcon findb = new ImageIcon("robo.png");
 				Image image3 = findb.getImage(); // transform it
 				Image abimage = image3.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				findb = new ImageIcon(abimage);  // transform it back
 				//lblfindb = new JLabel (findb, JLabel.CENTER);
-
 
 
 				ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
@@ -527,14 +491,14 @@ public class CallibratorGUI  {
 				lbledge.setBounds(1010, insets.top + 6, lbledge.getPreferredSize().width, lbledge.getPreferredSize().height);
 				
 				lbltxt.setBounds(200, insets.top + 500, lbltxt.getPreferredSize().width, 10);
-
-//				txtArea1.setText(String);
-//				txtArea1.append(String);
+				lbltxt2.setBounds(200, insets.top + 515, lbltxt2.getPreferredSize().width, 10);
+				lbltxt3.setBounds(200, insets.top + 530, lbltxt3.getPreferredSize().width, 10);
+				lbltxt4.setBounds (200, insets.top + 545, lbltxt4.getPreferredSize().width, 10);
 				
 			}
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt);
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
 
 		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 470, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
@@ -555,7 +519,6 @@ public class CallibratorGUI  {
 					System.out.println("connected");		//forbundet
 					//åbner streams}
 					OutputStream dos = connt.getOutputStream();
-					//InputStream dis = connt.getInputStream();
 					
 				//	Scanner scan = new Scanner(System.in);
 				//	while(true){
@@ -565,7 +528,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.1309);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -583,18 +546,13 @@ public class CallibratorGUI  {
 						dos.flush();
 						dos.write(angle);			//sender vinkel
 						dos.flush();
- 
-						//				//venter på at motorerne ikke kører længere
-						//				int u = dis.read();			
-						//				while(u==1){
-						//					u = dis.read();
-						//				}
 
 						Thread.sleep(1500);
 						dos.write(61);			//sender case
 						dos.flush();
 						dos.write(61);			//sender vinkel
 						dos.flush();
+						Thread.sleep(500);
 						//kører robot frem
 						System.out.println("minlength " + minLength);
 						int distance = (int)((minLength*2.3)/ppcm);	//længde konvertering
@@ -605,13 +563,7 @@ public class CallibratorGUI  {
 						dos.write(i);
 						dos.flush();
 
-//										//venter på at motorerne ikke kører længere
-//										int j = dis.read();			
-//										while(j==1){
-//											j = dis.read();
-//										}
-
-						Thread.sleep((15*distance));
+						Thread.sleep((18*distance));
 
 						//samler bold op
 						dos.write(71);				
@@ -643,11 +595,6 @@ public class CallibratorGUI  {
 			}
 		});
 
-		
-		
-		
-		
-
 		//Gør rammen synlig
 		frame1.setVisible (true);
 
@@ -658,7 +605,5 @@ public class CallibratorGUI  {
 		catch (IllegalAccessException e) {}
 		catch (UnsupportedLookAndFeelException e) {}		
 	}
-
-
 
 }
