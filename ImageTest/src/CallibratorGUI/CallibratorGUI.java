@@ -27,8 +27,8 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnConnect, btnSend;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt;
-	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lblromin, lblromax;
+	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax;
 	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
 	static JTextArea txtArea1;
@@ -118,6 +118,8 @@ public class CallibratorGUI  {
 		btnSend = new JButton ("Send");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
+		lblromin = new JLabel ("RoboMin");
+		lblromax = new JLabel ("RoboMax");
 		lblCirkleDIst = new JLabel ("Cirkle Dist:");
 		lblParameter1 = new JLabel ("Parameter 1:");
 		lblParameter2 = new JLabel ("Parameter 2:");
@@ -134,6 +136,8 @@ public class CallibratorGUI  {
 		jl5 = new JLabel ();
 		jl6 = new JLabel ();
 		jl7 = new JLabel();
+		jl8 = new JLabel();
+		jl9 = new JLabel();
 		txtDP = new JTextField (10);
 		txtCirkleDIst = new JTextField  (10);
 		txtParameter1 = new JTextField  (10);
@@ -141,6 +145,8 @@ public class CallibratorGUI  {
 		txtMinradius = new JTextField  (10);
 		txtMaxradius = new JTextField  (10);
 		txtBallCount = new JTextField (10);
+		txtromin = new JTextField (10);
+		txtromax = new JTextField (10);
 
 
 
@@ -151,6 +157,8 @@ public class CallibratorGUI  {
 		txtMinradius.setText("8");
 		txtMaxradius.setText("18");
 		txtBallCount.setText("13");
+		txtromin.setText("19");
+		txtromax.setText("28");
 		
 		
 		//Tilføjer alle komponenter
@@ -161,6 +169,8 @@ public class CallibratorGUI  {
 		pane.add (jl5);
 		pane.add (jl6);
 		pane.add (jl7);
+		pane.add(jl8);
+		pane.add(jl9);
 		pane.add (lblDP);
 		pane.add (lblCirkleDIst);
 		pane.add (lblParameter1);
@@ -186,7 +196,12 @@ public class CallibratorGUI  {
 		pane.add (lbltxt);
 		pane.add (txtArea1);
 		pane.add (lbledge);
-
+		pane.add(lblromin);
+		pane.add(lblromax);
+		pane.add(txtromin);
+		pane.add(txtromax);
+		
+		
 		//		//Placerer alle kompoenter
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
 		txtDP.setBounds (txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
@@ -288,12 +303,42 @@ public class CallibratorGUI  {
 				jl7.setBounds(150, insets.top + 20, jl7.getPreferredSize().width, jl7.getPreferredSize().height);	
 			}		
 		});
-		frame1.add(jl1);
+		frame1.add(jl7);
 
 
+		lblromin.setBounds (lblromin.getX() + lblromin.getWidth() + 5, insets.top + 320, lblromin.getPreferredSize().width, lblromin.getPreferredSize().height);
+		txtromin.setBounds (txtromin.getX() + txtromin.getWidth() + 5, insets.top + 335, txtromin.getPreferredSize().width, txtromin.getPreferredSize().height);
 
+		
+		txtromin.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input8 = txtromin.getText();
+				jl8.setText(input8);
+				jl8.setBounds(150, insets.top + 335, jl8.getPreferredSize().width, jl8.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl8);
 
-		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 320, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
+		
+		lblromax.setBounds (lblromax.getX() + lblromax.getWidth() + 5, insets.top + 365, lblromax.getPreferredSize().width, lblromax.getPreferredSize().height);
+		txtromax.setBounds (txtromax.getX() + txtromax.getWidth() + 5, insets.top + 380, txtromax.getPreferredSize().width, txtromax.getPreferredSize().height);
+
+		
+		txtromax.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input9 = txtromax.getText();
+				jl9.setText(input9);
+				jl9.setBounds(150, insets.top + 380, jl9.getPreferredSize().width, jl9.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl9);
+
+		
+		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 420, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
 
 		btnApply.addActionListener(new ActionListener()
 		{
@@ -330,6 +375,15 @@ public class CallibratorGUI  {
 				String input7 = txtBallCount.getText();
 				jl7.setText(input7);
 				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
+				
+				String input8 = txtromin.getText();
+				jl8.setText(input8);
+				jl8.setBounds(150, insets.top + 335, jl8.getPreferredSize().width, jl8.getPreferredSize().height);	
+
+				String input9 = txtromax.getText();
+				jl9.setText(input9);
+				jl9.setBounds(150, insets.top + 380, jl9.getPreferredSize().width, jl9.getPreferredSize().height);	
+
 
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
@@ -398,7 +452,6 @@ public class CallibratorGUI  {
 				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls",false);//minradius, maxrdius, antalbolde
 
 				
-
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
 			
@@ -423,18 +476,11 @@ public class CallibratorGUI  {
 				CalcDist dist = new CalcDist();
 				minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
 
-				
-
-				
-				
-
 				ImageIcon afterc = new ImageIcon("billed0.png");
 				Image image1 = afterc.getImage(); // transform it
 				Image afimage = image1.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				afterc = new ImageIcon(afimage);  // transform it back
 				//lblafterc = new JLabel (afterc, JLabel.CENTER);
-
-
 
 				ImageIcon img = new ImageIcon("RouteTest3.png");
 				Image image2 = img.getImage(); // transform it
@@ -460,7 +506,7 @@ public class CallibratorGUI  {
 				
 				ImageIcon edge = new ImageIcon("edge.png");
 				Image image5 = edge.getImage(); // transform it
-				Image edimage = image5.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+				Image edimage = image5.getScaledInstance(300, 169,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				edge = new ImageIcon(edimage);  // transform it back
 				
 				lblimg.setIcon(img);
@@ -483,9 +529,9 @@ public class CallibratorGUI  {
 			}
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt);
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt);
 
-		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 75, insets.top + 320, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
+		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 470, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 		btnConnect.addActionListener(new ActionListener()
 		{
@@ -575,7 +621,7 @@ public class CallibratorGUI  {
 			}
 		});
 		
-		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 75, insets.top + 350, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
+		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 5, insets.top + 520, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
 
 		btnSend.addActionListener(new ActionListener()
 		{
