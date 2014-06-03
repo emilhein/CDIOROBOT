@@ -64,7 +64,8 @@ public class ballMethod {
 			System.out.println("IN TRUE");
 		}
 		else{
-			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde pÃ¥.
+			pictureToMat3("billed0.png");
+			webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes bolde pÃ¥.
 
 			// Save
 			System.out.println("IN FALSE");
@@ -114,7 +115,7 @@ public class ballMethod {
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
 			if (data2.length>0){ 
-					for(int c=0; c<numberOfCircles; c++)
+					for(int c=0; c<circles.cols(); c++)
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
 						Coordi[ballnr] = data2[0]; // x -koordinate
@@ -177,15 +178,48 @@ public class ballMethod {
 		IplImage img = cvLoadImage("AfterColorConvert.png");
 
 		// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
-		IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
+		//IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
 
 		// convert image to grayscale
-		cvCvtColor(img, imageGray, CV_BGR2GRAY);
+		//cvCvtColor(img, imageGray, CV_BGR2GRAY);
 		// cvAdaptiveThreshold(imageGray, imageGray, 255,
 		// CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 4);
 
 		// Save
-		cvSaveImage("readyForBallMethodGrey.png", imageGray);
+		//cvSaveImage("readyForBallMethodGrey.png", imageGray);
+	}
+	
+	public static void pictureToMat3(String image) {
+		
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+		Mat m = Highgui.imread(image);
+
+		for (int j = 0; j < m.rows(); j++) {
+			for (int b = 0; b < m.cols(); b++) {
+				double[] rgb = m.get(j, b);
+				for (int i = 0; i < rgb.length; i = i + 3) {
+					double blue = rgb[i];
+					double green = rgb[i + 1];
+					double red = rgb[i + 2];
+
+					/*if (blue <= 100 && green <= 100 && red <= 100) // for mørkt
+					{
+						m.put(j, b, 0, 0, 0);
+						break;
+					}*/
+					if ((blue > 80 || green > 80 || red > 80) && !(blue > 130 && green > 130 && red > 130)) { // for grønt
+						m.put(j, b, 0, 0, 0);
+						break;
+					}
+				}
+			}
+		}
+
+		Mat frame = new Mat();
+		frame = m.clone();
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
+															// roden
 	}
 
 	public static void pictureToMat(String image) {
