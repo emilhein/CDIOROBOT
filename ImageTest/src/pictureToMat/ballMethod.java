@@ -8,10 +8,22 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+
+
+
+
+
+import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -52,7 +64,11 @@ public class ballMethod {
 			System.out.println("IN TRUE");
 		}
 		else{
+<<<<<<< HEAD
+			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde på.
+=======
 			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde pÃ¥.
+>>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 
 			// Save
 			Highgui.imwrite("testP3.png", webcam_image);
@@ -235,5 +251,30 @@ public class ballMethod {
 		Highgui.imwrite("readyForBallMethod.png", frame); // Gemmer billedet i
 															// roden
 	}
+	
+	
+    public void invertImage(String imageName) {
+    	BufferedImage inputFile;
+    	try {
+    		inputFile = ImageIO.read(new File(imageName));
 
+
+    		for (int x = 0; x < inputFile.getWidth(); x++) {
+    			for (int y = 0; y < inputFile.getHeight(); y++) {
+    				int rgba = inputFile.getRGB(x, y);
+    				Color col = new Color(rgba, true);
+    				col = new Color(255 + col.getRed(),
+    								255 + col.getGreen(),
+    								255 + col.getBlue());
+    				inputFile.setRGB(x, y, col.getRGB());
+    			}
+    		}
+    		File outputFile = new File("invert-"+imageName);
+    		ImageIO.write(inputFile, "png", outputFile);
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    }
 }
