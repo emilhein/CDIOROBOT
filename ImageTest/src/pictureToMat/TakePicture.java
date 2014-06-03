@@ -1,5 +1,4 @@
 package pictureToMat;
-import java.nio.Buffer;
 
 import org.opencv.core.*;
 import org.opencv.highgui.Highgui;        
@@ -28,8 +27,13 @@ public class TakePicture {
     	    		System.out.println("Frame Obtained");
     	    		System.out.println("Captured Frame Width " + 
     	    		frame.width() + " Height " + frame.height());
+    	    		
     	    		//	Highgui.imwrite("C:/Users/Emil/Desktop/Pictures/Billed"+i+".jpg", frame);
     	    			Highgui.imwrite("billed0.png", frame);
+    	  
+
+
+
     	    		}
     	    		System.out.println("Picture saved");
     	    		

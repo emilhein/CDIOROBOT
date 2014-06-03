@@ -27,18 +27,15 @@ public class Main {
 
 		TakePicture takepic = new TakePicture(); //tager et billed og gemmer i roden af projektet.
 		takepic.takePicture();
-
-
+		DetectBorder findEdge = new DetectBorder();
 		try {
-			BufferedImage src = ImageIO.read(new File("Billed0.png"));
-			DetectBorder findEdge = new DetectBorder();
-			findEdge.getRectCoordis(src);
+
+			findEdge.getRectCoordis("Billed0.png");
 		} catch (IOException e) {
 			System.out.println("WIHIIHIHHIIH");
 		}
 
-		int ppcm = (int) DetectBorder.getPixPerCm(); 
-
+		float ppcm = (int) findEdge.getPixPerCm(); 
 		ballMethod balls = new ballMethod();
 
 
@@ -48,8 +45,8 @@ public class Main {
 		 *Standardværdier for disse argumenter plejer at være 4,8,19 eller 30,40,2
 		 */
 
+		float[] RoboCoor = balls.findCircle(6,13,2,2,1,50,2,"RoboMain",true);//minradius, maxrdius, antalbolde
 
-		float[] RoboCoor = balls.findCircle(6,13,2,2,1,50,2,"RoboMain");//minradius, maxrdius, antalbolde
 
 		Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 		for(int i = 0; i < RoboCoor.length;i=i+3){
@@ -84,7 +81,9 @@ public class Main {
 			System.out.println("Dette er rød2 farven = " + red2);
 		 */
 
-		float[] ballCoor = balls.findCircle(2, 6,2,1,50,5, 3,"ballMain"); // finder bolde 6,12,6
+
+		float[] ballCoor = balls.findCircle(2, 6,2,1,50,5, 3,"ballMain",false); // finder bolde 6,12,6
+
 
 		RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 
@@ -160,7 +159,7 @@ public class Main {
 
 				Thread.sleep(2000);
 				//kører robot frem
-				int distance = (minLength/2)/ppcm;	//længde konvertering
+				int distance = (int)((minLength/2)/ppcm);	//længde konvertering
 				System.out.println("dist = " + distance);
 				dos.write(81);
 				dos.flush();

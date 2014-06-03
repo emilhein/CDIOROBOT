@@ -12,5 +12,5 @@ public class CalcAngle {
 		int angle = (int) Math.toDegrees(Math.atan2(delta_y, delta_x));
 
 		return angle;
-	}
+	} 
 }
