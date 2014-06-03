@@ -125,8 +125,7 @@ public class DetectBorder {
 			return pixPerCm;
 		}
 		
-		public void brownThreshold(String image)
-		{
+		public void brownThreshold(String image){
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 
@@ -152,6 +151,7 @@ public class DetectBorder {
 
 				}
 			}
+
 
 			Highgui.imwrite("BrownThreshold.png", img); // Gemmer billedet i roden
 		}
