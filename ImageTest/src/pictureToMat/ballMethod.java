@@ -60,7 +60,7 @@ public class ballMethod {
 		Mat webcam_image;
 		if(findRobot == true){
 			pictureToMat("billed0.png");
-			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes robot på.
+			webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes robot på.
 			System.out.println("IN TRUE");
 		}
 		else{
