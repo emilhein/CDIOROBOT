@@ -99,7 +99,7 @@ public class CallibratorGUI  {
 		ImageIcon findb = new ImageIcon("robo.png");
 		lblfindb = new JLabel (findb, JLabel.CENTER);
 
-		ImageIcon bh = new ImageIcon("readyForBallMethodGrey.png");
+		ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
 		lblbh = new JLabel (bh, JLabel.CENTER);
 		
 		ImageIcon edge = new ImageIcon("edge.png");
@@ -338,7 +338,7 @@ public class CallibratorGUI  {
 				
 				ballMethod balls = new ballMethod();
 
-				float[] RoboCoor = balls.findCircle(16, 20, 1,1,50,5,2,"robo", true); // finder robo
+				float[] RoboCoor = balls.findCircle(19, 25, 1,1,50,5,2,"robo", true); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
@@ -503,7 +503,7 @@ public class CallibratorGUI  {
 
 
 
-				ImageIcon bh = new ImageIcon("readyForBallMethodGrey.png");
+				ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
 				Image image4 = bh.getImage(); // transform it
 				Image acimage = image4.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				bh = new ImageIcon(acimage);  // transform it back
