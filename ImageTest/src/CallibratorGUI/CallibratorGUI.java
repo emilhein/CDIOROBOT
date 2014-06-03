@@ -555,7 +555,6 @@ public class CallibratorGUI  {
 					System.out.println("connected");		//forbundet
 					//åbner streams}
 					OutputStream dos = connt.getOutputStream();
-					//InputStream dis = connt.getInputStream();
 					
 				//	Scanner scan = new Scanner(System.in);
 				//	while(true){
@@ -565,7 +564,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.131);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -583,18 +582,13 @@ public class CallibratorGUI  {
 						dos.flush();
 						dos.write(angle);			//sender vinkel
 						dos.flush();
- 
-						//				//venter på at motorerne ikke kører længere
-						//				int u = dis.read();			
-						//				while(u==1){
-						//					u = dis.read();
-						//				}
 
 						Thread.sleep(1500);
 						dos.write(61);			//sender case
 						dos.flush();
 						dos.write(61);			//sender vinkel
 						dos.flush();
+						Thread.sleep(500);
 						//kører robot frem
 						System.out.println("minlength " + minLength);
 						int distance = (int)((minLength*2.3)/ppcm);	//længde konvertering
@@ -605,13 +599,7 @@ public class CallibratorGUI  {
 						dos.write(i);
 						dos.flush();
 
-//										//venter på at motorerne ikke kører længere
-//										int j = dis.read();			
-//										while(j==1){
-//											j = dis.read();
-//										}
-
-						Thread.sleep((15*distance));
+						Thread.sleep((18*distance));
 
 						//samler bold op
 						dos.write(71);				
