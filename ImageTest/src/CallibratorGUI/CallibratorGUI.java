@@ -532,7 +532,7 @@ public class CallibratorGUI  {
 						dos.flush();
 						dos.write(angle);			//sender vinkel
 						dos.flush();
-
+ 
 						//				//venter på at motorerne ikke kører længere
 						//				int u = dis.read();			
 						//				while(u==1){
