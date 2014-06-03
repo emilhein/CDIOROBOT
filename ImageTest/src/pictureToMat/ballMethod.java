@@ -8,10 +8,21 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.List;
 
+
+
+
+
+
+
+
+import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -22,6 +33,7 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.CvType;
 
+import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 public class ballMethod {
@@ -40,6 +52,10 @@ public class ballMethod {
 				//-- 2. Read the video stream
 		 
 		/**********************TESTKODE********************/
+		CanvasFrame cnvs=new CanvasFrame("Polygon");
+        cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		
+		
 		Mat webcam_image;
 		if(findRobot == true){
 			pictureToMat("billed0.png");
@@ -47,82 +63,50 @@ public class ballMethod {
 			System.out.println("IN TRUE");
 		}
 		else{
-			//pictureToMat2("billed0.png");
-			webcam_image = Highgui.imread("robo.png");  //billede der skal findes bolde på.
+			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde på.
+
+			// Save
+			Highgui.imwrite("testP3.png", webcam_image);
 			System.out.println("IN FALSE");
 		}
 		/************************SLUT**********************/
-		
-//		VideoCapture capture =new VideoCapture(0);  
-		//Mat webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes bolde på.
-		Mat hsv_image=new Mat();  
-		Mat thresholded=new Mat();  
-		Mat thresholded2=new Mat();  
+ 
 		//capture.read(webcam_image);  
 		Mat array255=new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);  
-		array255.setTo(new Scalar(255));  
-		/*Mat S=new Mat();  
-	     S.ones(new Size(hsv_image.width(),hsv_image.height()),CvType.CV_8UC1);  
-	     Mat V=new Mat();  
-	     V.ones(new Size(hsv_image.width(),hsv_image.height()),CvType.CV_8UC1);  
-	         Mat H=new Mat();  
-	     H.ones(new Size(hsv_image.width(),hsv_image.height()),CvType.CV_8UC1);*/  
-		Mat distance=new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);  
-		//new Mat();//new Size(webcam_image.width(),webcam_image.height()),CvType.CV_8UC1);  
-		List<Mat> lhsv = new ArrayList<Mat>(3);      
-		Mat circles = new Mat(); // No need (and don't know how) to initialize it.  
-		// The function later will do it... (to a 1*N*CV_32FC3)  
-		Scalar hsv_min = new Scalar(0, 0, 0, 50);  
-		Scalar hsv_max = new Scalar(60, 60, 255, 0);  
-		Scalar hsv_min2 = new Scalar(0, 0, 100, 0);  
-		Scalar hsv_max2 = new Scalar(70, 70, 255, 0);   
-		double[] data=new double[3];  
+		array255.setTo(new Scalar(255));     
+		Mat circles = new Mat(); // No need (and don't know how) to initialize it.
 
 		if( !webcam_image.empty() )  
 		{  
 			System.out.println("IMAGE IS PRESENT");
-			// One way to select a range of colors by Hue  
-			Imgproc.cvtColor(webcam_image, hsv_image, Imgproc.COLOR_BGR2HSV);  
-			Core.inRange(hsv_image, hsv_min, hsv_max, thresholded);           
-			Core.inRange(hsv_image, hsv_min2, hsv_max2, thresholded2);  
-			Core.bitwise_or(thresholded, thresholded2, thresholded);  
-			// Notice that the thresholds don't really work as a "distance"  
-			// Ideally we would like to cut the image by hue and then pick just  
-			// the area where S combined V are largest.  
-			// Strictly speaking, this would be something like sqrt((255-S)^2+(255-V)^2)>Range  
-			// But if we want to be "faster" we can do just (255-S)+(255-V)>Range  
-			// Or otherwise 510-S-V>Range  
-			// Anyhow, we do the following... Will see how fast it goes...  
-			Core.split(hsv_image, lhsv); // We get 3 2D one channel Mats  
-			Mat S = lhsv.get(1);  
-			Mat V = lhsv.get(2);  
-			Core.subtract(array255, S, S);  
-			Core.subtract(array255, V, V);  
-			S.convertTo(S, CvType.CV_32F);  
-			V.convertTo(V, CvType.CV_32F);  
-			Core.magnitude(S, V, distance);  
-			Core.inRange(distance,new Scalar(0.0), new Scalar(255.0), thresholded2);  
-			Core.bitwise_and(thresholded, thresholded2, thresholded);  
-			// Apply the Hough Transform to find the circles  
-			Imgproc.GaussianBlur(thresholded, thresholded, new Size(9,9),0,0);
-			// STANDARD: Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, 2, thresholded.height()/4, 500, 50, 0, 0);
-			Imgproc.HoughCircles(thresholded, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
-			//dp = 2
-			//minDist =1
-			//param1 = 50
-			//param2 = 5
+			
+			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1); //webcam_image.height(),webcam_image.width(),CvType.CV_8UC1
 			
 			
-			//Imgproc.Canny(thresholded, thresholded, 500, 250);  
+			webcam_image.convertTo(webcam_image, CvType.CV_8UC1); //32S
 			
-		/*	
-			 4. Add some info to the image  
-			Core.line(webcam_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10), 3);  
-			Core.circle(webcam_image, new Point(210,210), 10, new Scalar(100,10,10),3);  
-			data=webcam_image.get(210, 210);  
-			Core.putText(webcam_image,String.format("("+String.valueOf(data[0])+","+String.valueOf(data[1])+","+String.valueOf(data[2])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
-					,1.0,new Scalar(100,10,10,255),3);  
-*/
+			
+			Highgui.imwrite("TEST.png", webcam_image); // Gemmer billedet i
+			// roden
+
+			// load image
+			IplImage img = cvLoadImage("TEST.png");
+
+			// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
+			IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
+
+			// convert image to grayscale
+			cvCvtColor(img, imageGray, CV_BGR2GRAY);
+			
+			cvSaveImage("TEST2.png", imageGray);
+			
+			b8ch1 = Highgui.imread("TEST2.png", CvType.CV_8UC1);
+			
+			System.out.println("CHANNELS: " + webcam_image.channels());
+			System.out.println("CHANNELS: " + b8ch1.channels());
+			Imgproc.HoughCircles(b8ch1, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
+			System.out.println("lll");
+			
 			int rows = circles.rows();
 						
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
@@ -140,18 +124,7 @@ public class ballMethod {
 					}
 				
 			}  
-
-			Core.line(hsv_image, new Point(150,50), new Point(202,200), new Scalar(100,10,10)/*CV_BGR(100,10,10)*/, 3);  
-			Core.circle(hsv_image, new Point(210,210), 10, new Scalar(100,10,10),3);  
-			data=hsv_image.get(210, 210);  
-			Core.putText(hsv_image,String.format("("+String.valueOf(data[0])+","+String.valueOf(data[1])+","+String.valueOf(data[2])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
-					,1.0,new Scalar(100,10,10,255),3);  
-			distance.convertTo(distance, CvType.CV_8UC1);  
-			Core.line(distance, new Point(150,50), new Point(202,200), new Scalar(100)/*CV_BGR(100,10,10)*/, 3);  
-			Core.circle(distance, new Point(210,210), 10, new Scalar(100),3);  
-			data=(double[])distance.get(210, 210);  
-			Core.putText(distance,String.format("("+String.valueOf(data[0])+")"),new Point(30, 30) , 3 //FONT_HERSHEY_SCRIPT_SIMPLEX  
-					,1.0,new Scalar(100),3);   
+ 
 			//-- 5. Display the image  
 
 			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
@@ -161,6 +134,8 @@ public class ballMethod {
 		{  
 			System.out.println(" --(!) No captured frame -- Break!"); 
 		}  
+		
+		System.out.println("ok");
 		
 		return Coordi;  
 	}
@@ -271,5 +246,30 @@ public class ballMethod {
 		Highgui.imwrite("readyForBallMethod.png", frame); // Gemmer billedet i
 															// roden
 	}
+	
+	
+    public void invertImage(String imageName) {
+    	BufferedImage inputFile;
+    	try {
+    		inputFile = ImageIO.read(new File(imageName));
 
+
+    		for (int x = 0; x < inputFile.getWidth(); x++) {
+    			for (int y = 0; y < inputFile.getHeight(); y++) {
+    				int rgba = inputFile.getRGB(x, y);
+    				Color col = new Color(rgba, true);
+    				col = new Color(255 + col.getRed(),
+    								255 + col.getGreen(),
+    								255 + col.getBlue());
+    				inputFile.setRGB(x, y, col.getRGB());
+    			}
+    		}
+    		File outputFile = new File("invert-"+imageName);
+    		ImageIO.write(inputFile, "png", outputFile);
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    }
 }

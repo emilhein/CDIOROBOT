@@ -374,7 +374,7 @@ public class CallibratorGUI  {
 					roboBagPunkt.setY(Math.round(RoboCoor[1]));
 				}
 				
-				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl6.getText()),"balls",false);//minradius, maxrdius, antalbolde
+				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls",false);//minradius, maxrdius, antalbolde
 
 				
 				
