@@ -109,7 +109,7 @@ public class ballMethod {
 			
 			int rows = circles.rows();
 			
-			System.out.println("ROWS: " + rows);
+			System.out.println("Cols: " + circles.cols());
 						
 			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[rows * elemSize/4];  
