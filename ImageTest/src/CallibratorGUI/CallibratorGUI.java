@@ -26,7 +26,7 @@ public class CallibratorGUI  {
 
 	static JFrame frame1;
 	static Container pane;
-	static JButton btnApply, btnRun;
+	static JButton btnApply, btnConnect, btnSend;
 	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt;
 	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius;
 	static ImageIcon img, afterc, findb, bh, edge;
@@ -36,8 +36,8 @@ public class CallibratorGUI  {
 //
 //	
 //	private void updateTxtArea1(final String text) {
-//	    SwingUtilities.invokeLater(new Runnable() {
-//	      public void run() {
+//	    SwingUtilities.invokeLater(new Connectnable() {
+//	      public void Connect() {
 //	        txtArea1.append(text);
 //	      }
 //	    });
@@ -66,10 +66,17 @@ public class CallibratorGUI  {
 //	  }
 //
 //	
+	static int TurnAngle = 0;
+	static int minLength = 0;
+	static float ppcm = 0;
+	static int firstRun = 0;
 	
 	
 	public static void main (String args[]){
 
+		
+
+		
 		//Opretter rammen
 
 
@@ -107,7 +114,8 @@ public class CallibratorGUI  {
 
 
 
-		btnRun = new JButton ("Run Program");
+		btnConnect = new JButton ("Connect");
+		btnSend = new JButton ("Send");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
 		lblCirkleDIst = new JLabel ("Cirkle Dist:");
@@ -137,7 +145,7 @@ public class CallibratorGUI  {
 
 
 		txtDP.setText("1");
-		txtCirkleDIst.setText("1");
+		txtCirkleDIst.setText("5");
 		txtParameter1.setText("50");
 		txtParameter2.setText("5");
 		txtMinradius.setText("8");
@@ -168,7 +176,9 @@ public class CallibratorGUI  {
 		pane.add (txtMaxradius);
 		pane.add(txtBallCount);
 		pane.add (btnApply);
-		pane.add (btnRun);
+		pane.add (btnConnect);
+		pane.add (btnSend);
+
 		pane.add (lblimg);
 		pane.add (lblafterc);
 		pane.add (lblfindb);
@@ -255,7 +265,7 @@ public class CallibratorGUI  {
 
 		txtMaxradius.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				String input = txtMaxradius.getText();
 				jl6.setText(input);
@@ -321,8 +331,8 @@ public class CallibratorGUI  {
 				jl7.setText(input7);
 				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 
-				//TakePicture takepic = new TakePicture();
-				//takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
  
 				
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
@@ -333,35 +343,36 @@ public class CallibratorGUI  {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					float ppcm = findEdge.getPixPerCm();
+					ppcm = findEdge.getPixPerCm();
 				
 				
 				ballMethod balls = new ballMethod();
 
-				float[] RoboCoor = balls.findCircle(23, 28, 1,1,50,5,2,"robo", true); // finder robo
+				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
 				for(int j = 0; j<RoboCoor.length;j=j+3){
 
 
-					txtArea1  = new JTextArea ("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]), 1,1);
+					txtArea1  = new JTextArea ("Forholdet mellem pixel og cm er = " + ppcm, 1,1);
 					String text1 = txtArea1.getText();
 					lbltxt.setText(text1);
-
 //					System.out.println("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]));
 
 				}
 
-				Mat frame = Highgui.imread("readyForBallMethod.png"); // henter det konverterede billlede
+				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
-				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///X OG Y ER FUCKED
+				double[] front = frame.get(Math.round(RoboCoor[1]), Math.round(RoboCoor[0])); ///Y OG X ER BYTTET OM GConnectDET get-metoden
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
+				double green = front[1];
 				double red = front[2];
 
-				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); /// X OG Y ER FUCKED
+				double[] back = frame.get(Math.round(RoboCoor[4]), Math.round(RoboCoor[3])); ///
+				double green2 = back[1];
 				double red2 = back[2]; // henter en rød farve ([2]) fra den anden cirkel
 
 				Punkt roboFrontPunkt = new Punkt(10,10);
 				Punkt roboBagPunkt = new Punkt(20,20);
-				// herunder sættes robotpunket, alt efter hvilken cirkel der er rød.
+				// heConnectder sættes robotpunket, alt efter hvilken cirkel der er rød.
 				if(red > 245){
 					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
 					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
@@ -372,14 +383,21 @@ public class CallibratorGUI  {
 					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
 					roboBagPunkt.setX(Math.round(RoboCoor[0]));
 					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				} else if(green > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[3]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[4]));
+					roboBagPunkt.setX(Math.round(RoboCoor[0]));
+					roboBagPunkt.setY(Math.round(RoboCoor[1]));
+				} else if (green2 > 245){
+					roboFrontPunkt.setX(Math.round(RoboCoor[0]));
+					roboFrontPunkt.setY(Math.round(RoboCoor[1]));
+					roboBagPunkt.setX(Math.round(RoboCoor[3]));
+					roboBagPunkt.setY(Math.round(RoboCoor[4]));
 				}
 				
 				float[] ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),Integer.parseInt(jl7.getText()),"balls",false);//minradius, maxrdius, antalbolde
 
 				
-				
-				
-					
 
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
@@ -400,81 +418,12 @@ public class CallibratorGUI  {
 				System.out.println("BallAngle = " + BallAngle);
 				int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
 				System.out.println("RoboAngle = " + RoboAngle);
-				int TurnAngle = BallAngle - RoboAngle;
+				TurnAngle = RoboAngle-BallAngle;
 
 				CalcDist dist = new CalcDist();
-				int minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
+				minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
 
-				try{ 
-					//prøver at forbinde til vores robot
-					NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
-					NXTConnector connt = new NXTConnector();
-					System.out.println("trying to connect");
-					connt.connectTo(nxtInfo, NXTComm.LCP);
-					System.out.println("connected");		//forbundet
-					//åbner streams
-					OutputStream dos = connt.getOutputStream();
-				//	InputStream dis = connt.getInputStream();
-
-				//	Scanner scan = new Scanner(System.in);
-				//	while(true){
-						System.out.println("Waiting for your go!");	
-			//			int input = scan.nextInt();
-
-						int Case;
-						int i;
-						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = TurnAngle*2;	//vinkel konvertering
-						System.out.println("angle " + angle);
-						if(Math.abs(angle) < 250){
-							if(angle > 0) 				//vælger retning der skal drejes
-								Case = 11;				
-							else Case = 22;
-						}
-						else{
-							if(angle > 0) 				//vælger retning der skal drejes
-								Case = 31;				
-							else Case = 42;
-						}
-						angle = Math.abs(angle);
-						dos.write(Case);			//sender case
-						dos.flush();
-						dos.write(angle);			//sender vinkel
-						dos.flush();
-
-						//				//venter på at motorerne ikke kører længere
-						//				int u = dis.read();			
-						//				while(u==1){
-						//					u = dis.read();
-						//				}
-
-						Thread.sleep(2000);
-						//kører robot frem
-						int distance = (int)((minLength/2)/ppcm);	//længde konvertering
-						System.out.println("dist = " + distance);
-						dos.write(81);
-						dos.flush();
-						i = distance;
-						dos.write(i);
-						dos.flush();
-
-						//				//venter på at motorerne ikke kører længere
-						//				int j = dis.read();			
-						//				while(j==1){
-						//					j = dis.read();
-						//				}
-
-						Thread.sleep(2000);
-
-						//samler bold op
-						dos.write(51);				
-						dos.flush();
-						dos.write(51);
-						dos.flush();	
-						Thread.sleep(2000);
-					//}
-				}
-				catch(Exception ex){System.out.println(ex);}
+				
 
 				
 				
@@ -536,19 +485,113 @@ public class CallibratorGUI  {
 
 		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt);
 
-		btnRun.setBounds (btnRun.getX() + btnRun.getWidth() + 75, insets.top + 320, btnRun.getPreferredSize().width, btnRun.getPreferredSize().height);
+		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 75, insets.top + 320, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
-		btnRun.addActionListener(new ActionListener()
+		btnConnect.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				System.out.println("In CONNECT");
+				if(firstRun == 0){
+				try{ 
+					
+					//prøver at forbinde til vores robot
+					NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
+					NXTConnector connt = new NXTConnector();
+					System.out.println("trying to connect");
+					connt.connectTo(nxtInfo, NXTComm.LCP);
+					System.out.println("connected");		//forbundet
+					//åbner streams}
+					OutputStream dos = connt.getOutputStream();
+				//	InputStream dis = connt.getInputStream();
+					
+				//	Scanner scan = new Scanner(System.in);
+				//	while(true){
+						System.out.println("Waiting for your go!");	
+			//			int input = scan.nextInt();
+
+						int Case;
+						int i;
+						System.out.println("TurnAngle = " + TurnAngle);
+						int angle = (TurnAngle*2)-2;	//vinkel konvertering
+						System.out.println("angle " + angle);
+						if(Math.abs(angle) < 250){
+							if(angle > 0) 				//vælger retning der skal drejes
+								Case = 11;				
+							else Case = 22;
+						}
+						else{
+							angle = angle/10;
+							if(angle > 0) 				//vælger retning der skal drejes
+								Case = 31;				
+							else Case = 42;
+						}
+						angle = Math.abs(angle);
+						dos.write(Case);			//sender case
+						dos.flush();
+						dos.write(angle);			//sender vinkel
+						dos.flush();
+ 
+						//				//venter på at motorerne ikke kører længere
+						//				int u = dis.read();			
+						//				while(u==1){
+						//					u = dis.read();
+						//				}
+
+						Thread.sleep(2000);
+						//kører robot frem
+						System.out.println("minlength " + minLength);
+						int distance = (int)((minLength*2.5)/ppcm);	//længde konvertering
+						System.out.println("dist = " + distance);
+						dos.write(81);
+						dos.flush();
+						i = distance;
+						dos.write(i);
+						dos.flush();
+
+						//				//venter på at motorerne ikke kører længere
+						//				int j = dis.read();			
+						//				while(j==1){
+						//					j = dis.read();
+						//				}
+
+						Thread.sleep(2000);
+
+						//samler bold op
+						dos.write(51);				
+						dos.flush();
+						dos.write(51);
+						dos.flush();	
+						Thread.sleep(2000);
+					//}
+						firstRun = 1;
+						
+				}
+				catch(Exception ex){System.out.println(ex);}
+				} else{
+					System.out.println("SAY WHAT");
+				}
+			}
+		});
+		
+		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 75, insets.top + 350, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
+
+		btnSend.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 
+				System.out.println("In SEND");
 
-				//Indsæt her noget, der kalder main kladsen.
-
+				
 			}
 		});
 
+		
+		
+		
+		
 
 		//Gør rammen synlig
 		frame1.setVisible (true);

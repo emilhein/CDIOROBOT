@@ -22,6 +22,7 @@ import java.util.List;
 
 
 
+
 import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
@@ -59,11 +60,15 @@ public class ballMethod {
 		Mat webcam_image;
 		if(findRobot == true){
 			pictureToMat("billed0.png");
-			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes robot på.
+			webcam_image = Highgui.imread("readyForBallMethod.png");  //billede der skal findes robot pÃ¥.
 			System.out.println("IN TRUE");
 		}
 		else{
+<<<<<<< HEAD
 			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde på.
+=======
+			webcam_image = Highgui.imread("billed0.png");  //billede der skal findes bolde pÃ¥.
+>>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 
 			// Save
 			Highgui.imwrite("testP3.png", webcam_image);
@@ -210,7 +215,7 @@ public class ballMethod {
 					 * // m.put(j, b, 0,0,0); break; } else
 					 */
 					if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder
-																				// grønne
+																				// grÃ¸nne
 																				// farver
 																				// //
 																				// farver
@@ -219,9 +224,9 @@ public class ballMethod {
 					}
 
 					else if (red > 130 && green < 60 && blue < 60) { // finder
-																		// røde
+																		// rÃ¸de
 																		// farver
-						m.put(j, b, 0, 0, 255); // rød
+						m.put(j, b, 0, 0, 255); // rÃ¸d
 						break;
 					} else if (blue + red + green > 500 && blue > 120
 							&& green > 120 && red > 120) { // finder hvid

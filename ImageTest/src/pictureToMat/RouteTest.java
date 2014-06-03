@@ -26,9 +26,8 @@ public class RouteTest {
 	
 	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat frame = Highgui.imread("billed0.png"); /// SKal bruges til at lave et blank lærred..
-		System.out.println("koordinaterne$ til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
-
+		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
+/*
 		// farver hele matricen hvid
 		for (int j = 0; j < frame.rows(); j++) {
 			for (int b = 0; b < frame.cols(); b++) {
@@ -36,13 +35,13 @@ public class RouteTest {
 
 			}
 		}
-
-	
+*/	
 		for (int c = 0; c < Coordi.length; c = c + 3) {
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 20; i++) {
 				for (int g = 0; g < 20; g++) {
-					frame.put(((Math.round(Coordi[c + 1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
+					frame.put(((Math.round(Coordi[c+1])) + i), ((Math.round(Coordi[c])) + g), 0, 0, 0);
+
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
@@ -77,11 +76,7 @@ public class RouteTest {
 				minPunkt2 = punkt3;
 			}
 		}
-		
-		minPunkt = new Punkt(300,150);
-
-
-		
+				
 		
 		paintPoint(frame, new Punkt(minPunkt.getX(), minPunkt.getY()), 255, 0, 0); // farver tætteste bold rød
 		paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255); // farver næsttætteste bold blå
@@ -90,9 +85,6 @@ public class RouteTest {
 		paintPoint(frame,new Punkt(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10), 0, 255, 255); //
 		
 		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 2);
-		
-
-		
 		
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 		
