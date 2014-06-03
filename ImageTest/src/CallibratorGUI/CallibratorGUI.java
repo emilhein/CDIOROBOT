@@ -255,7 +255,7 @@ public class CallibratorGUI  {
 
 		txtMaxradius.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				String input = txtMaxradius.getText();
 				jl6.setText(input);
