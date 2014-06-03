@@ -27,7 +27,6 @@ public class RouteTest {
 	public static Punkt drawBallMap(float[] Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
-		System.out.println("koordinaterne$ til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
 /*
 		// farver hele matricen hvid
 		for (int j = 0; j < frame.rows(); j++) {

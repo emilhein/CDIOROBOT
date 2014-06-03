@@ -11,6 +11,8 @@ public class CalcAngle {
 		int delta_y = p2.getY() - p1.getY();
 		int angle = (int) Math.toDegrees(Math.atan2(delta_y, delta_x));
 
+		if(angle < 0) angle += 360;
+		
 		return angle;
 	} 
 }
