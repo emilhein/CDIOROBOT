@@ -15,8 +15,6 @@ import org.opencv.highgui.Highgui;
 public class RouteTest {
 	static List<Integer> xCoor = new ArrayList<Integer>();
 	static List<Integer> yCoor = new ArrayList<Integer>();
-	static int total = 0;
-//	static Punkt goal = new Punkt(0, 240);
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
@@ -25,6 +23,9 @@ public class RouteTest {
 	
 	
 	public static Punkt drawBallMap(ArrayList<Float> Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
+		minPunkt = new Punkt(0,0);
+		CalcDist dist = new CalcDist();
+
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
 /*
@@ -50,15 +51,13 @@ public class RouteTest {
 		}
 		
 		//Dette for-loop finder det tætteste ppunkt på robotens front
-		for (int i = 0; i < xCoor.size()-1; i++) {
-			//System.out.println("ROBOFRONTPRUNKT = " + roboFrontPunkt.getX() + "," + roboFrontPunkt.getY());
+		for (int i = 0; i < xCoor.size(); i++) {
 			int tempLength = 0;	
 		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
 			
-			CalcDist dist = new CalcDist();
-			Punkt punkt2 = new Punkt(xCoor.get(i) + 10, yCoor.get(i) + 10);
+			Punkt punkt2 = new Punkt(xCoor.get(i), yCoor.get(i));
 			tempLength = dist.Calcdist(new Punkt(roboFrontPunkt.getX(),roboFrontPunkt.getY()), punkt2);
-			total = total + tempLength;
+			
 			if (tempLength < minLength) {
 				minLength = tempLength;
 				minPunkt = punkt2;
@@ -82,7 +81,7 @@ public class RouteTest {
 		}
 				*/
 		
-		paintPoint(frame, new Punkt(minPunkt.getX(), minPunkt.getY()), 255, 0, 0,20); // farver tætteste bold rød
+		paintPoint(frame, new Punkt(minPunkt.getX()+10, minPunkt.getY()+10), 255, 0, 0,20); // farver tætteste bold rød
 	//	paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255,20); // farver næsttætteste bold blå
 		
 		paintPoint(frame,new Punkt(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10), 0, 128, 255,20); //
