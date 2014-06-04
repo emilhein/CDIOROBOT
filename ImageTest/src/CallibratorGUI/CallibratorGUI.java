@@ -150,9 +150,9 @@ public class CallibratorGUI  {
 		txtRoboDP.setText("13");
 		txtromin.setText("19");
 		txtromax.setText("28");
-		txtRoboMinDist.setText("indæt");
-		txtRoboPar1.setText("indsæt");
-		txtRoboPar2.setText("indsæt");
+		txtRoboMinDist.setText("6");
+		txtRoboPar1.setText("8");
+		txtRoboPar2.setText("5");
 		
 		
 		//Tilføjer alle komponenter
@@ -481,7 +481,7 @@ public class CallibratorGUI  {
 
 
 				
-				ArrayList<Float> RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"robo",true);//minradius, maxrdius, antalbolde
+				ArrayList<Float> RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl7.getText()),Integer.parseInt(jl10.getText()),Integer.parseInt(jl11.getText()),Integer.parseInt(jl12.getText()),"robo",true);//minradius, maxrdius, antalbolde
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
@@ -532,7 +532,7 @@ public class CallibratorGUI  {
 				}
 				
 				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
-
+//1
 				
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
