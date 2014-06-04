@@ -440,7 +440,7 @@ public class CallibratorGUI  {
 
 				String input7 = txtRoboDP.getText();
 				jl7.setText(input7);
-				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
+				jl7.setBounds(150, insets.top + 300, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 				
 				String input8 = txtromin.getText();
 				jl8.setText(input8);
