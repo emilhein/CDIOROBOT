@@ -40,7 +40,24 @@ public class CallibratorGUI  {
 	static int firstRun = 0;
 	
 	
-	public static void main (String args[]){
+	public static void main (String args[]) throws IOException{
+		
+		if(firstRun == 0){
+			//try{ 
+				
+				//prøver at forbinde til vores robot
+				NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
+				NXTConnector connt = new NXTConnector();
+				System.out.println("trying to connect");
+				connt.connectTo(nxtInfo, NXTComm.LCP);
+				System.out.println("connected");		//forbundet
+				//åbner streams}
+				final OutputStream dos = connt.getOutputStream();
+				
+				firstRun = 1;
+		
+			//	Scanner scan = new Scanner(System.in);
+			//	while(true){
 		
 		//Opretter rammen
 		frame1 = new JFrame ("CallibratorGUI");
@@ -551,27 +568,14 @@ public class CallibratorGUI  {
 			{
 				
 				System.out.println("In CONNECT");
-				if(firstRun == 0){
-				try{ 
-					
-					//prøver at forbinde til vores robot
-					NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
-					NXTConnector connt = new NXTConnector();
-					System.out.println("trying to connect");
-					connt.connectTo(nxtInfo, NXTComm.LCP);
-					System.out.println("connected");		//forbundet
-					//åbner streams}
-					OutputStream dos = connt.getOutputStream();
-					
-				//	Scanner scan = new Scanner(System.in);
-				//	while(true){
+				
 						System.out.println("Waiting for your go!");	
 			//			int input = scan.nextInt();
 
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.1309);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.129);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -585,43 +589,46 @@ public class CallibratorGUI  {
 							else Case = 42;
 						}
 						angle = Math.abs(angle);
-						dos.write(Case);			//sender case
-						dos.flush();
-						dos.write(angle);			//sender vinkel
-						dos.flush();
+						try {
+							dos.write(Case);			//sender case
+							dos.flush();
+							dos.write(angle);			//sender vinkel
+							dos.flush();
 
-						Thread.sleep(1500);
-						dos.write(61);			//sender case
-						dos.flush();
-						dos.write(61);			//sender vinkel
-						dos.flush();
-						Thread.sleep(500);
-						//kører robot frem
-						System.out.println("minlength " + minLength);
-						int distance = (int)((minLength*2.3)/ppcm);	//længde konvertering
-						System.out.println("dist = " + distance);
-						dos.write(81);
-						dos.flush();
-						i = distance;
-						dos.write(i);
-						dos.flush();
+							Thread.sleep(1500);
+							dos.write(61);			//sender case
+							dos.flush();
+							dos.write(61);			//sender vinkel
+							dos.flush();
+							Thread.sleep(500);
+							
+							//kører robot frem
+							System.out.println("minlength " + minLength);
+							int distance = (int)((minLength*2.3)/ppcm);	//længde konvertering
+							System.out.println("dist = " + distance);
+							dos.write(81);
+							dos.flush();
+							i = distance;
+							dos.write(i);
+							dos.flush();
 
-						Thread.sleep((18*distance));
+							Thread.sleep((18*distance));
 
-						//samler bold op
-						dos.write(71);				
-						dos.flush();
-						dos.write(71);
-						dos.flush();	
+							//samler bold op
+							dos.write(71);				
+							dos.flush();
+							dos.write(71);
+							dos.flush();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}	
 					
 					//}
-						firstRun = 1;
-						
-				}
-				catch(Exception ex){System.out.println(ex);}
-				} else{
-					System.out.println("SAY WHAT");
-				}
+					
 			}
 		});
 		
@@ -649,4 +656,4 @@ public class CallibratorGUI  {
 		catch (UnsupportedLookAndFeelException e) {}		
 	}
 
-}
+}}
