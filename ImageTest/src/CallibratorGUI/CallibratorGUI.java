@@ -573,7 +573,7 @@ public class CallibratorGUI  {
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
 					DetectBorder findEdge = new DetectBorder();
 					try {
-						findEdge.getRectCoordis("billed0.png", Integer.parseInt(jl14.getText()), Integer.parseInt(jl13.getText()), Integer.parseInt(jl16.getText()), Integer.parseInt(jl15.getText()));
+						findEdge.getRectCoordis("billed0.png",40,65,40,160);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -733,7 +733,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.125);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -762,11 +762,11 @@ public class CallibratorGUI  {
 							
 							//kører robot frem
 							System.out.println("minlength " + minLength);
-							int distance = (int)((minLength*2.25)/ppcm);	//længde konvertering
+							int distance = (int)((minLength*2.)/ppcm);	//længde konvertering
 							System.out.println("dist = " + distance);
 							dos.write(81);
 							dos.flush();
-							if(angle > 180) distance -= 30;
+							if(angle > 180) distance -= 90;
 							i = distance/10;
 							dos.write(i);
 							dos.flush();
