@@ -28,8 +28,8 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnConnect, btnSend;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblBallCount, lblParameter2, lblMinradius, lblMaxradius, jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
-	static JTextField txtDP, txtBallCount,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblRoboDP, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
+	static JTextField txtDP, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2;
 	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
 	static JTextArea txtArea1;
@@ -102,8 +102,12 @@ public class CallibratorGUI  {
 		lblParameter2 = new JLabel ("Parameter 2:");
 		lblMinradius = new JLabel ("Min radius:");
 		lblMaxradius = new JLabel ("Max radius:");
-		lblBallCount = new JLabel ("BallCount:");
+		lblRoboDP = new JLabel ("RoboDP:");
+		lblRoboMinDist = new JLabel ("RoboMinDist");
+		lblRoboPar1 = new JLabel ("RoboParameter1");
+		lblRoboPar2 = new JLabel ("RoboParameter2");
 
+		
 		txtArea1 = new JTextArea (1, 1);
 		lbltxt = new JLabel ();
 		lbltxt2 = new JLabel ();
@@ -118,26 +122,36 @@ public class CallibratorGUI  {
 		jl7 = new JLabel();
 		jl8 = new JLabel();
 		jl9 = new JLabel();
+		jl10 = new JLabel();
+		jl11 = new JLabel ();
+		jl12 = new JLabel ();
 		txtDP = new JTextField (10);
 		txtCirkleDIst = new JTextField  (10);
 		txtParameter1 = new JTextField  (10);
 		txtParameter2 = new JTextField  (5);
 		txtMinradius = new JTextField  (10);
 		txtMaxradius = new JTextField  (10);
-		txtBallCount = new JTextField (10);
+		txtRoboDP = new JTextField (10);
 		txtromin = new JTextField (10);
 		txtromax = new JTextField (10);
-
+		txtRoboMinDist = new JTextField (10);
+		txtRoboPar1 = new JTextField (10);
+		txtRoboPar2 = new JTextField (10);
+		
+		
 		
 		txtDP.setText("1");
-		txtCirkleDIst.setText("20");
+		txtCirkleDIst.setText("10");
 		txtParameter1.setText("50");
-		txtParameter2.setText("20");
+		txtParameter2.setText("2");
 		txtMinradius.setText("8");
 		txtMaxradius.setText("18");
-		txtBallCount.setText("13");
+		txtRoboDP.setText("13");
 		txtromin.setText("19");
 		txtromax.setText("28");
+		txtRoboMinDist.setText("indæt");
+		txtRoboPar1.setText("indsæt");
+		txtRoboPar2.setText("indsæt");
 		
 		
 		//Tilføjer alle komponenter
@@ -156,14 +170,14 @@ public class CallibratorGUI  {
 		pane.add (lblParameter2);
 		pane.add (lblMinradius);
 		pane.add (lblMaxradius);
-		pane.add(lblBallCount);
+		pane.add(lblRoboDP);
 		pane.add (txtDP);
 		pane.add (txtCirkleDIst);
 		pane.add (txtParameter1);
 		pane.add (txtParameter2);
 		pane.add (txtMinradius);
 		pane.add (txtMaxradius);
-		pane.add(txtBallCount);
+		pane.add(txtRoboDP);
 		pane.add (btnApply);
 		pane.add (btnConnect);
 		pane.add (btnSend);
@@ -182,6 +196,12 @@ public class CallibratorGUI  {
 		pane.add (lblromax);
 		pane.add (txtromin);
 		pane.add (txtromax);
+		pane.add(lblRoboMinDist);
+		pane.add (lblRoboPar1);
+		pane.add(lblRoboPar2);
+		pane.add (txtRoboMinDist);
+		pane.add(txtRoboPar1);
+		pane.add(txtRoboPar2);
 		
 		
 		//		//Placerer alle kompoenter
@@ -272,15 +292,15 @@ public class CallibratorGUI  {
 		frame1.add(jl6);
 
 
-		lblBallCount.setBounds (lblBallCount.getX() + lblBallCount.getWidth() + 5, insets.top + 275, lblBallCount.getPreferredSize().width, lblBallCount.getPreferredSize().height);
-		txtBallCount.setBounds (txtBallCount.getX() + txtBallCount.getWidth() + 5, insets.top + 290, txtBallCount.getPreferredSize().width, txtBallCount.getPreferredSize().height);
+		lblRoboDP.setBounds (lblRoboDP.getX() + lblRoboDP.getWidth() + 5, insets.top + 275, lblRoboDP.getPreferredSize().width, lblRoboDP.getPreferredSize().height);
+		txtRoboDP.setBounds (txtRoboDP.getX() + txtRoboDP.getWidth() + 5, insets.top + 290, txtRoboDP.getPreferredSize().width, txtRoboDP.getPreferredSize().height);
 
 
-		txtDP.addActionListener(new ActionListener()
+		txtRoboDP.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String input = txtBallCount.getText();
+				String input = txtRoboDP.getText();
 				jl7.setText(input);
 				jl7.setBounds(150, insets.top + 20, jl7.getPreferredSize().width, jl7.getPreferredSize().height);	
 			}		
@@ -318,9 +338,65 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl9);
+		
+		
+		
+		lblRoboMinDist.setBounds (lblRoboMinDist.getX() + lblRoboMinDist.getWidth() + 5, insets.top + 410, lblRoboMinDist.getPreferredSize().width, lblRoboMinDist.getPreferredSize().height);
+		txtRoboMinDist.setBounds (txtRoboMinDist.getX() + txtRoboMinDist.getWidth() + 5, insets.top + 425, txtRoboMinDist.getPreferredSize().width, txtRoboMinDist.getPreferredSize().height);
 
 		
-		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 420, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
+		txtRoboMinDist.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input10 = txtRoboMinDist.getText();
+				jl10.setText(input10);
+				jl10.setBounds(150, insets.top + 425, jl10.getPreferredSize().width, jl10.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl10);
+
+		
+		
+		//RoboPar1
+
+		
+		lblRoboPar1.setBounds (lblRoboPar1.getX() + lblRoboPar1.getWidth() + 5, insets.top + 455, lblRoboPar1.getPreferredSize().width, lblRoboPar1.getPreferredSize().height);
+		txtRoboPar1.setBounds (txtRoboPar1.getX() + txtRoboPar1.getWidth() + 5, insets.top + 470, txtRoboPar1.getPreferredSize().width, txtRoboPar1.getPreferredSize().height);
+
+		
+		txtRoboPar1.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input11 = txtRoboPar1.getText();
+				jl11.setText(input11);
+				jl11.setBounds(150, insets.top + 470, jl11.getPreferredSize().width, jl11.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl11);
+		
+		//RoboPar2
+
+
+		lblRoboPar2.setBounds (lblRoboPar2.getX() + lblRoboPar2.getWidth() + 5, insets.top + 500, lblRoboPar2.getPreferredSize().width, lblRoboPar2.getPreferredSize().height);
+		txtRoboPar2.setBounds (txtRoboPar2.getX() + txtRoboPar2.getWidth() + 5, insets.top + 515, txtRoboPar2.getPreferredSize().width, txtRoboPar2.getPreferredSize().height);
+
+		
+		txtRoboPar2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input12 = txtRoboPar2.getText();
+				jl12.setText(input12);
+				jl12.setBounds(150, insets.top + 515, jl12.getPreferredSize().width, jl12.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl12);
+
+		
+//		
+		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 550, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
 
 		btnApply.addActionListener(new ActionListener()
 		{
@@ -354,7 +430,7 @@ public class CallibratorGUI  {
 				jl6.setText(input6);
 				jl6.setBounds(150, insets.top + 240, jl6.getPreferredSize().width, jl6.getPreferredSize().height);	
 
-				String input7 = txtBallCount.getText();
+				String input7 = txtRoboDP.getText();
 				jl7.setText(input7);
 				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 				
@@ -366,6 +442,17 @@ public class CallibratorGUI  {
 				jl9.setText(input9);
 				jl9.setBounds(150, insets.top + 380, jl9.getPreferredSize().width, jl9.getPreferredSize().height);	
 
+				String input10 = txtRoboMinDist.getText();
+				jl10.setText(input10);
+				jl10.setBounds(150, insets.top + 425, jl10.getPreferredSize().width, jl10.getPreferredSize().height);
+				
+				String input11 = txtRoboPar1.getText();
+				jl11.setText(input11);
+				jl11.setBounds(150, insets.top + 470, jl11.getPreferredSize().width, jl11.getPreferredSize().height);
+				
+				String input12 = txtRoboPar2.getText();
+				jl12.setText(input12);
+				jl12.setBounds(150, insets.top + 515, jl12.getPreferredSize().width, jl12.getPreferredSize().height);	
 
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
@@ -517,9 +604,9 @@ public class CallibratorGUI  {
 			}
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(jl10);frame1.add(jl11);frame1.add(jl12);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
 
-		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 470, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
+		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 590, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 		btnConnect.addActionListener(new ActionListener()
 		{
@@ -591,7 +678,7 @@ public class CallibratorGUI  {
 			}
 		});
 		
-		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 5, insets.top + 520, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
+		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 80, insets.top + 550, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
 
 		btnSend.addActionListener(new ActionListener()
 		{
