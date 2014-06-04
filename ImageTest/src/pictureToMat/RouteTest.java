@@ -20,8 +20,8 @@ public class RouteTest {
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
-	static Punkt minPunkt = new Punkt(300,150);
-	static Punkt minPunkt2 = new Punkt(10,233);
+	static Punkt minPunkt;
+	static Punkt minPunkt2;
 	
 	
 	public static Punkt drawBallMap(ArrayList<Float> Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
@@ -78,13 +78,13 @@ public class RouteTest {
 		}
 				
 		
-		paintPoint(frame, new Punkt(minPunkt.getX(), minPunkt.getY()), 255, 0, 0); // farver tætteste bold rød
-		paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255); // farver næsttætteste bold blå
+		paintPoint(frame, new Punkt(minPunkt.getX(), minPunkt.getY()), 255, 0, 0,20); // farver tætteste bold rød
+		paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255,20); // farver næsttætteste bold blå
 		
-		paintPoint(frame,new Punkt(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10), 0, 255, 0); //
-		paintPoint(frame,new Punkt(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10), 0, 255, 255); //
+		paintPoint(frame,new Punkt(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10), 0, 128, 255,20); //
+		paintPoint(frame,new Punkt(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10), 0, 255, 0,60); //
 		
-		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 2);
+		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 4);
 		
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 		
@@ -95,10 +95,10 @@ public class RouteTest {
 	}
 
 	
-	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl) {
-		for (int a = 0; a < 20; a++) {
-			for (int b = 0; b < 20; b++) {
-				frame.put(((p.getY() - 10) + a), ((p.getX() + b) - 10), bl, gr, re);///KRÆVER Y FØR X
+	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl, int size) {
+		for (int a = 0; a < size; a++) {
+			for (int b = 0; b < size; b++) {
+				frame.put(((p.getY() - size/2) + a), ((p.getX() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
 
 			}
 		}
