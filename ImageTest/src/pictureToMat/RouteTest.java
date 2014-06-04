@@ -57,7 +57,7 @@ public class RouteTest {
 			
 			CalcDist dist = new CalcDist();
 			Punkt punkt2 = new Punkt(xCoor.get(i) + 10, yCoor.get(i) + 10);
-			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
+			tempLength = dist.Calcdist(new Punkt(roboFrontPunkt.getX(),roboFrontPunkt.getY()), punkt2);
 			total = total + tempLength;
 			if (tempLength < minLength) {
 				minLength = tempLength;
