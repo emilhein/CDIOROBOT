@@ -220,6 +220,32 @@ public class ballMethod {
 		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
+	
+	public static void pictureToMat4(String image) {
+		
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+		Mat m = Highgui.imread(image);
+
+		for (int j = 0; j < m.rows(); j++) {
+			for (int b = 0; b < m.cols(); b++) {
+				double[] rgb = m.get(j, b);
+				for (int i = 0; i < rgb.length; i = i + 3) {
+					double blue = rgb[i];
+					double green = rgb[i + 1];
+					double red = rgb[i + 2];
+
+					if ((blue > 130 && green > 130 && red > 130) || (blue < 50 && green < 50 && red < 50)) {
+						m.put(j, b, 0, 0, 0);
+						break;
+					}
+				}
+			}
+		}
+
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
+															// roden
+	}
 
 	public static void pictureToMat(String image) {
 		// int[] test = new int[10];
