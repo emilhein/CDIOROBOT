@@ -275,7 +275,7 @@ public class CallibratorGUI  {
 			}		
 		});
 		frame1.add(jl15);	
-//				
+				
 
 		lblminrød.setBounds (lblminrød.getX() + lblminrød.getWidth() + 1010, insets.top + 366, lblminrød.getPreferredSize().width, lblminrød.getPreferredSize().height);
 		txtminrød.setBounds (txtminrød.getX() + txtminrød.getWidth() + 1010, insets.top + 381, txtminrød.getPreferredSize().width, txtminrød.getPreferredSize().height);
@@ -291,9 +291,6 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl16);	
 	
-		
-		
-//		
 		
 		lblDP.setBounds (lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
 		txtDP.setBounds (txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
@@ -403,7 +400,7 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl7);
 
-//RoboMinDist
+		
 		lblRoboMinDist.setBounds (lblromin.getX() + lblRoboMinDist.getWidth() + 5, insets.top + 320, lblRoboMinDist.getPreferredSize().width, lblRoboMinDist.getPreferredSize().height);
 		txtRoboMinDist.setBounds (txtromin.getX() + txtRoboMinDist.getWidth() + 5, insets.top + 335, txtRoboMinDist.getPreferredSize().width, txtRoboMinDist.getPreferredSize().height);
 
@@ -419,8 +416,6 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl8);
 
-//RoboPar1		
-		
 		lblRoboPar1.setBounds (lblRoboPar1.getX() + lblRoboPar1.getWidth() + 5, insets.top + 365, lblRoboPar1.getPreferredSize().width, lblRoboPar1.getPreferredSize().height);
 		txtRoboPar1.setBounds (txtRoboPar1.getX() + txtRoboPar1.getWidth() + 5, insets.top + 380, txtRoboPar1.getPreferredSize().width, txtRoboPar1.getPreferredSize().height);
 
@@ -437,7 +432,6 @@ public class CallibratorGUI  {
 		frame1.add(jl9);
 		
 		
-//		RoboPar2
 		lblRoboPar2.setBounds (lblRoboPar2.getX() + lblRoboPar2.getWidth() + 5, insets.top + 410, lblRoboPar2.getPreferredSize().width, lblRoboPar2.getPreferredSize().height);
 		txtRoboPar2.setBounds (txtRoboPar2.getX() + txtRoboPar2.getWidth() + 5, insets.top + 425, txtRoboPar2.getPreferredSize().width, txtRoboPar2.getPreferredSize().height);
 
@@ -453,11 +447,6 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl10);
 
-		
-		
-		//romin
-
-		
 		lblromin.setBounds (lblromin.getX() + lblromin.getWidth() + 5, insets.top + 455, lblromin.getPreferredSize().width, lblromin.getPreferredSize().height);
 		txtromin.setBounds (txtromin.getX() + txtromin.getWidth() + 5, insets.top + 470, txtromin.getPreferredSize().width, txtromin.getPreferredSize().height);
 
@@ -473,9 +462,7 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl11);
 		
-		//romax
-
-
+	
 		lblromax.setBounds (lblromax.getX() + lblromax.getWidth() + 5, insets.top + 500, lblromax.getPreferredSize().width, lblromax.getPreferredSize().height);
 		txtromax.setBounds (txtromax.getX() + txtromax.getWidth() + 5, insets.top + 515, txtromax.getPreferredSize().width, txtromax.getPreferredSize().height);
 
