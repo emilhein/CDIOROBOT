@@ -44,7 +44,6 @@ public class ballMethod {
 	public ArrayList<Float> findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 		
 		ArrayList<Float> Coordi = new ArrayList<Float>();
-		int ballnr = 0;
 				
 		// Load the native library.  
 		System.loadLibrary("opencv_java248");  
@@ -100,31 +99,28 @@ public class ballMethod {
 			// convert image to grayscale
 			cvCvtColor(img, imageGray, CV_BGR2GRAY);
 			
-			cvSaveImage("TEST2.png", imageGray);
+			cvSaveImage("TEST.png", imageGray);
 			
-			b8ch1 = Highgui.imread("TEST2.png", CvType.CV_8UC1);
+			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
 			
 			System.out.println("CHANNELS: " + webcam_image.channels());
 			System.out.println("CHANNELS: " + b8ch1.channels());
 			Imgproc.HoughCircles(b8ch1, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
 			System.out.println("lll");
 			
-			int rows = circles.rows();
+		//	int rows = circles.rows();
 			
 			System.out.println("Cols: " + circles.cols());
 						
-			int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
+			//int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[3];  
 			if (data2.length>0){ 
 					for(int c=0; c<circles.cols(); c++)
 					{
 						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-						System.out.println("ballnr: " + ballnr);
-						System.out.println("data2[0]: " + data2[0]);
 						Coordi.add(data2[0]); // x -koordinate
 						Coordi.add(data2[1]); //y - koordinate
 						Coordi.add(data2[2]); //radius
-						ballnr = ballnr+3; // radius
 						Point center= new Point(data2[0], data2[1]);  
 						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
 					}
