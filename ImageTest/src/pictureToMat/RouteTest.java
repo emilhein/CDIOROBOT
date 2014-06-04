@@ -20,7 +20,7 @@ public class RouteTest {
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
-	static Punkt minPunkt = new Punkt(0,0);
+	static Punkt minPunkt;
 	//static Punkt minPunkt2 = new Punkt(1,1);
 	
 	
@@ -62,7 +62,10 @@ public class RouteTest {
 			if (tempLength < minLength) {
 				minLength = tempLength;
 				minPunkt = punkt2;
+				minPunkt.setX(punkt2.getX());
+				minPunkt.setY(punkt2.getY());
 			}
+			xCoor.clear();yCoor.clear();
 		}
 		//Finder nr. 2 punkt
 		/*

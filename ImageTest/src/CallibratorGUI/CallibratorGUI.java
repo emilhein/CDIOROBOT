@@ -524,7 +524,6 @@ public class CallibratorGUI  {
 				}
 				
 				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
-
 				
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
@@ -599,7 +598,7 @@ public class CallibratorGUI  {
 				lbltxt3.setBounds(200, insets.top + 530, lbltxt3.getPreferredSize().width, 10);
 				lbltxt4.setBounds (200, insets.top + 545, lbltxt4.getPreferredSize().width, 10);
 				
-				ballCoor.clear();
+				//ballCoor.clear();
 				
 			}
 		});
@@ -621,7 +620,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.129);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.125);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -650,15 +649,16 @@ public class CallibratorGUI  {
 							
 							//kører robot frem
 							System.out.println("minlength " + minLength);
-							int distance = (int)((minLength*2.3)/ppcm);	//længde konvertering
+							int distance = (int)((minLength*2.25)/ppcm);	//længde konvertering
 							System.out.println("dist = " + distance);
 							dos.write(81);
 							dos.flush();
-							i = distance;
+							if(angle > 180) distance -= 30;
+							i = distance/10;
 							dos.write(i);
 							dos.flush();
 
-							Thread.sleep((18*distance));
+							Thread.sleep((int)(17.5*distance));
 
 							//samler bold op
 							dos.write(71);				
