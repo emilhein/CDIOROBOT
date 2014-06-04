@@ -38,14 +38,14 @@ public class DetectBorder {
 
 		private static float pixPerCm = -1;
 		
-		public CvRect getRectCoordis(String src) throws IOException
+		public CvRect getRectCoordis(String src, int blueMax, int greenMax, int redMin, int redMax) throws IOException
 		{		
 
 			//CanvasFrame cnvs=new CanvasFrame("Polygon");
 	        //cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	         
 	           
-	        brownThreshold(src);
+	        brownThreshold(src, blueMax, greenMax, redMin, redMax);
 	        
 	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.png"));
 	        IplImage img = IplImage.createFrom(brownThresholded);
@@ -125,7 +125,7 @@ public class DetectBorder {
 			return pixPerCm;
 		}
 		
-		public void brownThreshold(String image){
+		public void brownThreshold(String image, int blueMax, int greenMax, int redMin, int redMax){
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 
@@ -138,7 +138,7 @@ public class DetectBorder {
 						double blue = rgb[i];
 						double green = rgb[i+1];
 						double red = rgb[i+2];
-						if (blue < 40 && green < 65 && red > 40 && red < 160) { // finder kanten og farver hvid														// farver
+						if (blue < blueMax && green < greenMax && red > redMin && red < redMax) { // finder kanten og farver hvid, STANDARD: blue < 40 && green < 65 && red > 40 && red < 160												// farver
 							img.put(j, b, 255, 255, 255); 
 							break;
 						}
