@@ -340,7 +340,6 @@ public class CallibratorGUI  {
 		frame1.add(jl9);
 		
 		
-		//RoboMinDist
 		
 		lblRoboMinDist.setBounds (lblRoboMinDist.getX() + lblRoboMinDist.getWidth() + 5, insets.top + 410, lblRoboMinDist.getPreferredSize().width, lblRoboMinDist.getPreferredSize().height);
 		txtRoboMinDist.setBounds (txtRoboMinDist.getX() + txtRoboMinDist.getWidth() + 5, insets.top + 425, txtRoboMinDist.getPreferredSize().width, txtRoboMinDist.getPreferredSize().height);
@@ -350,9 +349,9 @@ public class CallibratorGUI  {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				String input10 = txtromin.getText();
+				String input10 = txtRoboMinDist.getText();
 				jl10.setText(input10);
-				jl10.setBounds(150, insets.top + 335, jl10.getPreferredSize().width, jl10.getPreferredSize().height);	
+				jl10.setBounds(150, insets.top + 425, jl10.getPreferredSize().width, jl10.getPreferredSize().height);	
 			}		
 		});
 		frame1.add(jl10);
@@ -360,10 +359,44 @@ public class CallibratorGUI  {
 		
 		
 		//RoboPar1
-		//RoboPar2
 
 		
-		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 70, insets.top + 500, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
+		lblRoboPar1.setBounds (lblRoboPar1.getX() + lblRoboPar1.getWidth() + 5, insets.top + 455, lblRoboPar1.getPreferredSize().width, lblRoboPar1.getPreferredSize().height);
+		txtRoboPar1.setBounds (txtRoboPar1.getX() + txtRoboPar1.getWidth() + 5, insets.top + 470, txtRoboPar1.getPreferredSize().width, txtRoboPar1.getPreferredSize().height);
+
+		
+		txtRoboPar1.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input11 = txtRoboPar1.getText();
+				jl11.setText(input11);
+				jl11.setBounds(150, insets.top + 470, jl11.getPreferredSize().width, jl11.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl11);
+		
+		//RoboPar2
+
+
+		lblRoboPar2.setBounds (lblRoboPar2.getX() + lblRoboPar2.getWidth() + 5, insets.top + 500, lblRoboPar2.getPreferredSize().width, lblRoboPar2.getPreferredSize().height);
+		txtRoboPar2.setBounds (txtRoboPar2.getX() + txtRoboPar2.getWidth() + 5, insets.top + 515, txtRoboPar2.getPreferredSize().width, txtRoboPar2.getPreferredSize().height);
+
+		
+		txtRoboPar2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String input12 = txtRoboPar2.getText();
+				jl12.setText(input12);
+				jl12.setBounds(150, insets.top + 515, jl12.getPreferredSize().width, jl12.getPreferredSize().height);	
+			}		
+		});
+		frame1.add(jl12);
+
+		
+//		
+		btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 550, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
 
 		btnApply.addActionListener(new ActionListener()
 		{
@@ -409,6 +442,17 @@ public class CallibratorGUI  {
 				jl9.setText(input9);
 				jl9.setBounds(150, insets.top + 380, jl9.getPreferredSize().width, jl9.getPreferredSize().height);	
 
+				String input10 = txtRoboMinDist.getText();
+				jl10.setText(input10);
+				jl10.setBounds(150, insets.top + 425, jl10.getPreferredSize().width, jl10.getPreferredSize().height);
+				
+				String input11 = txtRoboPar1.getText();
+				jl11.setText(input11);
+				jl11.setBounds(150, insets.top + 470, jl11.getPreferredSize().width, jl11.getPreferredSize().height);
+				
+				String input12 = txtRoboPar2.getText();
+				jl12.setText(input12);
+				jl12.setBounds(150, insets.top + 515, jl12.getPreferredSize().width, jl12.getPreferredSize().height);	
 
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
@@ -558,9 +602,9 @@ public class CallibratorGUI  {
 			}
 		});
 
-		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
+		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(jl10);frame1.add(jl11);frame1.add(jl12);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
 
-		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 70, insets.top + 520, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
+		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 590, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 		btnConnect.addActionListener(new ActionListener()
 		{
@@ -632,7 +676,7 @@ public class CallibratorGUI  {
 			}
 		});
 		
-		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 70, insets.top + 570, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
+		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 80, insets.top + 550, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
 
 		btnSend.addActionListener(new ActionListener()
 		{
