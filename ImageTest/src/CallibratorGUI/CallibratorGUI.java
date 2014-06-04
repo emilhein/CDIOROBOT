@@ -589,15 +589,11 @@ public class CallibratorGUI  {
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
-				for(int j = 0; j<RoboCoor.size();j=j+3){
+//				for(int j = 0; j<RoboCoor.size();j=j+3){
 
 
-					txtArea1  = new JTextArea ("Forholdet mellem pixel og cm er = " + ppcm, 1,1);
-					String text1 = txtArea1.getText();
-					lbltxt.setText(text1);
-//					System.out.println("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]));
-
-				}
+	
+//				}
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
@@ -638,6 +634,10 @@ public class CallibratorGUI  {
 				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
 	
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+	
+				txtArea1  = new JTextArea ("Antal bolde fundet: " + (ballCoor.size()/3), 1,1);
+				String text1 = txtArea1.getText();
+				lbltxt.setText(text1);
 				
 				
 				lbltxt2.setText("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");	
