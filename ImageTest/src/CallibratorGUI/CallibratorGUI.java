@@ -512,6 +512,8 @@ public class CallibratorGUI  {
 				lbltxt3.setBounds(200, insets.top + 530, lbltxt3.getPreferredSize().width, 10);
 				lbltxt4.setBounds (200, insets.top + 545, lbltxt4.getPreferredSize().width, 10);
 				
+				ballCoor.clear();
+				
 			}
 		});
 

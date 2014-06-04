@@ -20,8 +20,8 @@ public class RouteTest {
 
 	static int minLength = 1000000;
 	static int minLength2 = 1000000;
-	static Punkt minPunkt;
-	static Punkt minPunkt2;
+	static Punkt minPunkt = new Punkt(0,0);
+	//static Punkt minPunkt2 = new Punkt(1,1);
 	
 	
 	public static Punkt drawBallMap(ArrayList<Float> Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
@@ -65,6 +65,7 @@ public class RouteTest {
 			}
 		}
 		//Finder nr. 2 punkt
+		/*
 		for (int i = 0; i < xCoor.size(); i++) {
 			int tempLength2 = 0;
 			CalcDist dist = new CalcDist();
@@ -76,10 +77,10 @@ public class RouteTest {
 				minPunkt2 = punkt3;
 			}
 		}
-				
+				*/
 		
 		paintPoint(frame, new Punkt(minPunkt.getX(), minPunkt.getY()), 255, 0, 0,20); // farver tætteste bold rød
-		paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255,20); // farver næsttætteste bold blå
+	//	paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255,20); // farver næsttætteste bold blå
 		
 		paintPoint(frame,new Punkt(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10), 0, 128, 255,20); //
 		paintPoint(frame,new Punkt(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10), 0, 255, 0,60); //
@@ -89,7 +90,7 @@ public class RouteTest {
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 		
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
-		System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
+	//	System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
 		
 		return minPunkt;
 	}
