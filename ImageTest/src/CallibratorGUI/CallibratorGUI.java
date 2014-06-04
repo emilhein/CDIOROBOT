@@ -568,7 +568,7 @@ public class CallibratorGUI  {
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
 					DetectBorder findEdge = new DetectBorder();
 					try {
-						findEdge.getRectCoordis("billed0.png");
+						findEdge.getRectCoordis("billed0.png", Integer.parseInt(jl14.getText()), Integer.parseInt(jl13.getText()), Integer.parseInt(jl16.getText()), Integer.parseInt(jl15.getText()));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
