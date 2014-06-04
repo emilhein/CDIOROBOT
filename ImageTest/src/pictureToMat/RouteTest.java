@@ -16,14 +16,14 @@ public class RouteTest {
 	static List<Integer> xCoor = new ArrayList<Integer>();
 	static List<Integer> yCoor = new ArrayList<Integer>();
 
-	static int minLength = 1000000;
-	static int minLength2 = 1000000;
-	static Punkt minPunkt;
+	
+	//static int minLength2 = 1000000;
 	//static Punkt minPunkt2 = new Punkt(1,1);
 	
 	
 	public static Punkt drawBallMap(ArrayList<Float> Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
-		minPunkt = new Punkt(0,0);
+		Punkt minPunkt = new Punkt(0,0);
+		int minLength = 1000000;
 		CalcDist dist = new CalcDist();
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
