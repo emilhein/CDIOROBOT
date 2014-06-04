@@ -28,7 +28,7 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnConnect, btnSend;
-	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblRoboDP, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
+	static JLabel lblDP, lblCirkleDIst, lblParameter1,lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
 	static JTextField txtDP, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2;
 	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
@@ -106,7 +106,8 @@ public class CallibratorGUI  {
 		lblRoboMinDist = new JLabel ("RoboMinDist");
 		lblRoboPar1 = new JLabel ("RoboParameter1");
 		lblRoboPar2 = new JLabel ("RoboParameter2");
-
+		jlsep = new JLabel("=================");
+		
 		
 		txtArea1 = new JTextArea (1, 1);
 		lbltxt = new JLabel ();
@@ -139,19 +140,20 @@ public class CallibratorGUI  {
 		txtRoboPar2 = new JTextField (10);
 		
 		
-		
+		//BOLDE
 		txtDP.setText("1");
 		txtCirkleDIst.setText("10");
 		txtParameter1.setText("50");
-		txtParameter2.setText("2");
-		txtMinradius.setText("8");
+		txtParameter2.setText("14");
+		txtMinradius.setText("12");
 		txtMaxradius.setText("18");
-		txtRoboDP.setText("13");
+		//ROBOT
+		txtRoboDP.setText("1");
 		txtromin.setText("19");
 		txtromax.setText("28");
-		txtRoboMinDist.setText("indæt");
-		txtRoboPar1.setText("indsæt");
-		txtRoboPar2.setText("indsæt");
+		txtRoboMinDist.setText("6");
+		txtRoboPar1.setText("50");
+		txtRoboPar2.setText("5");
 		
 		
 		//Tilføjer alle komponenter
@@ -202,6 +204,7 @@ public class CallibratorGUI  {
 		pane.add (txtRoboMinDist);
 		pane.add(txtRoboPar1);
 		pane.add(txtRoboPar2);
+		pane.add(jlsep);
 		
 		
 		//		//Placerer alle kompoenter
@@ -291,9 +294,15 @@ public class CallibratorGUI  {
 		});
 		frame1.add(jl6);
 
-
-		lblRoboDP.setBounds (lblRoboDP.getX() + lblRoboDP.getWidth() + 5, insets.top + 275, lblRoboDP.getPreferredSize().width, lblRoboDP.getPreferredSize().height);
-		txtRoboDP.setBounds (txtRoboDP.getX() + txtRoboDP.getWidth() + 5, insets.top + 290, txtRoboDP.getPreferredSize().width, txtRoboDP.getPreferredSize().height);
+		//deler robotdelen fra det andet
+		jlsep.setBounds (jlsep.getX() + jlsep.getWidth() + 2, insets.top + 268, jlsep.getPreferredSize().width, jlsep.getPreferredSize().height);
+		
+		frame1.add(jlsep);
+		
+		
+		
+		lblRoboDP.setBounds (lblRoboDP.getX() + lblRoboDP.getWidth() + 5, insets.top + 285, lblRoboDP.getPreferredSize().width, lblRoboDP.getPreferredSize().height);
+		txtRoboDP.setBounds (txtRoboDP.getX() + txtRoboDP.getWidth() + 5, insets.top + 300, txtRoboDP.getPreferredSize().width, txtRoboDP.getPreferredSize().height);
 
 
 		txtRoboDP.addActionListener(new ActionListener()
@@ -302,7 +311,7 @@ public class CallibratorGUI  {
 			{
 				String input = txtRoboDP.getText();
 				jl7.setText(input);
-				jl7.setBounds(150, insets.top + 20, jl7.getPreferredSize().width, jl7.getPreferredSize().height);	
+				jl7.setBounds(150, insets.top + 300, jl7.getPreferredSize().width, jl7.getPreferredSize().height);	
 			}		
 		});
 		frame1.add(jl7);
@@ -432,7 +441,7 @@ public class CallibratorGUI  {
 
 				String input7 = txtRoboDP.getText();
 				jl7.setText(input7);
-				jl7.setBounds(150, insets.top + 280, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
+				jl7.setBounds(150, insets.top + 300, jl7.getPreferredSize().width, jl7.getPreferredSize().height);
 				
 				String input8 = txtromin.getText();
 				jl8.setText(input8);
@@ -473,7 +482,7 @@ public class CallibratorGUI  {
 
 
 				
-				ArrayList<Float> RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"robo",true);//minradius, maxrdius, antalbolde
+				ArrayList<Float> RoboCoor = balls.findCircle(Integer.parseInt(jl8.getText()),Integer.parseInt(jl9.getText()),Integer.parseInt(jl7.getText()),Integer.parseInt(jl10.getText()),Integer.parseInt(jl11.getText()),Integer.parseInt(jl12.getText()),"robo",true);//minradius, maxrdius, antalbolde
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
@@ -524,7 +533,7 @@ public class CallibratorGUI  {
 				}
 				
 				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
-				
+	
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 				
 				
