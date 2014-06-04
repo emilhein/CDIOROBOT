@@ -54,9 +54,9 @@ public class RouteTest {
 		for (int i = 0; i < xCoor.size(); i++) {
 			int tempLength = 0;	
 		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
-			
+			System.out.println("UDREGNER BOLDLÆNGDE NR = " + i);
 			Punkt punkt2 = new Punkt(xCoor.get(i), yCoor.get(i));
-			tempLength = dist.Calcdist(new Punkt(roboFrontPunkt.getX(),roboFrontPunkt.getY()), punkt2);
+			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
 			
 			if (tempLength < minLength) {
 				minLength = tempLength;
@@ -64,8 +64,9 @@ public class RouteTest {
 				minPunkt.setX(punkt2.getX());
 				minPunkt.setY(punkt2.getY());
 			}
-			xCoor.clear();yCoor.clear();
+			
 		}
+		xCoor.clear();yCoor.clear();
 		//Finder nr. 2 punkt
 		/*
 		for (int i = 0; i < xCoor.size(); i++) {
