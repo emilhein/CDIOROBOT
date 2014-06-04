@@ -27,7 +27,7 @@ public class CallibratorGUI  {
 
 	static JFrame frame1;
 	static Container pane;
-	static JButton btnApply, btnConnect, btnSend;
+	static JButton btnApply, btnConnect;
 	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød, lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1,lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
 	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2;
 	static ImageIcon img, afterc, findb, bh, edge;
@@ -67,13 +67,14 @@ public class CallibratorGUI  {
 
 		//Prepare panel
 		pane = frame1.getContentPane();
-
 		insets = pane.getInsets();
 
-		//tilføj layout for null
-		pane.setLayout (null);
+		
+//		pane.setLayout (null);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		pane.setBackground(Color.lightGray);
+		
 		ImageIcon afterc = new ImageIcon("billed0.png");
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
 
@@ -91,8 +92,7 @@ public class CallibratorGUI  {
 		lbledge = new JLabel (edge, JLabel.CENTER);
 
 
-		btnConnect = new JButton ("Connect");
-		btnSend = new JButton ("Send");
+		btnConnect = new JButton ("Send");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
 		lblromin = new JLabel ("RoboMin");
@@ -111,6 +111,9 @@ public class CallibratorGUI  {
 		lblmaxblå = new JLabel ("MaxBlå");
 		lblmaxrød = new JLabel ("MaxRød");
 		lblminrød = new JLabel ("MinRød");
+		
+		btnConnect.setBackground(Color.PINK);
+		btnApply.setBackground(Color.PINK);
 		
 		txtArea1 = new JTextArea (1, 1);
 		lbltxt = new JLabel ();
@@ -165,8 +168,11 @@ public class CallibratorGUI  {
 		txtRoboMinDist.setText("60");
 		txtRoboPar1.setText("50");
 		txtRoboPar2.setText("7");
-		
-		
+		//
+		txtmaxgrøn.setText("65");
+		txtmaxblå.setText("40");
+		txtmaxrød.setText("160");
+		txtminrød.setText("40");
 		//Tilføjer alle komponenter
 		pane.add (jl1);
 		pane.add (jl2);
@@ -193,7 +199,6 @@ public class CallibratorGUI  {
 		pane.add(txtRoboDP);
 		pane.add (btnApply);
 		pane.add (btnConnect);
-		pane.add (btnSend);
 
 		pane.add (lblimg);
 		pane.add (lblafterc);
@@ -713,7 +718,7 @@ public class CallibratorGUI  {
 		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(jl10);frame1.add(jl11);frame1.add(jl12);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
 		frame1.add(jl13);frame1.add(jl14);frame1.add(jl15);frame1.add(jl16);
 		
-		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 590, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
+		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 80, insets.top + 550, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 		btnConnect.addActionListener(new ActionListener()
 		{
@@ -786,18 +791,7 @@ public class CallibratorGUI  {
 			}
 		});
 		
-		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 80, insets.top + 550, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
-
-		btnSend.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-
-				System.out.println("In SEND");
-
-				
-			}
-		});
+	
 
 		//Gør rammen synlig
 		frame1.setVisible (true);
