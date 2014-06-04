@@ -168,7 +168,11 @@ public class CallibratorGUI  {
 		txtRoboMinDist.setText("60");
 		txtRoboPar1.setText("50");
 		txtRoboPar2.setText("7");
-		
+		//
+		txtmaxgrøn.setText("65");
+		txtmaxblå.setText("40");
+		txtmaxrød.setText("160");
+		txtminrød.setText("40");
 		//Tilføjer alle komponenter
 		pane.add (jl1);
 		pane.add (jl2);
