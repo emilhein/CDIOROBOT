@@ -149,11 +149,11 @@ public class CallibratorGUI  {
 		txtMaxradius.setText("18");
 		//ROBOT
 		txtRoboDP.setText("1");
-		txtromin.setText("19");
+		txtromin.setText("21");
 		txtromax.setText("28");
-		txtRoboMinDist.setText("6");
+		txtRoboMinDist.setText("22");
 		txtRoboPar1.setText("50");
-		txtRoboPar2.setText("5");
+		txtRoboPar2.setText("11");
 		
 		
 		//Tilføjer alle komponenter
