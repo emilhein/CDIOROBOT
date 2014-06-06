@@ -5,6 +5,7 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,8 @@ public class DetectBorder {
 		private float externalWidth = 195;
 		private float innerHeight = 120;
 		private float innerWidth = 180;
+		private CvPoint goalA;
+		private CvPoint goalB;
 
 		private static float pixPerCm = -1;
 		
@@ -74,7 +77,7 @@ public class DetectBorder {
 		        }
 		    }
 
-		    cvRectangle(img, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
+		    cvRectangle(img, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
 
 		    pixPerCm = pixPerCm(greatest.width(), greatest.height());
 		    
@@ -91,9 +94,14 @@ public class DetectBorder {
 	        p1.y(innerRect.y());
 	        p2.y(innerRect.y()+innerRect.height());
 		    
-		    cvRectangle(img, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
+		    cvRectangle(img, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
 		    
 	      // cnvs.showImage(img);
+		    
+		    goalA = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
+		    goalB= new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
+		    
+		    cvLine(img, goalA, goalB, CV_RGB(0,200,255), 3,0,0);  
 		    
 		    cvSaveImage("edge.png", img);
 		    
@@ -114,6 +122,16 @@ public class DetectBorder {
 		public float getPixPerCm()
 		{
 			return pixPerCm;
+		}
+		
+		public CvPoint getGoalA()
+		{
+			return goalA;
+		}
+		
+		public CvPoint getGoalB()
+		{
+			return goalB;
 		}
 		
 		public void brownThreshold(String image)
