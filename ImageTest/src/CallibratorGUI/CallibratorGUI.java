@@ -64,6 +64,7 @@ public class CallibratorGUI  {
 			//Sætter størrelsen af rammen i pixelx 
 			frame1.setSize (1300,718);
 
+			
 			//Prepare panel
 			pane = frame1.getContentPane();
 			insets = pane.getInsets();
@@ -116,7 +117,8 @@ public class CallibratorGUI  {
 			
 			btnConnect.setBackground(Color.PINK);
 			btnApply.setBackground(Color.PINK);
-
+			
+			
 			txtArea1 = new JTextArea (1, 1);
 			lbltxt = new JLabel ();
 			lbltxt2 = new JLabel ();
@@ -254,7 +256,8 @@ public class CallibratorGUI  {
 			pane.add(txtvinkel);
 			pane.add(txtlm);
 			pane.add(txtluk);
-
+			
+			
 			//		//Placerer alle kompoenter
 
 			lblmaxgrøn.setBounds (lblmaxgrøn.getX() + lblmaxgrøn.getWidth() + 1010, insets.top + 236, lblmaxgrøn.getPreferredSize().width, lblmaxgrøn.getPreferredSize().height);
