@@ -2,14 +2,9 @@ package pictureToMat;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_CHAIN_APPROX_NONE;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_RETR_CCOMP;
+import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvBoundingRect;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvFindContours;
-
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
@@ -39,23 +35,18 @@ public class DetectBorder {
 		private static float pixPerCm = -1;
 		
 		public CvRect getRectCoordis(String src, int blueMax, int greenMax, int redMin, int redMax) throws IOException
-		{		
-
+		{					
 			//CanvasFrame cnvs=new CanvasFrame("Polygon");
 	        //cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-	         
 	           
-	        brownThreshold(src, blueMax, greenMax, redMin, redMax);
+			brownThreshold(src);
 	        
-	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.jpg"));
+	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.png"));
 	        IplImage img = IplImage.createFrom(brownThresholded);
 	        
 		    CvSize cvSize = cvSize(img.width(), img.height());
 		    IplImage gry=cvCreateImage(cvSize, img.depth(), 1);
 		    cvCvtColor(img, gry, CV_BGR2GRAY);
-
-		    //cvThreshold(gry, gry, 75, 98, CV_THRESH_BINARY);
-		    //cvAdaptiveThreshold(gry, gry, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 5);
 
 			
 		    CvMemStorage storage = CvMemStorage.create();
@@ -104,7 +95,7 @@ public class DetectBorder {
 		    
 	      // cnvs.showImage(img);
 		    
-		    cvSaveImage("edge.jpg", img);
+		    cvSaveImage("edge.png", img);
 		    
 		    return innerRect;
 
@@ -117,8 +108,8 @@ public class DetectBorder {
 			float heightPixPrCm = pixBorderHeight / externalHeight;
 			float pixPrCm = (widthPixPrCm + heightPixPrCm) / 2;
 			
-			//return pixPrCm;
-			return (float) 6.761823; // er fastsat for test!
+			return pixPrCm;
+			//return (float) 6.761823; // er fastsat for test!
 		}
 		
 		public float getPixPerCm()
@@ -126,34 +117,37 @@ public class DetectBorder {
 			return pixPerCm;
 		}
 		
-		public void brownThreshold(String image, int blueMax, int greenMax, int redMin, int redMax){
+		public void brownThreshold(String image)
+		{
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-
-			Mat img = Highgui.imread(image);
-
-			for (int j = 0; j < img.rows(); j++) {
-				for (int b = 0; b < img.cols(); b++) {
+			
+	    	Mat img = Highgui.imread("billed0.png");
+			
+			for (int j = 0; j < img.rows(); j++)
+			{
+				for (int b = 0; b < img.cols(); b++)
+				{
 					double[] rgb = img.get(j, b);
-					for (int i = 0; i < rgb.length; i = i + 3) {
+					for (int i = 0; i < rgb.length; i = i + 3)
+					{
 						double blue = rgb[i];
 						double green = rgb[i+1];
 						double red = rgb[i+2];
-						if (blue < blueMax && green < greenMax && red > redMin && red < redMax) { // finder kanten og farver hvid, STANDARD: blue < 40 && green < 65 && red > 40 && red < 160												// farver
-							img.put(j, b, 255, 255, 255); 
-							break;
+						
+						if(((((red - blue)/blue) < 0.5) || (((red - green)/green) < 0.5)) || (red < 20 && green > 0 && blue > 0) || red < 18)
+						{
+							img.put(j, b, 0, 0, 0);
 						}
 						else
 						{
-							img.put(j, b, 0, 0, 0); // farver alt andet sort
-							break;
+							img.put(j, b, 255, 255, 255);
 						}
 					}
 
 				}
 			}
 
-
-			Highgui.imwrite("BrownThreshold.jpg", img); // Gemmer billedet i roden
+			
+			Highgui.imwrite("BrownThreshold.png", img);
 		}
 }

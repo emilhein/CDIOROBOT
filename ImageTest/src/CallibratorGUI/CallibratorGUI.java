@@ -74,20 +74,20 @@ public class CallibratorGUI  {
 
 		pane.setBackground(Color.lightGray);
 		
-		ImageIcon afterc = new ImageIcon("billed0.jpg");
+		ImageIcon afterc = new ImageIcon("billed0.png");
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
 
-		ImageIcon img = new ImageIcon("RouteTest3.jpg");
+		ImageIcon img = new ImageIcon("RouteTest3.png");
 		lblimg = new JLabel (img, JLabel.CENTER);
 
 
-		ImageIcon findb = new ImageIcon("robo.jpg");
+		ImageIcon findb = new ImageIcon("robo.png");
 		lblfindb = new JLabel (findb, JLabel.CENTER);
 
-		ImageIcon bh = new ImageIcon("balls.jpg"); //readyForBallMethodGrey
+		ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
 		lblbh = new JLabel (bh, JLabel.CENTER);
 		
-		ImageIcon edge = new ImageIcon("edge.jpg");
+		ImageIcon edge = new ImageIcon("edge.png");
 		lbledge = new JLabel (edge, JLabel.CENTER);
 
 
@@ -570,10 +570,10 @@ public class CallibratorGUI  {
 				takepic.takePicture();
  
 				
-					//BufferedImage src = ImageIO.read(new File("Billed0.jpg"));
+					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
 					DetectBorder findEdge = new DetectBorder();
 					try {
-						findEdge.getRectCoordis("billed0.jpg",40,65,40,160);
+						findEdge.getRectCoordis("billed0.png",40,65,40,160);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -595,7 +595,7 @@ public class CallibratorGUI  {
 	
 //				}
 
-				Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
+				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
 				double[] front = frame.get(Math.round(RoboCoor.get(1)), Math.round(RoboCoor.get(0))); ///Y OG X ER BYTTET OM GConnectDET get-metoden
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
@@ -635,7 +635,10 @@ public class CallibratorGUI  {
 	
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 	
-				txtArea1  = new JTextArea ("Antal bolde fundet: " + (ballCoor.size()/3), 1,1);
+//				txtArea1  = new JTextArea ("Antal bolde fundet: " + (ballCoor.size()/3), 1,1);
+//				String text1 = txtArea1.getText();
+//				lbltxt.setText(text1);
+				txtArea1  = new JTextArea ("ppcm: " + ppcm, 1,1);
 				String text1 = txtArea1.getText();
 				lbltxt.setText(text1);
 				
@@ -667,33 +670,33 @@ public class CallibratorGUI  {
 				lbltxt4.setText ("Total Calculation time: " + (endTime - startTime)); 
 			
 				
-				ImageIcon afterc = new ImageIcon("billed0.jpg");
+				ImageIcon afterc = new ImageIcon("billed0.png");
 				Image image1 = afterc.getImage(); // transform it
 				Image afimage = image1.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				afterc = new ImageIcon(afimage);  // transform it back
 				//lblafterc = new JLabel (afterc, JLabel.CENTER);
 
-				ImageIcon img = new ImageIcon("RouteTest3.jpg");
+				ImageIcon img = new ImageIcon("RouteTest3.png");
 				Image image2 = img.getImage(); // transform it
 				Image dimage = image2.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				img = new ImageIcon(dimage);  // transform it back
 				//lblimg = new JLabel (img, JLabel.CENTER);
 
 
-				ImageIcon findb = new ImageIcon("robo.jpg");
+				ImageIcon findb = new ImageIcon("robo.png");
 				Image image3 = findb.getImage(); // transform it
 				Image abimage = image3.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				findb = new ImageIcon(abimage);  // transform it back
 				//lblfindb = new JLabel (findb, JLabel.CENTER);
 
 
-				ImageIcon bh = new ImageIcon("balls.jpg"); //readyForBallMethodGrey
+				ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
 				Image image4 = bh.getImage(); // transform it
 				Image acimage = image4.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				bh = new ImageIcon(acimage);  // transform it back
 				//	lblbh = new JLabel (bh, JLabel.CENTER);
 				
-				ImageIcon edge = new ImageIcon("edge.jpg");
+				ImageIcon edge = new ImageIcon("edge.png");
 				Image image5 = edge.getImage(); // transform it
 				Image edimage = image5.getScaledInstance(300, 169,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				edge = new ImageIcon(edimage);  // transform it back

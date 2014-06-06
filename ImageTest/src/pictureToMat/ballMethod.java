@@ -59,13 +59,13 @@ public class ballMethod {
 		
 		Mat webcam_image;
 		if(findRobot == true){
-			pictureToMat("billed0.jpg");
-			webcam_image = Highgui.imread("AfterColorConvert.jpg");  //billede der skal findes robot på.
+			pictureToMat("billed0.png");
+			webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes robot på.
 			System.out.println("IN TRUE");
 		}
 		else{
-			pictureToMat3("billed0.jpg");
-			webcam_image = Highgui.imread("AfterColorConvert.jpg");  //billede der skal findes bolde på.
+			pictureToMat3("billed0.png");
+			webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes bolde på.
 
 			// Save
 			System.out.println("IN FALSE");
@@ -87,11 +87,11 @@ public class ballMethod {
 			webcam_image.convertTo(webcam_image, CvType.CV_8UC1); //32S
 			
 			
-			Highgui.imwrite("TEST.jpg", webcam_image); // Gemmer billedet i
+			Highgui.imwrite("TEST.png", webcam_image); // Gemmer billedet i
 			// roden
 
 			// load image
-			IplImage img = cvLoadImage("TEST.jpg");
+			IplImage img = cvLoadImage("TEST.png");
 
 			// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
 			IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
@@ -99,9 +99,9 @@ public class ballMethod {
 			// convert image to grayscale
 			cvCvtColor(img, imageGray, CV_BGR2GRAY);
 			
-			cvSaveImage("TEST.jpg", imageGray);
+			cvSaveImage("TEST.png", imageGray);
 			
-			b8ch1 = Highgui.imread("TEST.jpg", CvType.CV_8UC1);
+			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
 			
 			System.out.println("CHANNELS: " + webcam_image.channels());
 			System.out.println("CHANNELS: " + b8ch1.channels());
@@ -129,7 +129,7 @@ public class ballMethod {
  
 			//-- 5. Display the image  
 
-			Highgui.imwrite(name+".jpg", webcam_image); // Gemmer billedet i roden
+			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
 
 		}  
 		else  
@@ -168,11 +168,11 @@ public class ballMethod {
 			}
 		}
 
-		Highgui.imwrite("AfterColorConvert.jpg", m); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 
 		// load image
-		IplImage img = cvLoadImage("AfterColorConvert.jpg");
+		IplImage img = cvLoadImage("AfterColorConvert.png");
 
 		// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
 		//IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
@@ -183,7 +183,7 @@ public class ballMethod {
 		// CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 4);
 
 		// Save
-		//cvSaveImage("readyForBallMethodGrey.jpg", imageGray);
+		//cvSaveImage("readyForBallMethodGrey.png", imageGray);
 	}
 	
 	public static void pictureToMat3(String image) {
@@ -205,7 +205,7 @@ public class ballMethod {
 						m.put(j, b, 0, 0, 0);
 						break;
 					}*/
-					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) { // for gr�nt
+					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
 						m.put(j, b, 0, 0, 0);
 						break;
 					}
@@ -213,7 +213,7 @@ public class ballMethod {
 			}
 		}
 
-		Highgui.imwrite("AfterColorConvert.jpg", m); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
 	
@@ -239,7 +239,7 @@ public class ballMethod {
 			}
 		}
 
-		Highgui.imwrite("AfterColorConvert.jpg", m); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
 
@@ -247,7 +247,7 @@ public class ballMethod {
 		// int[] test = new int[10];
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-		// Mat image = Highgui.imread("test.jpg"); // BGR
+		// Mat image = Highgui.imread("test.png"); // BGR
 		Mat m = Highgui.imread(image); // BGR
 		// System.out.println(m.dump());
 		// int count = 0;
@@ -298,7 +298,7 @@ public class ballMethod {
 			}
 		}
 
-		Highgui.imwrite("AfterColorConvert.jpg", m); // Gemmer billedet i
+		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
 	
@@ -320,7 +320,7 @@ public class ballMethod {
     			}
     		}
     		File outputFile = new File("invert-"+imageName);
-    		ImageIO.write(inputFile, "jpg", outputFile);
+    		ImageIO.write(inputFile, "png", outputFile);
     	}
     	catch (IOException e)
     	{
