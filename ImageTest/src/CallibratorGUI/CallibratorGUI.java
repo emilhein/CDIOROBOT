@@ -27,8 +27,8 @@ public class CallibratorGUI  {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnConnect;
-	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød, lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1,lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
-	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2;
+	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød, lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1,lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax, lblvinkel, lbllm, lblluk, jl17, jl18, jl19;
+	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk;
 	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
 	static JTextArea txtArea1;
@@ -110,7 +110,10 @@ public class CallibratorGUI  {
 			lblmaxblå = new JLabel ("MaxBlå");
 			lblmaxrød = new JLabel ("MaxRød");
 			lblminrød = new JLabel ("MinRød");
-
+			lblvinkel = new JLabel ("Vinkel");
+			lbllm = new JLabel ("LM");
+			lblluk = new JLabel ("Luk");
+			
 			btnConnect.setBackground(Color.PINK);
 			btnApply.setBackground(Color.PINK);
 
@@ -135,6 +138,9 @@ public class CallibratorGUI  {
 			jl14 = new JLabel ();
 			jl15 = new JLabel ();
 			jl16 = new JLabel ();
+			jl17 = new JLabel();
+			jl18 = new JLabel();
+			jl19 = new JLabel();
 			txtDP = new JTextField (10);
 			txtCirkleDIst = new JTextField  (10);
 			txtParameter1 = new JTextField  (10);
@@ -151,6 +157,9 @@ public class CallibratorGUI  {
 			txtmaxblå = new JTextField (10);
 			txtmaxrød = new JTextField (10);
 			txtminrød = new JTextField (10);
+			txtvinkel = new JTextField (10);
+			txtlm = new JTextField (10);
+			txtluk = new JTextField (10);
 
 
 			//BOLDE
@@ -167,11 +176,15 @@ public class CallibratorGUI  {
 			txtRoboMinDist.setText("60");
 			txtRoboPar1.setText("50");
 			txtRoboPar2.setText("7");
-			//
+			//FARVE
 			txtmaxgrøn.setText("65");
 			txtmaxblå.setText("40");
 			txtmaxrød.setText("160");
 			txtminrød.setText("40");
+			//NYT TIL ROBOT
+			txtvinkel.setText("2.13");
+			txtlm.setText("2.5");
+			txtluk.setText("17.5");
 			//Tilføjer alle komponenter
 			pane.add (jl1);
 			pane.add (jl2);
@@ -189,6 +202,9 @@ public class CallibratorGUI  {
 			pane.add (lblMinradius);
 			pane.add (lblMaxradius);
 			pane.add(lblRoboDP);
+			pane.add(lblvinkel);
+			pane.add(lbllm);
+			pane.add(lblluk);
 			pane.add (txtDP);
 			pane.add (txtCirkleDIst);
 			pane.add (txtParameter1);
@@ -232,7 +248,12 @@ public class CallibratorGUI  {
 			pane.add(jl14);
 			pane.add(jl15);
 			pane.add(jl16);
-
+			pane.add(jl17);
+			pane.add(jl18);
+			pane.add(jl19);
+			pane.add(txtvinkel);
+			pane.add(txtlm);
+			pane.add(txtluk);
 
 			//		//Placerer alle kompoenter
 
@@ -483,8 +504,53 @@ public class CallibratorGUI  {
 			});
 			frame1.add(jl12);
 
+			
+			lblvinkel.setBounds (lblvinkel.getX() + lblvinkel.getWidth() + 1010, insets.top + 411, lblvinkel.getPreferredSize().width, lblvinkel.getPreferredSize().height);
+			txtvinkel.setBounds (txtvinkel.getX() + txtvinkel.getWidth() + 1010, insets.top + 426, txtvinkel.getPreferredSize().width, txtvinkel.getPreferredSize().height);
+			
+			txtvinkel.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					String input17 = txtvinkel.getText();
+					jl17.setText(input17);
+					jl17.setBounds(1155, insets.top + 426, jl17.getPreferredSize().width, jl17.getPreferredSize().height);
+				}
+			});
+		
 
-			//		
+			lbllm.setBounds (lbllm.getX() + lbllm.getWidth() + 1010, insets.top + 451, lbllm.getPreferredSize().width, lbllm.getPreferredSize().height);
+			txtlm.setBounds (txtlm.getX() + txtlm.getWidth() + 1010, insets.top + 466, txtlm.getPreferredSize().width, txtlm.getPreferredSize().height);
+
+			txtlm.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					String input18 = txtlm.getText();
+					jl18.setText(input18);
+					jl18.setBounds(1155, insets.top + 466, jl18.getPreferredSize().width, jl18.getPreferredSize().height);
+
+				}
+			});
+			
+
+
+			lblluk.setBounds (lblluk.getX() + lblluk.getWidth() + 1010, insets.top + 496, lblluk.getPreferredSize().width, lblluk.getPreferredSize().height);
+			txtluk.setBounds (txtluk.getX() + txtluk.getWidth() + 1010, insets.top + 511, txtluk.getPreferredSize().width, txtluk.getPreferredSize().height);
+
+			txtluk.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					String input19 = txtluk.getText();
+					jl19.setText(input19);
+					jl19.setBounds(1155, insets.top + 511, jl19.getPreferredSize().width, jl19.getPreferredSize().height);
+
+				}
+			});
+		
+			
+			
 			btnApply.setBounds (btnApply.getX() + btnApply.getWidth() + 5, insets.top + 550, btnApply.getPreferredSize().width, btnApply.getPreferredSize().height);
 
 			btnApply.addActionListener(new ActionListener()
@@ -563,6 +629,19 @@ public class CallibratorGUI  {
 					String input16 = txtminrød.getText();
 					jl16.setText(input16);
 					jl16.setBounds(1155, insets.top + 381, jl16.getPreferredSize().width, jl16.getPreferredSize().height);
+					
+					String input17 = txtvinkel.getText();
+					jl17.setText(input17);
+					jl17.setBounds(1155, insets.top + 426, jl17.getPreferredSize().width, jl17.getPreferredSize().height);
+					
+					String input18 = txtlm.getText();
+					jl18.setText(input18);
+					jl18.setBounds(1155, insets.top + 466, jl18.getPreferredSize().width, jl18.getPreferredSize().height);
+					
+					String input19 = txtluk.getText();
+					jl19.setText(input19);
+					jl19.setBounds(1155, insets.top + 511, jl19.getPreferredSize().width, jl19.getPreferredSize().height);
+
 
 					TakePicture takepic = new TakePicture();
 					takepic.takePicture();
@@ -731,6 +810,9 @@ public class CallibratorGUI  {
 			frame1.add(jl14);
 			frame1.add(jl15);
 			frame1.add(jl16);
+			frame1.add(jl17);
+			frame1.add(jl18);
+			frame1.add(jl19);
 			frame1.add(lblimg);
 			frame1.add(lblafterc);
 			frame1.add(lblbh);
@@ -739,6 +821,7 @@ public class CallibratorGUI  {
 			frame1.add(lbltxt3);	
 			frame1.add(lbltxt4);
 			frame1.add(txtArea1);
+			
 
 			btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 80, insets.top + 550, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
