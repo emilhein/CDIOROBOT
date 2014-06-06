@@ -91,7 +91,7 @@ public class RouteTest {
 		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 40, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 4);
 		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() - 20, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 4);
 
-		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
+		Highgui.imwrite("RouteTest3.jpg", frame); // Gemmer billedet i roden
 		
 		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
 	//	System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");

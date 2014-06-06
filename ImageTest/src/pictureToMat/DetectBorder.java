@@ -47,7 +47,7 @@ public class DetectBorder {
 	           
 	        brownThreshold(src, blueMax, greenMax, redMin, redMax);
 	        
-	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.png"));
+	        BufferedImage brownThresholded = ImageIO.read(new File("BrownThreshold.jpg"));
 	        IplImage img = IplImage.createFrom(brownThresholded);
 	        
 		    CvSize cvSize = cvSize(img.width(), img.height());
@@ -104,7 +104,7 @@ public class DetectBorder {
 		    
 	      // cnvs.showImage(img);
 		    
-		    cvSaveImage("edge.png", img);
+		    cvSaveImage("edge.jpg", img);
 		    
 		    return innerRect;
 
@@ -117,7 +117,8 @@ public class DetectBorder {
 			float heightPixPrCm = pixBorderHeight / externalHeight;
 			float pixPrCm = (widthPixPrCm + heightPixPrCm) / 2;
 			
-			return pixPrCm;
+			//return pixPrCm;
+			return (float) 6.761823; // er fastsat for test!
 		}
 		
 		public float getPixPerCm()
@@ -153,6 +154,6 @@ public class DetectBorder {
 			}
 
 
-			Highgui.imwrite("BrownThreshold.png", img); // Gemmer billedet i roden
+			Highgui.imwrite("BrownThreshold.jpg", img); // Gemmer billedet i roden
 		}
 }

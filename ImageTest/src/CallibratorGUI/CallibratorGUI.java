@@ -74,20 +74,20 @@ public class CallibratorGUI  {
 
 		pane.setBackground(Color.lightGray);
 		
-		ImageIcon afterc = new ImageIcon("billed0.png");
+		ImageIcon afterc = new ImageIcon("billed0.jpg");
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
 
-		ImageIcon img = new ImageIcon("RouteTest3.png");
+		ImageIcon img = new ImageIcon("RouteTest3.jpg");
 		lblimg = new JLabel (img, JLabel.CENTER);
 
 
-		ImageIcon findb = new ImageIcon("robo.png");
+		ImageIcon findb = new ImageIcon("robo.jpg");
 		lblfindb = new JLabel (findb, JLabel.CENTER);
 
-		ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
+		ImageIcon bh = new ImageIcon("balls.jpg"); //readyForBallMethodGrey
 		lblbh = new JLabel (bh, JLabel.CENTER);
 		
-		ImageIcon edge = new ImageIcon("edge.png");
+		ImageIcon edge = new ImageIcon("edge.jpg");
 		lbledge = new JLabel (edge, JLabel.CENTER);
 
 
@@ -490,6 +490,7 @@ public class CallibratorGUI  {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				final long startTime = System.currentTimeMillis();
 
 				Punkt minPunkt;
 
@@ -569,10 +570,10 @@ public class CallibratorGUI  {
 				takepic.takePicture();
  
 				
-					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
+					//BufferedImage src = ImageIO.read(new File("Billed0.jpg"));
 					DetectBorder findEdge = new DetectBorder();
 					try {
-						findEdge.getRectCoordis("billed0.png",40,65,40,160);
+						findEdge.getRectCoordis("billed0.jpg",40,65,40,160);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -594,7 +595,7 @@ public class CallibratorGUI  {
 	
 //				}
 
-				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
+				Mat frame = Highgui.imread("AfterColorConvert.jpg"); // henter det konverterede billlede
 
 				double[] front = frame.get(Math.round(RoboCoor.get(1)), Math.round(RoboCoor.get(0))); ///Y OG X ER BYTTET OM GConnectDET get-metoden
 				//double red = front[2]; //henter en rød farver fra den ene cirkel
@@ -641,8 +642,8 @@ public class CallibratorGUI  {
 				
 				lbltxt2.setText("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");	
 				lbltxt3.setText("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-				lbltxt4.setText ("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
-						
+				//lbltxt4.setText ("pixel/cm =   "+ ppcm);
+				
 
 				Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
 				Punkt nyRoboBag = new Punkt(0,0);
@@ -660,37 +661,44 @@ public class CallibratorGUI  {
 
 				CalcDist dist = new CalcDist();
 				minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
-
-				ImageIcon afterc = new ImageIcon("billed0.png");
+				
+				
+				final long endTime = System.currentTimeMillis();
+				lbltxt4.setText ("Total Calculation time: " + (endTime - startTime)); 
+			
+				
+				ImageIcon afterc = new ImageIcon("billed0.jpg");
 				Image image1 = afterc.getImage(); // transform it
 				Image afimage = image1.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				afterc = new ImageIcon(afimage);  // transform it back
 				//lblafterc = new JLabel (afterc, JLabel.CENTER);
 
-				ImageIcon img = new ImageIcon("RouteTest3.png");
+				ImageIcon img = new ImageIcon("RouteTest3.jpg");
 				Image image2 = img.getImage(); // transform it
 				Image dimage = image2.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				img = new ImageIcon(dimage);  // transform it back
 				//lblimg = new JLabel (img, JLabel.CENTER);
 
 
-				ImageIcon findb = new ImageIcon("robo.png");
+				ImageIcon findb = new ImageIcon("robo.jpg");
 				Image image3 = findb.getImage(); // transform it
 				Image abimage = image3.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				findb = new ImageIcon(abimage);  // transform it back
 				//lblfindb = new JLabel (findb, JLabel.CENTER);
 
 
-				ImageIcon bh = new ImageIcon("balls.png"); //readyForBallMethodGrey
+				ImageIcon bh = new ImageIcon("balls.jpg"); //readyForBallMethodGrey
 				Image image4 = bh.getImage(); // transform it
 				Image acimage = image4.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				bh = new ImageIcon(acimage);  // transform it back
 				//	lblbh = new JLabel (bh, JLabel.CENTER);
 				
-				ImageIcon edge = new ImageIcon("edge.png");
+				ImageIcon edge = new ImageIcon("edge.jpg");
 				Image image5 = edge.getImage(); // transform it
 				Image edimage = image5.getScaledInstance(300, 169,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				edge = new ImageIcon(edimage);  // transform it back
+				
+						
 				
 				lblimg.setIcon(img);
 				lblafterc.setIcon(afterc);
@@ -709,7 +717,6 @@ public class CallibratorGUI  {
 				lbltxt3.setBounds(200, insets.top + 530, lbltxt3.getPreferredSize().width, 10);
 				lbltxt4.setBounds (200, insets.top + 545, lbltxt4.getPreferredSize().width, 10);
 				
-				//ballCoor.clear();
 				
 			}
 		});
@@ -732,7 +739,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.14);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -761,7 +768,7 @@ public class CallibratorGUI  {
 							
 							//kører robot frem
 							System.out.println("minlength " + minLength);
-							int distance = (int)((minLength*2.23)/ppcm);	//længde konvertering
+							int distance = (int)((minLength*2.25)/ppcm);	//længde konvertering
 							System.out.println("dist = " + distance);
 							dos.write(81);
 							dos.flush();
