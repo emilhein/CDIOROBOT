@@ -733,9 +733,9 @@ public class CallibratorGUI  {
 					System.out.println("koordinaterne til nyMinpunkt er (" + nyMinPunkt.getX() +","+nyMinPunkt.getY()+")");
 
 					CalcAngle Angle = new CalcAngle();
-					int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
+					int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
 					System.out.println("BallAngle = " + BallAngle);
-					int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
+					int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
 					System.out.println("RoboAngle = " + RoboAngle);
 					TurnAngle = RoboAngle-BallAngle;
 
@@ -813,9 +813,9 @@ public class CallibratorGUI  {
 			frame1.add(jl14);
 			frame1.add(jl15);
 			frame1.add(jl16);
-			frame1.add(jl17);
-			frame1.add(jl18);
-			frame1.add(jl19);
+			frame1.add(jl17); // vinkel
+			frame1.add(jl18); // lenght
+			frame1.add(jl19); // luk
 			frame1.add(lblimg);
 			frame1.add(lblafterc);
 			frame1.add(lblbh);
@@ -834,6 +834,7 @@ public class CallibratorGUI  {
 				{
 
 					System.out.println("In CONNECT");
+					
 
 					System.out.println("Waiting for your go!");	
 					//			int input = scan.nextInt();
@@ -841,7 +842,7 @@ public class CallibratorGUI  {
 					int Case;
 					int i;
 					System.out.println("TurnAngle = " + TurnAngle);
-					int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
+					int angle = (int) (TurnAngle*(Float.parseFloat(jl17.getText())));	//vinkel konvertering
 					System.out.println("angle " + angle);
 					if(Math.abs(angle) < 250){
 						if(angle > 0) 				//vælger retning der skal drejes
@@ -870,17 +871,17 @@ public class CallibratorGUI  {
 
 						//kører robot frem
 						System.out.println("minlength " + minLength);
-						int distance = (int)((minLength*2.23)/ppcm);	//længde konvertering
+						int distance = (int)((minLength*(Float.parseFloat(jl18.getText())))/ppcm);	//længde konvertering
 						System.out.println("dist = " + distance);
 						dos.write(81);
 						dos.flush();
-						if(angle > 180) distance -= 90;
+						if(angle > 180) distance -= 50;
 						i = distance/10;
 						dos.write(i);
 						dos.flush();
 
-						Thread.sleep((int)(17.5*distance));
-
+						Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText()))));
+						//Thread.sleep((int)minLength*2);
 						//samler bold op
 						dos.write(71);				
 						dos.flush();
