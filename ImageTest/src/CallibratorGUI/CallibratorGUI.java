@@ -714,6 +714,7 @@ public class CallibratorGUI  {
 			
 			});
 			
+			
 			frame1.add(jl1);
 			frame1.add(jl2);
 			frame1.add(jl3);
@@ -735,7 +736,7 @@ public class CallibratorGUI  {
 			frame1.add(lblbh);
 			frame1.add(lbltxt);
 			frame1.add(lbltxt2);
-			frame1.add(lbltxt3);
+			frame1.add(lbltxt3);	
 			frame1.add(lbltxt4);
 			frame1.add(txtArea1);
 
