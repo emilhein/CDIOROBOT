@@ -209,7 +209,7 @@ public class ballMethod {
 						m.put(j, b, 0, 0, 0);
 						break;
 					}*/
-					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) { // for gr�nt
+					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
 						m.put(j, b, 0, 0, 0);
 						break;
 					}
@@ -305,30 +305,4 @@ public class ballMethod {
 		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
 															// roden
 	}
-	
-	
-    public void invertImage(String imageName) {
-    	BufferedImage inputFile;
-    	try {
-    		inputFile = ImageIO.read(new File(imageName));
-
-
-    		for (int x = 0; x < inputFile.getWidth(); x++) {
-    			for (int y = 0; y < inputFile.getHeight(); y++) {
-    				int rgba = inputFile.getRGB(x, y);
-    				Color col = new Color(rgba, true);
-    				col = new Color(255 + col.getRed(),
-    								255 + col.getGreen(),
-    								255 + col.getBlue());
-    				inputFile.setRGB(x, y, col.getRGB());
-    			}
-    		}
-    		File outputFile = new File("invert-"+imageName);
-    		ImageIO.write(inputFile, "png", outputFile);
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
 }
