@@ -651,9 +651,9 @@ public class CallibratorGUI  {
 					System.out.println("koordinaterne til nyMinpunkt er (" + nyMinPunkt.getX() +","+nyMinPunkt.getY()+")");
 
 					CalcAngle Angle = new CalcAngle();
-					int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
+					int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
 					System.out.println("BallAngle = " + BallAngle);
-					int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
+					int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
 					System.out.println("RoboAngle = " + RoboAngle);
 					TurnAngle = RoboAngle-BallAngle;
 
@@ -748,6 +748,7 @@ public class CallibratorGUI  {
 				{
 
 					System.out.println("In CONNECT");
+					
 
 					System.out.println("Waiting for your go!");	
 					//			int input = scan.nextInt();
