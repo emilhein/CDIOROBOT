@@ -566,8 +566,8 @@ public class CallibratorGUI  {
 				
 				
 				
-				TakePicture takepic = new TakePicture();
-				takepic.takePicture();
+			//	TakePicture takepic = new TakePicture();
+			//	takepic.takePicture();
  
 				
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
@@ -656,9 +656,9 @@ public class CallibratorGUI  {
 				System.out.println("koordinaterne til nyMinpunkt er (" + nyMinPunkt.getX() +","+nyMinPunkt.getY()+")");
 
 				CalcAngle Angle = new CalcAngle();
-				int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
+				int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
 				System.out.println("BallAngle = " + BallAngle);
-				int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
+				int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
 				System.out.println("RoboAngle = " + RoboAngle);
 				TurnAngle = RoboAngle-BallAngle;
 
@@ -736,13 +736,13 @@ public class CallibratorGUI  {
 				
 				System.out.println("In CONNECT");
 				
-						System.out.println("Waiting for your go!");	
+		//			System.out.println("Waiting for your go!");	
 			//			int input = scan.nextInt();
 
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.14);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -771,7 +771,7 @@ public class CallibratorGUI  {
 							
 							//kører robot frem
 							System.out.println("minlength " + minLength);
-							int distance = (int)((minLength*2.25)/ppcm);	//længde konvertering
+							int distance = (int)((minLength*2.6)/ppcm);	//længde konvertering
 							System.out.println("dist = " + distance);
 							dos.write(81);
 							dos.flush();
