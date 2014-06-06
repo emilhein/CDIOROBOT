@@ -319,7 +319,8 @@ public class ballMethod {
     				inputFile.setRGB(x, y, col.getRGB());
     			}
     		}
-    		File outputFile = new File("BrownThreshold.png");
+    		File outputFile = new File("inverted.png");
+    		
     		ImageIO.write(inputFile, "png", outputFile);
     	}
     	catch (IOException e)

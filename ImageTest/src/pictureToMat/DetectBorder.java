@@ -117,6 +117,7 @@ public class DetectBorder {
 			float pixPrCm = (widthPixPrCm + heightPixPrCm) / 2;
 			
 			return pixPrCm;
+			//return (float) 6.761823; // er fastsat for test!
 		}
 		
 		public float getPixPerCm()
@@ -163,6 +164,7 @@ public class DetectBorder {
 
 				}
 			}
+
 			
 			Highgui.imwrite("BrownThreshold.png", img);
 		}

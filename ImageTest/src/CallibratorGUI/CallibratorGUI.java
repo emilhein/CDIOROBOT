@@ -490,6 +490,7 @@ public class CallibratorGUI  {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				final long startTime = System.currentTimeMillis();
 
 				Punkt minPunkt;
 
@@ -634,15 +635,18 @@ public class CallibratorGUI  {
 	
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 	
-				txtArea1  = new JTextArea ("Antal bolde fundet: " + (ballCoor.size()/3), 1,1);
+//				txtArea1  = new JTextArea ("Antal bolde fundet: " + (ballCoor.size()/3), 1,1);
+//				String text1 = txtArea1.getText();
+//				lbltxt.setText(text1);
+				txtArea1  = new JTextArea ("ppcm: " + ppcm, 1,1);
 				String text1 = txtArea1.getText();
 				lbltxt.setText(text1);
 				
 				
 				lbltxt2.setText("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");	
 				lbltxt3.setText("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-				lbltxt4.setText ("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
-						
+				//lbltxt4.setText ("pixel/cm =   "+ ppcm);
+				
 
 				Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
 				Punkt nyRoboBag = new Punkt(0,0);
@@ -660,7 +664,12 @@ public class CallibratorGUI  {
 
 				CalcDist dist = new CalcDist();
 				minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
-
+				
+				
+				final long endTime = System.currentTimeMillis();
+				lbltxt4.setText ("Total Calculation time: " + (endTime - startTime)); 
+			
+				
 				ImageIcon afterc = new ImageIcon("billed0.png");
 				Image image1 = afterc.getImage(); // transform it
 				Image afimage = image1.getScaledInstance(400, 225,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
@@ -692,6 +701,8 @@ public class CallibratorGUI  {
 				Image edimage = image5.getScaledInstance(300, 169,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
 				edge = new ImageIcon(edimage);  // transform it back
 				
+						
+				
 				lblimg.setIcon(img);
 				lblafterc.setIcon(afterc);
 				lblfindb.setIcon(findb);
@@ -709,7 +720,6 @@ public class CallibratorGUI  {
 				lbltxt3.setBounds(200, insets.top + 530, lbltxt3.getPreferredSize().width, 10);
 				lbltxt4.setBounds (200, insets.top + 545, lbltxt4.getPreferredSize().width, 10);
 				
-				//ballCoor.clear();
 				
 			}
 		});
@@ -732,7 +742,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.14);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -761,7 +771,7 @@ public class CallibratorGUI  {
 							
 							//kører robot frem
 							System.out.println("minlength " + minLength);
-							int distance = (int)((minLength*2.23)/ppcm);	//længde konvertering
+							int distance = (int)((minLength*2.25)/ppcm);	//længde konvertering
 							System.out.println("dist = " + distance);
 							dos.write(81);
 							dos.flush();
