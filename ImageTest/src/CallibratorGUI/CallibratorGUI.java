@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class CallibratorGUI  {
 
 	static JFrame frame1;
 	static Container pane;
-	static JButton btnApply, btnConnect, btnSend;
+	static JButton btnApply, btnConnect;
 	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød, lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1,lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax;
 	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2;
 	static ImageIcon img, afterc, findb, bh, edge;
@@ -67,13 +66,14 @@ public class CallibratorGUI  {
 
 		//Prepare panel
 		pane = frame1.getContentPane();
-
 		insets = pane.getInsets();
 
-		//tilføj layout for null
-		pane.setLayout (null);
+		
+//		pane.setLayout (null);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		pane.setBackground(Color.lightGray);
+		
 		ImageIcon afterc = new ImageIcon("billed0.png");
 		lblafterc = new JLabel (afterc, JLabel.CENTER);
 
@@ -91,8 +91,7 @@ public class CallibratorGUI  {
 		lbledge = new JLabel (edge, JLabel.CENTER);
 
 
-		btnConnect = new JButton ("Connect");
-		btnSend = new JButton ("Send");
+		btnConnect = new JButton ("Send");
 		btnApply = new JButton ("Apply");
 		lblDP = new JLabel ("DP:");
 		lblromin = new JLabel ("RoboMin");
@@ -111,6 +110,9 @@ public class CallibratorGUI  {
 		lblmaxblå = new JLabel ("MaxBlå");
 		lblmaxrød = new JLabel ("MaxRød");
 		lblminrød = new JLabel ("MinRød");
+		
+		btnConnect.setBackground(Color.PINK);
+		btnApply.setBackground(Color.PINK);
 		
 		txtArea1 = new JTextArea (1, 1);
 		lbltxt = new JLabel ();
@@ -165,8 +167,11 @@ public class CallibratorGUI  {
 		txtRoboMinDist.setText("60");
 		txtRoboPar1.setText("50");
 		txtRoboPar2.setText("7");
-		
-		
+		//
+		txtmaxgrøn.setText("65");
+		txtmaxblå.setText("40");
+		txtmaxrød.setText("160");
+		txtminrød.setText("40");
 		//Tilføjer alle komponenter
 		pane.add (jl1);
 		pane.add (jl2);
@@ -193,7 +198,6 @@ public class CallibratorGUI  {
 		pane.add(txtRoboDP);
 		pane.add (btnApply);
 		pane.add (btnConnect);
-		pane.add (btnSend);
 
 		pane.add (lblimg);
 		pane.add (lblafterc);
@@ -568,7 +572,7 @@ public class CallibratorGUI  {
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
 					DetectBorder findEdge = new DetectBorder();
 					try {
-						findEdge.getRectCoordis("billed0.png", Integer.parseInt(jl14.getText()), Integer.parseInt(jl13.getText()), Integer.parseInt(jl16.getText()), Integer.parseInt(jl15.getText()));
+						findEdge.getRectCoordis("billed0.png",40,65,40,160);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -584,15 +588,11 @@ public class CallibratorGUI  {
 
 				
 //				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
-				for(int j = 0; j<RoboCoor.size();j=j+3){
+//				for(int j = 0; j<RoboCoor.size();j=j+3){
 
 
-					txtArea1  = new JTextArea ("Forholdet mellem pixel og cm er = " + ppcm, 1,1);
-					String text1 = txtArea1.getText();
-					lbltxt.setText(text1);
-//					System.out.println("Bold nr " + j +" ligger på "+Math.round(RoboCoor[j]) + ","+Math.round(RoboCoor[j+1]) +" Med radius = " + Math.round(RoboCoor[j+2]));
-
-				}
+	
+//				}
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
 
@@ -633,6 +633,10 @@ public class CallibratorGUI  {
 				ArrayList<Float> ballCoor = balls.findCircle(Integer.parseInt(jl5.getText()),Integer.parseInt(jl6.getText()),Integer.parseInt(jl1.getText()),Integer.parseInt(jl2.getText()),Integer.parseInt(jl3.getText()),Integer.parseInt(jl4.getText()),"balls",false);//minradius, maxrdius, antalbolde
 	
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+	
+				txtArea1  = new JTextArea ("Antal bolde fundet: " + (ballCoor.size()/3), 1,1);
+				String text1 = txtArea1.getText();
+				lbltxt.setText(text1);
 				
 				
 				lbltxt2.setText("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");	
@@ -713,7 +717,7 @@ public class CallibratorGUI  {
 		frame1.add(jl1);frame1.add(jl2);frame1.add(jl4);frame1.add(jl8);frame1.add(jl9);frame1.add(jl5);frame1.add(jl6);frame1.add(jl3);frame1.add(lblimg);frame1.add(jl7);frame1.add(jl10);frame1.add(jl11);frame1.add(jl12);frame1.add(lblafterc);frame1.add(lblbh);frame1.add(txtArea1);frame1.add(lbltxt); frame1.add(lbltxt2);frame1.add(lbltxt3);frame1.add(lbltxt4);
 		frame1.add(jl13);frame1.add(jl14);frame1.add(jl15);frame1.add(jl16);
 		
-		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 5, insets.top + 590, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
+		btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 80, insets.top + 550, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 		btnConnect.addActionListener(new ActionListener()
 		{
@@ -728,7 +732,7 @@ public class CallibratorGUI  {
 						int Case;
 						int i;
 						System.out.println("TurnAngle = " + TurnAngle);
-						int angle = (int) (TurnAngle*2.125);	//vinkel konvertering
+						int angle = (int) (TurnAngle*2.15);	//vinkel konvertering
 						System.out.println("angle " + angle);
 						if(Math.abs(angle) < 250){
 							if(angle > 0) 				//vælger retning der skal drejes
@@ -757,11 +761,11 @@ public class CallibratorGUI  {
 							
 							//kører robot frem
 							System.out.println("minlength " + minLength);
-							int distance = (int)((minLength*2.25)/ppcm);	//længde konvertering
+							int distance = (int)((minLength*2.23)/ppcm);	//længde konvertering
 							System.out.println("dist = " + distance);
 							dos.write(81);
 							dos.flush();
-							if(angle > 180) distance -= 30;
+							if(angle > 180) distance -= 90;
 							i = distance/10;
 							dos.write(i);
 							dos.flush();
@@ -786,18 +790,7 @@ public class CallibratorGUI  {
 			}
 		});
 		
-		btnSend.setBounds (btnSend.getX() + btnSend.getWidth() + 80, insets.top + 550, btnSend.getPreferredSize().width, btnSend.getPreferredSize().height);
-
-		btnSend.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-
-				System.out.println("In SEND");
-
-				
-			}
-		});
+	
 
 		//Gør rammen synlig
 		frame1.setVisible (true);
