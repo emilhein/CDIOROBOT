@@ -29,17 +29,8 @@ public class CallibratorGUI {
 	static JFrame frame1;
 	static Container pane;
 	static JButton btnApply, btnConnect, btnDeliver;
-	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød,
-			lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1, lblRoboDP,
-			jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist,
-			lblRoboPar1, lblRoboPar2, jl1, jl2, jl3, jl4, jl5, jl6, jl7, jl8,
-			jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge,
-			lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax, lblvinkel,
-			lbllm, lblluk, jl17, jl18, jl19;
-	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød,
-			txtRoboDP, txtCirkleDIst, txtParameter1, txtParameter2,
-			txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist,
-			txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk;
+	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød, lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1, lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2, jl1, jl2, jl3, jl4, jl5, jl6, jl7, jl8,jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax, lblvinkel, lbllm, lblluk, jl17, jl18, jl19;
+	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød, txtRoboDP, txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk;
 	static ImageIcon img, afterc, findb, bh, edge;
 	static Insets insets;
 	static JTextArea txtArea1;
@@ -264,163 +255,111 @@ public class CallibratorGUI {
 
 		// //Placerer alle kompoenter
 
-		lblmaxgrøn.setBounds(lblmaxgrøn.getX() + lblmaxgrøn.getWidth() + 1010,
-				insets.top + 236, lblmaxgrøn.getPreferredSize().width,
-				lblmaxgrøn.getPreferredSize().height);
-		txtmaxgrøn.setBounds(txtmaxgrøn.getX() + txtmaxgrøn.getWidth() + 1010,
-				insets.top + 251, txtmaxgrøn.getPreferredSize().width,
-				txtmaxgrøn.getPreferredSize().height);
+		lblmaxgrøn.setBounds(lblmaxgrøn.getX() + lblmaxgrøn.getWidth() + 1010, insets.top + 236, lblmaxgrøn.getPreferredSize().width, lblmaxgrøn.getPreferredSize().height);
+		txtmaxgrøn.setBounds(txtmaxgrøn.getX() + txtmaxgrøn.getWidth() + 1010, insets.top + 251, txtmaxgrøn.getPreferredSize().width, txtmaxgrøn.getPreferredSize().height);
 
 		txtmaxgrøn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input13 = txtmaxgrøn.getText();
 				jl13.setText(input13);
-				jl13.setBounds(1155, insets.top + 251,
-						jl13.getPreferredSize().width,
-						jl13.getPreferredSize().height);
+				jl13.setBounds(1155, insets.top + 251, jl13.getPreferredSize().width, jl13.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl13);
 
-		lblmaxblå.setBounds(lblmaxblå.getX() + lblmaxblå.getWidth() + 1010,
-				insets.top + 281, lblmaxblå.getPreferredSize().width,
-				lblmaxblå.getPreferredSize().height);
-		txtmaxblå.setBounds(txtmaxblå.getX() + txtmaxblå.getWidth() + 1010,
-				insets.top + 296, txtmaxblå.getPreferredSize().width,
-				txtmaxblå.getPreferredSize().height);
+		lblmaxblå.setBounds(lblmaxblå.getX() + lblmaxblå.getWidth() + 1010, insets.top + 281, lblmaxblå.getPreferredSize().width, lblmaxblå.getPreferredSize().height);
+		txtmaxblå.setBounds(txtmaxblå.getX() + txtmaxblå.getWidth() + 1010, insets.top + 296, txtmaxblå.getPreferredSize().width, txtmaxblå.getPreferredSize().height);
 
 		txtmaxblå.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input14 = txtmaxblå.getText();
 				jl14.setText(input14);
-				jl14.setBounds(1155, insets.top + 296,
-						jl14.getPreferredSize().width,
-						jl14.getPreferredSize().height);
+				jl14.setBounds(1155, insets.top + 296, jl14.getPreferredSize().width, jl14.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl14);
 
-		lblmaxrød.setBounds(lblmaxrød.getX() + lblmaxrød.getWidth() + 1010,
-				insets.top + 321, lblmaxrød.getPreferredSize().width,
-				lblmaxrød.getPreferredSize().height);
-		txtmaxrød.setBounds(txtmaxrød.getX() + txtmaxrød.getWidth() + 1010,
-				insets.top + 336, txtmaxrød.getPreferredSize().width,
-				txtmaxrød.getPreferredSize().height);
+		lblmaxrød.setBounds(lblmaxrød.getX() + lblmaxrød.getWidth() + 1010, insets.top + 321, lblmaxrød.getPreferredSize().width, lblmaxrød.getPreferredSize().height);
+		txtmaxrød.setBounds(txtmaxrød.getX() + txtmaxrød.getWidth() + 1010,	insets.top + 336, txtmaxrød.getPreferredSize().width, txtmaxrød.getPreferredSize().height);
 
 		txtmaxrød.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input15 = txtmaxrød.getText();
 				jl15.setText(input15);
-				jl15.setBounds(1155, insets.top + 336,
-						jl15.getPreferredSize().width,
-						jl15.getPreferredSize().height);
+				jl15.setBounds(1155, insets.top + 336, jl15.getPreferredSize().width, jl15.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl15);
 
-		lblminrød.setBounds(lblminrød.getX() + lblminrød.getWidth() + 1010,
-				insets.top + 366, lblminrød.getPreferredSize().width,
-				lblminrød.getPreferredSize().height);
-		txtminrød.setBounds(txtminrød.getX() + txtminrød.getWidth() + 1010,
-				insets.top + 381, txtminrød.getPreferredSize().width,
-				txtminrød.getPreferredSize().height);
+		lblminrød.setBounds(lblminrød.getX() + lblminrød.getWidth() + 1010, insets.top + 366, lblminrød.getPreferredSize().width, lblminrød.getPreferredSize().height);
+		txtminrød.setBounds(txtminrød.getX() + txtminrød.getWidth() + 1010,	insets.top + 381, txtminrød.getPreferredSize().width, txtminrød.getPreferredSize().height);
 
 		txtminrød.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				String input16 = txtminrød.getText();
 				jl16.setText(input16);
-				jl16.setBounds(1155, insets.top + 381,
-						jl16.getPreferredSize().width,
-						jl16.getPreferredSize().height);
+				jl16.setBounds(1155, insets.top + 381, jl16.getPreferredSize().width, jl16.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl16);
 
-		lblDP.setBounds(lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5,
-				lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
-		txtDP.setBounds(txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20,
-				txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
+		lblDP.setBounds(lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5, lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
+		txtDP.setBounds(txtDP.getX() + txtDP.getWidth() + 5, insets.top + 20, txtDP.getPreferredSize().width, txtDP.getPreferredSize().height);
 
 		txtDP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtDP.getText();
 				jl1.setText(input);
-				jl1.setBounds(150, insets.top + 20,
-						jl1.getPreferredSize().width,
-						jl1.getPreferredSize().height);
+				jl1.setBounds(150, insets.top + 20,	jl1.getPreferredSize().width, jl1.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl1);
 
-		lblCirkleDIst.setBounds(lblCirkleDIst.getX() + lblCirkleDIst.getWidth()
-				+ 5, insets.top + 50, lblCirkleDIst.getPreferredSize().width,
-				lblCirkleDIst.getPreferredSize().height);
-		txtCirkleDIst.setBounds(txtCirkleDIst.getX() + txtCirkleDIst.getWidth()
-				+ 5, insets.top + 65, txtCirkleDIst.getPreferredSize().width,
-				txtCirkleDIst.getPreferredSize().height);
+		lblCirkleDIst.setBounds(lblCirkleDIst.getX() + lblCirkleDIst.getWidth()	+ 5, insets.top + 50, lblCirkleDIst.getPreferredSize().width, lblCirkleDIst.getPreferredSize().height);
+		txtCirkleDIst.setBounds(txtCirkleDIst.getX() + txtCirkleDIst.getWidth() + 5, insets.top + 65, txtCirkleDIst.getPreferredSize().width, txtCirkleDIst.getPreferredSize().height);
 
 		txtCirkleDIst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtCirkleDIst.getText();
 				jl2.setText(input);
-				jl2.setBounds(150, insets.top + 65,
-						jl2.getPreferredSize().width,
-						jl2.getPreferredSize().height);
+				jl2.setBounds(150, insets.top + 65, jl2.getPreferredSize().width, jl2.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl2);
 
-		lblParameter1.setBounds(lblParameter1.getX() + lblParameter1.getWidth()
-				+ 5, insets.top + 95, lblParameter1.getPreferredSize().width,
-				lblParameter1.getPreferredSize().height);
-		txtParameter1.setBounds(txtParameter1.getX() + txtParameter1.getWidth()
-				+ 5, insets.top + 110, txtParameter1.getPreferredSize().width,
-				txtParameter1.getPreferredSize().height);
+		lblParameter1.setBounds(lblParameter1.getX() + lblParameter1.getWidth()	+ 5, insets.top + 95, lblParameter1.getPreferredSize().width, lblParameter1.getPreferredSize().height);
+		txtParameter1.setBounds(txtParameter1.getX() + txtParameter1.getWidth()	+ 5, insets.top + 110, txtParameter1.getPreferredSize().width, txtParameter1.getPreferredSize().height);
 
 		txtParameter1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtParameter1.getText();
 				jl3.setText(input);
-				jl3.setBounds(150, insets.top + 110,
-						jl3.getPreferredSize().width,
-						jl3.getPreferredSize().height);
+				jl3.setBounds(150, insets.top + 110, jl3.getPreferredSize().width, jl3.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl3);
 
-		lblParameter2.setBounds(lblParameter2.getX() + lblParameter2.getWidth()
-				+ 5, insets.top + 140, lblParameter2.getPreferredSize().width,
-				lblParameter2.getPreferredSize().height);
-		txtParameter2.setBounds(txtParameter2.getX() + txtParameter2.getWidth()
-				+ 5, insets.top + 155, txtParameter2.getPreferredSize().width,
-				txtParameter2.getPreferredSize().height);
+		lblParameter2.setBounds(lblParameter2.getX() + lblParameter2.getWidth()	+ 5, insets.top + 140, lblParameter2.getPreferredSize().width, lblParameter2.getPreferredSize().height);
+		txtParameter2.setBounds(txtParameter2.getX() + txtParameter2.getWidth()	+ 5, insets.top + 155, txtParameter2.getPreferredSize().width, txtParameter2.getPreferredSize().height);
 
 		txtParameter2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtParameter2.getText();
 				jl4.setText(input);
-				jl4.setBounds(150, insets.top + 155,
-						jl4.getPreferredSize().width,
-						jl4.getPreferredSize().height);
+				jl4.setBounds(150, insets.top + 155, jl4.getPreferredSize().width, jl4.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl4);
 
-		lblMinradius.setBounds(lblMinradius.getX() + lblMinradius.getWidth()
-				+ 5, insets.top + 185, lblMinradius.getPreferredSize().width,
-				lblMinradius.getPreferredSize().height);
-		txtMinradius.setBounds(txtMinradius.getX() + txtMinradius.getWidth()
-				+ 5, insets.top + 200, txtMinradius.getPreferredSize().width,
-				txtMinradius.getPreferredSize().height);
+		lblMinradius.setBounds(lblMinradius.getX() + lblMinradius.getWidth() + 5, insets.top + 185, lblMinradius.getPreferredSize().width, lblMinradius.getPreferredSize().height);
+		txtMinradius.setBounds(txtMinradius.getX() + txtMinradius.getWidth() + 5, insets.top + 200, txtMinradius.getPreferredSize().width, txtMinradius.getPreferredSize().height);
 
 		txtMinradius.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtMinradius.getText();
 				jl5.setText(input);
-				jl5.setBounds(150, insets.top + 200,
-						jl5.getPreferredSize().width,
-						jl5.getPreferredSize().height);
+				jl5.setBounds(150, insets.top + 200, jl5.getPreferredSize().width, jl5.getPreferredSize().height);
 			}
 		});
 		frame1.add(jl5);
@@ -760,8 +699,8 @@ public class CallibratorGUI {
 						Integer.parseInt(jl8.getText()),
 						Integer.parseInt(jl9.getText()),
 						Integer.parseInt(jl10.getText()), "robo", true);// minradius,
-																		// maxrdius,
-																		// antalbolde
+				// maxrdius,
+				// antalbolde
 
 				// float[] RoboCoor = balls.findCircle(19, 28,
 				// 1,5,50,5,2,"robo", true); // finder robo
@@ -769,14 +708,14 @@ public class CallibratorGUI {
 				// }
 
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter
-																		// det
-																		// konverterede
-																		// billlede
+				// det
+				// konverterede
+				// billlede
 
 				double[] front = frame.get(Math.round(RoboCoor.get(1)),
 						Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
-														// GConnectDET
-														// get-metoden
+				// GConnectDET
+				// get-metoden
 				// double red = front[2]; //henter en rød farver fra den ene
 				// cirkel
 				double green = front[1];
@@ -786,7 +725,7 @@ public class CallibratorGUI {
 						Math.round(RoboCoor.get(3))); // /
 				double green2 = back[1];
 				double red2 = back[2]; // henter en rød farve ([2]) fra den
-										// anden cirkel
+				// anden cirkel
 
 				Punkt roboFrontPunkt = new Punkt(10, 10);
 				Punkt roboBagPunkt = new Punkt(20, 20);
@@ -801,21 +740,21 @@ public class CallibratorGUI {
 						Integer.parseInt(jl2.getText()),
 						Integer.parseInt(jl3.getText()),
 						Integer.parseInt(jl4.getText()), "balls", false);// minradius,
-																			// maxrdius,
-																			// antalbolde
+				// maxrdius,
+				// antalbolde
 
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt,
 						roboFrontPunkt); // tegner dem i testprogrammet
 
 
 				if(firstRun == 'a'){
-				ballCount = (ballCoor.size() / 3);
-				firstRun = 'b';
+					ballCount = (ballCoor.size() / 3);
+					firstRun = 'b';
 				}
 				int tempCount = (ballCoor.size() / 3);
 				System.out.println("tempcount = " + tempCount);
 				System.out.println("Ballcount = " + ballCount);
-				
+
 				if (tempCount == ballCount - 1) {
 					System.out.println("HEJ1");
 					count++;
@@ -830,7 +769,7 @@ public class CallibratorGUI {
 						count = 0;
 						System.out.println("koordinaterne til Minpunkt er ("
 								+ minPunkt.getX() + "," + minPunkt.getY() + ")");
-						
+
 					}
 				}
 
@@ -1063,7 +1002,7 @@ public class CallibratorGUI {
 				int i;
 				System.out.println("TurnAngle = " + TurnAngle);
 				int angle = (int) (TurnAngle * (Float.parseFloat(jl17.getText()))); // vinkel
-																					// konvertering
+				// konvertering
 				System.out.println("angle " + angle);
 				try {
 					if (Math.abs(angle) < 250) {
