@@ -27,7 +27,7 @@ public class CallibratorGUI  {
 
 	static JFrame frame1;
 	static Container pane;
-	static JButton btnApply, btnConnect;
+	static JButton btnApply, btnConnect, btnDeliver;
 	static JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød, lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1,lblRoboDP, jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist, lblRoboPar1, lblRoboPar2,  jl1, jl2, jl3, jl4, jl5, jl6,jl7, jl8, jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge, lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax, lblvinkel, lbllm, lblluk, jl17, jl18, jl19;
 	static JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød, txtRoboDP,txtCirkleDIst, txtParameter1, txtParameter2, txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist, txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk;
 	static ImageIcon img, afterc, findb, bh, edge;
@@ -62,6 +62,8 @@ public class CallibratorGUI  {
 
 			//Sætter størrelsen af rammen i pixelx 
 			frame1.setSize (1300,718);
+			frame1.setBackground(Color.lightGray);
+
 
 			//Prepare panel
 			pane = frame1.getContentPane();
@@ -69,10 +71,8 @@ public class CallibratorGUI  {
 
 
 			//		pane.setLayout (null);
-			frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			pane.setBackground(Color.lightGray);
-
+			frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
+			
 			ImageIcon afterc = new ImageIcon("billed0.png");
 			lblafterc = new JLabel (afterc, JLabel.CENTER);
 
@@ -90,6 +90,7 @@ public class CallibratorGUI  {
 			lbledge = new JLabel (edge, JLabel.CENTER);
 
 
+			btnDeliver = new JButton ("Deliver");
 			btnConnect = new JButton ("Send");
 			btnApply = new JButton ("Apply");
 			lblDP = new JLabel ("DP:");
@@ -115,6 +116,7 @@ public class CallibratorGUI  {
 			
 			btnConnect.setBackground(Color.PINK);
 			btnApply.setBackground(Color.PINK);
+			btnDeliver.setBackground(Color.PINK);
 
 			txtArea1 = new JTextArea (1, 1);
 			lbltxt = new JLabel ();
@@ -213,7 +215,8 @@ public class CallibratorGUI  {
 			pane.add(txtRoboDP);
 			pane.add (btnApply);
 			pane.add (btnConnect);
-
+			pane.add (btnDeliver);
+			
 			pane.add (lblimg);
 			pane.add (lblafterc);
 			pane.add (lblfindb);
@@ -666,9 +669,6 @@ public class CallibratorGUI  {
 
 					//				float[] RoboCoor = balls.findCircle(19, 28, 1,5,50,5,2,"robo", true); // finder robo
 					//				for(int j = 0; j<RoboCoor.size();j=j+3){
-
-
-
 					//				}
 
 					Mat frame = Highgui.imread("AfterColorConvert.png"); // henter det konverterede billlede
@@ -902,6 +902,16 @@ public class CallibratorGUI  {
 			frame1.add(txtArea1);
 			
 
+			btnDeliver.setBounds (btnDeliver.getX() + btnDeliver.getWidth() + 5, insets.top + 590, btnDeliver.getPreferredSize().width, btnDeliver.getPreferredSize().height);
+			btnDeliver.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					System.out.println("Delivering balls");
+				}
+			});
+			
+			
 			btnConnect.setBounds (btnConnect.getX() + btnConnect.getWidth() + 80, insets.top + 550, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 			btnConnect.addActionListener(new ActionListener()
