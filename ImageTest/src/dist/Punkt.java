@@ -11,6 +11,11 @@ public class Punkt {
 		this.x = x;
 	}
 
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + ")";
+	}
+
 	public void setY(int y) {
 		this.y = y;
 	}
