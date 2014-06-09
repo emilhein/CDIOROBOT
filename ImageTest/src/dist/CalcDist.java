@@ -12,6 +12,10 @@ public class CalcDist {
 
 		return length;
 	}
+	@Override
+	public String toString() {
+		return "(" + p1 + "," + p2 + ")";
+	}
 	public int CalcAngel(Punkt punkt1, Punkt punkt2)
 	{
 		this.p1 = punkt1;

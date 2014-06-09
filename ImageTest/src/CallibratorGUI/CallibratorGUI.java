@@ -173,7 +173,7 @@ public class CallibratorGUI {
 		txtCirkleDIst.setText("10");
 		txtParameter1.setText("50");
 		txtParameter2.setText("14");
-		txtMinradius.setText("12");
+		txtMinradius.setText("13");
 		txtMaxradius.setText("18");
 		// ROBOT
 		txtRoboDP.setText("1");
@@ -188,7 +188,7 @@ public class CallibratorGUI {
 		txtmaxrød.setText("160");
 		txtminrød.setText("40");
 		// NYT TIL ROBOT
-		txtvinkel.setText("2.135");
+		txtvinkel.setText("2.133");
 		txtlm.setText("2.4");
 		txtluk.setText("5");
 		// Tilføjer alle komponenter
@@ -616,7 +616,9 @@ public class CallibratorGUI {
 
 		btnApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// for(int j = 0; j<2;j++){
+				//for(int j = 0; j<2;j++){
+			//	while(true){
+				
 				Punkt minPunkt;
 
 				String input1 = txtDP.getText();
@@ -737,9 +739,9 @@ public class CallibratorGUI {
 				jl19.setBounds(1155, insets.top + 511,
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
-
-				TakePicture takepic = new TakePicture();
-				takepic.takePicture();
+//
+//				TakePicture takepic = new TakePicture();
+//				takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectBorder findEdge = new DetectBorder();
@@ -843,28 +845,76 @@ public class CallibratorGUI {
 						- roboBagPunkt.getX(), roboFrontPunkt.getY()
 						- roboBagPunkt.getY());
 				Punkt nyRoboBag = new Punkt(0, 0);
-				Punkt nyMinPunkt = new Punkt(minPunkt.getX()
-						- roboBagPunkt.getX(), minPunkt.getY()
-						- roboBagPunkt.getY());
-				System.out.println("koordinaterne til nyBagpunkt er ("
-						+ nyRoboBag.getX() + "," + nyRoboBag.getY() + ")");
-				System.out.println("koordinaterne til nyFrontpunkt er ("
-						+ nyRoboFront.getX() + "," + nyRoboFront.getY() + ")");
-				System.out.println("koordinaterne til nyMinpunkt er ("
-						+ nyMinPunkt.getX() + "," + nyMinPunkt.getY() + ")");
-
+				Punkt nyMinPunkt = new Punkt(minPunkt.getX()- roboBagPunkt.getX(), minPunkt.getY()- roboBagPunkt.getY());	
+				
+				
 				CalcAngle Angle = new CalcAngle();
 				int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
 				System.out.println("BallAngle = " + BallAngle);
 				int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
 				System.out.println("RoboAngle = " + RoboAngle);
+				
 				TurnAngle = RoboAngle - BallAngle;
+				
+				
+				CalcDist dist = new CalcDist();
 
+				Punkt middle = new Punkt(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
+
+				Punkt corner3 = new Punkt(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
+				Punkt corner1 = new Punkt(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*(int)ppcm));//1
+				Punkt corner4 = new Punkt(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
+				Punkt corner2 = new Punkt(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
+				
+				/*
+				1 												2
+				 -------------------------------------------|
+				 |											|
+				 |											|
+				 |											|
+				 |											|
+				 |					X = middle				|
+				 |											|
+				 |											|
+				 |											|
+				 |											|
+				 -------------------------------------------|	
+				 3												4
+				 */
+			
+				int distance1  = dist.Calcdist(roboFrontPunkt, corner1);
+				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
+				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
+				int distance4  = dist.Calcdist(roboFrontPunkt, corner4);
+				int x = 3;
+				
+				if(distance1 < 500){
+					System.out.println("Dist1");
+					TurnAngle = TurnAngle+x*(dist.Calcdist(roboFrontPunkt, middle));
+				}
+				if(distance2 < 500){
+					System.out.println("Dist2");
+					TurnAngle = TurnAngle-x*(dist.Calcdist(roboFrontPunkt, middle));
+
+				}
+				if(distance3 < 150){
+					System.out.println("Dist3");
+					TurnAngle = TurnAngle+x*(dist.Calcdist(roboFrontPunkt, middle));
+
+				}
+				if(distance4 < 150){
+					System.out.println("Dist4");
+					TurnAngle = TurnAngle-x*(dist.Calcdist(roboFrontPunkt, middle));
+
+				}
+					
+				
+				
+				
 				lbltxt2.setText("BallAngle = " + BallAngle);
 				lbltxt3.setText("RoboAngle = " + RoboAngle);
 				lbltxt4.setText("TurnAngle = " + (RoboAngle - BallAngle));
 
-				CalcDist dist = new CalcDist();
 				minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
 
 				ImageIcon afterc = new ImageIcon("billed0.png");
@@ -935,55 +985,67 @@ public class CallibratorGUI {
 				// ballCoor.clear();
 
 				/*
-				 * System.out.println("In CONNECT");
-				 * 
-				 * 
-				 * System.out.println("Waiting for your go!");
-				 * 
-				 * Scanner scan = new Scanner(System.in); int input =
-				 * scan.nextInt();
-				 * 
-				 * 
-				 * int Case; int i; System.out.println("TurnAngle = " +
-				 * TurnAngle); int angle = (int)
-				 * (TurnAngle*(Float.parseFloat(jl17.getText()))); //vinkel
-				 * konvertering System.out.println("angle " + angle);
-				 * if(Math.abs(angle) < 250){ if(angle > 0) //vælger retning der
-				 * skal drejes Case = 11; else Case = 22; } else{ angle =
-				 * angle/10; if(angle > 0) //vælger retning der skal drejes Case
-				 * = 31; else Case = 42; } angle = Math.abs(angle); try {
-				 * dos.write(Case); //sender case dos.flush(); dos.write(angle);
-				 * //sender vinkel dos.flush();
-				 * 
-				 * Thread.sleep(1500); dos.write(61); //sender case dos.flush();
-				 * dos.write(61); //sender vinkel dos.flush();
-				 * Thread.sleep(500);
-				 * 
-				 * //kører robot frem System.out.println("minlength " +
-				 * minLength); int distance =
-				 * (int)((minLength*(Float.parseFloat(jl18.getText())))/ppcm);
-				 * //længde konvertering System.out.println("dist = " +
-				 * distance); dos.write(81); dos.flush(); if(angle > 180)
-				 * distance -= 50; i = distance/10; dos.write(i); dos.flush();
-				 * 
-				 * Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText())
-				 * ))); //Thread.sleep((int)minLength*2); //samler bold op
-				 * dos.write(51); dos.flush(); dos.write(51); dos.flush();
-				 * 
-				 * 
-				 * } catch (IOException e1) { // TODO Auto-generated catch block
-				 * e1.printStackTrace(); } catch (InterruptedException e1) { //
-				 * TODO Auto-generated catch block e1.printStackTrace(); }
-				 * 
-				 * 
-				 * 
-				 * 
-				 * }
-				 */
+				  System.out.println("In CONNECT");
+				  
+				  
+				  System.out.println("Waiting for your go!");
+				  
+				//  Scanner scan = new Scanner(System.in); int input =
+				//  scan.nextInt();
+				  try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				  
+				  int Case; int i; System.out.println("TurnAngle = " +
+				  TurnAngle); int angle = (int)
+				  (TurnAngle*(Float.parseFloat(jl17.getText()))); //vinkel konvertering 
+				  if(Math.abs(angle) < 250){ if(angle > 0) //vælger retning der  skal drejes 
+					  Case = 11; 
+				  else Case = 22; } 
+				  else{ angle =
+				  angle/10; 
+				  if(angle > 0) //vælger retning der skal drejes Case
+				  Case = 31;
+				  else Case = 42; } 
+				  angle = Math.abs(angle);
+				  
+				  try {
+				  dos.write(Case); //sender case 
+				  dos.flush(); 
+				  dos.write(angle);
+				  //sender vinkel 
+				  dos.flush();
+				  
+				  Thread.sleep(1500); dos.write(61); //sender case dos.flush();
+				  dos.write(61); //sender vinkel dos.flush();
+				  Thread.sleep(500);
+				  
+				  //kører robot frem System.out.println("minlength " +minLength); 
+				  int distance =   (int)((minLength*(Float.parseFloat(jl18.getText())))/ppcm);
+				  //længde konvertering System.out.println("dist = " + distance); dos.write(81); dos.flush(); if(angle > 180)
+				  distance -= 50; i = distance/10; dos.write(i); dos.flush();
+				  
+				  Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText())
+				  ))); //Thread.sleep((int)minLength*2); //samler bold op
+				  dos.write(51); dos.flush(); dos.write(51); dos.flush();
+				  
+				  
+				  } catch (IOException e1) { // TODO Auto-generated catch block
+				  e1.printStackTrace(); } 
+				  catch (InterruptedException e1) { //
+				  }
+				  
+				
+				  
+				  
+				  }*/
 
 			}
 
-			public void determineDirection(ArrayList<Float> RoboCoor,
+	public void determineDirection(ArrayList<Float> RoboCoor,
 					double green, double red, double green2, double red2,
 					Punkt roboFrontPunkt, Punkt roboBagPunkt) {
 				if (red > 245) {
@@ -1053,10 +1115,6 @@ public class CallibratorGUI {
 
 		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				System.out.println("In CONNECT");
-
-				System.out.println("Waiting for your go!");
 				// int input = scan.nextInt();
 
 				int Case;
