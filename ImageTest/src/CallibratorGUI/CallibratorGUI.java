@@ -564,18 +564,19 @@ public class CallibratorGUI  {
 					jl16.setText(input16);
 					jl16.setBounds(1155, insets.top + 381, jl16.getPreferredSize().width, jl16.getPreferredSize().height);
 
-					TakePicture takepic = new TakePicture();
-					takepic.takePicture();
+					//TakePicture takepic = new TakePicture();
+					//takepic.takePicture();
 
 
 					//BufferedImage src = ImageIO.read(new File("Billed0.png"));
-					DetectBorder findEdge = new DetectBorder();
-					try {
-						findEdge.getRectCoordis("billed0.png",40,65,40,160);
-					} catch (IOException e1) {
+					CopyOfDetectRects findEdge = new CopyOfDetectRects();
+					//try {
+						findEdge.detectAllRects();
+						//findEdge.getBorderCoordis();
+					/*} /*catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+					}*/
 					ppcm = findEdge.getPixPerCm();
 
 
