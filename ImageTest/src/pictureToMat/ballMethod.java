@@ -79,7 +79,6 @@ public class ballMethod {
 
 		if( !webcam_image.empty() )  
 		{  
-			System.out.println("IMAGE IS PRESENT");
 			
 			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1); //webcam_image.height(),webcam_image.width(),CvType.CV_8UC1
 			
@@ -102,15 +101,11 @@ public class ballMethod {
 			cvSaveImage("TEST.png", imageGray);
 			
 			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
-			
-			System.out.println("CHANNELS: " + webcam_image.channels());
-			System.out.println("CHANNELS: " + b8ch1.channels());
+
 			Imgproc.HoughCircles(b8ch1, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
-			System.out.println("lll");
 			
 		//	int rows = circles.rows();
 			
-			System.out.println("Cols: " + circles.cols());
 						
 			//int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
 			float[] data2 = new float[3];  
