@@ -928,19 +928,35 @@ public class CallibratorGUI  {
 					System.out.println("TurnAngle = " + TurnAngle);
 					int angle = (int) (TurnAngle*(Float.parseFloat(jl17.getText())));	//vinkel konvertering
 					System.out.println("angle " + angle);
+					try {
 					if(Math.abs(angle) < 250){
 						if(angle > 0) 				//vælger retning der skal drejes
 							Case = 11;				
 						else Case = 22;
 					}
 					else{
-						angle = angle/10;
+						angle = angle/2;
 						if(angle > 0) 				//vælger retning der skal drejes
-							Case = 31;				
-						else Case = 42;
+							Case = 11;				
+						else Case = 22;
+						dos.write(Case);			//sender case
+						dos.flush();
+						dos.write(angle);			//sender vinkel
+						dos.flush();
+						Thread.sleep(1500);
+						dos.write(Case);			//sender case
+						dos.flush();
+						dos.write(angle);			//sender vinkel
+						dos.flush();
 					}
+//					else{
+//						angle = angle/10;
+//						if(angle > 0) 				//vælger retning der skal drejes
+//							Case = 31;				
+//						else Case = 42;
+//					}
 					angle = Math.abs(angle);
-					try {
+					
 						dos.write(Case);			//sender case
 						dos.flush();
 						dos.write(angle);			//sender vinkel
