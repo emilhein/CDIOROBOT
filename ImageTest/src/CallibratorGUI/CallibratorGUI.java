@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
@@ -36,12 +37,10 @@ public class CallibratorGUI  {
 	static int TurnAngle = 0;
 	static int minLength = 0;
 	static float ppcm = 0;
-	static int firstRun = 0;
 
 
 	public static void main (String args[]) throws IOException{
 
-		if(firstRun == 0){
 			//try{ 
 
 			//prøver at forbinde til vores robot
@@ -53,7 +52,7 @@ public class CallibratorGUI  {
 			//åbner streams}
 			final OutputStream dos = connt.getOutputStream();
 
-			firstRun = 1;
+			
 
 			//	Scanner scan = new Scanner(System.in);
 			//	while(true){
@@ -171,20 +170,20 @@ public class CallibratorGUI  {
 			txtMaxradius.setText("18");
 			//ROBOT
 			txtRoboDP.setText("1");
-			txtromin.setText("21");
+			txtromin.setText("19");
 			txtromax.setText("28");
 			txtRoboMinDist.setText("60");
 			txtRoboPar1.setText("50");
-			txtRoboPar2.setText("7");
+			txtRoboPar2.setText("13");
 			//FARVE
 			txtmaxgrøn.setText("65");
 			txtmaxblå.setText("40");
 			txtmaxrød.setText("160");
 			txtminrød.setText("40");
 			//NYT TIL ROBOT
-			txtvinkel.setText("2.13");
-			txtlm.setText("2.5");
-			txtluk.setText("17.5");
+			txtvinkel.setText("2.135");
+			txtlm.setText("2.4");
+			txtluk.setText("5");
 			//Tilføjer alle komponenter
 			pane.add (jl1);
 			pane.add (jl2);
@@ -557,10 +556,10 @@ public class CallibratorGUI  {
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-
+				//	for(int j = 0; j<2;j++){
 					Punkt minPunkt;
 
-
+					
 					String input1 = txtDP.getText();
 					jl1.setText(input1);
 					jl1.setBounds(150, insets.top + 20, jl1.getPreferredSize().width, jl1.getPreferredSize().height);
@@ -717,10 +716,6 @@ public class CallibratorGUI  {
 					lbltxt.setText(text1);
 
 
-					lbltxt2.setText("koordinaterne til Bagpunkt er (" + roboBagPunkt.getX() +","+roboBagPunkt.getY()+")");	
-					lbltxt3.setText("koordinaterne til Frontpunkt er (" + roboFrontPunkt.getX() +","+roboFrontPunkt.getY()+")");
-					lbltxt4.setText ("koordinaterne til MinPunkt er (" + minPunkt.getX() +","+minPunkt.getY()+")");
-
 
 					Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
 					Punkt nyRoboBag = new Punkt(0,0);
@@ -735,6 +730,12 @@ public class CallibratorGUI  {
 					int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
 					System.out.println("RoboAngle = " + RoboAngle);
 					TurnAngle = RoboAngle-BallAngle;
+					
+
+					lbltxt2.setText("BallAngle = " + BallAngle);	
+					lbltxt3.setText("RoboAngle = " + RoboAngle);
+					lbltxt4.setText ("TurnAngle = " + (RoboAngle-BallAngle));
+
 
 					CalcDist dist = new CalcDist();
 					minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
@@ -788,9 +789,87 @@ public class CallibratorGUI  {
 					lbltxt4.setBounds (200, insets.top + 545, lbltxt4.getPreferredSize().width, 10);
 
 					//ballCoor.clear();
+					
+					
+					
+					
+					
+/*
+					System.out.println("In CONNECT");
+					
+					
+					System.out.println("Waiting for your go!");	
 
+						Scanner scan = new Scanner(System.in);
+						int input = scan.nextInt();
+
+
+					int Case;
+					int i;
+					System.out.println("TurnAngle = " + TurnAngle);
+					int angle = (int) (TurnAngle*(Float.parseFloat(jl17.getText())));	//vinkel konvertering
+					System.out.println("angle " + angle);
+					if(Math.abs(angle) < 250){
+						if(angle > 0) 				//vælger retning der skal drejes
+							Case = 11;				
+						else Case = 22;
+					}
+					else{
+						angle = angle/10;
+						if(angle > 0) 				//vælger retning der skal drejes
+							Case = 31;				
+						else Case = 42;
+					}
+					angle = Math.abs(angle);
+					try {
+						dos.write(Case);			//sender case
+						dos.flush();
+						dos.write(angle);			//sender vinkel
+						dos.flush();
+
+						Thread.sleep(1500);
+						dos.write(61);			//sender case
+						dos.flush();
+						dos.write(61);			//sender vinkel
+						dos.flush();
+						Thread.sleep(500);
+
+						//kører robot frem
+						System.out.println("minlength " + minLength);
+						int distance = (int)((minLength*(Float.parseFloat(jl18.getText())))/ppcm);	//længde konvertering
+						System.out.println("dist = " + distance);
+						dos.write(81);
+						dos.flush();
+						if(angle > 180) distance -= 50;
+						i = distance/10;
+						dos.write(i);
+						dos.flush();
+
+						Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText()))));
+						//Thread.sleep((int)minLength*2);
+						//samler bold op
+						dos.write(51);				
+						dos.flush();
+						dos.write(51);
+						dos.flush();
+						
+
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
+
+					
+
+						
 				}
-			
+*/
+					
+					
+				}
 			});
 			
 			
@@ -832,7 +911,7 @@ public class CallibratorGUI  {
 
 					System.out.println("In CONNECT");
 					
-
+					
 					System.out.println("Waiting for your go!");	
 					//			int input = scan.nextInt();
 
@@ -880,9 +959,9 @@ public class CallibratorGUI  {
 						Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText()))));
 						//Thread.sleep((int)minLength*2);
 						//samler bold op
-						dos.write(71);				
+						dos.write(51);				
 						dos.flush();
-						dos.write(71);
+						dos.write(51);
 						dos.flush();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -908,6 +987,6 @@ public class CallibratorGUI  {
 			catch (InstantiationException e) {}
 			catch (IllegalAccessException e) {}
 			catch (UnsupportedLookAndFeelException e) {}		
-		}
+		
 
 	}}
