@@ -935,11 +935,6 @@ public class CallibratorGUI  {
 						dos.flush();
 						dos.write(angle);			//sender vinkel
 						dos.flush();
-						Thread.sleep(1500);
-						dos.write(Case);			//sender case
-						dos.flush();
-						dos.write(angle);			//sender vinkel
-						dos.flush();
 					}
 //					else{
 //						angle = angle/10;
@@ -954,7 +949,7 @@ public class CallibratorGUI  {
 						dos.write(angle);			//sender vinkel
 						dos.flush();
 
-						Thread.sleep(1500);
+						Thread.sleep(1200);
 						dos.write(61);			//sender case
 						dos.flush();
 						dos.write(61);			//sender vinkel
