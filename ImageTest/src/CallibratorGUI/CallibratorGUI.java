@@ -767,11 +767,11 @@ public class CallibratorGUI {
 				// for(int j = 0; j<RoboCoor.size();j=j+3){
 				// }
 
-				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter
+				Mat frame = Highgui.imread("robo.png"); // henter
 																		// det
 																		// konverterede
 																		// billlede
-
+				System.out.println("ROBOCOOR size = " + RoboCoor.size());
 				double green;
 				double red;
 				double green2;
