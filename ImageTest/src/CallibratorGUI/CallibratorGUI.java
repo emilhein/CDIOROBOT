@@ -620,7 +620,8 @@ public class CallibratorGUI {
 			public void actionPerformed(ActionEvent e) {
 				//for(int j = 0; j<2;j++){
 			//	while(true){
-				
+				long startbutton = System.currentTimeMillis();
+
 				CvPoint minPunkt;
 
 				String input1 = txtDP.getText();
@@ -953,6 +954,10 @@ public class CallibratorGUI {
 				long endangle = System.currentTimeMillis();
 				System.out.println("ALL angle calculation took = " +(endangle-startangle));
 				
+				
+				
+				long startgui = System.currentTimeMillis();
+
 				lbltxt2.setText("BallAngle = " + BallAngle);
 				lbltxt3.setText("RoboAngle = " + RoboAngle);
 				lbltxt4.setText("TurnAngle = " + (RoboAngle - BallAngle));
@@ -1024,6 +1029,11 @@ public class CallibratorGUI {
 				lbltxt4.setBounds(200, insets.top + 545,
 						lbltxt4.getPreferredSize().width, 10);
 
+				
+				long endgui = System.currentTimeMillis();
+				System.out.println("showing gui took = " +(endgui-startgui));
+				
+				
 				// ballCoor.clear();
 
 				/*
@@ -1084,7 +1094,8 @@ public class CallibratorGUI {
 				  
 				  
 				  }*/
-
+				long endbutton = System.currentTimeMillis();
+				System.out.println("The entire apply button took = " + (endbutton-startbutton));
 			}
 
 	public void determineDirection(ArrayList<Float> RoboCoor,
