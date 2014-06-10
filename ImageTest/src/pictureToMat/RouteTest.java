@@ -76,7 +76,6 @@ public class RouteTest {
 
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
-		System.out.println("Closest to robo is (" + minPunkt.x() + ","+ minPunkt.y() + ")");
 
 		return minPunkt;
 	}

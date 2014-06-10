@@ -742,17 +742,27 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-				TakePicture takepic = new TakePicture();
-				takepic.takePicture();
+	//			TakePicture takepic = new TakePicture();
+	//			takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectRects findEdge = new DetectRects();
+				long startedge = System.currentTimeMillis();
+				
 				findEdge.detectAllRects();
 				ppcm = findEdge.getPixPerCm();
-
+				
+				long endedge = System.currentTimeMillis();
+				System.out.println("detectALLRects took = " +(endedge-startedge));
+				
 				ballMethod balls = new ballMethod();
+				
+				long startpictomat = System.currentTimeMillis();
 				balls.pictureToMat("billed0.png");
-
+				long endpictomat = System.currentTimeMillis();
+				System.out.println("PicToMat took = " +(endpictomat-startpictomat));
+				
+				long startfindrobo = System.currentTimeMillis();
 				ArrayList<Float> RoboCoor = balls.findCircle(
 						Integer.parseInt(jl11.getText()),
 						Integer.parseInt(jl12.getText()),
@@ -762,6 +772,8 @@ public class CallibratorGUI {
 						Integer.parseInt(jl10.getText()), "robo", true);// minradius,
 																		// maxrdius,
 																		// antalbolde
+				long endfindrobo = System.currentTimeMillis();
+				System.out.println("find robo took = " +(endfindrobo-startfindrobo));
 
 				// float[] RoboCoor = balls.findCircle(19, 28,
 				// 1,5,50,5,2,"robo", true); // finder robo
@@ -772,7 +784,6 @@ public class CallibratorGUI {
 																		// det
 																		// konverterede
 																		// billlede
-				System.out.println("ROBOCOOR size = " + RoboCoor.size());
 				double green;
 				double red;
 				double green2;
@@ -790,11 +801,16 @@ public class CallibratorGUI {
 					red2 = back[2];
 
 				
-			
+					long startdirection = System.currentTimeMillis();
+
 					determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
 
+					long enddirection = System.currentTimeMillis();
+					System.out.println("direction took = " +(enddirection-startdirection));
+
 				
-				
+					long startballs = System.currentTimeMillis();
+
 				ArrayList<Float> ballCoor = balls.findCircle(
 						Integer.parseInt(jl5.getText()),
 						Integer.parseInt(jl6.getText()),
@@ -804,18 +820,31 @@ public class CallibratorGUI {
 						Integer.parseInt(jl4.getText()), "balls", false);// minradius,
 																			// maxrdius,
 																			// antalbolde
+				long endballs = System.currentTimeMillis();
+				System.out.println("finding balls took = " +(endballs-startballs));
+
+				
+				
+				
+				long startroute = System.currentTimeMillis();
 
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt,
 						roboFrontPunkt); // tegner dem i testprogrammet
 
+				long endroute = System.currentTimeMillis();
+				System.out.println("drawing ballmap took = " +(endroute-startroute));
+				
+				
+				
+				long startangle = System.currentTimeMillis();
 
 				if(firstRun == 'a'){
 				ballCount = (ballCoor.size() / 3);
 				firstRun = 'b';
 				}
 				int tempCount = (ballCoor.size() / 3);
-				System.out.println("tempcount = " + tempCount);
-				System.out.println("Ballcount = " + ballCount);
+				//System.out.println("tempcount = " + tempCount);
+				//System.out.println("Ballcount = " + ballCount);
 				
 				if (tempCount == ballCount - 1) {
 					System.out.println("HEJ1");
@@ -829,8 +858,8 @@ public class CallibratorGUI {
 						minPunkt.x(goalA.x());
 						minPunkt.y(goalA.y());
 						count = 0;
-						System.out.println("koordinaterne til Minpunkt er ("
-								+ minPunkt.x() + "," + minPunkt.y() + ")");
+					//	System.out.println("koordinaterne til Minpunkt er ("
+					//			+ minPunkt.x() + "," + minPunkt.y() + ")");
 						
 					}
 				}
@@ -849,9 +878,9 @@ public class CallibratorGUI {
 				
 				CalcAngle Angle = new CalcAngle();
 				int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
-				System.out.println("BallAngle = " + BallAngle);
+				//System.out.println("BallAngle = " + BallAngle);
 				int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
-				System.out.println("RoboAngle = " + RoboAngle);
+				//System.out.println("RoboAngle = " + RoboAngle);
 				
 				TurnAngle = RoboAngle - BallAngle;
 				
@@ -921,7 +950,8 @@ public class CallibratorGUI {
 				}
 					
 				
-				
+				long endangle = System.currentTimeMillis();
+				System.out.println("ALL angle calculation took = " +(endangle-startangle));
 				
 				lbltxt2.setText("BallAngle = " + BallAngle);
 				lbltxt3.setText("RoboAngle = " + RoboAngle);
