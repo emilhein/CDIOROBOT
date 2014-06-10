@@ -82,7 +82,8 @@ public class RouteTest {
 					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-System.out.println("Could not paint requested point");				}
+						System.out.println("Could not paint requested point");			
+						}
 
 			}
 		}

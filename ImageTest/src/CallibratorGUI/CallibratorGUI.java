@@ -49,11 +49,14 @@ public class CallibratorGUI {
 	static int ballCount = 0;
 	static int count = 0;
 	static char firstRun = 'a';
+	static CvPoint roboFrontPunkt = new CvPoint(10, 10);
+	static CvPoint roboBagPunkt = new CvPoint(20, 20);
 
 	public static void main(String args[]) throws IOException {
 
 		// try{
 
+		
 		// prøver at forbinde til vores robot
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTConnector connt = new NXTConnector();
@@ -739,8 +742,8 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-				//TakePicture takepic = new TakePicture();
-				//takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectRects findEdge = new DetectRects();
@@ -773,8 +776,7 @@ public class CallibratorGUI {
 				double red;
 				double green2;
 				double red2;
-				CvPoint roboFrontPunkt = new CvPoint(10, 10);
-				CvPoint roboBagPunkt = new CvPoint(20, 20);
+				
 				
 				try {
 					double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
@@ -785,11 +787,9 @@ public class CallibratorGUI {
 					green2 = back[1];
 					red2 = back[2];
 				
-
+			
+					determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
 				
-				// heConnectder sættes robotpunket, alt efter hvilken cirkel der
-				// er rød.
-				determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
 				} catch (Exception e1) {
 					System.out.println("NO BALLS FOUND TRY AGAIN");
 				}
