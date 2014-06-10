@@ -744,13 +744,8 @@ public class CallibratorGUI {
 				takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
-				DetectBorder findEdge = new DetectBorder();
-				try {
-					findEdge.getRectCoordis("billed0.png", 40, 65, 40, 160);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				DetectRects findEdge = new DetectRects();
+				findEdge.detectAllRects();
 				ppcm = findEdge.getPixPerCm();
 
 				ballMethod balls = new ballMethod();
