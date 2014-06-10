@@ -1122,7 +1122,29 @@ public class CallibratorGUI {
 					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
 					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
 				}
-			}
+				double PovM = 0.1;
+				CvPoint midpunkt = new CvPoint(800,450);
+				int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
+				int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
+				int PovBagX = roboBagPunkt.x() - midpunkt.x();
+				int PovBagY = roboBagPunkt.y() - midpunkt.y();
+				if(PovFrontX < 0){
+					if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
+					else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
+				}
+				else{
+					if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
+					else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
+				}
+				if(PovBagX < 0){
+					if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
+					else roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
+				}
+				else{
+					if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
+					else roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
+				}
+	}
 		});
 
 		frame1.add(jl1);
