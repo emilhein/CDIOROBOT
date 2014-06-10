@@ -787,9 +787,11 @@ public class CallibratorGUI {
 					double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
 					green2 = back[1];
 					red2 = back[2];
+
 				
 			
 					determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
+
 				
 				
 				ArrayList<Float> ballCoor = balls.findCircle(
