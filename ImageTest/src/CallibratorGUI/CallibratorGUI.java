@@ -748,6 +748,7 @@ public class CallibratorGUI {
 				ppcm = findEdge.getPixPerCm();
 
 				ballMethod balls = new ballMethod();
+				balls.pictureToMat("billed0.png");
 
 				ArrayList<Float> RoboCoor = balls.findCircle(
 						Integer.parseInt(jl11.getText()),

@@ -14,15 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
-
-
-
-
 import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
@@ -40,6 +31,9 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import java.util.ArrayList;
 
 public class ballMethod {
+	
+	private Mat ballMat;
+	private Mat roboMat;
 
 	public ArrayList<Float> findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 		
@@ -57,8 +51,10 @@ public class ballMethod {
 		
 		
 		Mat webcam_image;
-		pictureToMat("billed0.png", findRobot);
-		webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes robot p√•.
+		if(findRobot)
+			webcam_image = roboMat;
+		else
+			webcam_image = ballMat;
  
 		//capture.read(webcam_image);  
 		Mat array255=new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);  
@@ -126,28 +122,23 @@ public class ballMethod {
 	}
 
 	
-	public static void pictureToMat(String image, boolean robo) {
+	public void pictureToMat(String image) {
 		
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-		Mat ballMat = Highgui.imread(image);
-		Mat roboMat = ballMat.clone();
+		Mat pic0 = Highgui.imread(image);
+		ballMat = pic0.clone();
+		roboMat = pic0.clone();
 
 		try
 		{
-			for (int j = 0; j < ballMat.rows(); j++) {
-				for (int b = 0; b < ballMat.cols(); b++) {
-					double[] rgb = ballMat.get(j, b);
+			for (int j = 0; j < pic0.rows(); j++) {
+				for (int b = 0; b < pic0.cols(); b++) {
+					double[] rgb = pic0.get(j, b);
 					for (int i = 0; i < rgb.length; i = i + 3) {
 						double blue = rgb[i];
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
-						
-						// Til fremhÊvning af bolde
-						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
-							ballMat.put(j, b, 0, 0, 0);
-							break;
-						}
 						
 						// Til fremhÊvning af robot
 						if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder gr¯n
@@ -165,18 +156,21 @@ public class ballMethod {
 						else {
 							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
 						}
+						
+						// Til fremhÊvning af bolde
+						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
+							ballMat.put(j, b, 0, 0, 0);
+							break;
+						}
 					}
 				}
 			}
+			Highgui.imwrite("testBALLS.png", ballMat);
+			Highgui.imwrite("testROBO.png", roboMat);
 		}
 		catch (Exception e) {
 		System.out.println("Could not convert image properly");
 		}
-
-		if(robo == true)
-			Highgui.imwrite("AfterColorConvert.png", roboMat);			
-		else
-			Highgui.imwrite("AfterColorConvert.png", ballMat);
 	}
 		
 
