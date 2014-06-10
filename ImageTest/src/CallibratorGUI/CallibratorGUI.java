@@ -785,7 +785,6 @@ public class CallibratorGUI {
 					double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
 					green2 = back[1];
 					red2 = back[2];
-				
 
 				
 				// heConnectder sættes robotpunket, alt efter hvilken cirkel der
