@@ -38,39 +38,25 @@ public class ballMethod {
 	public ArrayList<Float> findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 		
 		ArrayList<Float> Coordi = new ArrayList<Float>();
-				
-		// Load the native library.  
+				  
 		System.loadLibrary("opencv_java248");  
-		// It is better to group all frames together so cut and paste to  
-		// create more frames is easier  
-		
-				//-- 2. Read the video stream
-		 
-	//	CanvasFrame cnvs=new CanvasFrame("Polygon");
-    //    cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		
 		
 		Mat webcam_image;
 		if(findRobot)
 			webcam_image = roboMat;
 		else
 			webcam_image = ballMat;
- 
-		//capture.read(webcam_image);  
-		Mat array255=new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);  
-		array255.setTo(new Scalar(255));     
-		Mat circles = new Mat(); // No need (and don't know how) to initialize it.
+
+		Mat circles = new Mat();
 		if( !webcam_image.empty() )  
 		{  
 			
-			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1); //webcam_image.height(),webcam_image.width(),CvType.CV_8UC1
+			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);
+			
+			webcam_image.convertTo(webcam_image, CvType.CV_8UC1);
 			
 			
-			webcam_image.convertTo(webcam_image, CvType.CV_8UC1); //32S
-			
-			
-			Highgui.imwrite("TEST.png", webcam_image); // Gemmer billedet i
-			// roden
+			Highgui.imwrite("TEST.png", webcam_image);
 
 			// load image
 			IplImage img = cvLoadImage("TEST.png");
@@ -86,25 +72,20 @@ public class ballMethod {
 			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
 
 			Imgproc.HoughCircles(b8ch1, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
-			
-		//	int rows = circles.rows();
-			
-						
-			
-				//int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
-				float[] data2 = new float[3];  
-				if (data2.length>0){ 
-						for(int c=0; c<circles.cols(); c++)
-						{
-							circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-							Coordi.add(data2[0]); // x -koordinate
-							Coordi.add(data2[1]); //y - koordinate
-							Coordi.add(data2[2]); //radius
-							Point center= new Point(data2[0], data2[1]);  
-							Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
-						}
-					
+
+			float[] data2 = new float[3];  
+			if (data2.length>0){ 
+				for(int c=0; c<circles.cols(); c++)
+				{
+					circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
+					Coordi.add(data2[0]); // x -koordinate
+					Coordi.add(data2[1]); //y - koordinate
+					Coordi.add(data2[2]); //radius
+					Point center= new Point(data2[0], data2[1]);  
+					Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
 				}
+
+			}
 
 			//-- 5. Display the image  
 
@@ -114,9 +95,7 @@ public class ballMethod {
 		else  
 		{  
 			System.out.println(" --(!) No captured frame -- Break!"); 
-		}  
-		
-		System.out.println("ok");
+		}
 		
 		return Coordi;  
 	}
@@ -165,41 +144,9 @@ public class ballMethod {
 					}
 				}
 			}
-			Highgui.imwrite("testBALLS.png", ballMat);
-			Highgui.imwrite("testROBO.png", roboMat);
 		}
 		catch (Exception e) {
 		System.out.println("Could not convert image properly");
 		}
 	}
-		
-
-
-	
-    public void invertImage(String imageName) {
-    	BufferedImage inputFile;
-    	
-    	try {
-    		inputFile = ImageIO.read(new File(imageName));
-
-
-    		for (int x = 0; x < inputFile.getWidth(); x++) {
-    			for (int y = 0; y < inputFile.getHeight(); y++) {
-    				int rgba = inputFile.getRGB(x, y);
-    				Color col = new Color(rgba, true);
-    				col = new Color(255 - col.getRed(),
-    								255 - col.getGreen(),
-    								255);
-    				inputFile.setRGB(x, y, col.getRGB());
-    			}
-    		}
-    		File outputFile = new File("inverted.png");
-    		
-    		ImageIO.write(inputFile, "png", outputFile);
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
 }
