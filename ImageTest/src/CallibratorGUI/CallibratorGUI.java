@@ -769,27 +769,30 @@ public class CallibratorGUI {
 																		// konverterede
 																		// billlede
 
-				double[] front = frame.get(Math.round(RoboCoor.get(1)),
-						Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
-														// GConnectDET
-														// get-metoden
-				// double red = front[2]; //henter en rød farver fra den ene
-				// cirkel
-				double green = front[1];
-				double red = front[2];
-
-				double[] back = frame.get(Math.round(RoboCoor.get(4)),
-						Math.round(RoboCoor.get(3))); // /
-				double green2 = back[1];
-				double red2 = back[2]; // henter en rød farve ([2]) fra den
-										// anden cirkel
-
+				double green;
+				double red;
+				double green2;
+				double red2;
 				CvPoint roboFrontPunkt = new CvPoint(10, 10);
 				CvPoint roboBagPunkt = new CvPoint(20, 20);
+				
+				try {
+					double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
+					green = front[1];
+					red = front[2];
+
+					double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
+					green2 = back[1];
+					red2 = back[2];
+				
+
+				
 				// heConnectder sættes robotpunket, alt efter hvilken cirkel der
 				// er rød.
 				determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
-
+				} catch (Exception e1) {
+					System.out.println("NO BALLS FOUND TRY AGAIN");
+				}
 				ArrayList<Float> ballCoor = balls.findCircle(
 						Integer.parseInt(jl5.getText()),
 						Integer.parseInt(jl6.getText()),
