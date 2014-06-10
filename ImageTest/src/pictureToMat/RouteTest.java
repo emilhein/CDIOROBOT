@@ -82,6 +82,7 @@ public class RouteTest {
 	}
 
 
+
 	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
 		for (int a = 0; a < size; a++)
 		{

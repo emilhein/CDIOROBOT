@@ -49,11 +49,13 @@ public class CallibratorGUI {
 	static int ballCount = 0;
 	static int count = 0;
 	static char firstRun = 'a';
+	
 
 	public static void main(String args[]) throws IOException {
 
 		// try{
 
+		
 		// prøver at forbinde til vores robot
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTConnector connt = new NXTConnector();
@@ -739,8 +741,8 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-				//TakePicture takepic = new TakePicture();
-				//takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectRects findEdge = new DetectRects();
@@ -765,11 +767,11 @@ public class CallibratorGUI {
 				// for(int j = 0; j<RoboCoor.size();j=j+3){
 				// }
 
-				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter
+				Mat frame = Highgui.imread("robo.png"); // henter
 																		// det
 																		// konverterede
 																		// billlede
-
+				System.out.println("ROBOCOOR size = " + RoboCoor.size());
 				double green;
 				double red;
 				double green2;
@@ -777,7 +779,7 @@ public class CallibratorGUI {
 				CvPoint roboFrontPunkt = new CvPoint(10, 10);
 				CvPoint roboBagPunkt = new CvPoint(20, 20);
 				
-				try {
+				
 					double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
 					green = front[1];
 					red = front[2];
@@ -787,12 +789,11 @@ public class CallibratorGUI {
 					red2 = back[2];
 
 				
-				// heConnectder sættes robotpunket, alt efter hvilken cirkel der
-				// er rød.
-				determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
-				} catch (Exception e1) {
-					System.out.println("NO BALLS FOUND TRY AGAIN");
-				}
+			
+					determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
+
+				
+				
 				ArrayList<Float> ballCoor = balls.findCircle(
 						Integer.parseInt(jl5.getText()),
 						Integer.parseInt(jl6.getText()),
