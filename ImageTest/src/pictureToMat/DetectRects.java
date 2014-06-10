@@ -26,6 +26,7 @@ import com.googlecode.javacv.cpp.opencv_core.CvSeq;
 import com.googlecode.javacv.cpp.opencv_core.CvSize;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+
 public class DetectRects {
 	
 	private float externalHeight = 135;
@@ -39,92 +40,7 @@ public class DetectRects {
 	private CvSeq contoursPointer2;
 	private CvRect innerRect;
 	private CvRect obstruction;
-	
-	public void getBorderCoordis() throws IOException
-	{	
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	
 
-	    // ----- Detect border
-		
-		CvSeq ptr = new CvSeq();
-		CvPoint p1 = new CvPoint(0,0), p2 = new CvPoint(0,0);
-	    CvRect greatest = new CvRect(0,0,0,0);
-
-	    for (ptr = contoursPointer; ptr != null; ptr = ptr.h_next()) {
-
-	        CvRect sq = cvBoundingRect(ptr, 0);
-
-	        if(sq.width() > greatest.width() && sq.height() > greatest.height())
-	        {
-	        	greatest = sq;
-	            p1.x(sq.x());
-	            p2.x(sq.x()+sq.width());
-	            p1.y(sq.y());
-	            p2.y(sq.y()+sq.height());
-	        }
-	    }
-
-	    BufferedImage buffImg = ImageIO.read(new File("billed0.png"));
-    	IplImage img = IplImage.createFrom(buffImg);
-    	
-	    cvRectangle(img, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
-
-	    pixPerCm = pixPerCm(greatest.width(), greatest.height());
-	    
-	    innerRect = new CvRect(0,0,0,0);
-	    int widthDifference = greatest.width() - (int)(innerWidth * pixPerCm);
-	    int heightDifference = greatest.height() - (int)(innerHeight * pixPerCm);
-	    innerRect.width(greatest.width() - widthDifference);
-	    innerRect.height(greatest.height() - heightDifference);
-	    innerRect.x(greatest.x() + widthDifference/2);
-	    innerRect.y(greatest.y() + heightDifference/2);
-	   
-	    p1.x(innerRect.x());
-        p2.x(innerRect.x()+innerRect.width());
-        p1.y(innerRect.y());
-        p2.y(innerRect.y()+innerRect.height());
-	    
-	    cvRectangle(img, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
-	    
-      // cnvs.showImage(img);
-	    
-	    goalA = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
-	    goalB= new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
-	    
-	    cvLine(img, goalA, goalB, CV_RGB(0,200,255), 3,0,0);  
-
-	    
-	    
-	    // ----- Detect obstruction
-	    
-	    ptr = new CvSeq();
-		p1 = new CvPoint(0,0);
-		p2 = new CvPoint(0,0);
-	    obstruction = new CvRect(0,0,0,0);
-	    CvRect sq;
-
-
-	    for (ptr = contoursPointer2; ptr != null; ptr = ptr.h_next()) {
-
-	    	sq = cvBoundingRect(ptr, 0);
-
-	        if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
-	        {
-	        	obstruction = sq;
-	            p1.x(sq.x());
-	            p2.x(sq.x()+sq.width());
-	            p1.y(sq.y());
-	            p2.y(sq.y()+sq.height());
-	            cvRectangle(img, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
-	            //System.out.println("UHUH");
-	        }
-	    }
-	    System.out.println("END");
-
-	    cvSaveImage("edge.png", img);        
-	}
-	
 	public float pixPerCm(int pixBorderWidth, int pixBorderHeight)
 	{
 		float widthPixPrCm = pixBorderWidth / externalWidth;
@@ -235,6 +151,8 @@ public class DetectRects {
                 contoursPointer = contoursPointer.h_next();
             }*/
         	
+    	    // ----- Detect border
+    		
     		CvSeq ptr = new CvSeq();
     		CvPoint p1 = new CvPoint(0,0), p2 = new CvPoint(0,0);
     	    CvRect greatest = new CvRect(0,0,0,0);
@@ -254,12 +172,65 @@ public class DetectRects {
     	    }
 
     	    BufferedImage buffImg = ImageIO.read(new File("billed0.png"));
-        	IplImage img2 = IplImage.createFrom(buffImg);
+        	IplImage edge = IplImage.createFrom(buffImg);
         	
-    	    cvRectangle(img2, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
+    	    cvRectangle(edge, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
+
+    	    pixPerCm = pixPerCm(greatest.width(), greatest.height());
+    	    
+    	    innerRect = new CvRect(0,0,0,0);
+    	    int widthDifference = greatest.width() - (int)(innerWidth * pixPerCm);
+    	    int heightDifference = greatest.height() - (int)(innerHeight * pixPerCm);
+    	    innerRect.width(greatest.width() - widthDifference);
+    	    innerRect.height(greatest.height() - heightDifference);
+    	    innerRect.x(greatest.x() + widthDifference/2);
+    	    innerRect.y(greatest.y() + heightDifference/2);
+    	   
+    	    p1.x(innerRect.x());
+            p2.x(innerRect.x()+innerRect.width());
+            p1.y(innerRect.y());
+            p2.y(innerRect.y()+innerRect.height());
+    	    
+    	    cvRectangle(edge, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
+    	    
+          // cnvs.showImage(img);
+    	    
+    	    goalA = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
+    	    goalB= new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
+    	    
+    	    cvLine(edge, goalA, goalB, CV_RGB(0,200,255), 3,0,0);
+    	    
+    	    
+    	    
+    	    
+    	    // ----- Detect obstruction
+    	    
+    	    ptr = new CvSeq();
+    		p1 = new CvPoint(0,0);
+    		p2 = new CvPoint(0,0);
+    	    obstruction = new CvRect(0,0,0,0);
+    	    CvRect sq;
+
+
+    	    for (ptr = contoursPointer2; ptr != null; ptr = ptr.h_next()) {
+
+    	    	sq = cvBoundingRect(ptr, 0);
+
+    	        if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
+    	        {
+    	        	obstruction = sq;
+    	            p1.x(sq.x());
+    	            p2.x(sq.x()+sq.width());
+    	            p1.y(sq.y());
+    	            p2.y(sq.y()+sq.height());
+    	            cvRectangle(edge, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
+    	        }
+    	    }
+    	    
+    	    
         	
         	cvSaveImage("BrownThreshold2.png", thresholdImg);
-        	cvSaveImage("Img2.png", img2);
+        	cvSaveImage("edge.png", edge);
         } catch (IOException e) {
         	// TODO Auto-generated catch block
         	e.printStackTrace();
