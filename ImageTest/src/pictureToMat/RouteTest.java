@@ -10,6 +10,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
+
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
 public class RouteTest {
@@ -39,19 +40,22 @@ public class RouteTest {
 		}
 		
 		//Dette for-loop finder det tætteste ppunkt på robotens front
-		for (int i = 0; i < xCoor.size(); i++) {
-			int tempLength = 0;	
-			System.out.println("UDREGNER BOLDLÆNGDE NR = " + i);
-			CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
-			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
-			
-			if (tempLength < minLength) {
-				minLength = tempLength;
-				minPunkt = punkt2;
-				minPunkt.x(punkt2.x());
-				minPunkt.y(punkt2.y());
+		try {
+			for (int i = 0; i < xCoor.size(); i++) {
+				int tempLength = 0;	
+				CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
+				tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
+				
+				if (tempLength < minLength) {
+					minLength = tempLength;
+					minPunkt = punkt2;
+					minPunkt.x(punkt2.x());
+					minPunkt.y(punkt2.y());
+				}
+				
 			}
-			
+		} catch (Exception e) {
+			System.out.println("Closest balls can't be calculated, due to previous error...");
 		}
 		xCoor.clear();yCoor.clear();
 		
@@ -74,7 +78,11 @@ public class RouteTest {
 	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
 		for (int a = 0; a < size; a++) {
 			for (int b = 0; b < size; b++) {
-				frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
+				try {
+					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+System.out.println("Could not paint requested point");				}
 
 			}
 		}

@@ -64,7 +64,6 @@ public class ballMethod {
 		Mat array255=new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);  
 		array255.setTo(new Scalar(255));     
 		Mat circles = new Mat(); // No need (and don't know how) to initialize it.
-
 		if( !webcam_image.empty() )  
 		{  
 			
@@ -95,21 +94,22 @@ public class ballMethod {
 		//	int rows = circles.rows();
 			
 						
-			//int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
-			float[] data2 = new float[3];  
-			if (data2.length>0){ 
-					for(int c=0; c<circles.cols(); c++)
-					{
-						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-						Coordi.add(data2[0]); // x -koordinate
-						Coordi.add(data2[1]); //y - koordinate
-						Coordi.add(data2[2]); //radius
-						Point center= new Point(data2[0], data2[1]);  
-						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
-					}
-				
-			}  
- 
+			
+				//int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
+				float[] data2 = new float[3];  
+				if (data2.length>0){ 
+						for(int c=0; c<circles.cols(); c++)
+						{
+							circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
+							Coordi.add(data2[0]); // x -koordinate
+							Coordi.add(data2[1]); //y - koordinate
+							Coordi.add(data2[2]); //radius
+							Point center= new Point(data2[0], data2[1]);  
+							Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
+						}
+					
+				}
+
 			//-- 5. Display the image  
 
 			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
@@ -124,9 +124,7 @@ public class ballMethod {
 		
 		return Coordi;  
 	}
-	
-	
-	
+
 	
 	public static void pictureToMat(String image, boolean robo) {
 		
@@ -135,38 +133,44 @@ public class ballMethod {
 		Mat ballMat = Highgui.imread(image);
 		Mat roboMat = ballMat.clone();
 
-		for (int j = 0; j < ballMat.rows(); j++) {
-			for (int b = 0; b < ballMat.cols(); b++) {
-				double[] rgb = ballMat.get(j, b);
-				for (int i = 0; i < rgb.length; i = i + 3) {
-					double blue = rgb[i];
-					double green = rgb[i + 1];
-					double red = rgb[i + 2];
-					
-					// Til fremhævning af bolde
-					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
-						ballMat.put(j, b, 0, 0, 0);
-						break;
-					}
-					
-					// Til fremhævning af robot
-					if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder grøn
-						roboMat.put(j, b, 0, 255, 0);
-						break;
-					}
-					else if (red > 130 && green < 60 && blue < 60) { // finder rød
-						roboMat.put(j, b, 0, 0, 255);
-						break;
-					}
-					else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
-						roboMat.put(j, b, 255, 255, 255);
-						break;
-					}
-					else {
-						roboMat.put(j, b, 0, 0, 0); // resten bliver sort
+		try
+		{
+			for (int j = 0; j < ballMat.rows(); j++) {
+				for (int b = 0; b < ballMat.cols(); b++) {
+					double[] rgb = ballMat.get(j, b);
+					for (int i = 0; i < rgb.length; i = i + 3) {
+						double blue = rgb[i];
+						double green = rgb[i + 1];
+						double red = rgb[i + 2];
+						
+						// Til fremhævning af bolde
+						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
+							ballMat.put(j, b, 0, 0, 0);
+							break;
+						}
+						
+						// Til fremhævning af robot
+						if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder grøn
+							roboMat.put(j, b, 0, 255, 0);
+							break;
+						}
+						else if (red > 130 && green < 60 && blue < 60) { // finder rød
+							roboMat.put(j, b, 0, 0, 255);
+							break;
+						}
+						else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
+							roboMat.put(j, b, 255, 255, 255);
+							break;
+						}
+						else {
+							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
+						}
 					}
 				}
 			}
+		}
+		catch (Exception e) {
+		System.out.println("Could not convert image properly");
 		}
 
 		if(robo == true)
