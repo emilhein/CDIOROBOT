@@ -740,8 +740,8 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-//				TakePicture takepic = new TakePicture();
-//				takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectBorder findEdge = new DetectBorder();
@@ -886,25 +886,28 @@ public class CallibratorGUI {
 				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
 				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
 				int distance4  = dist.Calcdist(roboFrontPunkt, corner4);
-				int x = 3;
+				double x = 0.01;
 				
-				if(distance1 < 500){
+				if(distance1 < 150){
 					System.out.println("Dist1");
-					TurnAngle = TurnAngle+x*(dist.Calcdist(roboFrontPunkt, middle));
+					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
 				}
-				if(distance2 < 500){
+				if(distance2 < 150){
 					System.out.println("Dist2");
-					TurnAngle = TurnAngle-x*(dist.Calcdist(roboFrontPunkt, middle));
+					System.out.println("TurnAngle = " + TurnAngle);
+					TurnAngle -= (int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
+					System.out.println(((int)x*(dist.Calcdist(roboFrontPunkt, middle))));
+					System.out.println("TurnAngle2 = " + TurnAngle);
 
 				}
 				if(distance3 < 150){
 					System.out.println("Dist3");
-					TurnAngle = TurnAngle+x*(dist.Calcdist(roboFrontPunkt, middle));
+					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
 
 				}
 				if(distance4 < 150){
 					System.out.println("Dist4");
-					TurnAngle = TurnAngle-x*(dist.Calcdist(roboFrontPunkt, middle));
+					TurnAngle = TurnAngle-(int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
 
 				}
 					
