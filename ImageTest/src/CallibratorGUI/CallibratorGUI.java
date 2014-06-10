@@ -618,7 +618,7 @@ public class CallibratorGUI {
 				//for(int j = 0; j<2;j++){
 			//	while(true){
 				
-				Point minPunkt;
+				CvPoint minPunkt;
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
@@ -784,8 +784,8 @@ public class CallibratorGUI {
 				double red2 = back[2]; // henter en rød farve ([2]) fra den
 										// anden cirkel
 
-				Point roboFrontPunkt = new Point(10, 10);
-				Point roboBagPunkt = new Point(20, 20);
+				CvPoint roboFrontPunkt = new CvPoint(10, 10);
+				CvPoint roboBagPunkt = new CvPoint(20, 20);
 				// heConnectder sættes robotpunket, alt efter hvilken cirkel der
 				// er rød.
 				determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
@@ -821,11 +821,11 @@ public class CallibratorGUI {
 
 						CvPoint goalA = findEdge.getGoalB();
 
-						minPunkt.setX(goalA.x());
-						minPunkt.setY(goalA.y());
+						minPunkt.x(goalA.x());
+						minPunkt.y(goalA.y());
 						count = 0;
 						System.out.println("koordinaterne til Minpunkt er ("
-								+ minPunkt.getX() + "," + minPunkt.getY() + ")");
+								+ minPunkt.x() + "," + minPunkt.y() + ")");
 						
 					}
 				}
@@ -835,11 +835,11 @@ public class CallibratorGUI {
 				String text1 = txtArea1.getText();
 				lbltxt.setText(text1);
 
-				Point nyRoboFront = new Point(roboFrontPunkt.getX()
-						- roboBagPunkt.getX(), roboFrontPunkt.getY()
-						- roboBagPunkt.getY());
-				Point nyRoboBag = new Point(0, 0);
-				Point nyMinPunkt = new Punkt(minPunkt.getX()- roboBagPunkt.getX(), minPunkt.getY()- roboBagPunkt.getY());	
+				CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()
+						- roboBagPunkt.x(), roboFrontPunkt.y()
+						- roboBagPunkt.y());
+				CvPoint nyRoboBag = new CvPoint(0, 0);
+				CvPoint nyMinPunkt = new CvPoint(minPunkt.x()- roboBagPunkt.x(), minPunkt.y()- roboBagPunkt.y());	
 				
 				
 				CalcAngle Angle = new CalcAngle();
@@ -853,12 +853,12 @@ public class CallibratorGUI {
 				
 				CalcDist dist = new CalcDist();
 
-				Punkt middle = new Punkt(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
+				CvPoint middle = new CvPoint(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
 
-				Punkt corner3 = new Punkt(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
-				Punkt corner1 = new Punkt(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*(int)ppcm));//1
-				Punkt corner4 = new Punkt(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
-				Punkt corner2 = new Punkt(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
+				CvPoint corner3 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
+				CvPoint corner1 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*(int)ppcm));//1
+				CvPoint corner4 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
+				CvPoint corner2 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
 				
 				/*
 				1 												2
@@ -880,7 +880,7 @@ public class CallibratorGUI {
 				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
 				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
 				int distance4  = dist.Calcdist(roboFrontPunkt, corner4);
-				double x = 0.03;
+				double x = 0.02;
 				
 				if(distance1 < 150){
 					System.out.println("Dist1");
@@ -1054,27 +1054,27 @@ public class CallibratorGUI {
 
 	public void determineDirection(ArrayList<Float> RoboCoor,
 					double green, double red, double green2, double red2,
-					Punkt roboFrontPunkt, Punkt roboBagPunkt) {
+					CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
 				if (red > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
 				} else if (red2 > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(1)));
 				} else if (green > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(1)));
 				} else if (green2 > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
 				}
 			}
 		});
