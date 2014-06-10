@@ -739,8 +739,8 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-				TakePicture takepic = new TakePicture();
-				takepic.takePicture();
+				//TakePicture takepic = new TakePicture();
+				//takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectRects findEdge = new DetectRects();
