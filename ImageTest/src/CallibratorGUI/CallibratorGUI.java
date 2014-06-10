@@ -881,29 +881,39 @@ public class CallibratorGUI {
 				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
 				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
 				int distance4  = dist.Calcdist(roboFrontPunkt, corner4);
-				double x = 0.01;
+				double x = 0.03;
 				
 				if(distance1 < 150){
 					System.out.println("Dist1");
+					if(RoboAngle > 196){
 					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
+					}
 				}
 				if(distance2 < 150){
 					System.out.println("Dist2");
 					System.out.println("TurnAngle = " + TurnAngle);
+					if(RoboAngle > 196){
 					TurnAngle -= (int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
+					}
 					System.out.println(((int)x*(dist.Calcdist(roboFrontPunkt, middle))));
 					System.out.println("TurnAngle2 = " + TurnAngle);
 
 				}
 				if(distance3 < 150){
 					System.out.println("Dist3");
+					if(RoboAngle > 196){
 					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
-
+					}
 				}
 				if(distance4 < 150){
 					System.out.println("Dist4");
-					TurnAngle = TurnAngle-(int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
+					System.out.println("TurnAngle = " + TurnAngle);
 
+					if(RoboAngle > 196){
+					TurnAngle = TurnAngle-(int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
+					System.out.println("TurnAngle = " + TurnAngle);
+
+					}
 				}
 					
 				

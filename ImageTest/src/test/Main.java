@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
 
 	public static void main(String[] args) {
-		DetectRects detecter = new DetectRects();
+		Detect detecter = new Detect();
 		detecter.detectAllRects();
 		//detecter.getObstructionCoordis();
 		try {
