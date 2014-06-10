@@ -1,4 +1,4 @@
-package dist;
+package test;
 
 public class Punkt {
     int x, y;

@@ -1,15 +1,17 @@
 package dist;
 
+import com.googlecode.javacv.cpp.opencv_core.CvPoint;
+
 public class Angletest {
 
 	public static void main(String[] args) {
-		Punkt roboFrontPunkt = new Punkt(3,2);
-		Punkt roboBagPunkt = new Punkt(2,2);
-		Punkt minPunkt = new Punkt(2,3);
+		CvPoint roboFrontPunkt = new CvPoint(3,2);
+		CvPoint roboBagPunkt = new CvPoint(2,2);
+		CvPoint minPunkt = new CvPoint(2,3);
 		
-		Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()-roboBagPunkt.getX(),roboFrontPunkt.getY()-roboBagPunkt.getY());
-		Punkt nyRoboBag = new Punkt(0,0);
-		Punkt nyMinPunkt = new Punkt(minPunkt.getX()-roboBagPunkt.getX(),minPunkt.getY()-roboBagPunkt.getY());
+		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()-roboBagPunkt.x(),roboFrontPunkt.y()-roboBagPunkt.y());
+		CvPoint nyRoboBag = new CvPoint(0,0);
+		CvPoint nyMinPunkt = new CvPoint(minPunkt.x()-roboBagPunkt.x(),minPunkt.y()-roboBagPunkt.y());
 		
 		CalcAngle Angle = new CalcAngle();
 		int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
