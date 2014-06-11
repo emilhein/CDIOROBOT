@@ -132,9 +132,9 @@ public class DetectRects {
         	contoursPointer = contours;
         	contoursPointer2 = contours2;
         	
-        	int red = 0;
-        	int blue = 0;
-        	int green = 0;
+        //	int red = 0;
+        //	int blue = 0;
+        //	int green = 0;
         	
            /* while (contoursPointer != null && !contoursPointer.isNull()) {
                 if (contoursPointer.elem_size() > 0) {
