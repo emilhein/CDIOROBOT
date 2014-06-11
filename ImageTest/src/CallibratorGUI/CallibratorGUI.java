@@ -16,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
@@ -57,8 +56,8 @@ public class CallibratorGUI {
 
 		
 		// prøver at forbinde til vores robot
-		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
-		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
+		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+		NXTInfo nxtInfo = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
 		System.out.println("trying to connect");
 		connt.connectTo(nxtInfo, NXTComm.LCP);
@@ -183,8 +182,8 @@ public class CallibratorGUI {
 		// ROBOT
 		txtRoboDP.setText("1");
 		txtromin.setText("30");
-		txtromax.setText("38");
-		txtRoboMinDist.setText("10");
+		txtromax.setText("42");
+		txtRoboMinDist.setText("15");
 		txtRoboPar1.setText("40");
 		txtRoboPar2.setText("12");
 		// FARVE
@@ -832,9 +831,10 @@ public class CallibratorGUI {
 				Mat frame = Highgui.imread("robo.png"); // henter
 																		// det
 																		// konverterede
-																		// billlede
+				double blue = 0;														// billlede
 				double green = 0;
 				double red= 0;
+				double blue2 = 0;														// billlede
 				double green2= 0;
 				double red2= 0;
 				CvPoint roboFrontPunkt = new CvPoint(10, 10);
@@ -843,10 +843,12 @@ public class CallibratorGUI {
 				
 					try {
 						double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
+						blue = front[0];
 						green = front[1];
 						red = front[2];
 
 						double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
+						blue2 = front[0];
 						green2 = back[1];
 						red2 = back[2];
 					} catch (IndexOutOfBoundsException e1) {
@@ -857,7 +859,7 @@ public class CallibratorGUI {
 				
 					long startdirection = System.currentTimeMillis();
 
-					determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
+					determineDirection(RoboCoor,blue, green, red,blue2,green2, red2,roboFrontPunkt, roboBagPunkt);
 
 					long enddirection = System.currentTimeMillis();
 					System.out.println("direction took = " +(enddirection-startdirection));
@@ -935,9 +937,10 @@ public class CallibratorGUI {
 				//System.out.println("BallAngle = " + BallAngle);
 				int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
 				//System.out.println("RoboAngle = " + RoboAngle);
+					TurnAngle = RoboAngle - BallAngle;
 				
-				TurnAngle = BallAngle-RoboAngle;
-				
+				if(TurnAngle > 180)TurnAngle -= 360;
+	
 				CalcDist dist = new CalcDist();
 
 				
@@ -1154,7 +1157,36 @@ public class CallibratorGUI {
 				System.out.println("The entire apply button took = " + (endbutton-startbutton));
 			}
 
-	public void determineDirection(ArrayList<Float> RoboCoor,double green, double red, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
+	public void determineDirection(ArrayList<Float> RoboCoor,double blue,double green, double red,double blue2, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
+		
+		
+		if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
+			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+		}
+		
+		if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rød
+			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+		}
+		
+		if ((((green2 - blue2)/blue2) > 0.3) && (green2 > red2)) { // finder grøn
+			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+		}
+		if ((((red2 - blue2)/blue2) > 1.4) && (red2 > green2)) { // finder rød
+			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+		}
+/*
 				try {
 					if (red > 245) {
 						roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
@@ -1180,8 +1212,8 @@ public class CallibratorGUI {
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println("OUT OF BOUND BITCH");
 				}
-				
-				double PovM = 0.1;
+				*/
+				double PovM = Double.parseDouble(jl20.getText());
 				CvPoint midpunkt = new CvPoint(800,450);
 				int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
 				int PovFrontY = roboFrontPunkt.y() - midpunkt.y();

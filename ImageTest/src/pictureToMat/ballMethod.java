@@ -111,23 +111,24 @@ public class ballMethod {
 						double blue = rgb[i];
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
-						
+					/*	
 						// Til fremhævning af robot
-						if ((((green - blue)/blue) > 0.1) && (green > red)) { // finder grøn
+						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
 							roboMat.put(j, b, 0, 255, 0);
 							break;
 						}
-						else if ((((red - blue)/blue) > 0.5) && (red > green)) { // finder rød
+						else if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rød
 							roboMat.put(j, b, 0, 0, 255);
 							break;
 						}
-						/*else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
-							roboMat.put(j, b, 255, 255, 255);
-							break;
-						}*/
+						//else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
+						//	roboMat.put(j, b, 255, 255, 255);
+						//	break;
+						//}
 						else {
 							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
 						}
+						*/
 						
 						// Til fremhævning af bolde
 						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
