@@ -14,15 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
-
-
-
-
 import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
@@ -40,54 +31,32 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import java.util.ArrayList;
 
 public class ballMethod {
+	
+	private Mat ballMat;
+	private Mat roboMat;
 
 	public ArrayList<Float> findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 		
 		ArrayList<Float> Coordi = new ArrayList<Float>();
-				
-		// Load the native library.  
+				  
 		System.loadLibrary("opencv_java248");  
-		// It is better to group all frames together so cut and paste to  
-		// create more frames is easier  
-		
-				//-- 2. Read the video stream
-		 
-		/**********************TESTKODE********************/
-	//	CanvasFrame cnvs=new CanvasFrame("Polygon");
-    //    cnvs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		
 		
 		Mat webcam_image;
-		if(findRobot == true){
-			pictureToMat("billed0.png");
-			webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes robot pÃ¥.
-			System.out.println("IN TRUE");
-		}
-		else{
-			pictureToMat3("billed0.png");
-			webcam_image = Highgui.imread("AfterColorConvert.png");  //billede der skal findes bolde pÃ¥.
+		if(findRobot)
+			webcam_image = roboMat;
+		else
+			webcam_image = ballMat;
 
-			// Save
-			System.out.println("IN FALSE");
-		}
-		/************************SLUT**********************/
- 
-		//capture.read(webcam_image);  
-		Mat array255=new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);  
-		array255.setTo(new Scalar(255));     
-		Mat circles = new Mat(); // No need (and don't know how) to initialize it.
-
+		Mat circles = new Mat();
 		if( !webcam_image.empty() )  
 		{  
 			
-			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1); //webcam_image.height(),webcam_image.width(),CvType.CV_8UC1
+			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);
+			
+			webcam_image.convertTo(webcam_image, CvType.CV_8UC1);
 			
 			
-			webcam_image.convertTo(webcam_image, CvType.CV_8UC1); //32S
-			
-			
-			Highgui.imwrite("TEST.png", webcam_image); // Gemmer billedet i
-			// roden
+			Highgui.imwrite("TEST.png", webcam_image);
 
 			// load image
 			IplImage img = cvLoadImage("TEST.png");
@@ -103,25 +72,21 @@ public class ballMethod {
 			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
 
 			Imgproc.HoughCircles(b8ch1, circles, Imgproc.CV_HOUGH_GRADIENT, dp, mindist, param1, param2, minRadius, maxRadius);   
-			
-		//	int rows = circles.rows();
-			
-						
-			//int elemSize = (int)circles.elemSize(); // Returns 12 (3 * 4bytes in a float)  
+
 			float[] data2 = new float[3];  
 			if (data2.length>0){ 
-					for(int c=0; c<circles.cols(); c++)
-					{
-						circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
-						Coordi.add(data2[0]); // x -koordinate
-						Coordi.add(data2[1]); //y - koordinate
-						Coordi.add(data2[2]); //radius
-						Point center= new Point(data2[0], data2[1]);  
-						Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
-					}
-				
-			}  
- 
+				for(int c=0; c<circles.cols(); c++)
+				{
+					circles.get(0, c, data2); // Points to the first element and reads the whole thing  // into data2
+					Coordi.add(data2[0]); // x -koordinate
+					Coordi.add(data2[1]); //y - koordinate
+					Coordi.add(data2[2]); //radius
+					Point center= new Point(data2[0], data2[1]);  
+					Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
+				}
+
+			}
+
 			//-- 5. Display the image  
 
 			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
@@ -130,197 +95,58 @@ public class ballMethod {
 		else  
 		{  
 			System.out.println(" --(!) No captured frame -- Break!"); 
-		}  
-		
-		System.out.println("ok");
+		}
 		
 		return Coordi;  
 	}
 
-	public static void pictureToMat2(String image) {
-		// int[] test = new int[10];
+	
+	public void pictureToMat(String image) {
+		
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-		Mat m = Highgui.imread(image);
+		Mat pic0 = Highgui.imread(image);
+		ballMat = pic0.clone();
+		roboMat = pic0.clone();
 
-		for (int j = 0; j < m.rows(); j++) 
+		try
 		{
-			for (int b = 0; b < m.cols(); b++) 
-			{
-				double[] rgb = m.get(j, b);
-				for (int i = 0; i < rgb.length; i = i + 3) 
-				{
-					double blue = rgb[i];
-					double green = rgb[i + 1];
-					double red = rgb[i + 2];
-					if (blue <= 65 && green <= 65 && red <= 65) 
-					{
-						m.put(j, b, 0, 0, 0); // farver alt andet sort
-						break;
-					}
-				}
-
-			}
-		}
-
-		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
-															// roden
-
-		// load image
-		IplImage img = cvLoadImage("AfterColorConvert.png");
-
-		// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
-		//IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
-
-		// convert image to grayscale
-		//cvCvtColor(img, imageGray, CV_BGR2GRAY);
-		// cvAdaptiveThreshold(imageGray, imageGray, 255,
-		// CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 11, 4);
-
-		// Save
-		//cvSaveImage("readyForBallMethodGrey.png", imageGray);
-	}
-	
-	public static void pictureToMat3(String image) {
-		
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-		Mat m = Highgui.imread(image);
-
-		for (int j = 0; j < m.rows(); j++) {
-			for (int b = 0; b < m.cols(); b++) {
-				double[] rgb = m.get(j, b);
-				for (int i = 0; i < rgb.length; i = i + 3) {
-					double blue = rgb[i];
-					double green = rgb[i + 1];
-					double red = rgb[i + 2];
-
-					/*if (blue <= 100 && green <= 100 && red <= 100) // for mï¿½rkt
-					{
-						m.put(j, b, 0, 0, 0);
-						break;
-					}*/
-					if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
-						m.put(j, b, 0, 0, 0);
-						break;
+			for (int j = 0; j < pic0.rows(); j++) {
+				for (int b = 0; b < pic0.cols(); b++) {
+					double[] rgb = pic0.get(j, b);
+					for (int i = 0; i < rgb.length; i = i + 3) {
+						double blue = rgb[i];
+						double green = rgb[i + 1];
+						double red = rgb[i + 2];
+						
+						// Til fremhævning af robot
+						if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder grøn
+							roboMat.put(j, b, 0, 255, 0);
+							break;
+						}
+						else if (red > 130 && green < 60 && blue < 60) { // finder rød
+							roboMat.put(j, b, 0, 0, 255);
+							break;
+						}
+						else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
+							roboMat.put(j, b, 255, 255, 255);
+							break;
+						}
+						else {
+							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
+						}
+						
+						// Til fremhævning af bolde
+						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
+							ballMat.put(j, b, 0, 0, 0);
+							break;
+						}
 					}
 				}
 			}
 		}
-
-		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
-															// roden
-	}
-	
-	public static void pictureToMat4(String image) {
-		
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-		Mat m = Highgui.imread(image);
-
-		for (int j = 0; j < m.rows(); j++) {
-			for (int b = 0; b < m.cols(); b++) {
-				double[] rgb = m.get(j, b);
-				for (int i = 0; i < rgb.length; i = i + 3) {
-					double blue = rgb[i];
-					double green = rgb[i + 1];
-					double red = rgb[i + 2];
-
-					if ((blue > 130 && green > 130 && red > 130) || (blue < 50 && green < 50 && red < 50)) {
-						m.put(j, b, 0, 0, 0);
-						break;
-					}
-				}
-			}
+		catch (Exception e) {
+		System.out.println("Could not convert image properly");
 		}
-
-		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
-															// roden
 	}
-
-	public static void pictureToMat(String image) {
-		// int[] test = new int[10];
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-		// Mat image = Highgui.imread("test.png"); // BGR
-		Mat m = Highgui.imread(image); // BGR
-		// System.out.println(m.dump());
-		// int count = 0;
-		// System.out.println("Pixelnr " + "("+j+","+b+") " + "red:" + rgb[i+2]
-		// + " green:" + rgb[i + 1] + " blue:" + rgb[i]);
-
-		for (int j = 0; j < m.rows(); j++) {
-			for (int b = 0; b < m.cols(); b++) {
-				double[] rgb = m.get(j, b);
-				for (int i = 0; i < rgb.length; i = i + 3) {
-					double blue = rgb[i];
-					double green = rgb[i + 1];
-					double red = rgb[i + 2];
-					/*
-					 * if (blue < 50 && green > 25 && red > 100 && red < 180) {
-					 * // finder brune farver m.put(j, b, 63, 133, 205); // brun
-					 * // m.put(j, b, 0,0,0); break; } else
-					 */
-					if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder
-																				// grÃ¸nne
-																				// farver
-																				// //
-																				// farver
-						m.put(j, b, 0, 255, 0);
-						break;
-					}
-
-					else if (red > 130 && green < 60 && blue < 60) { // finder
-																		// rÃ¸de
-																		// farver
-						m.put(j, b, 0, 0, 255); // rÃ¸d
-						break;
-					} else if (blue + red + green > 500 && blue > 120
-							&& green > 120 && red > 120) { // finder hvid
-						// drawrect(j,b,m);
-
-						m.put(j, b, 255, 255, 255);// / hvid
-						// count++;
-						// if(count > 1000)
-						// System.out.println("GOTO " + j +"," +b);
-						break;
-					} else {
-						// m.put(j, b, 63, 133, 205); // resten bliver brun
-						m.put(j, b, 0, 0, 0); // resten bliver sort
-					}
-
-				}
-			}
-		}
-
-		Highgui.imwrite("AfterColorConvert.png", m); // Gemmer billedet i
-															// roden
-	}
-	
-    public void invertImage(String imageName) {
-    	BufferedImage inputFile;
-    	
-    	try {
-    		inputFile = ImageIO.read(new File(imageName));
-
-
-    		for (int x = 0; x < inputFile.getWidth(); x++) {
-    			for (int y = 0; y < inputFile.getHeight(); y++) {
-    				int rgba = inputFile.getRGB(x, y);
-    				Color col = new Color(rgba, true);
-    				col = new Color(255 - col.getRed(),
-    								255 - col.getGreen(),
-    								255);
-    				inputFile.setRGB(x, y, col.getRGB());
-    			}
-    		}
-    		File outputFile = new File("inverted.png");
-    		
-    		ImageIO.write(inputFile, "png", outputFile);
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
 }

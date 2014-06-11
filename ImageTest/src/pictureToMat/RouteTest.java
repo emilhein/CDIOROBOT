@@ -1,7 +1,6 @@
 package pictureToMat;
 
 import dist.CalcDist;
-import dist.Punkt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,35 +11,28 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 
+import com.googlecode.javacv.cpp.opencv_core.CvPoint;
+
 public class RouteTest {
 	static List<Integer> xCoor = new ArrayList<Integer>();
 	static List<Integer> yCoor = new ArrayList<Integer>();
 
-	
-	//static int minLength2 = 1000000;
-	//static Punkt minPunkt2 = new Punkt(1,1);
-	
-	
-	public static Punkt drawBallMap(ArrayList<Float> Coordi, Punkt roboBagPunkt, Punkt roboFrontPunkt) {
-		Punkt minPunkt = new Punkt(0,0);
+	public static CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
+		CvPoint minPunkt = new CvPoint(0,0);
 		int minLength = 1000000;
 		CalcDist dist = new CalcDist();
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
-/*
-		// farver hele matricen hvid
-		for (int j = 0; j < frame.rows(); j++) {
-			for (int b = 0; b < frame.cols(); b++) {
-				frame.put(j, b, 255, 255, 255);
 
-			}
-		}
-*/	
-		for (int c = 0; c < Coordi.size(); c = c + 3) {
+		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
+
+		for (int c = 0; c < Coordi.size(); c = c + 3)
+		{
 			// tegner firkant på koordinatplads i sort
-			for (int i = 0; i < 20; i++) {
-				for (int g = 0; g < 20; g++) {
+			for (int i = 0; i < 20; i++)
+			{
+				for (int g = 0; g < 20; g++)
+				{
 					frame.put(((Math.round(Coordi.get(c+1))) + i), ((Math.round(Coordi.get(c))) + g), 0, 0, 0);
 
 				}
@@ -49,62 +41,60 @@ public class RouteTest {
 			xCoor.add(Math.round(Coordi.get(c)));
 			yCoor.add(Math.round(Coordi.get(c + 1)));
 		}
-		
+
 		//Dette for-loop finder det tætteste ppunkt på robotens front
-		for (int i = 0; i < xCoor.size(); i++) {
-			int tempLength = 0;	
-		//	Core.line(frame, new Point(yCoor.get(i) + 5, xCoor.get(i) + 5),	new Point(yCoor.get(i + 1) + 5, xCoor.get(i + 1) + 5),	new Scalar((i*2) * 27, i * 12, i * 45), 2);
-			System.out.println("UDREGNER BOLDLÆNGDE NR = " + i);
-			Punkt punkt2 = new Punkt(xCoor.get(i), yCoor.get(i));
-			tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
-			
-			if (tempLength < minLength) {
-				minLength = tempLength;
-				minPunkt = punkt2;
-				minPunkt.setX(punkt2.getX());
-				minPunkt.setY(punkt2.getY());
+		try {
+			for (int i = 0; i < xCoor.size(); i++)
+			{
+				int tempLength = 0;	
+				CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
+				tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
+
+				if (tempLength < minLength)
+				{
+					minLength = tempLength;
+					minPunkt = punkt2;
+					minPunkt.x(punkt2.x());
+					minPunkt.y(punkt2.y());
+				}
+
 			}
-			
+		}
+		catch (Exception e)
+		{
+			System.out.println("Closest balls can't be calculated, due to previous error...");
 		}
 		xCoor.clear();yCoor.clear();
-		//Finder nr. 2 punkt
-		/*
-		for (int i = 0; i < xCoor.size(); i++) {
-			int tempLength2 = 0;
-			CalcDist dist = new CalcDist();
-			Punkt punkt3 = new Punkt(xCoor.get(i) + 10, yCoor.get(i) + 10);
-			tempLength2 = dist.Calcdist(minPunkt, punkt3);
-			
-			if (tempLength2 < minLength2 && punkt3.getX() != (minPunkt.getX()) && punkt3.getY() != (minPunkt.getY())) {
-				minLength2 = tempLength2;
-				minPunkt2 = punkt3;
-			}
-		}
-				*/
-		
-		paintPoint(frame, new Punkt(minPunkt.getX()+10, minPunkt.getY()+10), 255, 0, 0,20); // farver tætteste bold rød
-	//	paintPoint(frame, new Punkt(minPunkt2.getX(), minPunkt2.getY()), 0, 0, 255,20); // farver næsttætteste bold blå
-		
-		paintPoint(frame,new Punkt(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10), 0, 128, 255,20); //
-		paintPoint(frame,new Punkt(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10), 0, 255, 0,60); //
-		
-		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(roboFrontPunkt.getX() + 10, roboFrontPunkt.getY() + 10),	new Scalar(27, 12, 45), 4);
-		Core.line(frame, new Point(roboBagPunkt.getX() + 10, roboBagPunkt.getY() + 10),	new Point(minPunkt.getX() +10, minPunkt.getY() + 10),	new Scalar(200, 120, 45), 4);
+
+		paintPoint(frame, new CvPoint(minPunkt.x()+10, minPunkt.y()+10), 255, 0, 0,20); // farver tætteste bold rød
+
+		paintPoint(frame,new CvPoint(roboBagPunkt.x() + 10, roboBagPunkt.y() + 10), 0, 128, 255,20); //
+		paintPoint(frame,new CvPoint(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10), 0, 255, 0,60); //
+
+		Core.line(frame, new Point(roboBagPunkt.x() + 10, roboBagPunkt.y() + 10),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
+		Core.line(frame, new Point(roboBagPunkt.x() + 10, roboBagPunkt.y() + 10),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
 
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
-		
-		System.out.println("Closest to robo is (" + minPunkt.getX() + ","+ minPunkt.getY() + ")");
-	//	System.out.println("Closest to ball is (" + minPunkt2.getX() + ","+ minPunkt2.getY() + ")");
-		
+
+
 		return minPunkt;
 	}
 
-	
-	public static void paintPoint(Mat frame, Punkt p, int re, int gr, int bl, int size) {
-		for (int a = 0; a < size; a++) {
-			for (int b = 0; b < size; b++) {
-				frame.put(((p.getY() - size/2) + a), ((p.getX() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
 
+
+	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
+		for (int a = 0; a < size; a++)
+		{
+			for (int b = 0; b < size; b++)
+			{
+				try
+				{
+					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
+				}
+				catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					System.out.println("Could not paint requested point");				}
 			}
 		}
 	}

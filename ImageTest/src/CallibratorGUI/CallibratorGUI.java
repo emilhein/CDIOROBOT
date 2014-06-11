@@ -9,7 +9,6 @@ import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
 import dist.CalcAngle;
 import dist.CalcDist;
-import dist.Punkt;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,13 +40,16 @@ public class CallibratorGUI {
 	static int ballCount = 0;
 	static int count = 0;
 	static char firstRun = 'a';
+	
 
 	public static void main(String args[]) throws IOException {
 
 		// try{
 
+		
 		// prøver at forbinde til vores robot
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
 		System.out.println("trying to connect");
 		connt.connectTo(nxtInfo, NXTComm.LCP);
@@ -557,8 +559,9 @@ public class CallibratorGUI {
 			public void actionPerformed(ActionEvent e) {
 				//for(int j = 0; j<2;j++){
 			//	while(true){
-				
-				Punkt minPunkt;
+				long startbutton = System.currentTimeMillis();
+
+				CvPoint minPunkt;
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
@@ -679,21 +682,27 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-//				TakePicture takepic = new TakePicture();
-//				takepic.takePicture();
+	//			TakePicture takepic = new TakePicture();
+	//			takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
-				DetectBorder findEdge = new DetectBorder();
-				try {
-					findEdge.getRectCoordis("billed0.png", 40, 65, 40, 160);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				DetectRects findEdge = new DetectRects();
+				long startedge = System.currentTimeMillis();
+				
+				findEdge.detectAllRects();
 				ppcm = findEdge.getPixPerCm();
-
+				
+				long endedge = System.currentTimeMillis();
+				System.out.println("detectALLRects took = " +(endedge-startedge));
+				
 				ballMethod balls = new ballMethod();
-
+				
+				long startpictomat = System.currentTimeMillis();
+				balls.pictureToMat("billed0.png");
+				long endpictomat = System.currentTimeMillis();
+				System.out.println("PicToMat took = " +(endpictomat-startpictomat));
+				
+				long startfindrobo = System.currentTimeMillis();
 				ArrayList<Float> RoboCoor = balls.findCircle(
 						Integer.parseInt(jl11.getText()),
 						Integer.parseInt(jl12.getText()),
@@ -701,18 +710,44 @@ public class CallibratorGUI {
 						Integer.parseInt(jl8.getText()),
 						Integer.parseInt(jl9.getText()),
 						Integer.parseInt(jl10.getText()), "robo", true);// minradius,
+
 				// maxrdius,
 				// antalbolde
+
+																		// maxrdius,
+																		// antalbolde
+				long endfindrobo = System.currentTimeMillis();
+				System.out.println("find robo took = " +(endfindrobo-startfindrobo));
+
 
 				// float[] RoboCoor = balls.findCircle(19, 28,
 				// 1,5,50,5,2,"robo", true); // finder robo
 				// for(int j = 0; j<RoboCoor.size();j=j+3){
 				// }
 
+
 				Mat frame = Highgui.imread("AfterColorConvert.png"); // henter
 				// det
 				// konverterede
 				// billlede
+
+				Mat frame = Highgui.imread("robo.png"); // henter
+																		// det
+																		// konverterede
+																		// billlede
+				double green;
+				double red;
+				double green2;
+				double red2;
+				CvPoint roboFrontPunkt = new CvPoint(10, 10);
+				CvPoint roboBagPunkt = new CvPoint(20, 20);
+				
+				
+					double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
+					green = front[1];
+					red = front[2];
+
+
 
 				double[] front = frame.get(Math.round(RoboCoor.get(1)),
 						Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
@@ -723,17 +758,28 @@ public class CallibratorGUI {
 				double green = front[1];
 				double red = front[2];
 
+					double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
+					green2 = back[1];
+					red2 = back[2];
+
+				
+					long startdirection = System.currentTimeMillis();
+
+
+
 				double[] back = frame.get(Math.round(RoboCoor.get(4)),
 						Math.round(RoboCoor.get(3))); // /
 				double green2 = back[1];
 				double red2 = back[2]; // henter en rød farve ([2]) fra den
 				// anden cirkel
 
-				Punkt roboFrontPunkt = new Punkt(10, 10);
-				Punkt roboBagPunkt = new Punkt(20, 20);
-				// heConnectder sættes robotpunket, alt efter hvilken cirkel der
-				// er rød.
-				determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
+					determineDirection(RoboCoor, green, red, green2, red2,roboFrontPunkt, roboBagPunkt);
+
+					long enddirection = System.currentTimeMillis();
+					System.out.println("direction took = " +(enddirection-startdirection));
+
+				
+					long startballs = System.currentTimeMillis();
 
 				ArrayList<Float> ballCoor = balls.findCircle(
 						Integer.parseInt(jl5.getText()),
@@ -744,16 +790,32 @@ public class CallibratorGUI {
 						Integer.parseInt(jl4.getText()), "balls", false);// minradius,
 				// maxrdius,
 				// antalbolde
+																			// maxrdius,
+																			// antalbolde
+				long endballs = System.currentTimeMillis();
+				System.out.println("finding balls took = " +(endballs-startballs));
+
+				
+				
+				
+				long startroute = System.currentTimeMillis();
 
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt,
 						roboFrontPunkt); // tegner dem i testprogrammet
 
+				long endroute = System.currentTimeMillis();
+				System.out.println("drawing ballmap took = " +(endroute-startroute));
+				
+				
+				
+				long startangle = System.currentTimeMillis();
 
 				if(firstRun == 'a'){
 					ballCount = (ballCoor.size() / 3);
 					firstRun = 'b';
 				}
 				int tempCount = (ballCoor.size() / 3);
+
 				System.out.println("tempcount = " + tempCount);
 				System.out.println("Ballcount = " + ballCount);
 
@@ -766,12 +828,16 @@ public class CallibratorGUI {
 
 						CvPoint goalA = findEdge.getGoalB();
 
-						minPunkt.setX(goalA.x());
-						minPunkt.setY(goalA.y());
+						minPunkt.x(goalA.x());
+						minPunkt.y(goalA.y());
 						count = 0;
+
 						System.out.println("koordinaterne til Minpunkt er ("
 								+ minPunkt.getX() + "," + minPunkt.getY() + ")");
 
+					//	System.out.println("koordinaterne til Minpunkt er ("
+					//			+ minPunkt.x() + "," + minPunkt.y() + ")");
+						
 					}
 				}
 
@@ -780,30 +846,30 @@ public class CallibratorGUI {
 				String text1 = txtArea1.getText();
 				lbltxt.setText(text1);
 
-				Punkt nyRoboFront = new Punkt(roboFrontPunkt.getX()
-						- roboBagPunkt.getX(), roboFrontPunkt.getY()
-						- roboBagPunkt.getY());
-				Punkt nyRoboBag = new Punkt(0, 0);
-				Punkt nyMinPunkt = new Punkt(minPunkt.getX()- roboBagPunkt.getX(), minPunkt.getY()- roboBagPunkt.getY());	
+				CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()
+						- roboBagPunkt.x(), roboFrontPunkt.y()
+						- roboBagPunkt.y());
+				CvPoint nyRoboBag = new CvPoint(0, 0);
+				CvPoint nyMinPunkt = new CvPoint(minPunkt.x()- roboBagPunkt.x(), minPunkt.y()- roboBagPunkt.y());	
 				
 				
 				CalcAngle Angle = new CalcAngle();
 				int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
-				System.out.println("BallAngle = " + BallAngle);
+				//System.out.println("BallAngle = " + BallAngle);
 				int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
-				System.out.println("RoboAngle = " + RoboAngle);
+				//System.out.println("RoboAngle = " + RoboAngle);
 				
 				TurnAngle = RoboAngle - BallAngle;
 				
 				
 				CalcDist dist = new CalcDist();
 
-				Punkt middle = new Punkt(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
+				CvPoint middle = new CvPoint(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
 
-				Punkt corner3 = new Punkt(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
-				Punkt corner1 = new Punkt(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*(int)ppcm));//1
-				Punkt corner4 = new Punkt(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
-				Punkt corner2 = new Punkt(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
+				CvPoint corner3 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
+				CvPoint corner1 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*(int)ppcm));//1
+				CvPoint corner4 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
+				CvPoint corner2 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
 				
 				/*
 				1 												2
@@ -825,31 +891,49 @@ public class CallibratorGUI {
 				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
 				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
 				int distance4  = dist.Calcdist(roboFrontPunkt, corner4);
-				int x = 3;
+				double x = 0.02;
 				
-				if(distance1 < 500){
+				if(distance1 < 150){
 					System.out.println("Dist1");
-					TurnAngle = TurnAngle+x*(dist.Calcdist(roboFrontPunkt, middle));
+					if(RoboAngle > 196){
+					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
+					}
 				}
-				if(distance2 < 500){
+				if(distance2 < 150){
 					System.out.println("Dist2");
-					TurnAngle = TurnAngle-x*(dist.Calcdist(roboFrontPunkt, middle));
+					System.out.println("TurnAngle = " + TurnAngle);
+					if(RoboAngle > 196){
+					TurnAngle -= (int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
+					}
+					System.out.println(((int)x*(dist.Calcdist(roboFrontPunkt, middle))));
+					System.out.println("TurnAngle2 = " + TurnAngle);
 
 				}
 				if(distance3 < 150){
 					System.out.println("Dist3");
-					TurnAngle = TurnAngle+x*(dist.Calcdist(roboFrontPunkt, middle));
-
+					if(RoboAngle > 196){
+					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
+					}
 				}
 				if(distance4 < 150){
 					System.out.println("Dist4");
-					TurnAngle = TurnAngle-x*(dist.Calcdist(roboFrontPunkt, middle));
+					System.out.println("TurnAngle = " + TurnAngle);
 
+					if(RoboAngle > 196){
+					TurnAngle = TurnAngle-(int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
+					System.out.println("TurnAngle = " + TurnAngle);
+
+					}
 				}
 					
 				
+				long endangle = System.currentTimeMillis();
+				System.out.println("ALL angle calculation took = " +(endangle-startangle));
 				
 				
+				
+				long startgui = System.currentTimeMillis();
+
 				lbltxt2.setText("BallAngle = " + BallAngle);
 				lbltxt3.setText("RoboAngle = " + RoboAngle);
 				lbltxt4.setText("TurnAngle = " + (RoboAngle - BallAngle));
@@ -921,6 +1005,11 @@ public class CallibratorGUI {
 				lbltxt4.setBounds(200, insets.top + 545,
 						lbltxt4.getPreferredSize().width, 10);
 
+				
+				long endgui = System.currentTimeMillis();
+				System.out.println("showing gui took = " +(endgui-startgui));
+				
+				
 				// ballCoor.clear();
 
 				/*
@@ -981,34 +1070,57 @@ public class CallibratorGUI {
 				  
 				  
 				  }*/
-
+				long endbutton = System.currentTimeMillis();
+				System.out.println("The entire apply button took = " + (endbutton-startbutton));
 			}
 
 	public void determineDirection(ArrayList<Float> RoboCoor,
 					double green, double red, double green2, double red2,
-					Punkt roboFrontPunkt, Punkt roboBagPunkt) {
+					CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
 				if (red > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
 				} else if (red2 > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(1)));
 				} else if (green > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(4)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(1)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(1)));
 				} else if (green2 > 245) {
-					roboFrontPunkt.setX(Math.round(RoboCoor.get(0)));
-					roboFrontPunkt.setY(Math.round(RoboCoor.get(1)));
-					roboBagPunkt.setX(Math.round(RoboCoor.get(3)));
-					roboBagPunkt.setY(Math.round(RoboCoor.get(4)));
+					roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+					roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
 				}
-			}
+				double PovM = 0.1;
+				CvPoint midpunkt = new CvPoint(800,450);
+				int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
+				int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
+				int PovBagX = roboBagPunkt.x() - midpunkt.x();
+				int PovBagY = roboBagPunkt.y() - midpunkt.y();
+				if(PovFrontX < 0){
+					if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
+					else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
+				}
+				else{
+					if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
+					else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
+				}
+				if(PovBagX < 0){
+					if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
+					else roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
+				}
+				else{
+					if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
+					else roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
+				}
+	}
 		});
 
 		frame1.add(jl1);
