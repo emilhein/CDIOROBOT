@@ -183,10 +183,10 @@ public class CallibratorGUI {
 		// ROBOT
 		txtRoboDP.setText("1");
 		txtromin.setText("30");
-		txtromax.setText("40");
-		txtRoboMinDist.setText("20");
-		txtRoboPar1.setText("50");
-		txtRoboPar2.setText("13");
+		txtromax.setText("38");
+		txtRoboMinDist.setText("10");
+		txtRoboPar1.setText("40");
+		txtRoboPar2.setText("12");
 		// FARVE
 		txtmaxgrøn.setText("65");
 		txtmaxblå.setText("40");
@@ -818,7 +818,9 @@ public class CallibratorGUI {
 						Integer.parseInt(jl9.getText()),
 						Integer.parseInt(jl10.getText()), "robo", true);// minradius,
 																		// maxrdius,
-																		// antalbolde
+				
+			
+				// antalbolde
 				long endfindrobo = System.currentTimeMillis();
 				System.out.println("find robo took = " +(endfindrobo-startfindrobo));
 
@@ -831,21 +833,26 @@ public class CallibratorGUI {
 																		// det
 																		// konverterede
 																		// billlede
-				double green;
-				double red;
-				double green2;
-				double red2;
+				double green = 0;
+				double red= 0;
+				double green2= 0;
+				double red2= 0;
 				CvPoint roboFrontPunkt = new CvPoint(10, 10);
 				CvPoint roboBagPunkt = new CvPoint(20, 20);
 				
 				
-					double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
-					green = front[1];
-					red = front[2];
+					try {
+						double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
+						green = front[1];
+						red = front[2];
 
-					double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
-					green2 = back[1];
-					red2 = back[2];
+						double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
+						green2 = back[1];
+						red2 = back[2];
+					} catch (IndexOutOfBoundsException e1) {
+						System.out.println("INDEX OUT OF BOUND");
+						
+						}
 
 				
 					long startdirection = System.currentTimeMillis();
@@ -854,8 +861,9 @@ public class CallibratorGUI {
 
 					long enddirection = System.currentTimeMillis();
 					System.out.println("direction took = " +(enddirection-startdirection));
+					System.out.println("Robot frontpunkt = (" + roboFrontPunkt.x() + "," + roboFrontPunkt.y() +")");
+					System.out.println("Robot bagpunkt = (" + roboBagPunkt.x() + "," + roboBagPunkt.y() +")");
 
-				
 					long startballs = System.currentTimeMillis();
 
 				ArrayList<Float> ballCoor = balls.findCircle(
@@ -877,7 +885,7 @@ public class CallibratorGUI {
 
 				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt,
 						roboFrontPunkt); // tegner dem i testprogrammet
-
+				System.out.println("minpunkt = " + minPunkt.x() + " " +minPunkt.y());
 				long endroute = System.currentTimeMillis();
 				System.out.println("drawing ballmap took = " +(endroute-startroute));
 				
@@ -905,8 +913,7 @@ public class CallibratorGUI {
 						minPunkt.x(goalA.x());
 						minPunkt.y(goalA.y());
 						count = 0;
-					//	System.out.println("koordinaterne til Minpunkt er ("
-					//			+ minPunkt.x() + "," + minPunkt.y() + ")");
+						System.out.println("koordinaterne til Minpunkt er ("+ minPunkt.x() + "," + minPunkt.y() + ")");
 						
 					}
 				}
@@ -924,12 +931,12 @@ public class CallibratorGUI {
 				
 				
 				CalcAngle Angle = new CalcAngle();
-				int BallAngle = Angle.Calcangle(nyMinPunkt, nyRoboBag);
+				int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
 				//System.out.println("BallAngle = " + BallAngle);
-				int RoboAngle = Angle.Calcangle(nyRoboFront, nyRoboBag);
+				int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
 				//System.out.println("RoboAngle = " + RoboAngle);
 				
-				TurnAngle = RoboAngle - BallAngle;
+				TurnAngle = BallAngle-RoboAngle;
 				
 				CalcDist dist = new CalcDist();
 
@@ -1148,26 +1155,30 @@ public class CallibratorGUI {
 			}
 
 	public void determineDirection(ArrayList<Float> RoboCoor,double green, double red, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
-				if (red > 245) {
-					roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-					roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-				} else if (red2 > 245) {
-					roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-					roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-					roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-					roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-				} else if (green > 245) {
-					roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-					roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-					roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-					roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-				} else if (green2 > 245) {
-					roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-					roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-					roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-					roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+				try {
+					if (red > 245) {
+						roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+						roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+						roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+						roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+					} else if (red2 > 245) {
+						roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+						roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+						roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+						roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+					} else if (green > 245) {
+						roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+						roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+						roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+						roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+					} else if (green2 > 245) {
+						roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+						roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+						roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+						roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+					}
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("OUT OF BOUND BITCH");
 				}
 				
 				double PovM = 0.1;
