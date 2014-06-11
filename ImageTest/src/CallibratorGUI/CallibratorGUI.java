@@ -623,6 +623,7 @@ public class CallibratorGUI {
 				long startbutton = System.currentTimeMillis();
 
 				CvPoint minPunkt;
+				long startbuttoncheck = System.currentTimeMillis();
 
 				String input1 = txtDP.getText();
 				jl1.setText(input1);
@@ -743,9 +744,18 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
+				long endbuttoncheck = System.currentTimeMillis();
+				System.out.println("buttoncheck = " +(endbuttoncheck-startbuttoncheck));
+
+				
+				
+				long startpicture = System.currentTimeMillis();
+
 				TakePicture takepic = new TakePicture();
 				takepic.takePicture();
-
+				long endpicture = System.currentTimeMillis();
+				System.out.println("taking and saving a picture took = " +(endpicture-startpicture));
+				
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectRects findEdge = new DetectRects();
 				long startedge = System.currentTimeMillis();
