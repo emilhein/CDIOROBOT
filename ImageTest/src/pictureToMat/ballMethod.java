@@ -8,13 +8,8 @@ import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -25,10 +20,8 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.CvType;
 
-import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
-import java.util.ArrayList;
 
 public class ballMethod {
 	
@@ -118,25 +111,26 @@ public class ballMethod {
 						double blue = rgb[i];
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
-						
-						// Til fremhævning af robot
-						if (blue > 20 && blue < 110 && green > 130 && red < 160) { // finder grøn
+					/*	
+						// Til fremhÃ¦vning af robot
+						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grÃ¸n
 							roboMat.put(j, b, 0, 255, 0);
 							break;
 						}
-						else if (red > 130 && green < 60 && blue < 60) { // finder rød
+						else if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rÃ¸d
 							roboMat.put(j, b, 0, 0, 255);
 							break;
 						}
-						else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
-							roboMat.put(j, b, 255, 255, 255);
-							break;
-						}
+						//else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
+						//	roboMat.put(j, b, 255, 255, 255);
+						//	break;
+						//}
 						else {
 							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
 						}
+						*/
 						
-						// Til fremhævning af bolde
+						// Til fremhÃ¦vning af bolde
 						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
 							ballMat.put(j, b, 0, 0, 0);
 							break;
