@@ -743,8 +743,8 @@ public class CallibratorGUI {
 						jl19.getPreferredSize().width,
 						jl19.getPreferredSize().height);
 //
-	//			TakePicture takepic = new TakePicture();
-	//			takepic.takePicture();
+				TakePicture takepic = new TakePicture();
+				takepic.takePicture();
 
 				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
 				DetectRects findEdge = new DetectRects();
@@ -885,9 +885,11 @@ public class CallibratorGUI {
 				
 				TurnAngle = RoboAngle - BallAngle;
 				
-				
 				CalcDist dist = new CalcDist();
 
+				
+				/*
+				
 				CvPoint middle = new CvPoint(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
 
 				CvPoint corner3 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
@@ -895,7 +897,7 @@ public class CallibratorGUI {
 				CvPoint corner4 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
 				CvPoint corner2 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
 				
-				/*
+				
 				1 												2
 				 -------------------------------------------|
 				 |											|
@@ -911,6 +913,7 @@ public class CallibratorGUI {
 				 3												4
 				 */
 			
+				/*
 				int distance1  = dist.Calcdist(roboFrontPunkt, corner1);
 				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
 				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
@@ -950,7 +953,7 @@ public class CallibratorGUI {
 					}
 				}
 					
-				
+				*/
 				long endangle = System.currentTimeMillis();
 				System.out.println("ALL angle calculation took = " +(endangle-startangle));
 				
