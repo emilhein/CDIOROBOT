@@ -820,7 +820,7 @@ public class CallibratorGUI {
 				 -------------------------------------------|	
 				 3												4
 				 */
-			
+				 
 				int distance1  = dist.Calcdist(roboFrontPunkt, corner1);
 				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
 				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
