@@ -7,6 +7,7 @@ import org.opencv.highgui.Highgui;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
+import data.GUIInfo;
 import dist.CalcAngle;
 import dist.CalcDist;
 
@@ -21,24 +22,25 @@ import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 import pictureToMat.*;
+import Controller.PrimaryController;
 
 public class CallibratorGUI {
-	
+
 
 	private JFrame frame1;
 	private Container pane;
 	private JButton btnApply, btnConnect, btnDeliver;
 	private JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød,
-			lblCirkleDIst, jl13, jl14, jl15, jl16, lblParameter1, lblRoboDP,
-			jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist,
-			lblRoboPar1, lblRoboPar2, jl1, jl2, jl3, jl4, jl5, jl6, jl7, jl8,
-			jl9, jl10, jl11, jl12, lblimg, lblafterc, lblfindb, lblbh, lbledge,
-			lbltxt, lbltxt2, lbltxt3, lbltxt4, lblromin, lblromax, lblvinkel,
-			lbllm, lblluk, lblpov, jl17, jl18, jl19, jl20;
+	lblCirkleDIst, jlcolorMaxGreen, jlcolorMaxBlue, jlcolorMaxRed, jlColorMinRed, lblParameter1, lblRoboDP,
+	jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist,
+	lblRoboPar1, lblRoboPar2, jlcircleDP, jlcircleDist, jlcirclePar1, jlcirclePar2, jlcircleMinRadius, jlcircleMaxRadius, jlroboDP, jlroboMinDist,
+	jlroboPar1, jlroboPar2, jlroboMin, jlroboMax, lblimg, lblafterc, lblfindb, lblbh, lbledge,
+	lbltxt, lbltxtBallAngle, lbltxtRoboAngle, lbltxtTurnAngle, lblromin, lblromax, lblvinkel,
+	lbllm, lblluk, lblpov, jlAngle, jlLengthMultiply, jlClose, jlPoV;
 	private JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød,
-			txtRoboDP, txtCirkleDIst, txtParameter1, txtParameter2,
-			txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist,
-			txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk, txtpov;
+	txtRoboDP, txtCirkleDIst, txtParameter1, txtParameter2,
+	txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist,
+	txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk, txtpov;
 	private ImageIcon img, afterc, findb, bh, edge;
 	private Insets insets;
 	private JTextArea txtArea1;
@@ -46,18 +48,22 @@ public class CallibratorGUI {
 	private int TurnAngle = 0;
 	private int minLength = 0;
 	private float ppcm = 0;
-	private int ballCount = 0;
-	private int count = 0;
-	private char firstRun = 'a';
 	private ArrayList<Float> RoboCoor;
-	private ArrayList<Float> BallCoor;
-	
-	
+	private ArrayList<Float> ballCoor;
+	private int BallAngle;
+	private int RoboAngle;
+	private DetectRects findEdge;
+	private PrimaryController control;
+	private GUIInfo info;
+
+
 	public void startGUI() throws IOException {
 
+		info = new GUIInfo();
+		control = new PrimaryController();
 		// try{
 
-		
+
 		// prøver at forbinde til vores robot
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
@@ -131,29 +137,29 @@ public class CallibratorGUI {
 
 		txtArea1 = new JTextArea(1, 1);
 		lbltxt = new JLabel();
-		lbltxt2 = new JLabel();
-		lbltxt3 = new JLabel();
-		lbltxt4 = new JLabel();
-		jl1 = new JLabel();
-		jl2 = new JLabel();
-		jl3 = new JLabel();
-		jl4 = new JLabel();
-		jl5 = new JLabel();
-		jl6 = new JLabel();
-		jl7 = new JLabel();
-		jl8 = new JLabel();
-		jl9 = new JLabel();
-		jl10 = new JLabel();
-		jl11 = new JLabel();
-		jl12 = new JLabel();
-		jl13 = new JLabel();
-		jl14 = new JLabel();
-		jl15 = new JLabel();
-		jl16 = new JLabel();
-		jl17 = new JLabel();
-		jl18 = new JLabel();
-		jl19 = new JLabel();
-		jl20 = new JLabel();
+		lbltxtBallAngle = new JLabel();
+		lbltxtRoboAngle = new JLabel();
+		lbltxtTurnAngle = new JLabel();
+		jlcircleDP = new JLabel();
+		jlcircleDist = new JLabel();
+		jlcirclePar1 = new JLabel();
+		jlcirclePar2 = new JLabel();
+		jlcircleMinRadius = new JLabel();
+		jlcircleMaxRadius = new JLabel();
+		jlroboDP = new JLabel();
+		jlroboMinDist = new JLabel();
+		jlroboPar1 = new JLabel();
+		jlroboPar2 = new JLabel();
+		jlroboMin = new JLabel();
+		jlroboMax = new JLabel();
+		jlcolorMaxGreen = new JLabel();
+		jlcolorMaxBlue = new JLabel();
+		jlcolorMaxRed = new JLabel();
+		jlColorMinRed = new JLabel();
+		jlAngle = new JLabel();
+		jlLengthMultiply = new JLabel();
+		jlClose = new JLabel();
+		jlPoV = new JLabel();
 		txtDP = new JTextField(10);
 		txtCirkleDIst = new JTextField(10);
 		txtParameter1 = new JTextField(10);
@@ -178,8 +184,8 @@ public class CallibratorGUI {
 		// BOLDE
 		txtDP.setText("1");
 		txtCirkleDIst.setText("10");
-		txtParameter1.setText("50");
-		txtParameter2.setText("14");
+		txtParameter1.setText("40");
+		txtParameter2.setText("16");
 		txtMinradius.setText("13");
 		txtMaxradius.setText("18");
 		// ROBOT
@@ -190,27 +196,26 @@ public class CallibratorGUI {
 		txtromax.setText("42");
 		txtRoboMinDist.setText("15");
 		txtRoboPar1.setText("40");
-		txtRoboPar2.setText("12");
+		txtRoboPar2.setText("18");
 		// FARVE
 		txtmaxgrøn.setText("65");
 		txtmaxblå.setText("40");
 		txtmaxrød.setText("160");
 		txtminrød.setText("40");
 		// NYT TIL ROBOT
-		txtvinkel.setText("2.133");
-		txtlm.setText("2.4");
-		txtluk.setText("5");
-		txtpov.setText("0.1");
-		// Tilføjer alle komponenter
-		pane.add(jl1);
-		pane.add(jl2);
-		pane.add(jl3);
-		pane.add(jl4);
-		pane.add(jl5);
-		pane.add(jl6);
-		pane.add(jl7);
-		pane.add(jl8);
-		pane.add(jl9);
+		txtvinkel.setText("2.1348");
+		txtlm.setText("2.48");
+		txtluk.setText("5.5");
+		txtpov.setText("0.05");		// Tilføjer alle komponenter
+		pane.add(jlcircleDP);
+		pane.add(jlcircleDist);
+		pane.add(jlcirclePar1);
+		pane.add(jlcirclePar2);
+		pane.add(jlcircleMinRadius);
+		pane.add(jlcircleMaxRadius);
+		pane.add(jlroboDP);
+		pane.add(jlroboMinDist);
+		pane.add(jlroboPar1);
 		pane.add(lblDP);
 		pane.add(lblCirkleDIst);
 		pane.add(lblParameter1);
@@ -238,9 +243,9 @@ public class CallibratorGUI {
 		pane.add(lblfindb);
 		pane.add(lblbh);
 		pane.add(lbltxt);
-		pane.add(lbltxt2);
-		pane.add(lbltxt2);
-		pane.add(lbltxt4);
+		pane.add(lbltxtBallAngle);
+		pane.add(lbltxtBallAngle);
+		pane.add(lbltxtTurnAngle);
 		pane.add(txtArea1);
 		pane.add(lbledge);
 		pane.add(lblromin);
@@ -263,14 +268,14 @@ public class CallibratorGUI {
 		pane.add(lblminrød);
 		pane.add(txtminrød);
 		pane.add(lblpov);
-		pane.add(jl13);
-		pane.add(jl14);
-		pane.add(jl15);
-		pane.add(jl16);
-		pane.add(jl17);
-		pane.add(jl18);
-		pane.add(jl19);
-		pane.add(jl20);
+		pane.add(jlcolorMaxGreen);
+		pane.add(jlcolorMaxBlue);
+		pane.add(jlcolorMaxRed);
+		pane.add(jlColorMinRed);
+		pane.add(jlAngle);
+		pane.add(jlLengthMultiply);
+		pane.add(jlClose);
+		pane.add(jlPoV);
 		pane.add(txtvinkel);
 		pane.add(txtlm);
 		pane.add(txtluk);
@@ -287,13 +292,13 @@ public class CallibratorGUI {
 		txtmaxgrøn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input13 = txtmaxgrøn.getText();
-				jl13.setText(input13);
-				jl13.setBounds(1155, insets.top + 251,
-						jl13.getPreferredSize().width,
-						jl13.getPreferredSize().height);
+				jlcolorMaxGreen.setText(input13);
+				jlcolorMaxGreen.setBounds(1155, insets.top + 251,
+						jlcolorMaxGreen.getPreferredSize().width,
+						jlcolorMaxGreen.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl13);
+		frame1.add(jlcolorMaxGreen);
 
 		lblmaxblå.setBounds(lblmaxblå.getX() + lblmaxblå.getWidth() + 1010,
 				insets.top + 281, lblmaxblå.getPreferredSize().width,
@@ -305,13 +310,13 @@ public class CallibratorGUI {
 		txtmaxblå.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input14 = txtmaxblå.getText();
-				jl14.setText(input14);
-				jl14.setBounds(1155, insets.top + 296,
-						jl14.getPreferredSize().width,
-						jl14.getPreferredSize().height);
+				jlcolorMaxBlue.setText(input14);
+				jlcolorMaxBlue.setBounds(1155, insets.top + 296,
+						jlcolorMaxBlue.getPreferredSize().width,
+						jlcolorMaxBlue.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl14);
+		frame1.add(jlcolorMaxBlue);
 
 		lblmaxrød.setBounds(lblmaxrød.getX() + lblmaxrød.getWidth() + 1010,
 				insets.top + 321, lblmaxrød.getPreferredSize().width,
@@ -323,13 +328,13 @@ public class CallibratorGUI {
 		txtmaxrød.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input15 = txtmaxrød.getText();
-				jl15.setText(input15);
-				jl15.setBounds(1155, insets.top + 336,
-						jl15.getPreferredSize().width,
-						jl15.getPreferredSize().height);
+				jlcolorMaxRed.setText(input15);
+				jlcolorMaxRed.setBounds(1155, insets.top + 336,
+						jlcolorMaxRed.getPreferredSize().width,
+						jlcolorMaxRed.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl15);
+		frame1.add(jlcolorMaxRed);
 
 		lblminrød.setBounds(lblminrød.getX() + lblminrød.getWidth() + 1010,
 				insets.top + 366, lblminrød.getPreferredSize().width,
@@ -342,13 +347,13 @@ public class CallibratorGUI {
 
 			public void actionPerformed(ActionEvent e) {
 				String input16 = txtminrød.getText();
-				jl16.setText(input16);
-				jl16.setBounds(1155, insets.top + 381,
-						jl16.getPreferredSize().width,
-						jl16.getPreferredSize().height);
+				jlColorMinRed.setText(input16);
+				jlColorMinRed.setBounds(1155, insets.top + 381,
+						jlColorMinRed.getPreferredSize().width,
+						jlColorMinRed.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl16);
+		frame1.add(jlColorMinRed);
 
 		lblDP.setBounds(lblDP.getX() + lblDP.getWidth() + 5, insets.top + 5,
 				lblDP.getPreferredSize().width, lblDP.getPreferredSize().height);
@@ -358,13 +363,13 @@ public class CallibratorGUI {
 		txtDP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtDP.getText();
-				jl1.setText(input);
-				jl1.setBounds(150, insets.top + 20,
-						jl1.getPreferredSize().width,
-						jl1.getPreferredSize().height);
+				jlcircleDP.setText(input);
+				jlcircleDP.setBounds(150, insets.top + 20,
+						jlcircleDP.getPreferredSize().width,
+						jlcircleDP.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl1);
+		frame1.add(jlcircleDP);
 
 		lblCirkleDIst.setBounds(lblCirkleDIst.getX() + lblCirkleDIst.getWidth()
 				+ 5, insets.top + 50, lblCirkleDIst.getPreferredSize().width,
@@ -376,13 +381,13 @@ public class CallibratorGUI {
 		txtCirkleDIst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtCirkleDIst.getText();
-				jl2.setText(input);
-				jl2.setBounds(150, insets.top + 65,
-						jl2.getPreferredSize().width,
-						jl2.getPreferredSize().height);
+				jlcircleDist.setText(input);
+				jlcircleDist.setBounds(150, insets.top + 65,
+						jlcircleDist.getPreferredSize().width,
+						jlcircleDist.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl2);
+		frame1.add(jlcircleDist);
 
 		lblParameter1.setBounds(lblParameter1.getX() + lblParameter1.getWidth()
 				+ 5, insets.top + 95, lblParameter1.getPreferredSize().width,
@@ -394,13 +399,13 @@ public class CallibratorGUI {
 		txtParameter1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtParameter1.getText();
-				jl3.setText(input);
-				jl3.setBounds(150, insets.top + 110,
-						jl3.getPreferredSize().width,
-						jl3.getPreferredSize().height);
+				jlcirclePar1.setText(input);
+				jlcirclePar1.setBounds(150, insets.top + 110,
+						jlcirclePar1.getPreferredSize().width,
+						jlcirclePar1.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl3);
+		frame1.add(jlcirclePar1);
 
 		lblParameter2.setBounds(lblParameter2.getX() + lblParameter2.getWidth()
 				+ 5, insets.top + 140, lblParameter2.getPreferredSize().width,
@@ -412,13 +417,13 @@ public class CallibratorGUI {
 		txtParameter2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtParameter2.getText();
-				jl4.setText(input);
-				jl4.setBounds(150, insets.top + 155,
-						jl4.getPreferredSize().width,
-						jl4.getPreferredSize().height);
+				jlcirclePar2.setText(input);
+				jlcirclePar2.setBounds(150, insets.top + 155,
+						jlcirclePar2.getPreferredSize().width,
+						jlcirclePar2.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl4);
+		frame1.add(jlcirclePar2);
 
 		lblMinradius.setBounds(lblMinradius.getX() + lblMinradius.getWidth()
 				+ 5, insets.top + 185, lblMinradius.getPreferredSize().width,
@@ -430,13 +435,13 @@ public class CallibratorGUI {
 		txtMinradius.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtMinradius.getText();
-				jl5.setText(input);
-				jl5.setBounds(150, insets.top + 200,
-						jl5.getPreferredSize().width,
-						jl5.getPreferredSize().height);
+				jlcircleMinRadius.setText(input);
+				jlcircleMinRadius.setBounds(150, insets.top + 200,
+						jlcircleMinRadius.getPreferredSize().width,
+						jlcircleMinRadius.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl5);
+		frame1.add(jlcircleMinRadius);
 
 		lblMaxradius.setBounds(lblMaxradius.getX() + lblMaxradius.getWidth()
 				+ 5, insets.top + 230, lblMaxradius.getPreferredSize().width,
@@ -448,13 +453,13 @@ public class CallibratorGUI {
 		txtMaxradius.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtMaxradius.getText();
-				jl6.setText(input);
-				jl6.setBounds(150, insets.top + 240,
-						jl6.getPreferredSize().width,
-						jl6.getPreferredSize().height);
+				jlcircleMaxRadius.setText(input);
+				jlcircleMaxRadius.setBounds(150, insets.top + 240,
+						jlcircleMaxRadius.getPreferredSize().width,
+						jlcircleMaxRadius.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl6);
+		frame1.add(jlcircleMaxRadius);
 
 		// deler robotdelen fra det andet
 		jlsep.setBounds(jlsep.getX() + jlsep.getWidth() + 2, insets.top + 268,
@@ -472,13 +477,13 @@ public class CallibratorGUI {
 		txtRoboDP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = txtRoboDP.getText();
-				jl7.setText(input);
-				jl7.setBounds(150, insets.top + 300,
-						jl7.getPreferredSize().width,
-						jl7.getPreferredSize().height);
+				jlroboDP.setText(input);
+				jlroboDP.setBounds(150, insets.top + 300,
+						jlroboDP.getPreferredSize().width,
+						jlroboDP.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl7);
+		frame1.add(jlroboDP);
 
 		lblRoboMinDist.setBounds(lblromin.getX() + lblRoboMinDist.getWidth()
 				+ 5, insets.top + 320, lblRoboMinDist.getPreferredSize().width,
@@ -490,13 +495,13 @@ public class CallibratorGUI {
 		txtRoboMinDist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input8 = txtRoboMinDist.getText();
-				jl8.setText(input8);
-				jl8.setBounds(150, insets.top + 335,
-						jl8.getPreferredSize().width,
-						jl8.getPreferredSize().height);
+				jlroboMinDist.setText(input8);
+				jlroboMinDist.setBounds(150, insets.top + 335,
+						jlroboMinDist.getPreferredSize().width,
+						jlroboMinDist.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl8);
+		frame1.add(jlroboMinDist);
 
 		lblRoboPar1.setBounds(lblRoboPar1.getX() + lblRoboPar1.getWidth() + 5,
 				insets.top + 365, lblRoboPar1.getPreferredSize().width,
@@ -508,13 +513,13 @@ public class CallibratorGUI {
 		txtRoboPar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input9 = txtRoboPar1.getText();
-				jl9.setText(input9);
-				jl9.setBounds(150, insets.top + 380,
-						jl9.getPreferredSize().width,
-						jl9.getPreferredSize().height);
+				jlroboPar1.setText(input9);
+				jlroboPar1.setBounds(150, insets.top + 380,
+						jlroboPar1.getPreferredSize().width,
+						jlroboPar1.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl9);
+		frame1.add(jlroboPar1);
 
 		lblRoboPar2.setBounds(lblRoboPar2.getX() + lblRoboPar2.getWidth() + 5,
 				insets.top + 410, lblRoboPar2.getPreferredSize().width,
@@ -526,13 +531,13 @@ public class CallibratorGUI {
 		txtRoboPar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input10 = txtRoboPar2.getText();
-				jl10.setText(input10);
-				jl10.setBounds(150, insets.top + 425,
-						jl10.getPreferredSize().width,
-						jl10.getPreferredSize().height);
+				jlroboPar2.setText(input10);
+				jlroboPar2.setBounds(150, insets.top + 425,
+						jlroboPar2.getPreferredSize().width,
+						jlroboPar2.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl10);
+		frame1.add(jlroboPar2);
 
 		lblromin.setBounds(lblromin.getX() + lblromin.getWidth() + 5,
 				insets.top + 455, lblromin.getPreferredSize().width,
@@ -544,13 +549,13 @@ public class CallibratorGUI {
 		txtromin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input11 = txtromin.getText();
-				jl11.setText(input11);
-				jl11.setBounds(150, insets.top + 470,
-						jl11.getPreferredSize().width,
-						jl11.getPreferredSize().height);
+				jlroboMin.setText(input11);
+				jlroboMin.setBounds(150, insets.top + 470,
+						jlroboMin.getPreferredSize().width,
+						jlroboMin.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl11);
+		frame1.add(jlroboMin);
 
 		lblromax.setBounds(lblromax.getX() + lblromax.getWidth() + 5,
 				insets.top + 500, lblromax.getPreferredSize().width,
@@ -562,13 +567,13 @@ public class CallibratorGUI {
 		txtromax.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input12 = txtromax.getText();
-				jl12.setText(input12);
-				jl12.setBounds(150, insets.top + 515,
-						jl12.getPreferredSize().width,
-						jl12.getPreferredSize().height);
+				jlroboMax.setText(input12);
+				jlroboMax.setBounds(150, insets.top + 515,
+						jlroboMax.getPreferredSize().width,
+						jlroboMax.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl12);
+		frame1.add(jlroboMax);
 
 		lblvinkel.setBounds(lblvinkel.getX() + lblvinkel.getWidth() + 1010,
 				insets.top + 411, lblvinkel.getPreferredSize().width,
@@ -580,15 +585,15 @@ public class CallibratorGUI {
 		txtvinkel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input17 = txtvinkel.getText();
-				jl17.setText(input17);
-				jl17.setBounds(1155, insets.top + 426,
-						jl17.getPreferredSize().width,
-						jl17.getPreferredSize().height);
+				jlAngle.setText(input17);
+				jlAngle.setBounds(1155, insets.top + 426,
+						jlAngle.getPreferredSize().width,
+						jlAngle.getPreferredSize().height);
 			}
 		});
-		frame1.add(jl17);
+		frame1.add(jlAngle);
 
-		
+
 		lbllm.setBounds(lbllm.getX() + lbllm.getWidth() + 1010,
 				insets.top + 451, lbllm.getPreferredSize().width,
 				lbllm.getPreferredSize().height);
@@ -599,16 +604,16 @@ public class CallibratorGUI {
 		txtlm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input18 = txtlm.getText();
-				jl18.setText(input18);
-				jl18.setBounds(1155, insets.top + 466,
-						jl18.getPreferredSize().width,
-						jl18.getPreferredSize().height);
+				jlLengthMultiply.setText(input18);
+				jlLengthMultiply.setBounds(1155, insets.top + 466,
+						jlLengthMultiply.getPreferredSize().width,
+						jlLengthMultiply.getPreferredSize().height);
 
 			}
 		});
-		frame1.add(jl18);
-		
-		
+		frame1.add(jlLengthMultiply);
+
+
 		lblluk.setBounds(lblluk.getX() + lblluk.getWidth() + 1010,
 				insets.top + 496, lblluk.getPreferredSize().width,
 				lblluk.getPreferredSize().height);
@@ -619,32 +624,32 @@ public class CallibratorGUI {
 		txtluk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input19 = txtluk.getText();
-				jl19.setText(input19);
-				jl19.setBounds(1155, insets.top + 511,
-						jl19.getPreferredSize().width,
-						jl19.getPreferredSize().height);
+				jlClose.setText(input19);
+				jlClose.setBounds(1155, insets.top + 511,
+						jlClose.getPreferredSize().width,
+						jlClose.getPreferredSize().height);
 
 			}
 		});
-		frame1.add(jl19);
-		
-		
+		frame1.add(jlClose);
+
+
 		lblpov.setBounds(lblpov.getX() + lblpov.getWidth() + 1010, insets.top + 536, lblpov.getPreferredSize().width, lblpov.getPreferredSize().height);
 		txtpov.setBounds(txtpov.getX() + txtpov.getWidth() + 1010, insets.top + 551, txtpov.getPreferredSize().width, txtpov.getPreferredSize().height);
 
 		txtpov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input20 = txtpov.getText();
-				jl20.setText(input20);
-				jl20.setBounds(1155, insets.top + 551,
-						jl20.getPreferredSize().width,
-						jl20.getPreferredSize().height);
+				jlPoV.setText(input20);
+				jlPoV.setBounds(1155, insets.top + 551,
+						jlPoV.getPreferredSize().width,
+						jlPoV.getPreferredSize().height);
 
 			}
 		});
-		frame1.add(jl20);
-		
-		
+		frame1.add(jlPoV);
+
+
 		btnApply.setBounds(btnApply.getX() + btnApply.getWidth() + 5,
 				insets.top + 550, btnApply.getPreferredSize().width,
 				btnApply.getPreferredSize().height);
@@ -652,377 +657,161 @@ public class CallibratorGUI {
 		btnApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//for(int j = 0; j<2;j++){
-			//	while(true){
+				//	while(true){
 				long startbutton = System.currentTimeMillis();
 
 				CvPoint minPunkt;
 				long startbuttoncheck = System.currentTimeMillis();
 
 				String input1 = txtDP.getText();
-				jl1.setText(input1);
-				jl1.setBounds(150, insets.top + 20,
-						jl1.getPreferredSize().width,
-						jl1.getPreferredSize().height);
+				jlcircleDP.setText(input1);
+				jlcircleDP.setBounds(150, insets.top + 20,
+						jlcircleDP.getPreferredSize().width,
+						jlcircleDP.getPreferredSize().height);
 
 				String input2 = txtCirkleDIst.getText();
-				jl2.setText(input2);
-				jl2.setBounds(150, insets.top + 65,
-						jl2.getPreferredSize().width,
-						jl2.getPreferredSize().height);
+				jlcircleDist.setText(input2);
+				jlcircleDist.setBounds(150, insets.top + 65,
+						jlcircleDist.getPreferredSize().width,
+						jlcircleDist.getPreferredSize().height);
 
 				String input3 = txtParameter1.getText();
-				jl3.setText(input3);
-				jl3.setBounds(150, insets.top + 110,
-						jl3.getPreferredSize().width,
-						jl3.getPreferredSize().height);
+				jlcirclePar1.setText(input3);
+				jlcirclePar1.setBounds(150, insets.top + 110,
+						jlcirclePar1.getPreferredSize().width,
+						jlcirclePar1.getPreferredSize().height);
 
 				String input4 = txtParameter2.getText();
-				jl4.setText(input4);
-				jl4.setBounds(150, insets.top + 155,
-						jl4.getPreferredSize().width,
-						jl4.getPreferredSize().height);
+				jlcirclePar2.setText(input4);
+				jlcirclePar2.setBounds(150, insets.top + 155,
+						jlcirclePar2.getPreferredSize().width,
+						jlcirclePar2.getPreferredSize().height);
 
 				String input5 = txtMinradius.getText();
-				jl5.setText(input5);
-				jl5.setBounds(150, insets.top + 200,
-						jl5.getPreferredSize().width,
-						jl5.getPreferredSize().height);
+				jlcircleMinRadius.setText(input5);
+				jlcircleMinRadius.setBounds(150, insets.top + 200,
+						jlcircleMinRadius.getPreferredSize().width,
+						jlcircleMinRadius.getPreferredSize().height);
 
 				String input6 = txtMaxradius.getText();
-				jl6.setText(input6);
-				jl6.setBounds(150, insets.top + 240,
-						jl6.getPreferredSize().width,
-						jl6.getPreferredSize().height);
+				jlcircleMaxRadius.setText(input6);
+				jlcircleMaxRadius.setBounds(150, insets.top + 240,
+						jlcircleMaxRadius.getPreferredSize().width,
+						jlcircleMaxRadius.getPreferredSize().height);
 
 				String input7 = txtRoboDP.getText();
-				jl7.setText(input7);
-				jl7.setBounds(150, insets.top + 300,
-						jl7.getPreferredSize().width,
-						jl7.getPreferredSize().height);
+				jlroboDP.setText(input7);
+				jlroboDP.setBounds(150, insets.top + 300,
+						jlroboDP.getPreferredSize().width,
+						jlroboDP.getPreferredSize().height);
 
 				// dist
 				String input8 = txtRoboMinDist.getText();
-				jl8.setText(input8);
-				jl8.setBounds(150, insets.top + 335,
-						jl8.getPreferredSize().width,
-						jl8.getPreferredSize().height);
+				jlroboMinDist.setText(input8);
+				jlroboMinDist.setBounds(150, insets.top + 335,
+						jlroboMinDist.getPreferredSize().width,
+						jlroboMinDist.getPreferredSize().height);
 
 				// 1
 				String input9 = txtRoboPar1.getText();
-				jl9.setText(input9);
-				jl9.setBounds(150, insets.top + 380,
-						jl9.getPreferredSize().width,
-						jl9.getPreferredSize().height);
+				jlroboPar1.setText(input9);
+				jlroboPar1.setBounds(150, insets.top + 380,
+						jlroboPar1.getPreferredSize().width,
+						jlroboPar1.getPreferredSize().height);
 
 				// 2
 				String input10 = txtRoboPar2.getText();
-				jl10.setText(input10);
-				jl10.setBounds(150, insets.top + 425,
-						jl10.getPreferredSize().width,
-						jl10.getPreferredSize().height);
+				jlroboPar2.setText(input10);
+				jlroboPar2.setBounds(150, insets.top + 425,
+						jlroboPar2.getPreferredSize().width,
+						jlroboPar2.getPreferredSize().height);
 
 				// min
 				String input11 = txtromin.getText();
-				jl11.setText(input11);
-				jl11.setBounds(150, insets.top + 470,
-						jl11.getPreferredSize().width,
-						jl11.getPreferredSize().height);
+				jlroboMin.setText(input11);
+				jlroboMin.setBounds(150, insets.top + 470,
+						jlroboMin.getPreferredSize().width,
+						jlroboMin.getPreferredSize().height);
 
 				// max
 				String input12 = txtromax.getText();
-				jl12.setText(input12);
-				jl12.setBounds(150, insets.top + 515,
-						jl12.getPreferredSize().width,
-						jl12.getPreferredSize().height);
+				jlroboMax.setText(input12);
+				jlroboMax.setBounds(150, insets.top + 515,
+						jlroboMax.getPreferredSize().width,
+						jlroboMax.getPreferredSize().height);
 
 				String input13 = txtmaxgrøn.getText();
-				jl13.setText(input13);
-				jl13.setBounds(1155, insets.top + 251,
-						jl13.getPreferredSize().width,
-						jl13.getPreferredSize().height);
+				jlcolorMaxGreen.setText(input13);
+				jlcolorMaxGreen.setBounds(1155, insets.top + 251,
+						jlcolorMaxGreen.getPreferredSize().width,
+						jlcolorMaxGreen.getPreferredSize().height);
 
 				String input14 = txtmaxblå.getText();
-				jl14.setText(input14);
-				jl14.setBounds(1155, insets.top + 296,
-						jl14.getPreferredSize().width,
-						jl14.getPreferredSize().height);
+				jlcolorMaxBlue.setText(input14);
+				jlcolorMaxBlue.setBounds(1155, insets.top + 296,
+						jlcolorMaxBlue.getPreferredSize().width,
+						jlcolorMaxBlue.getPreferredSize().height);
 
 				String input15 = txtmaxrød.getText();
-				jl15.setText(input15);
-				jl15.setBounds(1155, insets.top + 336,
-						jl15.getPreferredSize().width,
-						jl15.getPreferredSize().height);
+				jlcolorMaxRed.setText(input15);
+				jlcolorMaxRed.setBounds(1155, insets.top + 336,
+						jlcolorMaxRed.getPreferredSize().width,
+						jlcolorMaxRed.getPreferredSize().height);
 
 				String input16 = txtminrød.getText();
-				jl16.setText(input16);
-				jl16.setBounds(1155, insets.top + 381,
-						jl16.getPreferredSize().width,
-						jl16.getPreferredSize().height);
+				jlColorMinRed.setText(input16);
+				jlColorMinRed.setBounds(1155, insets.top + 381,
+						jlColorMinRed.getPreferredSize().width,
+						jlColorMinRed.getPreferredSize().height);
 
 				String input17 = txtvinkel.getText();
-				jl17.setText(input17);
-				jl17.setBounds(1155, insets.top + 426,
-						jl17.getPreferredSize().width,
-						jl17.getPreferredSize().height);
+				jlAngle.setText(input17);
+				jlAngle.setBounds(1155, insets.top + 426,
+						jlAngle.getPreferredSize().width,
+						jlAngle.getPreferredSize().height);
 
 				String input18 = txtlm.getText();
-				jl18.setText(input18);
-				jl18.setBounds(1155, insets.top + 466,
-						jl18.getPreferredSize().width,
-						jl18.getPreferredSize().height);
+				jlLengthMultiply.setText(input18);
+				jlLengthMultiply.setBounds(1155, insets.top + 466,
+						jlLengthMultiply.getPreferredSize().width,
+						jlLengthMultiply.getPreferredSize().height);
 
 				String input19 = txtluk.getText();
-				jl19.setText(input19);
-				jl19.setBounds(1155, insets.top + 511,
-						jl19.getPreferredSize().width,
-						jl19.getPreferredSize().height);
-				
+				jlClose.setText(input19);
+				jlClose.setBounds(1155, insets.top + 511,
+						jlClose.getPreferredSize().width,
+						jlClose.getPreferredSize().height);
+
 				String input20 = txtpov.getText();
-				jl20.setText(input20);
-				jl20.setBounds(1155, insets.top + 551,
-						jl20.getPreferredSize().width,
-						jl20.getPreferredSize().height);
-				
-//
-				long endbuttoncheck = System.currentTimeMillis();
-				System.out.println("buttoncheck = " +(endbuttoncheck-startbuttoncheck));
-			
-				start();
-				
-				// BufferedImage src = ImageIO.read(new File("Billed0.png"));
-				DetectRects findEdge = new DetectRects();
-				long startedge = System.currentTimeMillis();
-				
-				findEdge.detectAllRects();
-				ppcm = findEdge.getPixPerCm();
-				
-				long endedge = System.currentTimeMillis();
-				System.out.println("detectALLRects took = " +(endedge-startedge));
-				
-				ballMethod balls = new ballMethod();
-				
-				long startpictomat = System.currentTimeMillis();
-				balls.pictureToMat("billed0.png");
-				long endpictomat = System.currentTimeMillis();
-				System.out.println("PicToMat took = " +(endpictomat-startpictomat));
-				
-				long startfindrobo = System.currentTimeMillis();
-				ArrayList<Float> RoboCoor = balls.findCircle(
-						Integer.parseInt(jl11.getText()),
-						Integer.parseInt(jl12.getText()),
-						Integer.parseInt(jl7.getText()),
-						Integer.parseInt(jl8.getText()),
-						Integer.parseInt(jl9.getText()),
-						Integer.parseInt(jl10.getText()), "robo", true);// minradius,
-																		// maxrdius,
-				
-			
-				// antalbolde
-				long endfindrobo = System.currentTimeMillis();
-				System.out.println("find robo took = " +(endfindrobo-startfindrobo));
+				jlPoV.setText(input20);
+				jlPoV.setBounds(1155, insets.top + 551,
+						jlPoV.getPreferredSize().width,
+						jlPoV.getPreferredSize().height);
 
-				// float[] RoboCoor = balls.findCircle(19, 28,
-				// 1,5,50,5,2,"robo", true); // finder robo
-				// for(int j = 0; j<RoboCoor.size();j=j+3){
-				// }
+				info.setJlcircleDP(jlcircleDP);
+				info.setJlcircleDist(jlcircleDist);
+				info.setJlcirclePar1(jlcirclePar1);
+				info.setJlcirclePar2(jlcirclePar2);
+				info.setJlcircleMinRadius(jlcircleMinRadius);
+				info.setJlcircleMaxRadius(jlcircleMaxRadius);
+				info.setJlroboDP(jlroboDP);
+				info.setJlroboMinDist(jlroboMinDist);
+				info.setJlroboPar1(jlroboPar1);
+				info.setJlroboPar2(jlroboPar2);
+				info.setJlroboMin(jlroboMin);
+				info.setJlroboMax(jlroboMax);
+				info.setJlAngle(jlAngle);
+				info.setJlPoV(jlPoV);
+				info.setclose(Float.parseFloat(jlClose.getText()));
+				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
-				Mat frame = Highgui.imread("robo.png"); // henter
-																		// det
-																		// konverterede
+				control.start();						
+				//				while (true){
+				info = control.loopRound(info);
 
-																		// billlede
-				double green = 0;
-				double red= 0;
-				double blue = 0;														// billlede
-				double blue2 = 0;														// billlede
-				double green2= 0;
-				double red2= 0;
-				CvPoint roboFrontPunkt = new CvPoint(10, 10);
-				CvPoint roboBagPunkt = new CvPoint(20, 20);
-				
-				
-					try {
-						double[] front = frame.get(Math.round(RoboCoor.get(1)),	Math.round(RoboCoor.get(0))); // /Y OG X ER BYTTET OM
-						blue = front[0];
-						green = front[1];
-						red = front[2];
-
-						double[] back = frame.get(Math.round(RoboCoor.get(4)),	Math.round(RoboCoor.get(3))); // /
-
-						blue2 = back[0];
-						green2 = back[1];
-						red2 = back[2];
-					} catch (IndexOutOfBoundsException e1) {
-						System.out.println("INDEX OUT OF BOUND");
-						
-						}
-						
-				
-					long startdirection = System.currentTimeMillis();
-
-					determineDirection(RoboCoor,blue, green, red,blue2,green2, red2,roboFrontPunkt, roboBagPunkt);
-
-					long enddirection = System.currentTimeMillis();
-					System.out.println("direction took = " +(enddirection-startdirection));
-					System.out.println("Robot frontpunkt = (" + roboFrontPunkt.x() + "," + roboFrontPunkt.y() +")");
-					System.out.println("Robot bagpunkt = (" + roboBagPunkt.x() + "," + roboBagPunkt.y() +")");
-
-					long startballs = System.currentTimeMillis();
-
-				ArrayList<Float> ballCoor = balls.findCircle(
-						Integer.parseInt(jl5.getText()),
-						Integer.parseInt(jl6.getText()),
-						Integer.parseInt(jl1.getText()),
-						Integer.parseInt(jl2.getText()),
-						Integer.parseInt(jl3.getText()),
-						Integer.parseInt(jl4.getText()), "balls", false);// minradius,
-																			// maxrdius,
-																			// antalbolde
-				long endballs = System.currentTimeMillis();
-				System.out.println("finding balls took = " +(endballs-startballs));
-
-				
-				
-				
-				long startroute = System.currentTimeMillis();
-
-				minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt,
-						roboFrontPunkt); // tegner dem i testprogrammet
-				System.out.println("minpunkt = " + minPunkt.x() + " " +minPunkt.y());
-				long endroute = System.currentTimeMillis();
-				System.out.println("drawing ballmap took = " +(endroute-startroute));
-				
-				
-				
-				long startangle = System.currentTimeMillis();
-
-				if(firstRun == 'a'){
-				ballCount = (ballCoor.size() / 3);
-				firstRun = 'b';
-				}
-				int tempCount = (ballCoor.size() / 3);
-				//System.out.println("tempcount = " + tempCount);
-				//System.out.println("Ballcount = " + ballCount);
-				
-				if (tempCount == ballCount - 1) {
-					System.out.println("HEJ1");
-					count++;
-					ballCount = tempCount;
-					if (count == 2) {
-						System.out.println("HEJ2");
-
-						CvPoint goalA = findEdge.getGoalB();
-
-						minPunkt.x(goalA.x());
-						minPunkt.y(goalA.y());
-						count = 0;
-						System.out.println("koordinaterne til Minpunkt er ("+ minPunkt.x() + "," + minPunkt.y() + ")");
-						
-					}
-				}
-
-				txtArea1 = new JTextArea("Antal bolde fundet: "
-						+ (ballCoor.size() / 3), 1, 1);
-				String text1 = txtArea1.getText();
-				lbltxt.setText(text1);
-
-				CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()
-						- roboBagPunkt.x(), roboFrontPunkt.y()
-						- roboBagPunkt.y());
-				CvPoint nyRoboBag = new CvPoint(0, 0);
-				CvPoint nyMinPunkt = new CvPoint(minPunkt.x()- roboBagPunkt.x(), minPunkt.y()- roboBagPunkt.y());	
-				
-				
-				CalcAngle Angle = new CalcAngle();
-				int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
-				//System.out.println("BallAngle = " + BallAngle);
-				int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
-				//System.out.println("RoboAngle = " + RoboAngle);
-					TurnAngle = RoboAngle - BallAngle;
-				
-				if(TurnAngle > 180)TurnAngle -= 360;
-	
-				CalcDist dist = new CalcDist();
-
-				
-				/*
-				
-				CvPoint middle = new CvPoint(findEdge.getGoalA().x()+(90*(int)ppcm),findEdge.getGoalA().y()); // in the middle of field
-
-				CvPoint corner3 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*(int)ppcm));//3
-				CvPoint corner1 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*(int)ppcm));//1
-				CvPoint corner4 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*(int)ppcm));//4
-				CvPoint corner2 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*(int)ppcm));//2 
-				
-				
-				1 												2
-				 -------------------------------------------|
-				 |											|
-				 |											|
-				 |											|
-				 |											|
-				 |					X = middle				|
-				 |											|
-				 |											|
-				 |											|
-				 |											|
-				 -------------------------------------------|	
-				 3												4
-				 */
-			
-				/*
-				int distance1  = dist.Calcdist(roboFrontPunkt, corner1);
-				int distance2  = dist.Calcdist(roboFrontPunkt, corner2);
-				int distance3  = dist.Calcdist(roboFrontPunkt, corner3);
-				int distance4  = dist.Calcdist(roboFrontPunkt, corner4);
-				double x = 0.02;
-				
-				if(distance1 < 150){
-					System.out.println("Dist1");
-					if(RoboAngle > 196){
-					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
-					}
-				}
-				if(distance2 < 150){
-					System.out.println("Dist2");
-					System.out.println("TurnAngle = " + TurnAngle);
-					if(RoboAngle > 196){
-					TurnAngle -= (int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
-					}
-					System.out.println(((int)x*(dist.Calcdist(roboFrontPunkt, middle))));
-					System.out.println("TurnAngle2 = " + TurnAngle);
-
-				}
-				if(distance3 < 150){
-					System.out.println("Dist3");
-					if(RoboAngle > 196){
-					TurnAngle = TurnAngle+(int)x*(dist.Calcdist(roboFrontPunkt, middle));
-					}
-				}
-				if(distance4 < 150){
-					System.out.println("Dist4");
-					System.out.println("TurnAngle = " + TurnAngle);
-
-					if(RoboAngle > 196){
-					TurnAngle = TurnAngle-(int)(x*(dist.Calcdist(roboFrontPunkt, middle)));
-					System.out.println("TurnAngle = " + TurnAngle);
-
-					}
-				}
-					
-				*/
-				long endangle = System.currentTimeMillis();
-				System.out.println("ALL angle calculation took = " +(endangle-startangle));
-				
-				
-				
-				long startgui = System.currentTimeMillis();
-
-				lbltxt2.setText("BallAngle = " + BallAngle);
-				lbltxt3.setText("RoboAngle = " + RoboAngle);
-				lbltxt4.setText("TurnAngle = " + (RoboAngle - BallAngle));
-
-				minLength = Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt));
+				lbltxtBallAngle.setText("BallAngle = " + info.getBallAngle());
+				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
+				lbltxtTurnAngle.setText("TurnAngle = " + info.getTurnAngle());
 
 				ImageIcon afterc = new ImageIcon("billed0.png");
 				Image image1 = afterc.getImage(); // transform it
@@ -1082,212 +871,47 @@ public class CallibratorGUI {
 
 				lbltxt.setBounds(200, insets.top + 500,
 						lbltxt.getPreferredSize().width, 10);
-				lbltxt2.setBounds(200, insets.top + 515,
-						lbltxt2.getPreferredSize().width, 10);
-				lbltxt3.setBounds(200, insets.top + 530,
-						lbltxt3.getPreferredSize().width, 10);
-				lbltxt4.setBounds(200, insets.top + 545,
-						lbltxt4.getPreferredSize().width, 10);
+				lbltxtBallAngle.setBounds(200, insets.top + 515,
+						lbltxtBallAngle.getPreferredSize().width, 10);
+				lbltxtRoboAngle.setBounds(200, insets.top + 530,
+						lbltxtRoboAngle.getPreferredSize().width, 10);
+				lbltxtTurnAngle.setBounds(200, insets.top + 545,
+						lbltxtTurnAngle.getPreferredSize().width, 10);
 
-				
-				long endgui = System.currentTimeMillis();
-				System.out.println("showing gui took = " +(endgui-startgui));
-				
-				
-				// ballCoor.clear();
 
-				/*
-				  System.out.println("In CONNECT");
-				  
-				  
-				  System.out.println("Waiting for your go!");
-				  
-				//  Scanner scan = new Scanner(System.in); int input =
-				//  scan.nextInt();
-				  try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				  
-				  int Case; int i; System.out.println("TurnAngle = " +
-				  TurnAngle); int angle = (int)
-				  (TurnAngle*(Float.parseFloat(jl17.getText()))); //vinkel konvertering 
-				  if(Math.abs(angle) < 250){ if(angle > 0) //vælger retning der  skal drejes 
-					  Case = 11; 
-				  else Case = 22; } 
-				  else{ angle =
-				  angle/10; 
-				  if(angle > 0) //vælger retning der skal drejes Case
-				  Case = 31;
-				  else Case = 42; } 
-				  angle = Math.abs(angle);
-				  
-				  try {
-				  dos.write(Case); //sender case 
-				  dos.flush(); 
-				  dos.write(angle);
-				  //sender vinkel 
-				  dos.flush();
-				  
-				  Thread.sleep(1500); dos.write(61); //sender case dos.flush();
-				  dos.write(61); //sender vinkel dos.flush();
-				  Thread.sleep(500);
-				  
-				  //kører robot frem System.out.println("minlength " +minLength); 
-				  int distance =   (int)((minLength*(Float.parseFloat(jl18.getText())))/ppcm);
-				  //længde konvertering System.out.println("dist = " + distance); dos.write(81); dos.flush(); if(angle > 180)
-				  distance -= 50; i = distance/10; dos.write(i); dos.flush();
-				  
-				  Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText())
-				  ))); //Thread.sleep((int)minLength*2); //samler bold op
-				  dos.write(51); dos.flush(); dos.write(51); dos.flush();
-				  
-				  
-				  } catch (IOException e1) { // TODO Auto-generated catch block
-				  e1.printStackTrace(); } 
-				  catch (InterruptedException e1) { //
-				  }
-				  
-				
-				  
-				  
-				  }*/
-				long endbutton = System.currentTimeMillis();
-				System.out.println("The entire apply button took = " + (endbutton-startbutton));
+				//				}
 			}
 
-			private void start() {
-				
-				takePicture();
-				
-			}
-			
-			private void takePicture() {
-				long startpicture = System.currentTimeMillis();
 
-				TakePicture takepic = new TakePicture();
-				takepic.takePicture();
-				long endpicture = System.currentTimeMillis();
-				System.out.println("taking and saving a picture took = " +(endpicture-startpicture));
-			}
-
-	public void determineDirection(ArrayList<Float> RoboCoor,double blue,double green, double red,double blue2, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
-		
-		
-		if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
-			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-		}
-		
-		if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rød
-			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-		}
-		
-		if ((((green2 - blue2)/blue2) > 0.3) && (green2 > red2)) { // finder grøn
-			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-		}
-		if ((((red2 - blue2)/blue2) > 1.4) && (red2 > green2)) { // finder rød
-			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-		}
-/*
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
-				try {
-					if (red > 245) {
-						roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-						roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-						roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-						roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-					} else if (red2 > 245) {
-						roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-						roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-						roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-						roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-					} else if (green > 245) {
-						roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-						roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-						roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-						roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-					} else if (green2 > 245) {
-						roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-						roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-						roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-						roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-					}
-				} catch (IndexOutOfBoundsException e) {
-					System.out.println("OUT OF BOUND BITCH");
-				}
-<<<<<<< HEAD
-				
-				double PovM = 0.1;
-=======
-				*/
-				double PovM = Double.parseDouble(jl20.getText());
-				CvPoint midpunkt = new CvPoint(800,450);
-				int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
-				int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
-				int PovBagX = roboBagPunkt.x() - midpunkt.x();
-				int PovBagY = roboBagPunkt.y() - midpunkt.y();
-				if(PovFrontX < 0){
-					if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
-					else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
-				}
-				else{
-					if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
-					else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
-				}
-				if(PovBagX < 0){
-					if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
-					else roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
-				}
-				else{
-					if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
-					else roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
-				}
-				
-				
-			}
 		});
 
-		frame1.add(jl1);
-		frame1.add(jl2);
-		frame1.add(jl3);
-		frame1.add(jl4);
-		frame1.add(jl5);
-		frame1.add(jl6);
-		frame1.add(jl7);
-		frame1.add(jl8);
-		frame1.add(jl9);
-		frame1.add(jl10);
-		frame1.add(jl11);
-		frame1.add(jl12);
-		frame1.add(jl13);
-		frame1.add(jl14);
-		frame1.add(jl15);
-		frame1.add(jl16);
-		frame1.add(jl17); // vinkel
-		frame1.add(jl18); // lenght
-		frame1.add(jl19); // luk
-		frame1.add(jl20); //pov
+		frame1.add(jlcircleDP);
+		frame1.add(jlcircleDist);
+		frame1.add(jlcirclePar1);
+		frame1.add(jlcirclePar2);
+		frame1.add(jlcircleMinRadius);
+		frame1.add(jlcircleMaxRadius);
+		frame1.add(jlroboDP);
+		frame1.add(jlroboMinDist);
+		frame1.add(jlroboPar1);
+		frame1.add(jlroboPar2);
+		frame1.add(jlroboMin);
+		frame1.add(jlroboMax);
+		frame1.add(jlcolorMaxGreen);
+		frame1.add(jlcolorMaxBlue);
+		frame1.add(jlcolorMaxRed);
+		frame1.add(jlColorMinRed);
+		frame1.add(jlAngle); // vinkel
+		frame1.add(jlLengthMultiply); // lenght
+		frame1.add(jlClose); // luk
+		frame1.add(jlPoV); //pov
 		frame1.add(lblimg);
 		frame1.add(lblafterc);
 		frame1.add(lblbh);
 		frame1.add(lbltxt);
-		frame1.add(lbltxt2);
-		frame1.add(lbltxt3);
-		frame1.add(lbltxt4);
+		frame1.add(lbltxtBallAngle);
+		frame1.add(lbltxtRoboAngle);
+		frame1.add(lbltxtTurnAngle);
 		frame1.add(txtArea1);
 
 		btnDeliver.setBounds(btnDeliver.getX() + btnDeliver.getWidth() + 5,
@@ -1310,32 +934,27 @@ public class CallibratorGUI {
 				int Case;
 				int i;
 				System.out.println("TurnAngle = " + TurnAngle);
-				int angle = (int) (TurnAngle * (Float.parseFloat(jl17.getText()))); // vinkel
-																					// konvertering
+				int angle = (int) (TurnAngle);// * (Float.parseFloat(jl17.getText()))); // vinkel
+				// konvertering
 				System.out.println("angle " + angle);
 				try {
 					if (Math.abs(angle) < 250) {
 						if (angle > 0) // vælger retning der skal drejes
-							Case = 11;
+							Case = 21;
 						else
-							Case = 22;
+							Case = 12;
 					} else {
 						angle = angle / 2;
 						if (angle > 0) // vælger retning der skal drejes
-							Case = 11;
+							Case = 21;
 						else
-							Case = 22;
+							Case = 12;
 						dos.write(Case); // sender case
 						dos.flush();
 						dos.write(angle); // sender vinkel
 						dos.flush();
+						Thread.sleep(700);
 					}
-					// else{
-					// angle = angle/10;
-					// if(angle > 0) //vælger retning der skal drejes
-					// Case = 31;
-					// else Case = 42;
-					// }
 					angle = Math.abs(angle);
 
 					dos.write(Case); // sender case
@@ -1352,25 +971,24 @@ public class CallibratorGUI {
 
 					// kører robot frem
 					System.out.println("minlength " + minLength);
-					int distance = (int) ((minLength * (Float.parseFloat(jl18
-							.getText()))) / ppcm); // længde konvertering
+					int distance = (int) ((minLength * (info.getlengthMultiply())) / ppcm); // længde konvertering
 					System.out.println("dist = " + distance);
 					dos.write(81);
 					dos.flush();
 					if (angle > 180)
-						distance -= 50;
+						distance -= 30;
 					i = distance / 10;
 					dos.write(i);
 					dos.flush();
 
-					Thread.sleep((int) (minLength * (Float.parseFloat(jl19
-							.getText()))));
+					Thread.sleep((int) (minLength * (info.getclose())));
 					// Thread.sleep((int)minLength*2);
 					// samler bold op
 					dos.write(51);
 					dos.flush();
 					dos.write(51);
 					dos.flush();
+					Thread.sleep(1200);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1384,6 +1002,8 @@ public class CallibratorGUI {
 			}
 		});
 
+
+
 		// Gør rammen synlig
 		frame1.setVisible(true);
 
@@ -1396,4 +1016,94 @@ public class CallibratorGUI {
 		}
 
 	}
+
+
+	//	Bliver PT ikke brugt i CallibratorGUI
+	public void determineDirection(ArrayList<Float> RoboCoor,double blue,double green, double red,double blue2, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
+
+
+		if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
+			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+		}
+
+		if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rød
+			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+		}
+
+		if ((((green2 - blue2)/blue2) > 0.3) && (green2 > red2)) { // finder grøn
+			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+		}
+		if ((((red2 - blue2)/blue2) > 1.4) && (red2 > green2)) { // finder rød
+			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+		}
+		/*
+>>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
+		try {
+			if (red > 245) {
+				roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+				roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+				roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+				roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+			} else if (red2 > 245) {
+				roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+				roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+				roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+				roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+			} else if (green > 245) {
+				roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
+				roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
+				roboBagPunkt.x(Math.round(RoboCoor.get(0)));
+				roboBagPunkt.y(Math.round(RoboCoor.get(1)));
+			} else if (green2 > 245) {
+				roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
+				roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
+				roboBagPunkt.x(Math.round(RoboCoor.get(3)));
+				roboBagPunkt.y(Math.round(RoboCoor.get(4)));
+			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("OUT OF BOUND BITCH");
+		}
+<<<<<<< HEAD
+
+		double PovM = 0.1;
+=======
+		 */
+		double PovM = Double.parseDouble(jlPoV.getText());
+		CvPoint midpunkt = new CvPoint(800,450);
+		int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
+		int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
+		int PovBagX = roboBagPunkt.x() - midpunkt.x();
+		int PovBagY = roboBagPunkt.y() - midpunkt.y();
+		if(PovFrontX < 0){
+			if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
+			else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
+		}
+		else{
+			if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
+			else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
+		}
+		if(PovBagX < 0){
+			if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
+			else roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
+		}
+		else{
+			if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
+			else roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
+		}
+
+
+	}
+
 }

@@ -19,12 +19,12 @@ public class RouteTest {
 
 	public static CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
 		CvPoint minPunkt = new CvPoint(0,0);
-		int minLength = 1000000;
+		float minLength = 1000000;
 		CalcDist dist = new CalcDist();
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-		Mat frame = Highgui.imread("White.png"); /// SKal bruges til at lave et blank lærred..
+		Mat frame = Highgui.imread("billed0.png"); /// SKal bruges til at lave et blank lærred..
 
 		for (int c = 0; c < Coordi.size(); c = c + 3)
 		{
@@ -46,7 +46,7 @@ public class RouteTest {
 		try {
 			for (int i = 0; i < xCoor.size(); i++)
 			{
-				int tempLength = 0;	
+				float tempLength = 0;	
 				CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
 				tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
 
@@ -68,12 +68,22 @@ public class RouteTest {
 
 		paintPoint(frame, new CvPoint(minPunkt.x()+10, minPunkt.y()+10), 255, 0, 0,20); // farver tætteste bold rød
 
-		paintPoint(frame,new CvPoint(roboBagPunkt.x() + 10, roboBagPunkt.y() + 10), 0, 128, 255,20); //
-		paintPoint(frame,new CvPoint(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10), 0, 255, 0,60); //
+		paintPoint(frame,new CvPoint(roboBagPunkt.x(), roboBagPunkt.y()), 0, 128, 255,20); //
+		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,60); //
 
-		Core.line(frame, new Point(roboBagPunkt.x() + 10, roboBagPunkt.y() + 10),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
-		Core.line(frame, new Point(roboBagPunkt.x() + 10, roboBagPunkt.y() + 10),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
-
+		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
+		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
+		
+		
+		paintPoint(frame,new CvPoint(1600/2, 900/2), 0, 128, 128,30); // midten af billedet
+		
+	/*	DetectRects findEdge = new DetectRects();
+		float ppcm = findEdge.getPixPerCm();
+		int height = findEdge.getInnerRect().height() + (60 * (int)ppcm);
+		int width = findEdge.getInnerRect().width() + (90 * (int)ppcm);
+		
+		paintPoint(frame,new CvPoint(width, height), 0, 128, 128,30); // midten af banen
+*/
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
 
