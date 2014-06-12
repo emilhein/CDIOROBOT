@@ -14,9 +14,9 @@ public class Angletest {
 		CvPoint nyMinPunkt = new CvPoint(minPunkt.x()-roboBagPunkt.x(),minPunkt.y()-roboBagPunkt.y());
 		
 		CalcAngle Angle = new CalcAngle();
-		int BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
-		int RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
-		int TurnAngle = BallAngle - RoboAngle;
+		float BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
+		float RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
+		float TurnAngle = BallAngle - RoboAngle;
 		System.out.println("turnangle = " + TurnAngle);
 	}
 }
