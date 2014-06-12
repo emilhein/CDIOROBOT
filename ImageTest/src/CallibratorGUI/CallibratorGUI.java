@@ -52,6 +52,7 @@ public class CallibratorGUI {
 	private ArrayList<Float> ballCoor;
 	//private int BallAngle;
 	//private int RoboAngle;
+
 	private DetectRects findEdge;
 	private PrimaryController control;
 	private GUIInfo info;
@@ -62,7 +63,6 @@ public class CallibratorGUI {
 		info = new GUIInfo();
 		findEdge = new DetectRects();
 		control = new PrimaryController(findEdge);
-		// try{
 
 
 		// prøver at forbinde til vores robot
@@ -936,6 +936,7 @@ public class CallibratorGUI {
 				int i;
 				System.out.println("TurnAngle = " + info.getTurnAngle());
 				int angle = (int)Math.round(Float.parseFloat("" + info.getTurnAngle()));// * (Float.parseFloat(jl17.getText()))); // vinkel
+
 				// konvertering
 				System.out.println("angle " + angle);
 				
@@ -974,6 +975,7 @@ public class CallibratorGUI {
 					Thread.sleep(500);
 
 					// kører robot frem
+
 					
 					minLength = info.getMinLength();
 					System.out.println("Lenghtmulti " + info.getlengthMultiply());
@@ -981,6 +983,7 @@ public class CallibratorGUI {
 					System.out.println("ppcm  " + findEdge.getPixPerCm());
 
 					int distance = (int) ((minLength * Math.round(info.getlengthMultiply()) / findEdge.getPixPerCm())); // længde konvertering
+
 					System.out.println("dist = " + distance);
 				
 
@@ -994,6 +997,7 @@ public class CallibratorGUI {
 					dos.flush();
 
 					Thread.sleep((int) Math.round((Float.parseFloat("" +info.getMinLength())) * Float.parseFloat("" +info.getclose())));
+
 					// Thread.sleep((int)minLength*2);
 					// samler bold op
 					dos.write(51);
@@ -1013,7 +1017,6 @@ public class CallibratorGUI {
 
 			}
 		});
-
 
 
 

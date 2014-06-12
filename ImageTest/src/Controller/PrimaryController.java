@@ -148,6 +148,7 @@ public class PrimaryController {
 		{
 			calliData.setTurnAngle(calliData.getTurnAngle()+360);
 		}
+		
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
 		//				###########################################################
