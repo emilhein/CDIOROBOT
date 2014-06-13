@@ -42,9 +42,9 @@ public class PrimaryController {
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
-//		System.out.println("trying to connect");
+		System.out.println("trying to connect");
 		connt.connectTo(nxtInfo, NXTComm.LCP);
-//		System.out.println("connected"); // forbundet
+		System.out.println("connected"); // forbundet
 		// åbner streams}
 		dos = connt.getOutputStream();
 		
@@ -60,7 +60,9 @@ public class PrimaryController {
 
 		
 		findEdge.detectAllRects();
+		System.out.println("Still here");
 		ppcm = findEdge.getPixPerCm();
+
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -162,13 +164,13 @@ public class PrimaryController {
 		angleCal(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
 		//				###########################################################
 
-		calliData.setMinLength(Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt)));
+		calliData.setMinLength(Math.abs((dist.Calcdist(roboBagPunkt, minPunkt))-35));
 
 
 		//				#############################################################
 
 		
-		if(deliverButtom == 1)deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+		if(deliverButtom == 1)deliverBalls(calliData, roboFrontPunkt, roboBagPunkt);
 		else{
 		
 		send(calliData); 
@@ -296,16 +298,24 @@ public class PrimaryController {
 		}
 	}
 
-	public void deliverBalls(GUIInfo calliData, CvPoint nyRoboFront, CvPoint nyRoboBag, CvPoint nyMinPunkt) {
-		if(toGoal == 0){toGoal = 1;
-		
-		minPunkt.x(goalA.x()-500);
+	public void deliverBalls(GUIInfo calliData, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
+		goalA = findEdge.getGoalB();
+		if(toGoal == 0){
+		toGoal = 1;
+		minPunkt.x((goalA.x())-250);
 		minPunkt.y(goalA.y());
 		}
 		else{ toGoal = 2;
-		minPunkt.x(goalA.x()-100);
+		minPunkt.x(goalA.x()-50);
 		minPunkt.y(goalA.y());
 		}
+		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()
+				- roboBagPunkt.x(), roboFrontPunkt.y()
+				- roboBagPunkt.y());
+		CvPoint nyRoboBag = new CvPoint(0, 0);
+		CvPoint nyMinPunkt = new CvPoint(minPunkt.x()- roboBagPunkt.x(), minPunkt.y()- roboBagPunkt.y());	
 		angleCal(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+		calliData.setMinLength(Math.abs((dist.Calcdist(nyRoboBag, nyMinPunkt))-35));
+		send(calliData); 
 	}
 }

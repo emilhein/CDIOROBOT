@@ -29,11 +29,12 @@ public class TakePicture {
     	    		frame.width() + " Height " + frame.height());
     	    		
     	    		Highgui.imwrite("billed0.png", frame);
+
+        	    	System.out.println("Picture saved");
+        	    	System.out.println();
+        	    	break;
     	    	}
     	    		
-    	    	System.out.println("Picture saved");
-    	    	System.out.println();
-    	    	break;
     	    }
     	}	
     	
