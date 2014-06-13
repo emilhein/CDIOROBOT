@@ -57,11 +57,10 @@ public class PrimaryController {
 		ppcm = findEdge.getPixPerCm();
 	}
 
-	public GUIInfo loopRound(GUIInfo calliData) {
+	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
 		char firstRun = 'a';
 		int ballCount = 0;
 		int count = 0;
-
 
 		do {
 
@@ -163,11 +162,11 @@ public class PrimaryController {
 		//				#############################################################
 
 		
-		//if("You want to party")deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
-		//else{
+		if(deliverButtom == 1)deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+		else{
 		
 		send(calliData); 
-		//}
+		}
 		
 		return calliData;
 	}

@@ -183,6 +183,4 @@ public class GUIInfo {
 	public void setTxtArea1(JTextArea txtArea1) {
 		this.txtArea1 = txtArea1;
 	}
-
-	
 }

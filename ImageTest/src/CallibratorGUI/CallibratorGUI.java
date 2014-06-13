@@ -52,31 +52,18 @@ public class CallibratorGUI {
 	private ArrayList<Float> ballCoor;
 	//private int BallAngle;
 	//private int RoboAngle;
-
+	
+	
 	private DetectRects findEdge;
 	private PrimaryController control;
 	private GUIInfo info;
-
+	
 
 	public void startGUI() throws IOException {
 
 		info = new GUIInfo();
 		findEdge = new DetectRects();
 		control = new PrimaryController(findEdge);
-
-
-//		// prøver at forbinde til vores robot
-//		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
-//		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
-//		NXTConnector connt = new NXTConnector();
-//		System.out.println("trying to connect");
-//		connt.connectTo(nxtInfo, NXTComm.LCP);
-//		System.out.println("connected"); // forbundet
-//		// åbner streams}
-//		final OutputStream dos = connt.getOutputStream();
-
-		// Scanner scan = new Scanner(System.in);
-		// while(true){
 
 		// Opretter rammen
 		frame1 = new JFrame("CallibratorGUI");
@@ -804,7 +791,7 @@ public class CallibratorGUI {
 
 				control.start();						
 				//				while (true){
-				info = control.loopRound(info);
+				info = control.loopRound(info,0);
 
 				lbltxtBallAngle.setText("BallAngle = " + info.getBallAngle());
 				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
@@ -902,9 +889,14 @@ public class CallibratorGUI {
 		btnDeliver.setBounds(btnDeliver.getX() + btnDeliver.getWidth() + 5,
 				insets.top + 590, btnDeliver.getPreferredSize().width,
 				btnDeliver.getPreferredSize().height);
+		
 		btnDeliver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Delivering balls");
+			
+				
+				info = control.loopRound(info,1);
+				
 			}
 		});
 
