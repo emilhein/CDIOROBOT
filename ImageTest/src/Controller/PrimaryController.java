@@ -154,6 +154,22 @@ public class PrimaryController {
 		CvPoint nyMinPunkt = new CvPoint(minPunkt.x()- roboBagPunkt.x(), minPunkt.y()- roboBagPunkt.y());	
 
 
+		angleCal(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+		//				###########################################################
+
+		calliData.setMinLength(Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt)));
+
+
+		//				#############################################################
+
+		send(calliData); 
+
+		
+		return calliData;
+	}
+
+	public void angleCal(GUIInfo calliData, CvPoint nyRoboFront,
+			CvPoint nyRoboBag, CvPoint nyMinPunkt) {
 		CalcAngle Angle = new CalcAngle();
 		Float BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
 		//System.out.println("BallAngle = " + BallAngle);
@@ -172,76 +188,6 @@ public class PrimaryController {
 		
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
-		//				###########################################################
-
-		calliData.setMinLength(Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt)));
-
-
-		//				#############################################################
-
-		// ballCoor.clear();
-
-		/*
-		  System.out.println("In CONNECT");
-
-
-		  System.out.println("Waiting for your go!");
-
-		//  Scanner scan = new Scanner(System.in); int input =
-		//  scan.nextInt();
-		  try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
-		  int Case; int i; System.out.println("TurnAngle = " +
-		  TurnAngle); int angle = (int)
-		  (TurnAngle*(Float.parseFloat(jl17.getText()))); //vinkel konvertering 
-		  if(Math.abs(angle) < 250){ if(angle > 0) //vælger retning der  skal drejes 
-			  Case = 11; 
-		  else Case = 22; } 
-		  else{ angle =
-		  angle/10; 
-		  if(angle > 0) //vælger retning der skal drejes Case
-		  Case = 31;
-		  else Case = 42; } 
-		  angle = Math.abs(angle);
-
-		  try {
-		  dos.write(Case); //sender case 
-		  dos.flush(); 
-		  dos.write(angle);
-		  //sender vinkel 
-		  dos.flush();
-
-		  Thread.sleep(1500); dos.write(61); //sender case dos.flush();
-		  dos.write(61); //sender vinkel dos.flush();
-		  Thread.sleep(500);
-
-		  //kører robot frem System.out.println("minlength " +minLength); 
-		  int distance =   (int)((minLength*(Float.parseFloat(jl18.getText())))/ppcm);
-		  //længde konvertering System.out.println("dist = " + distance); dos.write(81); dos.flush(); if(angle > 180)
-		  distance -= 50; i = distance/10; dos.write(i); dos.flush();
-
-		  Thread.sleep((int)(minLength*(Float.parseFloat(jl19.getText())
-		  ))); //Thread.sleep((int)minLength*2); //samler bold op
-		  dos.write(51); dos.flush(); dos.write(51); dos.flush();
-
-
-		  } catch (IOException e1) { // TODO Auto-generated catch block
-		  e1.printStackTrace(); } 
-		  catch (InterruptedException e1) { //
-		  }
-
-		  }*/
-
-
-		send(calliData); 
-
-		
-		return calliData;
 	}
 
 	public void send(GUIInfo calliData) {
