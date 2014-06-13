@@ -14,6 +14,7 @@ import pictureToMat.DetectRects;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
+import CallibratorGUI.CallibratorGUI;
 
 public class PrimaryController {
 
@@ -28,12 +29,15 @@ public class PrimaryController {
 		takepic = new TakePicture();
 		balls = new ballMethod();
 		dist = new CalcDist();
+		
+		
 	}
 
 	public void start() {
 		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
+		
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData) {
