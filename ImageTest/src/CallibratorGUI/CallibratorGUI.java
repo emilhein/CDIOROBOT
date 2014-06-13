@@ -789,7 +789,7 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
-				control.start();						
+				control.start();
 				//				while (true){
 				info = control.loopRound(info,0);
 

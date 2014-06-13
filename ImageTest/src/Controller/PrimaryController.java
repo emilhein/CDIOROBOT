@@ -32,7 +32,8 @@ public class PrimaryController {
 	private ballMethod balls;
 	private CalcDist dist;
 	private int moveBack = 0;
-	final OutputStream dos;
+	//final OutputStream dos;
+	private final OutputStream dos;
 
 	public PrimaryController (DetectRects findEdge){
 		this.findEdge = findEdge;
