@@ -51,8 +51,14 @@ public class PrimaryController {
 	}
 
 	public void start() {
-		
+		long startpic = System.currentTimeMillis();
+
 		takepic.takePicture();
+		
+		long endpic = System.currentTimeMillis();
+		System.out.println("picture takes = " + (endpic-startpic));
+
+		
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 	}
