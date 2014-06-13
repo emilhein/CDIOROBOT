@@ -933,8 +933,8 @@ public class CallibratorGUI {
 
 				int Case;
 				int i;
-				System.out.println("TurnAngle = " + TurnAngle);
-				int angle = (int) (TurnAngle);// * (Float.parseFloat(jl17.getText()))); // vinkel
+				System.out.println("TurnAngle = " + info.getTurnAngle());
+				int angle = Integer.parseInt("" + info.getTurnAngle());// * (Float.parseFloat(jl17.getText()))); // vinkel
 				// konvertering
 				System.out.println("angle " + angle);
 				try {
@@ -970,8 +970,8 @@ public class CallibratorGUI {
 					Thread.sleep(500);
 
 					// kører robot frem
-					System.out.println("minlength " + minLength);
-					int distance = (int) ((minLength * (info.getlengthMultiply())) / ppcm); // længde konvertering
+					System.out.println("minlength " + info.getMinLength());
+					int distance = (int) ((minLength * (info.getlengthMultiply())) / findEdge.getPixPerCm()); // længde konvertering
 					System.out.println("dist = " + distance);
 					dos.write(81);
 					dos.flush();
@@ -981,7 +981,7 @@ public class CallibratorGUI {
 					dos.write(i);
 					dos.flush();
 
-					Thread.sleep((int) (minLength * (info.getclose())));
+					Thread.sleep((int) (info.getMinLength() * (info.getclose())));
 					// Thread.sleep((int)minLength*2);
 					// samler bold op
 					dos.write(51);
