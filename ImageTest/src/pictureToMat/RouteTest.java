@@ -28,6 +28,7 @@ public class RouteTest {
 
 		for (int c = 0; c < Coordi.size(); c = c + 3)
 		{
+		
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 20; i++)
 			{
