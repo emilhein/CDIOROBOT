@@ -655,10 +655,8 @@ public class CallibratorGUI {
 			public void actionPerformed(ActionEvent e) {
 				//for(int j = 0; j<2;j++){
 				//	while(true){
-				long startbutton = System.currentTimeMillis();
 
 				CvPoint minPunkt;
-				long startbuttoncheck = System.currentTimeMillis();
 
 				String input1 = txtDP.getText();
 				jlcircleDP.setText(input1);
