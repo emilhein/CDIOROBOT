@@ -787,9 +787,8 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
-			
-					
-				info = control.loopRound(info,0);
+
+//				info = control.loopRound(info,0);
 				if(i%2 == 0){
 					info = control.loopRound(info,1); // kører til punkt foran mål
 					info = control.loopRound(info,1); // aflevere i mål.
