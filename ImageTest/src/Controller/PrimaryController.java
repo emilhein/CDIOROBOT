@@ -22,10 +22,10 @@ import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
 
 public class PrimaryController {
-
-	
+	CvPoint goalA;
+	CvPoint minPunkt;
 	private Float minLength;
-
+	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
 	private TakePicture takepic;
@@ -63,11 +63,10 @@ public class PrimaryController {
 		ppcm = findEdge.getPixPerCm();
 	}
 
-	public GUIInfo loopRound(GUIInfo calliData) {
+	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
 		char firstRun = 'a';
 		int ballCount = 0;
 		int count = 0;
-
 
 		do {
 
@@ -112,7 +111,7 @@ public class PrimaryController {
 
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
-		CvPoint minPunkt;
+	
 
 		minPunkt = RouteTest.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " +minPunkt.y());
@@ -133,7 +132,7 @@ public class PrimaryController {
 			if (count == 2) {
 				System.out.println("HEJ2");
 
-				CvPoint goalA = findEdge.getGoalB();
+				goalA = findEdge.getGoalB();
 
 				minPunkt.x(goalA.x());
 				minPunkt.y(goalA.y());
@@ -168,8 +167,12 @@ public class PrimaryController {
 
 		//				#############################################################
 
+		
+		if(deliverButtom == 1)deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+		else{
+		
 		send(calliData); 
-
+		}
 		
 		return calliData;
 	}
@@ -234,12 +237,13 @@ public class PrimaryController {
 			dos.flush();
 
 			Thread.sleep(1200);
+			if(toGoal < 1){
 			dos.write(61); // sender case
 			dos.flush();
 			dos.write(61); // sender vinkel
 			dos.flush();
 			Thread.sleep(500);
-
+			}
 			// kører robot frem
 
 		
@@ -266,13 +270,23 @@ public class PrimaryController {
 		
 			Thread.sleep((int) Math.round((Float.parseFloat("" +calliData.getMinLength())) * Float.parseFloat("" +calliData.getclose())));
 
-			// Thread.sleep((int)minLength*2);
+			if(toGoal < 1){
 			// samler bold op
 			dos.write(51);
 			dos.flush();
 			dos.write(51);
 			dos.flush();
 			Thread.sleep(1200);
+			}
+			
+			if(toGoal == 2){
+				dos.write(71);
+				dos.flush();
+				dos.write(71);
+				dos.flush();
+				Thread.sleep(1200);
+				toGoal = 0;
+			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -282,6 +296,16 @@ public class PrimaryController {
 		}
 	}
 
-
-
+	public void deliverBalls(GUIInfo calliData, CvPoint nyRoboFront, CvPoint nyRoboBag, CvPoint nyMinPunkt) {
+		if(toGoal == 0){toGoal = 1;
+		
+		minPunkt.x(goalA.x()-500);
+		minPunkt.y(goalA.y());
+		}
+		else{ toGoal = 2;
+		minPunkt.x(goalA.x()-100);
+		minPunkt.y(goalA.y());
+		}
+		angleCal(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+	}
 }
