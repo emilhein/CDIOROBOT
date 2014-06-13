@@ -163,6 +163,8 @@ public class PrimaryController {
 		//				#############################################################
 
 		
+		//if("You want to party")deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
+		
 		
 		send(calliData); 
 
