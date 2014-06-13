@@ -20,7 +20,6 @@ import pictureToMat.DetectRects;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
-import CallibratorGUI.CallibratorGUI;
 
 public class PrimaryController {
 
@@ -39,6 +38,7 @@ public class PrimaryController {
 		takepic = new TakePicture();
 		balls = new ballMethod();
 		dist = new CalcDist();
+
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
@@ -55,7 +55,6 @@ public class PrimaryController {
 		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
-		
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData) {
@@ -261,7 +260,6 @@ public class PrimaryController {
 		
 			Thread.sleep((int) Math.round((Float.parseFloat("" +calliData.getMinLength())) * Float.parseFloat("" +calliData.getclose())));
 
-//github.com/emilhein/CDIOROBOT.git
 			// Thread.sleep((int)minLength*2);
 			// samler bold op
 			dos.write(51);
