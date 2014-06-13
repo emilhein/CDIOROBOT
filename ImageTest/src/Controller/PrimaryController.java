@@ -1,9 +1,15 @@
 package Controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+
+import lejos.pc.comm.NXTComm;
+import lejos.pc.comm.NXTConnector;
+import lejos.pc.comm.NXTInfo;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
@@ -17,20 +23,35 @@ import pictureToMat.ballMethod;
 
 public class PrimaryController {
 
+	
+	private Float minLength;
+
 	private Float ppcm;
 	private DetectRects findEdge;
 	private TakePicture takepic;
 	private ballMethod balls;
 	private CalcDist dist;
+	final OutputStream dos;
 
 	public PrimaryController (DetectRects findEdge){
 		this.findEdge = findEdge;
 		takepic = new TakePicture();
 		balls = new ballMethod();
 		dist = new CalcDist();
+
+		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
+		NXTConnector connt = new NXTConnector();
+//		System.out.println("trying to connect");
+		connt.connectTo(nxtInfo, NXTComm.LCP);
+//		System.out.println("connected"); // forbundet
+		// åbner streams}
+		dos = connt.getOutputStream();
+		
 	}
 
 	public void start() {
+		
 		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
@@ -216,7 +237,97 @@ public class PrimaryController {
 
 		  }*/
 
+
+		send(calliData); 
+
+		
 		return calliData;
+	}
+
+	public void send(GUIInfo calliData) {
+		int Case;
+		int i;
+		System.out.println("TurnAngle = " + calliData.getTurnAngle());
+
+		int angle = (int)Math.round(Float.parseFloat("" + calliData.getTurnAngle()));// * (Float.parseFloat(jl17.getText()))); // vinkel
+
+		// konvertering
+		System.out.println("angle " + angle);
+		
+		System.out.println("turnAngle" + angle);
+
+		try {
+			if (Math.abs(angle) < 250) {
+				if (angle > 0) // vælger retning der skal drejes
+					Case = 21;
+				else
+					Case = 12;
+			} else {
+				angle = angle / 2;
+				if (angle > 0) // vælger retning der skal drejes
+					Case = 21;
+				else
+					Case = 12;
+				dos.write(Case); // sender case
+				dos.flush();
+				dos.write(angle); // sender vinkel
+				dos.flush();
+				Thread.sleep(700);
+			}
+			angle = Math.abs(angle);
+
+			dos.write(Case); // sender case
+			dos.flush();
+			dos.write(angle); // sender vinkel
+			dos.flush();
+
+			Thread.sleep(1200);
+			dos.write(61); // sender case
+			dos.flush();
+			dos.write(61); // sender vinkel
+			dos.flush();
+			Thread.sleep(500);
+
+			// kører robot frem
+
+		
+			
+			minLength = calliData.getMinLength();
+			System.out.println("Lenghtmulti " + calliData.getlengthMultiply());
+			System.out.println("minmulti " + calliData.getMinLength());
+			System.out.println("ppcm  " + findEdge.getPixPerCm());
+
+			int distance = (int) ((minLength * Math.round(calliData.getlengthMultiply()) / findEdge.getPixPerCm())); // længde konvertering
+
+			System.out.println("dist = " + distance);
+		
+
+			
+			dos.write(81);
+			dos.flush();
+			if (angle > 180)
+				distance -= 30;
+			i = distance / 10;
+			dos.write(i);
+			dos.flush();
+
+		
+			Thread.sleep((int) Math.round((Float.parseFloat("" +calliData.getMinLength())) * Float.parseFloat("" +calliData.getclose())));
+
+			// Thread.sleep((int)minLength*2);
+			// samler bold op
+			dos.write(51);
+			dos.flush();
+			dos.write(51);
+			dos.flush();
+			Thread.sleep(1200);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 
