@@ -138,7 +138,7 @@ public class PrimaryController {
 		//System.out.println("BallAngle = " + BallAngle);
 		Float RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
 		//System.out.println("RoboAngle = " + RoboAngle);
-		calliData.setTurnAngle(RoboAngle - BallAngle);
+		calliData.setTurnAngle(BallAngle-RoboAngle);
 
 		if(calliData.getTurnAngle() > 180)
 		{
