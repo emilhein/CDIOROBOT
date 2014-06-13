@@ -65,15 +65,15 @@ public class CallibratorGUI {
 		control = new PrimaryController(findEdge);
 
 
-		// prøver at forbinde til vores robot
-		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
-		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
-		NXTConnector connt = new NXTConnector();
-		System.out.println("trying to connect");
-		connt.connectTo(nxtInfo, NXTComm.LCP);
-		System.out.println("connected"); // forbundet
-		// åbner streams}
-		final OutputStream dos = connt.getOutputStream();
+//		// prøver at forbinde til vores robot
+//		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+//		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
+//		NXTConnector connt = new NXTConnector();
+//		System.out.println("trying to connect");
+//		connt.connectTo(nxtInfo, NXTComm.LCP);
+//		System.out.println("connected"); // forbundet
+//		// åbner streams}
+//		final OutputStream dos = connt.getOutputStream();
 
 		// Scanner scan = new Scanner(System.in);
 		// while(true){
@@ -916,90 +916,90 @@ public class CallibratorGUI {
 			public void actionPerformed(ActionEvent e) {
 				// int input = scan.nextInt();
 
-				int Case;
-				int i;
-				System.out.println("TurnAngle = " + info.getTurnAngle());
-
-				int angle = (int)Math.round(Float.parseFloat("" + info.getTurnAngle()));// * (Float.parseFloat(jl17.getText()))); // vinkel
-
-				// konvertering
-				System.out.println("angle " + angle);
-				
-				System.out.println("turnAngle" + angle);
-
-				try {
-					if (Math.abs(angle) < 250) {
-						if (angle > 0) // vælger retning der skal drejes
-							Case = 21;
-						else
-							Case = 12;
-					} else {
-						angle = angle / 2;
-						if (angle > 0) // vælger retning der skal drejes
-							Case = 21;
-						else
-							Case = 12;
-						dos.write(Case); // sender case
-						dos.flush();
-						dos.write(angle); // sender vinkel
-						dos.flush();
-						Thread.sleep(700);
-					}
-					angle = Math.abs(angle);
-
-					dos.write(Case); // sender case
-					dos.flush();
-					dos.write(angle); // sender vinkel
-					dos.flush();
-
-					Thread.sleep(1200);
-					dos.write(61); // sender case
-					dos.flush();
-					dos.write(61); // sender vinkel
-					dos.flush();
-					Thread.sleep(500);
-
-					// kører robot frem
-
-				
-					
-					minLength = info.getMinLength();
-					System.out.println("Lenghtmulti " + info.getlengthMultiply());
-					System.out.println("minmulti " + info.getMinLength());
-					System.out.println("ppcm  " + findEdge.getPixPerCm());
-
-					int distance = (int) ((minLength * Math.round(info.getlengthMultiply()) / findEdge.getPixPerCm())); // længde konvertering
-
-					System.out.println("dist = " + distance);
-				
-
-					
-					dos.write(81);
-					dos.flush();
-					if (angle > 180)
-						distance -= 30;
-					i = distance / 10;
-					dos.write(i);
-					dos.flush();
-
-				
-					Thread.sleep((int) Math.round((Float.parseFloat("" +info.getMinLength())) * Float.parseFloat("" +info.getclose())));
-
-//github.com/emilhein/CDIOROBOT.git
-					// Thread.sleep((int)minLength*2);
-					// samler bold op
-					dos.write(51);
-					dos.flush();
-					dos.write(51);
-					dos.flush();
-					Thread.sleep(1200);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				int Case;
+//				int i;
+//				System.out.println("TurnAngle = " + info.getTurnAngle());
+//
+//				int angle = (int)Math.round(Float.parseFloat("" + info.getTurnAngle()));// * (Float.parseFloat(jl17.getText()))); // vinkel
+//
+//				// konvertering
+//				System.out.println("angle " + angle);
+//				
+//				System.out.println("turnAngle" + angle);
+//
+//				try {
+//					if (Math.abs(angle) < 250) {
+//						if (angle > 0) // vælger retning der skal drejes
+//							Case = 21;
+//						else
+//							Case = 12;
+//					} else {
+//						angle = angle / 2;
+//						if (angle > 0) // vælger retning der skal drejes
+//							Case = 21;
+//						else
+//							Case = 12;
+//						dos.write(Case); // sender case
+//						dos.flush();
+//						dos.write(angle); // sender vinkel
+//						dos.flush();
+//						Thread.sleep(700);
+//					}
+//					angle = Math.abs(angle);
+//
+//					dos.write(Case); // sender case
+//					dos.flush();
+//					dos.write(angle); // sender vinkel
+//					dos.flush();
+//
+//					Thread.sleep(1200);
+//					dos.write(61); // sender case
+//					dos.flush();
+//					dos.write(61); // sender vinkel
+//					dos.flush();
+//					Thread.sleep(500);
+//
+//					// kører robot frem
+//
+//				
+//					
+//					minLength = info.getMinLength();
+//					System.out.println("Lenghtmulti " + info.getlengthMultiply());
+//					System.out.println("minmulti " + info.getMinLength());
+//					System.out.println("ppcm  " + findEdge.getPixPerCm());
+//
+//					int distance = (int) ((minLength * Math.round(info.getlengthMultiply()) / findEdge.getPixPerCm())); // længde konvertering
+//
+//					System.out.println("dist = " + distance);
+//				
+//
+//					
+//					dos.write(81);
+//					dos.flush();
+//					if (angle > 180)
+//						distance -= 30;
+//					i = distance / 10;
+//					dos.write(i);
+//					dos.flush();
+//
+//				
+//					Thread.sleep((int) Math.round((Float.parseFloat("" +info.getMinLength())) * Float.parseFloat("" +info.getclose())));
+//
+////github.com/emilhein/CDIOROBOT.git
+//					// Thread.sleep((int)minLength*2);
+//					// samler bold op
+//					dos.write(51);
+//					dos.flush();
+//					dos.write(51);
+//					dos.flush();
+//					Thread.sleep(1200);
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 				// }
 
