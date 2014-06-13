@@ -31,7 +31,7 @@ public class PrimaryController {
 	private TakePicture takepic;
 	private ballMethod balls;
 	private CalcDist dist;
-	final OutputStream dos;
+	private final OutputStream dos;
 
 	public PrimaryController (DetectRects findEdge){
 		this.findEdge = findEdge;
