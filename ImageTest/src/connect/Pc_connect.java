@@ -14,8 +14,8 @@ public class Pc_connect {
 		try
 		{ 
 	//		prøver at forbinde til vores robot
-			NXTInfo nxtInfo2 = new NXTInfo(2,"G9 awesome!","0016530918D4");
-			NXTInfo nxtInfo = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
+			NXTInfo nxtInfo = new NXTInfo(2,"G9 awesome!","0016530918D4");
+			NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 			NXTConnector connt = new NXTConnector();
 			System.out.println("trying to connect");
 			connt.connectTo(nxtInfo, NXTComm.LCP);

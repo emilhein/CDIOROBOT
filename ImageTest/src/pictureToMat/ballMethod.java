@@ -125,12 +125,17 @@ public class ballMethod {
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
 						/*	
+<<<<<<< HEAD
+						// Til fremhÃ¦vning af robot
+						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grÃ¸n
+=======
 						// Til fremhævning af robot
 						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
+>>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
 							roboMat.put(j, b, 0, 255, 0);
 							break;
 						}
-						else if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rød
+						else if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rÃ¸d
 							roboMat.put(j, b, 0, 0, 255);
 							break;
 						}
@@ -141,13 +146,17 @@ public class ballMethod {
 						else {
 							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
 						}
-						 */
+
+						
+
+						// Til fremhÃ¦vning af bolde
+
 
 						// Til fremhævning af bolde
 						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
 							ballMat.put(j, b, 0, 0, 0);
 							break;
-						}
+						} */
 					}
 				}
 			}
@@ -169,7 +178,7 @@ public class ballMethod {
 		double red2= 0;
 
 		System.out.println("Balls found: " + roboCoordi.size());
-		if (roboCoordi.size()==6){
+		if (roboCoordi.size() >= 6){
 
 			roboFrontPunkt = new CvPoint(-1,-1);
 			roboBagPunkt = new CvPoint(-1,-1);
@@ -191,27 +200,28 @@ public class ballMethod {
 				return false;
 			}
 
-			if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder gr�n
+
+			if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder gr�n
 				roboFrontPunkt.x(Math.round(roboCoordi.get(3)));
 				roboFrontPunkt.y(Math.round(roboCoordi.get(4)));
 				roboBagPunkt.x(Math.round(roboCoordi.get(0)));
 				roboBagPunkt.y(Math.round(roboCoordi.get(1)));
 			}
 
-			if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder r�d
+			if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder r�d
 				roboFrontPunkt.x(Math.round(roboCoordi.get(0)));
 				roboFrontPunkt.y(Math.round(roboCoordi.get(1)));
 				roboBagPunkt.x(Math.round(roboCoordi.get(3)));
 				roboBagPunkt.y(Math.round(roboCoordi.get(4)));
 			}
 
-			if ((((green2 - blue2)/blue2) > 0.3) && (green2 > red2)) { // finder gr�n
+			if ((((green2 - blue2)/blue2) > 0.3) && (green2 > red2)) { // finder gr�n
 				roboFrontPunkt.x(Math.round(roboCoordi.get(0)));
 				roboFrontPunkt.y(Math.round(roboCoordi.get(1)));
 				roboBagPunkt.x(Math.round(roboCoordi.get(3)));
 				roboBagPunkt.y(Math.round(roboCoordi.get(4)));
 			}
-			if ((((red2 - blue2)/blue2) > 1.4) && (red2 > green2)) { // finder r�d
+			if ((((red2 - blue2)/blue2) > 1.4) && (red2 > green2)) { // finder r�d
 				roboFrontPunkt.x(Math.round(roboCoordi.get(3)));
 				roboFrontPunkt.y(Math.round(roboCoordi.get(4)));
 				roboBagPunkt.x(Math.round(roboCoordi.get(0)));

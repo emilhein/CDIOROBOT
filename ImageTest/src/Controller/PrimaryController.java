@@ -23,16 +23,15 @@ public class PrimaryController {
 	private ballMethod balls;
 	private CalcDist dist;
 
-	public PrimaryController (){
-
+	public PrimaryController (DetectRects findEdge){
+		this.findEdge = findEdge;
 		takepic = new TakePicture();
-		findEdge = new DetectRects();
 		balls = new ballMethod();
 		dist = new CalcDist();
 	}
 
 	public void start() {
-		//		takepic.takePicture();
+		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 	}
@@ -45,7 +44,7 @@ public class PrimaryController {
 
 		do {
 
-			//				takepic.takePicture();	
+						takepic.takePicture();	
 
 			//				#################  Pic to Mat  ############
 
@@ -135,17 +134,21 @@ public class PrimaryController {
 
 
 		CalcAngle Angle = new CalcAngle();
-		Float BallAngle = (float) Angle.Calcangle(nyRoboBag, nyMinPunkt);
+		Float BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
 		//System.out.println("BallAngle = " + BallAngle);
-		Float RoboAngle = (float) Angle.Calcangle(nyRoboBag, nyRoboFront);
+		Float RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
 		//System.out.println("RoboAngle = " + RoboAngle);
-		calliData.setTurnAngle(RoboAngle - BallAngle);
+		calliData.setTurnAngle(BallAngle-RoboAngle);
 
 		if(calliData.getTurnAngle() > 180)
 		{
 			calliData.setTurnAngle(calliData.getTurnAngle()-360);
 		}
-
+		if(calliData.getTurnAngle() < -180)
+		{
+			calliData.setTurnAngle(calliData.getTurnAngle()+360);
+		}
+		
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
 		//				###########################################################

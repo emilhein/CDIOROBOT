@@ -34,24 +34,25 @@ public class CallibratorGUI {
 	lblCirkleDIst, jlcolorMaxGreen, jlcolorMaxBlue, jlcolorMaxRed, jlColorMinRed, lblParameter1, lblRoboDP,
 	jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist,
 	lblRoboPar1, lblRoboPar2, jlcircleDP, jlcircleDist, jlcirclePar1, jlcirclePar2, jlcircleMinRadius, jlcircleMaxRadius, jlroboDP, jlroboMinDist,
-	jlroboPar1, jlroboPar2, jlroboMin, jlroboMax, lblimg, lblafterc, lblfindb, lblbh, lbledge,
+	jlroboPar1, jlroboPar2, jlroboMin, jlroboMax, lblimg, lblfindb, lblbh, lbledge,
 	lbltxt, lbltxtBallAngle, lbltxtRoboAngle, lbltxtTurnAngle, lblromin, lblromax, lblvinkel,
 	lbllm, lblluk, lblpov, jlAngle, jlLengthMultiply, jlClose, jlPoV;
 	private JTextField txtDP, txtmaxgrøn, txtmaxblå, txtmaxrød, txtminrød,
 	txtRoboDP, txtCirkleDIst, txtParameter1, txtParameter2,
 	txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist,
 	txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk, txtpov;
-	private ImageIcon img, afterc, findb, bh, edge;
+	private ImageIcon img, findb, bh, edge;
 	private Insets insets;
 	private JTextArea txtArea1;
 
-	private int TurnAngle = 0;
-	private int minLength = 0;
+	//private int TurnAngle = 0;
+	private Float minLength;
 	private float ppcm = 0;
 	private ArrayList<Float> RoboCoor;
 	private ArrayList<Float> ballCoor;
-	private int BallAngle;
-	private int RoboAngle;
+	//private int BallAngle;
+	//private int RoboAngle;
+
 	private DetectRects findEdge;
 	private PrimaryController control;
 	private GUIInfo info;
@@ -60,13 +61,13 @@ public class CallibratorGUI {
 	public void startGUI() throws IOException {
 
 		info = new GUIInfo();
-		control = new PrimaryController();
-		// try{
+		findEdge = new DetectRects();
+		control = new PrimaryController(findEdge);
 
 
 		// prøver at forbinde til vores robot
-		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 awesome!", "0016530918D4");
-		NXTInfo nxtInfo = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
+		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
 		System.out.println("trying to connect");
 		connt.connectTo(nxtInfo, NXTComm.LCP);
@@ -90,9 +91,6 @@ public class CallibratorGUI {
 
 		// pane.setLayout (null);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		ImageIcon afterc = new ImageIcon("billed0.png");
-		lblafterc = new JLabel(afterc, JLabel.CENTER);
 
 		ImageIcon img = new ImageIcon("RouteTest3.png");
 		lblimg = new JLabel(img, JLabel.CENTER);
@@ -239,7 +237,6 @@ public class CallibratorGUI {
 		pane.add(btnDeliver);
 
 		pane.add(lblimg);
-		pane.add(lblafterc);
 		pane.add(lblfindb);
 		pane.add(lblbh);
 		pane.add(lbltxt);
@@ -813,13 +810,6 @@ public class CallibratorGUI {
 				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
 				lbltxtTurnAngle.setText("TurnAngle = " + info.getTurnAngle());
 
-				ImageIcon afterc = new ImageIcon("billed0.png");
-				Image image1 = afterc.getImage(); // transform it
-				Image afimage = image1.getScaledInstance(400, 225,
-						java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-				afterc = new ImageIcon(afimage); // transform it back
-				// lblafterc = new JLabel (afterc, JLabel.CENTER);
-
 				ImageIcon img = new ImageIcon("RouteTest3.png");
 				Image image2 = img.getImage(); // transform it
 				Image dimage = image2.getScaledInstance(400, 225,
@@ -848,7 +838,6 @@ public class CallibratorGUI {
 				edge = new ImageIcon(edimage); // transform it back
 
 				lblimg.setIcon(img);
-				lblafterc.setIcon(afterc);
 				lblfindb.setIcon(findb);
 				lblbh.setIcon(bh);
 				lbledge.setIcon(edge);
@@ -856,14 +845,11 @@ public class CallibratorGUI {
 				lblimg.setBounds(200, insets.top + 6,
 						lblimg.getPreferredSize().width,
 						lblimg.getPreferredSize().height);
-				lblafterc.setBounds(605, insets.top + 6,
-						lblafterc.getPreferredSize().width,
-						lblafterc.getPreferredSize().height);
 				lblfindb.setBounds(200, insets.top + 236,
 						lblfindb.getPreferredSize().width,
 						lblfindb.getPreferredSize().height);
-				lblbh.setBounds(605, insets.top + 236,
-						lblbh.getPreferredSize().width,
+				lblbh.setBounds(605, insets.top + 6,
+ 						lblbh.getPreferredSize().width,
 						lblbh.getPreferredSize().height);
 				lbledge.setBounds(1010, insets.top + 6,
 						lbledge.getPreferredSize().width,
@@ -906,7 +892,6 @@ public class CallibratorGUI {
 		frame1.add(jlClose); // luk
 		frame1.add(jlPoV); //pov
 		frame1.add(lblimg);
-		frame1.add(lblafterc);
 		frame1.add(lblbh);
 		frame1.add(lbltxt);
 		frame1.add(lbltxtBallAngle);
@@ -934,9 +919,14 @@ public class CallibratorGUI {
 				int Case;
 				int i;
 				System.out.println("TurnAngle = " + info.getTurnAngle());
-				int angle = Integer.parseInt("" + info.getTurnAngle());// * (Float.parseFloat(jl17.getText()))); // vinkel
+
+				int angle = (int)Math.round(Float.parseFloat("" + info.getTurnAngle()));// * (Float.parseFloat(jl17.getText()))); // vinkel
+
 				// konvertering
 				System.out.println("angle " + angle);
+				
+				System.out.println("turnAngle" + angle);
+
 				try {
 					if (Math.abs(angle) < 250) {
 						if (angle > 0) // vælger retning der skal drejes
@@ -970,9 +960,20 @@ public class CallibratorGUI {
 					Thread.sleep(500);
 
 					// kører robot frem
-					System.out.println("minlength " + info.getMinLength());
-					int distance = (int) ((minLength * (info.getlengthMultiply())) / findEdge.getPixPerCm()); // længde konvertering
+
+				
+					
+					minLength = info.getMinLength();
+					System.out.println("Lenghtmulti " + info.getlengthMultiply());
+					System.out.println("minmulti " + info.getMinLength());
+					System.out.println("ppcm  " + findEdge.getPixPerCm());
+
+					int distance = (int) ((minLength * Math.round(info.getlengthMultiply()) / findEdge.getPixPerCm())); // længde konvertering
+
 					System.out.println("dist = " + distance);
+				
+
+					
 					dos.write(81);
 					dos.flush();
 					if (angle > 180)
@@ -981,7 +982,10 @@ public class CallibratorGUI {
 					dos.write(i);
 					dos.flush();
 
-					Thread.sleep((int) (info.getMinLength() * (info.getclose())));
+				
+					Thread.sleep((int) Math.round((Float.parseFloat("" +info.getMinLength())) * Float.parseFloat("" +info.getclose())));
+
+//github.com/emilhein/CDIOROBOT.git
 					// Thread.sleep((int)minLength*2);
 					// samler bold op
 					dos.write(51);
