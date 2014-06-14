@@ -39,8 +39,14 @@ public class DetectRects {
 	private CvSeq contoursPointer;
 	private CvSeq contoursPointer2;
 	private CvRect innerRect;
-	private CvRect obstruction;
-
+	private CvRect obstruction; // forhindring
+	private Point north;
+	private Point south;
+	private Point east;
+	private Point west;
+	
+	
+	
 	public float pixPerCm(int pixBorderWidth, int pixBorderHeight)
 	{
 		float widthPixPrCm = pixBorderWidth / externalWidth;
@@ -53,7 +59,8 @@ public class DetectRects {
 	
 	public float getPixPerCm()
 	{
-		return pixPerCm;
+		//return pixPerCm;
+		return (float)7.1233616;
 	}
 	
 	public CvPoint getGoalA()

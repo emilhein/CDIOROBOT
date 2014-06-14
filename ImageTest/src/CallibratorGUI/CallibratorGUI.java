@@ -642,11 +642,9 @@ public class CallibratorGUI {
 			public void actionPerformed(ActionEvent e) {
 				//for(int j = 0; j<2;j++){
 				//	while(true){
-				long startbutton = System.currentTimeMillis();
-
-				CvPoint minPunkt;
-				long startbuttoncheck = System.currentTimeMillis();
-
+				control.start();						
+				//				while (true){
+				for(int i = 1;i<100;i++){
 				String input1 = txtDP.getText();
 				jlcircleDP.setText(input1);
 				jlcircleDP.setBounds(150, insets.top + 20,
@@ -789,10 +787,15 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
-				control.start();
-				//				while (true){
-				info = control.loopRound(info,0);
 
+//				info = control.loopRound(info,0);
+				if(i%2 == 0){
+					info = control.loopRound(info,1); // kører til punkt foran mål
+					info = control.loopRound(info,1); // aflevere i mål.
+				}
+				
+				
+				
 				lbltxtBallAngle.setText("BallAngle = " + info.getBallAngle());
 				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
 				lbltxtTurnAngle.setText("TurnAngle = " + info.getTurnAngle());
@@ -856,6 +859,8 @@ public class CallibratorGUI {
 			}
 
 
+			}// til for-loopet
+				
 		});
 
 		frame1.add(jlcircleDP);
