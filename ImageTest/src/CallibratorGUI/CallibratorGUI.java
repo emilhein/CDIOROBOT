@@ -58,6 +58,7 @@ public class CallibratorGUI {
 	private PrimaryController control;
 	private GUIInfo info;
 	
+	private boolean first = true;
 
 	public void startGUI() throws IOException {
 
@@ -782,8 +783,14 @@ public class CallibratorGUI {
 				info.setJlPoV(jlPoV);
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
-				control.start();						
-				//				while (true){
+				
+				if(first)
+				{
+					control.start();						
+					first = false;
+				}
+			
+			//				while (true){
 			//	for(int i = 1;i<3;i++){
 
 					info = control.loopRound(info,0);

@@ -57,10 +57,12 @@ public class DetectRects {
 		//return (float) 6.761823; // er fastsat for test!
 	}
 	
+	
+	
 	public float getPixPerCm()
 	{
-		//return pixPerCm;
-		return (float)7.1233616;
+		return pixPerCm;
+		//return (float)7.1233616;
 	}
 	
 	public CvPoint getGoalA()

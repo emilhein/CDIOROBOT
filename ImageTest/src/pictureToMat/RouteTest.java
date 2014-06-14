@@ -14,13 +14,15 @@ import org.opencv.highgui.Highgui;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
 public class RouteTest {
-	static List<Integer> xCoor = new ArrayList<Integer>();
-	static List<Integer> yCoor = new ArrayList<Integer>();
-
-	public static CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
+	private List<Integer> xCoor = new ArrayList<Integer>();
+	private List<Integer> yCoor = new ArrayList<Integer>();
+	private float minLength;
+	
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
 		CvPoint minPunkt = new CvPoint(300,450);
 		float minLength = 1000000;
 		CalcDist dist = new CalcDist();
+		
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
@@ -49,7 +51,7 @@ public class RouteTest {
 			{
 				float tempLength = 0;	
 				CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
-				tempLength = dist.Calcdist(roboFrontPunkt, punkt2);
+				tempLength = dist.Calcdist(roboBagPunkt, punkt2);
 
 				if (tempLength < minLength)
 				{
@@ -89,6 +91,18 @@ public class RouteTest {
 
 
 		return minPunkt;
+	}
+
+
+
+	public float getMinLength() {
+		return minLength;
+	}
+
+
+
+	public void setMinLength(float minLength) {
+		this.minLength = minLength;
 	}
 
 

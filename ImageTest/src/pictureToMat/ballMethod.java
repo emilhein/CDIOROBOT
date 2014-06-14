@@ -9,10 +9,7 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
-
 import java.util.ArrayList;
-
-import lejos.robotics.navigation.Move;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -246,25 +243,15 @@ public class ballMethod {
 
 	public void changePerspective (Float PoV) {
 		
-		CvPoint midpunkt = new CvPoint(800,450);
-		int diffXFront = midpunkt.x() - roboFrontPunkt.x();
-		int diffYFront = midpunkt.y() - roboFrontPunkt.y();
-		int diffXBag = midpunkt.x() - roboBagPunkt.x();
-		int diffYBag = midpunkt.y() - roboBagPunkt.y();
+	
+
 		
-		roboFrontPunkt.x(roboFrontPunkt.x() + (int)(diffXFront * PoV));
-		roboFrontPunkt.y(roboFrontPunkt.y() + (int)(diffYFront * PoV));
-		roboBagPunkt.x(roboBagPunkt.x() + (int)(diffXBag * PoV));
-		roboBagPunkt.y(roboBagPunkt.y() + (int)(diffYBag * PoV));
-		
-		
-		/*
+	
 		CvPoint midpunkt = new CvPoint(800,450);
 		int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
 		int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
 		int PovBagX = roboBagPunkt.x() - midpunkt.x();
 		int PovBagY = roboBagPunkt.y() - midpunkt.y();
-		 
 		if(PovFrontX < 0)
 		{
 			if(PovFrontY<0)
@@ -319,12 +306,7 @@ public class ballMethod {
 			}
 			
 	
-		}*/
-		
-	}
-	
-	public void calculateRotationPoint()
-	{
+		}
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
 		roboBagPunkt.x(roboBagPunkt.x()+diffX);
@@ -332,6 +314,7 @@ public class ballMethod {
 
 		System.out.println("Robot frontpunkt = (" + roboFrontPunkt.x() + "," + roboFrontPunkt.y() +")");
 		System.out.println("Robot bagpunkt = (" + roboBagPunkt.x() + "," + roboBagPunkt.y() +")");
+		
 	}
 
 	public ArrayList<Float> getBallCoordi () {
@@ -344,4 +327,3 @@ public class ballMethod {
 		return roboBagPunkt;
 	}
 }
-
