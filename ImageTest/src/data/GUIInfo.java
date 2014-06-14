@@ -8,14 +8,8 @@ public class GUIInfo {
 	private JLabel jlcircleDP, jlcircleDist, jlcirclePar1, jlcirclePar2, jlcircleMinRadius, jlcircleMaxRadius, jlroboDP, jlroboMinDist, jlroboPar1, jlroboPar2, jlroboMin, jlroboMax, jlAngle, jlPoV,
 	lbltxt;
 	private JTextArea txtArea1;
-	private Float turnAngle, ballAngle, roboAngle, PoV, lengthMultiply, close, minLength; 
-	
-	public Float getMinLength() {
-		return minLength;
-	}
-	public void setMinLength(Float minLength) {
-		this.minLength = minLength;
-	}
+	private Float turnAngle, ballAngle, roboAngle, PoV, lengthMultiply, close;
+
 	public JLabel getJlcircleDP() {
 		return jlcircleDP;
 	}
