@@ -19,25 +19,16 @@ public class TakePicture {
     	}
     	else {
     		
-    		Mat frame = new Mat();
-    	    while(true){
-    	    	
-    	    	if (camera.read(frame))
-    	    	{
-    	    		System.out.println("Frame Obtained");
-    	    		System.out.println("Captured Frame Width " + 
-    	    		frame.width() + " Height " + frame.height());
-    	    		
-    	    		Highgui.imwrite("billed0.png", frame);
+    		Mat frame = new Mat();	
+	    	camera.read(frame);
+    		System.out.println("Frame Obtained");
+    		System.out.println("Captured Frame Width " + 
+    		frame.width() + " Height " + frame.height());
+    		
+    		Highgui.imwrite("billed0.png", frame);
 
-        	    	System.out.println("Picture saved");
-        	    	System.out.println();
-        	    	break;
-    	    	}
-    	    	else {
-					System.out.println("No picture taken.");
-				}
-    	    }
+	    	System.out.println("Picture saved");
+	    	System.out.println();
     	}	
     	
     	camera.release();

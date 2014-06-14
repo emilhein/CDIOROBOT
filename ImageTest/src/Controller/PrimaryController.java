@@ -85,6 +85,7 @@ public class PrimaryController {
 		while (balls.determineDirection()==false);
 
 		balls.changePerspective(calliData.getPoV());
+		balls.calculateRotationPoint();
 		
 		
 		//				################### Find Balls #####################################
