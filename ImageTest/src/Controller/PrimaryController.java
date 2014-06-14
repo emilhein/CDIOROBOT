@@ -31,7 +31,7 @@ public class PrimaryController {
 	private TakePicture takepic;
 	private ballMethod balls;
 	private CalcDist dist;
-	private final OutputStream dos;
+//!!	private final OutputStream dos;
 
 	public PrimaryController (DetectRects findEdge){
 		this.findEdge = findEdge;
@@ -39,7 +39,7 @@ public class PrimaryController {
 		balls = new ballMethod();
 		dist = new CalcDist();
 
-		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+/*!!		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
 //		System.out.println("trying to connect");
@@ -47,12 +47,12 @@ public class PrimaryController {
 //		System.out.println("connected"); // forbundet
 		// åbner streams}
 		dos = connt.getOutputStream();
-		
+		!!*/
 	}
 
 	public void start() {
 		
-		takepic.takePicture();
+		//!!takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 	}
@@ -64,7 +64,7 @@ public class PrimaryController {
 
 		do {
 
-						takepic.takePicture();	
+						//!!takepic.takePicture();	
 
 			//				#################  Pic to Mat  ############
 
@@ -165,7 +165,7 @@ public class PrimaryController {
 		if(deliverButtom == 1)deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
 		else{
 		
-		send(calliData); 
+		//send(calliData); 
 		}
 		
 		return calliData;
@@ -193,6 +193,7 @@ public class PrimaryController {
 		calliData.setRoboAngle(RoboAngle);
 	}
 
+	/*!!
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
@@ -288,7 +289,7 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}
+	}!!*/
 
 	public void deliverBalls(GUIInfo calliData, CvPoint nyRoboFront, CvPoint nyRoboBag, CvPoint nyMinPunkt) {
 		if(toGoal == 0){toGoal = 1;
