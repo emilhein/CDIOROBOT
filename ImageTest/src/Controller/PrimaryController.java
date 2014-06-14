@@ -122,7 +122,7 @@ public class PrimaryController {
 
 		//				##########################################################################
 		
-		
+		/*
 		int intppcm = (int)(Math.round(ppcm));
 		CvPoint middle = new CvPoint(findEdge.getGoalA().x()+(90*intppcm),findEdge.getGoalA().y()); // in the middle of field
 		
@@ -130,7 +130,7 @@ public class PrimaryController {
 		CvPoint corner1 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//1
 		CvPoint corner4 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//4
 		CvPoint corner2 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//2 
-
+*/
 		/*
 		1 												2
 		 -------------------------------------------|
@@ -146,7 +146,7 @@ public class PrimaryController {
 		 -------------------------------------------|	
 		 3												4
 		 */
-
+/*
 		System.out.println(corner1.x() + " corner1 " + corner1.y());
 		System.out.println(corner2.x() + " corner2 " + corner2.y());
 		System.out.println(corner3.x() + " corner3 " + corner3.y());
@@ -175,7 +175,6 @@ public class PrimaryController {
 		else if(moveBack == 1)moveBack++;
 		else moveBack = 0;
 		
-			// TODO bare for at finde rundt i koden
 		if(minPunkt.x() > corner1.x() + (18*intppcm) && minPunkt.x() < corner2.x() - (18*intppcm)
 				&& minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm))
 		{
@@ -200,7 +199,7 @@ public class PrimaryController {
 			minPunkt = new CvPoint(minPunkt.y(), minPunkt.x()-(36*intppcm));
 			System.out.println("side D");
 		}
-		
+		*/
 		if(firstRun == 'a'){
 			ballCount = (ballCoor.size() / 3);
 			firstRun = 'b';
@@ -374,7 +373,7 @@ public class PrimaryController {
 			if(moveBack == 1){
 				dos.write(80);
 				dos.flush();
-				dos.write(51);
+				dos.write(10);
 				dos.flush();
 				Thread.sleep(1200);
 			}
@@ -395,7 +394,7 @@ public class PrimaryController {
 		minPunkt.y(goalA.y());
 		}
 		else{ toGoal = 2;
-		minPunkt.x(goalA.x()-50);
+		minPunkt.x(goalA.x()-180);
 		minPunkt.y(goalA.y());
 		}
 		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()
