@@ -34,7 +34,9 @@ public class TakePicture {
         	    	System.out.println();
         	    	break;
     	    	}
-    	    		
+    	    	else {
+					System.out.println("No picture taken.");
+				}
     	    }
     	}	
     	

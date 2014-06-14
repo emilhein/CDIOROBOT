@@ -22,8 +22,8 @@ import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
 
 public class PrimaryController {
-	private CvPoint goalA;
-	private CvPoint minPunkt;
+	CvPoint goalA;
+	CvPoint minPunkt;
 	private Float minLength;
 	private int toGoal = 0;
 	private Float ppcm;
@@ -31,8 +31,6 @@ public class PrimaryController {
 	private TakePicture takepic;
 	private ballMethod balls;
 	private CalcDist dist;
-	private int moveBack = 0;
-	//final OutputStream dos;
 	private final OutputStream dos;
 
 	public PrimaryController (DetectRects findEdge){
@@ -44,27 +42,18 @@ public class PrimaryController {
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 		NXTConnector connt = new NXTConnector();
-		System.out.println("trying to connect");
+//		System.out.println("trying to connect");
 		connt.connectTo(nxtInfo, NXTComm.LCP);
-		System.out.println("connected"); // forbundet
+//		System.out.println("connected"); // forbundet
 		// åbner streams}
 		dos = connt.getOutputStream();
-		
 	}
 
 	public void start() {
-		long startpic = System.currentTimeMillis();
-
+		
 		takepic.takePicture();
-		
-		long endpic = System.currentTimeMillis();
-		System.out.println("picture takes = " + (endpic-startpic));
-
-		
 		findEdge.detectAllRects();
-		System.out.println("Still here");
 		ppcm = findEdge.getPixPerCm();
-
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -200,6 +189,7 @@ public class PrimaryController {
 			System.out.println("side D");
 		}
 		*/
+
 		if(firstRun == 'a'){
 			ballCount = (ballCoor.size() / 3);
 			firstRun = 'b';
@@ -245,13 +235,13 @@ public class PrimaryController {
 		angleCal(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
 		//				###########################################################
 
-		calliData.setMinLength(Math.abs((dist.Calcdist(roboBagPunkt, minPunkt))-35));
+		calliData.setMinLength(Math.abs(dist.Calcdist(roboFrontPunkt, minPunkt)));
 
 
 		//				#############################################################
 
 		
-		if(deliverButtom == 1)deliverBalls(calliData, roboFrontPunkt, roboBagPunkt);
+		if(deliverButtom == 1)deliverBalls(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
 		else{
 		
 		send(calliData); 
@@ -370,13 +360,15 @@ public class PrimaryController {
 				Thread.sleep(1200);
 				toGoal = 0;
 			}
+			/*
 			if(moveBack == 1){
 				dos.write(80);
 				dos.flush();
 				dos.write(10);
 				dos.flush();
 				Thread.sleep(1200);
-			}
+			}*/
+
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -386,24 +378,17 @@ public class PrimaryController {
 		}
 	}
 
-	public void deliverBalls(GUIInfo calliData, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
-		goalA = findEdge.getGoalB();
-		if(toGoal == 0){
-		toGoal = 1;
-		minPunkt.x((goalA.x())-250);
+	public void deliverBalls(GUIInfo calliData, CvPoint nyRoboFront, CvPoint nyRoboBag, CvPoint nyMinPunkt) {
+		if(toGoal == 0){toGoal = 1;
+		
+		minPunkt.x(goalA.x()-500);
 		minPunkt.y(goalA.y());
 		}
 		else{ toGoal = 2;
 		minPunkt.x(goalA.x()-180);
+
 		minPunkt.y(goalA.y());
 		}
-		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()
-				- roboBagPunkt.x(), roboFrontPunkt.y()
-				- roboBagPunkt.y());
-		CvPoint nyRoboBag = new CvPoint(0, 0);
-		CvPoint nyMinPunkt = new CvPoint(minPunkt.x()- roboBagPunkt.x(), minPunkt.y()- roboBagPunkt.y());	
 		angleCal(calliData, nyRoboFront, nyRoboBag, nyMinPunkt);
-		calliData.setMinLength(Math.abs((dist.Calcdist(nyRoboBag, nyMinPunkt))-35));
-		send(calliData); 
 	}
 }

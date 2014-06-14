@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-<<<<<<< HEAD
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7(32 bit)"/>
-=======
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0(32-bit)"/>
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv"/>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Desktop/javacv-bin/javacpp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Desktop/javacv-bin/javacv.jar"/>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Desktop/javacv-bin/javacv-android-arm.jar"/>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Desktop/javacv-bin/javacv-windows-x86.jar"/>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Desktop/javacv-bin/javacv-windows-x86_64.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/openCV"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacpp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-android-arm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-0.1-bin/javacv-bin/javacv-windows-x86_64.jar"/>
 	<classpathentry exported="true" kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Programmer/opencv/build/java/opencv-248.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Documents/opencv/build/java/opencv-248.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NXT_PC"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/leJOS NXJ/lib/pc/pccomm.jar" sourcepath="C:/Program Files (x86)/leJOS NXJ/lib/pc/pccomm-src.zip">
 		<accessrules>
 			<accessrule kind="discouraged" pattern="**/internal/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/marti_000/Desktop/javacv-cppjars/opencv-2.4.4-windows-x86.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Emil/Desktop/javacv-cppjars/opencv-2.4.4-windows-x86.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
