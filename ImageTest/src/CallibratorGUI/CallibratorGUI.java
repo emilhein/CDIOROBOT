@@ -640,11 +640,7 @@ public class CallibratorGUI {
 
 		btnApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//for(int j = 0; j<2;j++){
-				//	while(true){
-				control.start();						
-				//				while (true){
-				for(int i = 1;i<100;i++){
+				
 				String input1 = txtDP.getText();
 				jlcircleDP.setText(input1);
 				jlcircleDP.setBounds(150, insets.top + 20,
@@ -786,13 +782,18 @@ public class CallibratorGUI {
 				info.setJlPoV(jlPoV);
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
+				control.start();						
+				//				while (true){
+			//	for(int i = 1;i<3;i++){
 
-
+					info = control.loopRound(info,0);
+					//if(i%2 == 0){
+					//	info = control.loopRound(info,1); // kører til punkt foran mål
+					//	info = control.loopRound(info,1); // aflevere i mål.
+					//}
+				//}
 //				info = control.loopRound(info,0);
-				if(i%2 == 0){
-					info = control.loopRound(info,1); // kører til punkt foran mål
-					info = control.loopRound(info,1); // aflevere i mål.
-				}
+				
 				
 				
 				
@@ -858,8 +859,10 @@ public class CallibratorGUI {
 				//				}
 			}
 
+				
+			
 
-			}// til for-loopet
+			
 				
 		});
 

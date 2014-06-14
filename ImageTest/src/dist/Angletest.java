@@ -5,9 +5,9 @@ import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 public class Angletest {
 
 	public static void main(String[] args) {
-		CvPoint roboFrontPunkt = new CvPoint(3,2);
-		CvPoint roboBagPunkt = new CvPoint(2,2);
-		CvPoint minPunkt = new CvPoint(2,3);
+		CvPoint roboFrontPunkt = new CvPoint(1,0);
+		CvPoint roboBagPunkt = new CvPoint(0,0);
+		CvPoint minPunkt = new CvPoint(1,1);
 		
 		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()-roboBagPunkt.x(),roboFrontPunkt.y()-roboBagPunkt.y());
 		CvPoint nyRoboBag = new CvPoint(0,0);
