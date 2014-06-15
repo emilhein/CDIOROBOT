@@ -108,7 +108,7 @@ public class PrimaryController {
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
 	
 
-		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt, findEdge.getGoalA()); // tegner dem i testprogrammet
+		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt, findEdge.getGoalA(), ppcm); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " +minPunkt.y());
 
 		//				##########################################################################
@@ -116,8 +116,7 @@ public class PrimaryController {
 		
 		int intppcm = (int)(Math.round(ppcm));
 		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
-		
-		//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
+//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
 		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
 		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
 		//CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
@@ -329,13 +328,18 @@ public class PrimaryController {
 			dos.flush();
 
 			Thread.sleep(1200);
+			/*
 			if(toGoal < 1){
 			dos.write(61); // sender case
 			dos.flush();
 			dos.write(61); // sender vinkel
 			dos.flush();
 			Thread.sleep(500);
-			}
+			}*/
+			
+			
+			
+			
 			// kører robot frem
 
 		
@@ -349,9 +353,10 @@ public class PrimaryController {
 
 			System.out.println("dist = " + distance);
 		
-			//!!distance -= 22; // for at lande foran bolden
+			distance -= 28; // for at lande foran bolden
+			Thread.sleep(600);
 			/*
-			 * Thread.sleep(600);
+			
 
 			
 			dos.write(91);
@@ -371,7 +376,7 @@ public class PrimaryController {
 			
 		
 			Thread.sleep((int) Math.round((Float.parseFloat("" +route.getMinLength())) * Float.parseFloat("" +calliData.getclose())));
-
+			/*
 			if(toGoal < 1){
 			// samler bold op
 			dos.write(51);
@@ -380,7 +385,15 @@ public class PrimaryController {
 			dos.flush();
 			Thread.sleep(1200);
 			}
-			
+			*/
+			if(toGoal < 1){
+				// samler bold op
+				dos.write(41);
+				dos.flush();
+				dos.write(41);
+				dos.flush();
+				Thread.sleep(1200);
+				}
 			if(toGoal == 2){
 				dos.write(71);
 				dos.flush();
