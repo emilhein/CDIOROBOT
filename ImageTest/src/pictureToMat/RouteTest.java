@@ -18,7 +18,7 @@ public class RouteTest {
 	private List<Integer> yCoor = new ArrayList<Integer>();
 	private float minLength = 1000000;
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm) {
 		CvPoint minPunkt = new CvPoint(300,450);
 		CalcDist dist = new CalcDist();
 		
@@ -78,7 +78,8 @@ public class RouteTest {
 		
 		
 		paintPoint(frame,new CvPoint(1600/2, 900/2), 0, 128, 128,30); // midten af billedet
-		
+		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
+
 	/*	DetectRects findEdge = new DetectRects();
 		float ppcm = findEdge.getPixPerCm();
 		int height = findEdge.getInnerRect().height() + (60 * (int)ppcm);

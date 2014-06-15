@@ -108,7 +108,7 @@ public class PrimaryController {
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
 	
 
-		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt, findEdge.getGoalA()); // tegner dem i testprogrammet
+		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt, findEdge.getGoalA(), ppcm); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " +minPunkt.y());
 
 		//				##########################################################################
@@ -116,8 +116,7 @@ public class PrimaryController {
 		
 		int intppcm = (int)(Math.round(ppcm));
 		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
-		
-		//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
+//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
 		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
 		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
 		//CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
@@ -354,9 +353,10 @@ public class PrimaryController {
 
 			System.out.println("dist = " + distance);
 		
-			//!!distance -= 22; // for at lande foran bolden
+			distance -= 28; // for at lande foran bolden
+			Thread.sleep(600);
 			/*
-			 * Thread.sleep(600);
+			
 
 			
 			dos.write(91);
