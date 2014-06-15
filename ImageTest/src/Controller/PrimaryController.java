@@ -58,10 +58,10 @@ public class PrimaryController {
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
-		char firstRun = 'a';
+	/*	char firstRun = 'a';
 		int ballCount = 0;
 		int count = 0;
-
+*/
 		do {
 
 						takepic.takePicture();	
@@ -353,7 +353,7 @@ public class PrimaryController {
 
 			System.out.println("dist = " + distance);
 		
-			distance -= 28; // for at lande foran bolden
+			distance -= 32; // for at lande foran bolden
 			Thread.sleep(600);
 			/*
 			
@@ -422,7 +422,7 @@ public class PrimaryController {
 
 	public void deliverBalls(GUIInfo calliData) {
 		if(toGoal == 0){toGoal = 1;
-		
+		goalA = findEdge.getGoalA();
 		minPunkt.x(goalA.x()-500);
 		minPunkt.y(goalA.y());
 		}
