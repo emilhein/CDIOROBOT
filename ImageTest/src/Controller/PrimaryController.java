@@ -108,7 +108,7 @@ public class PrimaryController {
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
 	
 
-		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt, findEdge.getGoalA()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " +minPunkt.y());
 
 		//				##########################################################################

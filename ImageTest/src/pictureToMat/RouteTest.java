@@ -18,7 +18,7 @@ public class RouteTest {
 	private List<Integer> yCoor = new ArrayList<Integer>();
 	private float minLength = 1000000;
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA) {
 		CvPoint minPunkt = new CvPoint(300,450);
 		CalcDist dist = new CalcDist();
 		
