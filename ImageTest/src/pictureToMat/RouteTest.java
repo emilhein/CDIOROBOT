@@ -16,11 +16,10 @@ import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 public class RouteTest {
 	private List<Integer> xCoor = new ArrayList<Integer>();
 	private List<Integer> yCoor = new ArrayList<Integer>();
-	private float minLength;
+	private float minLength = 1000000;
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA) {
 		CvPoint minPunkt = new CvPoint(300,450);
-		float minLength = 1000000;
 		CalcDist dist = new CalcDist();
 		
 
