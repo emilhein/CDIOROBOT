@@ -1033,64 +1033,6 @@ public class CallibratorGUI {
 	public void determineDirection(ArrayList<Float> RoboCoor,double blue,double green, double red,double blue2, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
 
 
-		if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
-			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-		}
-
-		if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rød
-			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-		}
-
-		if ((((green2 - blue2)/blue2) > 0.3) && (green2 > red2)) { // finder grøn
-			roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-		}
-		if ((((red2 - blue2)/blue2) > 1.4) && (red2 > green2)) { // finder rød
-			roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-			roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-			roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-			roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-		}
-		/*
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
-		try {
-			if (red > 245) {
-				roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-				roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-				roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-				roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-			} else if (red2 > 245) {
-				roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-				roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-				roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-				roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-			} else if (green > 245) {
-				roboFrontPunkt.x(Math.round(RoboCoor.get(3)));
-				roboFrontPunkt.y(Math.round(RoboCoor.get(4)));
-				roboBagPunkt.x(Math.round(RoboCoor.get(0)));
-				roboBagPunkt.y(Math.round(RoboCoor.get(1)));
-			} else if (green2 > 245) {
-				roboFrontPunkt.x(Math.round(RoboCoor.get(0)));
-				roboFrontPunkt.y(Math.round(RoboCoor.get(1)));
-				roboBagPunkt.x(Math.round(RoboCoor.get(3)));
-				roboBagPunkt.y(Math.round(RoboCoor.get(4)));
-			}
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("OUT OF BOUND BITCH");
-		}
-<<<<<<< HEAD
-
-		double PovM = 0.1;
-=======
-		 */
 		double PovM = Double.parseDouble(jlPoV.getText());
 		CvPoint midpunkt = new CvPoint(800,450);
 		int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
