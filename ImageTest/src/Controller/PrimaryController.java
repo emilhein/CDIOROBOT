@@ -33,6 +33,7 @@ public class PrimaryController {
 	private final OutputStream dos;
 	private RouteTest route;
 	private int moveBack = 0;
+	private int ifTemp = 0;
 
 	public PrimaryController (DetectRects findEdge){
 		this.findEdge = findEdge;
@@ -53,7 +54,7 @@ public class PrimaryController {
 
 	public void start() {
 		
-		takepic.takePicture();
+		//takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 	}
@@ -65,7 +66,7 @@ public class PrimaryController {
 */
 		do {
 
-						takepic.takePicture();	
+					//	takepic.takePicture();	
 
 			//				#################  Pic to Mat  ############
 
@@ -239,28 +240,58 @@ public class PrimaryController {
 		//				#############################################################
 		
 		if(deliverButtom == 1){
-			deliverBalls(calliData);
-		}
-		else{
+			if(toGoal == 0){
+				toGoal = 1;
+				goalA = findEdge.getGoalA();
+				
+				minPunkt.x(goalA.x()-500);
+				minPunkt.y(goalA.y());
+				CvPoint tempGoal  = new CvPoint(minPunkt.x(),minPunkt.y());
+				angleCal(calliData, tempGoal);
+				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()-minPunkt.x()));
+
+				send(calliData);
+				}
+				else{ toGoal = 2;
+				
+				minPunkt.x(goalA.x()-180);
+				minPunkt.y(goalA.y());
+			
+				CvPoint tempGoal  = new CvPoint(minPunkt.x(),minPunkt.y());
+				angleCal(calliData, tempGoal);
+				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()-minPunkt.x()));
+
+				send(calliData);
+				
+				}
+				angleCal(calliData, minPunkt);		
+			}
+	
+		
+		
+		//*****************************Avoid edge*******************************
 			if(minPunkt.x()<l3 || minPunkt.x()>l4 || minPunkt.y()<l1 || minPunkt.y()>l2){
 				// bold under L1!
 				CvPoint tempPoint  = new CvPoint(balls.getRoboBagPunkt().x()-(balls.getRoboBagPunkt().x()-minPunkt.x()),balls.getRoboBagPunkt().y());
 				angleCal(calliData, tempPoint);
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()-minPunkt.x()));
+				ifTemp = 1;
 				send(calliData);
+				
 				calliData.setTurnAngle(90F);
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()-minPunkt.y()));
 				moveBack = 1;
 				
 			}
+			
 			else
 			{
 				angleCal(calliData, minPunkt);
 			}
-
+		
 			send(calliData); 
 
-		}
+		
 		
 		return calliData;
 	}
@@ -330,24 +361,9 @@ public class PrimaryController {
 			dos.write(angle); // sender vinkel
 			dos.flush();
 
-			Thread.sleep(1200);
-			/*
-			if(toGoal < 1){
-			dos.write(61); // sender case
-			dos.flush();
-			dos.write(61); // sender vinkel
-			dos.flush();
-			Thread.sleep(500);
-			}*/
-			
-			
-			
-			
+			Thread.sleep(1200);			
 			// kører robot frem
-
-		
-			
-		
+	
 			System.out.println("Lenghtmulti " + calliData.getlengthMultiply());
 			System.out.println("minmulti " + route.getMinLength());
 			System.out.println("ppcm  " + findEdge.getPixPerCm());
@@ -358,16 +374,6 @@ public class PrimaryController {
 		
 			distance -= 6*ppcm; // for at lande foran bolden
 			Thread.sleep(600);
-			/*
-			
-
-			
-			dos.write(91);
-			dos.flush();
-			dos.write(91);//random tal
-			dos.flush();
-			
-			 */
 			
 			dos.write(81);
 			dos.flush();
@@ -389,18 +395,19 @@ public class PrimaryController {
 			Thread.sleep(1200);
 			}
 			*/
-			if(toGoal < 1){
+			if(toGoal < 1 || ifTemp < 1){
 				// samler bold op
 				dos.write(41);
 				dos.flush();
 				dos.write(41);
 				dos.flush();
 				Thread.sleep(1200);
+				ifTemp = 0;
 				}
 			if(toGoal == 2){
-				dos.write(71);
+				dos.write(31);
 				dos.flush();
-				dos.write(71);
+				dos.write(31);
 				dos.flush();
 				Thread.sleep(1200);
 				toGoal = 0;
@@ -425,16 +432,17 @@ public class PrimaryController {
 	}
 
 	public void deliverBalls(GUIInfo calliData) {
-		if(toGoal == 0){toGoal = 1;
-		goalA = findEdge.getGoalA();
-		minPunkt.x(goalA.x()-500);
-		minPunkt.y(goalA.y());
-		}
-		else{ toGoal = 2;
-		minPunkt.x(goalA.x()-180);
-
-		minPunkt.y(goalA.y());
-		}
-		angleCal(calliData, minPunkt);
+//		if(toGoal == 0){
+//		toGoal = 1;
+//		goalA = findEdge.getGoalA();
+//		minPunkt.x(goalA.x()-500);
+//		minPunkt.y(goalA.y());
+//		}
+//		else{ toGoal = 2;
+//		minPunkt.x(goalA.x()-180);
+//
+//		minPunkt.y(goalA.y());
+//		}
+//		angleCal(calliData, minPunkt);
 	}
 }
