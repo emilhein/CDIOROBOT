@@ -39,6 +39,10 @@ public class ballMethod {
 
 		System.loadLibrary("opencv_java248");  
 
+		Mat pic0 = Highgui.imread("billed0.png");
+		ballMat = pic0.clone();
+		roboMat = pic0.clone();
+		
 		Mat webcam_image;
 		if(findRobot)
 			webcam_image = roboMat;
