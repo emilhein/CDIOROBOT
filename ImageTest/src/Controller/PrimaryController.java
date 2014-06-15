@@ -86,7 +86,7 @@ public class PrimaryController {
 		while (balls.determineDirection()==false);
 
 		balls.changePerspective(calliData.getPoV());
-		//balls.calculateRotationPoint();
+		balls.calculateRotationPoint();
 		
 		
 		//				################### Find Balls #####################################
@@ -115,12 +115,12 @@ public class PrimaryController {
 		
 		
 		int intppcm = (int)(Math.round(ppcm));
-		//CvPoint middle = new CvPoint(findEdge.getGoalA().x()+(90*intppcm),findEdge.getGoalA().y()); // in the middle of field
+		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
 		
-		//CvPoint corner3 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//3
-		CvPoint corner1 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//1
-		CvPoint corner4 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//4
-		//CvPoint corner2 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//2 
+		//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
+		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
+		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
+		//CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
 
 		int l1 = corner1.y()+(int)(5*ppcm); 
 		int l2 = corner4.y()-(int)(5*ppcm);
@@ -214,7 +214,7 @@ public class PrimaryController {
 			if (count == 2) {
 				System.out.println("HEJ2");
 
-				goalA = findEdge.getGoalB();
+				goalA = findEdge.getGoalA();
 
 				minPunkt.x(goalA.x());
 				minPunkt.y(goalA.y());
@@ -246,10 +246,10 @@ public class PrimaryController {
 				// bold under L1!
 				CvPoint tempPoint  = new CvPoint(balls.getRoboBagPunkt().x()-(balls.getRoboBagPunkt().x()-minPunkt.x()),balls.getRoboBagPunkt().y());
 				angleCal(calliData, tempPoint);
-				route.setMinLength(balls.getRoboBagPunkt().x()-minPunkt.x());
+				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()-minPunkt.x()));
 				send(calliData);
 				calliData.setTurnAngle(90F);
-				route.setMinLength(balls.getRoboBagPunkt().y()-minPunkt.y());
+				route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()-minPunkt.y()));
 			}
 			else
 			{

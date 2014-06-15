@@ -92,8 +92,6 @@ public class DetectRects {
     	Mat imgOrig = Highgui.imread("billed0.png");
     	Mat img = imgOrig.clone();
 		
-    	System.out.println(img.rows());
-    	System.out.println(img.cols());
 		for (int j = 0; j < img.rows(); j++)
 		{
 			for (int b = 0; b < img.cols(); b++)
@@ -127,14 +125,10 @@ public class DetectRects {
         	brownThresholded = ImageIO.read(new File("BrownThreshold.png"));
 
         	IplImage thresholdImg = IplImage.createFrom(brownThresholded);
-        	
-        	System.out.println(thresholdImg != null);
 
         	CvSize cvSize = cvSize(thresholdImg.width(), thresholdImg.height());
         	IplImage grayImg = cvCreateImage(cvSize, thresholdImg.depth(), 1);
         	cvCvtColor(thresholdImg, grayImg, CV_BGR2GRAY);
-        	
-        	System.out.println(grayImg != null);
 
         	IplImage grayImg2 = grayImg.clone();
         	CvMemStorage storage = CvMemStorage.create();
@@ -145,34 +139,8 @@ public class DetectRects {
         	cvFindContours(grayImg, storage, contours, Loader.sizeof(CvContour.class), CV_RETR_CCOMP, CV_CHAIN_APPROX_NONE, new CvPoint(0,0));
         	cvFindContours(grayImg2, storage2, contours2, Loader.sizeof(CvContour.class), CV_RETR_CCOMP, CV_CHAIN_APPROX_NONE, new CvPoint(0,0));
         	
-
-        	System.out.println(contours != null);
-
-        	System.out.println(contours2 != null);
-        	
         	contoursPointer = contours;
         	contoursPointer2 = contours2;
-        	System.out.println("Har den en næste fra start af? " + contoursPointer2.h_next());
-        	CvRect r = cvBoundingRect(contoursPointer2.h_next(), 0);
-        	System.out.println("r " + r);
-        //	int red = 0;
-        //	int blue = 0;
-        //	int green = 0;
-        	
-           /* while (contoursPointer != null && !contoursPointer.isNull()) {
-                if (contoursPointer.elem_size() > 0) {
-                	red = (red + 100) % 255;
-                	blue = (blue + 30) % 255;
-                	green = (green + 145) % 255;
-                	System.out.println(red);
-                	System.out.println(green);
-                	System.out.println(blue);
-                	CvSeq points = cvApproxPoly(contoursPointer, Loader.sizeof(CvContour.class),
-                            storage, CV_POLY_APPROX_DP, cvContourPerimeter(contoursPointer)*0.02, 0);
-                    cvDrawContours(thresholdImg, points, CV_RGB(red, green, blue), CV_RGB(red, green, blue), -1, 1, CV_AA);
-                }
-                contoursPointer = contoursPointer.h_next();
-            }*/
         	
     	    // ----- Detect border
     		
@@ -180,12 +148,9 @@ public class DetectRects {
     		CvPoint p1 = new CvPoint(0,0), p2 = new CvPoint(0,0);
     	    CvRect greatest = new CvRect(0,0,0,0);
 
-    	    System.out.println("cp1 " + contoursPointer);
     	    for (ptr = contoursPointer; ptr != null; ptr = ptr.h_next()) {
-
-    	    	System.out.println("ptr " + ptr);
+    	    	
     	    	CvRect sq = cvBoundingRect(ptr, 0);
-    	    	System.out.println("d");
 
     	        if(sq.width() > greatest.width() && sq.height() > greatest.height())
     	        {
@@ -196,7 +161,6 @@ public class DetectRects {
     	            p2.y(sq.y()+sq.height());
     	        }
     	    }
-    	    System.out.println("HER1");
 
     	    BufferedImage buffImg = ImageIO.read(new File("billed0.png"));
         	IplImage edge = IplImage.createFrom(buffImg);
@@ -219,16 +183,11 @@ public class DetectRects {
             p2.y(innerRect.y()+innerRect.height());
     	    
     	    cvRectangle(edge, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
-    	    
-          // cnvs.showImage(img);
-    	    
-    	    goalA = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
-    	    goalB= new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
+
+    	    goalA = new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
+    	    goalB = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
     	    
     	    cvLine(edge, goalA, goalB, CV_RGB(0,200,255), 3,0,0);
-    	    
-
-        	System.out.println("HER2");
     	    
     	    
     	    // ----- Detect obstruction
@@ -239,15 +198,9 @@ public class DetectRects {
     	    obstruction = new CvRect(0,0,0,0);
     	    CvRect sq;
 
-    	    System.out.println("cp2 " + contoursPointer2);
-    	    System.out.println("prev: " + contoursPointer2.h_prev());
-        	System.out.println("HER3");
         	int c = 0;
-    	    for (ptr = contoursPointer2; ptr != null; ptr = ptr.h_next()) {
-    	    	System.out.println("c " + c);
-    	    	System.out.println("ptr " + ptr);
+    	    for (ptr = contoursPointer2; ptr != null; ptr = ptr.h_next()) {;
     	    	sq = cvBoundingRect(ptr, 0);
-    	    	System.out.println("d");
 
     	        if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
     	        {
@@ -267,7 +220,6 @@ public class DetectRects {
         	cvSaveImage("edge.png", edge);
         } catch (IOException e) {
         	// TODO Auto-generated catch block
-        	System.out.println("hej");
         	e.printStackTrace();
         }
 	}

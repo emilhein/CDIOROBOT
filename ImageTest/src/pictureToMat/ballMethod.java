@@ -243,70 +243,20 @@ public class ballMethod {
 
 	public void changePerspective (Float PoV) {
 		
-	
-
-		
-	
 		CvPoint midpunkt = new CvPoint(800,450);
-		int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
-		int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
-		int PovBagX = roboBagPunkt.x() - midpunkt.x();
-		int PovBagY = roboBagPunkt.y() - midpunkt.y();
-		if(PovFrontX < 0)
-		{
-			if(PovFrontY<0)
-			{
-				roboFrontPunkt.x((int)(roboFrontPunkt.x()+PoV*Math.abs(PovFrontX)));
-				roboFrontPunkt.y((int)(roboFrontPunkt.y()+PoV*Math.abs(PovFrontY)));
-			}
-			else
-			{
-
-				roboFrontPunkt.x((int)(roboFrontPunkt.x()+PoV*Math.abs(PovFrontX)));
-				roboFrontPunkt.y((int)(roboFrontPunkt.y()-PoV*Math.abs(PovFrontY)));
-			}
-		}
-		else
-		{
-			if(PovFrontY<0)
-			{
-				roboFrontPunkt.x((int)(roboFrontPunkt.x()-PoV*Math.abs(PovFrontX)));
-				roboFrontPunkt.y((int)(roboFrontPunkt.y()+PoV*Math.abs(PovFrontY)));
-			}
-			else 
-			{
-				roboFrontPunkt.x((int)(roboFrontPunkt.x()-PoV*Math.abs(PovFrontX)));
-				roboFrontPunkt.y((int)(roboFrontPunkt.y()-PoV*Math.abs(PovFrontY)));
-			}
-		}
-		if(PovBagX < 0)
-		{
-			if(PovBagY<0)
-			{
-				roboBagPunkt.x((int)(roboBagPunkt.x()+PoV*Math.abs(PovBagX)));
-				roboBagPunkt.y((int)(roboBagPunkt.y()+PoV*Math.abs(PovBagY)));
-			}
-			else
-			{
-				roboBagPunkt.x((int)(roboBagPunkt.x()+PoV*Math.abs(PovBagX)));
-				roboBagPunkt.y((int)(roboBagPunkt.y()-PoV*Math.abs(PovBagY)));
-			}
-		}
-		else
-		{
-			if(PovBagY<0)
-			{
-				roboBagPunkt.x((int)(roboBagPunkt.x()-PoV*Math.abs(PovBagX)));
-				roboBagPunkt.y((int)(roboBagPunkt.y()+PoV*Math.abs(PovBagY)));
-			}
-			else
-			{
-				roboBagPunkt.x((int)(roboBagPunkt.x()-PoV*Math.abs(PovBagX)));
-				roboBagPunkt.y((int)(roboBagPunkt.y()-PoV*Math.abs(PovBagY)));
-			}
-			
+		int diffXFront = midpunkt.x() - roboFrontPunkt.x();
+		int diffYFront = midpunkt.y() - roboFrontPunkt.y();
+		int diffXBag = midpunkt.x() - roboBagPunkt.x();
+		int diffYBag = midpunkt.y() - roboBagPunkt.y();
+		
+		roboFrontPunkt.x(roboFrontPunkt.x() + (int)(diffXFront * PoV));
+		roboFrontPunkt.y(roboFrontPunkt.y() + (int)(diffYFront * PoV));
+		roboBagPunkt.x(roboBagPunkt.x() + (int)(diffXBag * PoV));
+		roboBagPunkt.y(roboBagPunkt.y() + (int)(diffYBag * PoV));
+	}
 	
-		}
+	public void calculateRotationPoint()
+	{
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
 		roboBagPunkt.x(roboBagPunkt.x()+diffX);
@@ -314,7 +264,6 @@ public class ballMethod {
 
 		System.out.println("Robot frontpunkt = (" + roboFrontPunkt.x() + "," + roboFrontPunkt.y() +")");
 		System.out.println("Robot bagpunkt = (" + roboBagPunkt.x() + "," + roboBagPunkt.y() +")");
-		
 	}
 
 	public ArrayList<Float> getBallCoordi () {
