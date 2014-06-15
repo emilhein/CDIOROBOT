@@ -329,13 +329,18 @@ public class PrimaryController {
 			dos.flush();
 
 			Thread.sleep(1200);
+			/*
 			if(toGoal < 1){
 			dos.write(61); // sender case
 			dos.flush();
 			dos.write(61); // sender vinkel
 			dos.flush();
 			Thread.sleep(500);
-			}
+			}*/
+			
+			
+			
+			
 			// kører robot frem
 
 		
@@ -371,7 +376,7 @@ public class PrimaryController {
 			
 		
 			Thread.sleep((int) Math.round((Float.parseFloat("" +route.getMinLength())) * Float.parseFloat("" +calliData.getclose())));
-
+			/*
 			if(toGoal < 1){
 			// samler bold op
 			dos.write(51);
@@ -380,7 +385,15 @@ public class PrimaryController {
 			dos.flush();
 			Thread.sleep(1200);
 			}
-			
+			*/
+			if(toGoal < 1){
+				// samler bold op
+				dos.write(41);
+				dos.flush();
+				dos.write(41);
+				dos.flush();
+				Thread.sleep(1200);
+				}
 			if(toGoal == 2){
 				dos.write(71);
 				dos.flush();
