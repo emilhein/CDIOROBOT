@@ -32,6 +32,7 @@ public class PrimaryController {
 	private CalcDist dist;
 	private final OutputStream dos;
 	private RouteTest route;
+	private int moveBack = 0;
 
 	public PrimaryController (DetectRects findEdge){
 		this.findEdge = findEdge;
@@ -249,6 +250,8 @@ public class PrimaryController {
 				send(calliData);
 				calliData.setTurnAngle(90F);
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()-minPunkt.y()));
+				moveBack = 1;
+				
 			}
 			else
 			{
@@ -353,7 +356,7 @@ public class PrimaryController {
 
 			System.out.println("dist = " + distance);
 		
-			distance -= 32; // for at lande foran bolden
+			distance -= 6*ppcm; // for at lande foran bolden
 			Thread.sleep(600);
 			/*
 			
@@ -402,14 +405,15 @@ public class PrimaryController {
 				Thread.sleep(1200);
 				toGoal = 0;
 			}
-			/*
+			
 			if(moveBack == 1){
 				dos.write(80);
 				dos.flush();
-				dos.write(10);
+				dos.write(5);
 				dos.flush();
 				Thread.sleep(1200);
-			}*/
+				moveBack = 0;
+			}
 
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
