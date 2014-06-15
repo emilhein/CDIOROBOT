@@ -9,7 +9,10 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
+
+
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -32,6 +35,7 @@ public class ballMethod {
 	private ArrayList<Float> ballCoordi;
 	private CvPoint roboFrontPunkt;
 	private CvPoint roboBagPunkt;
+	private Random random;
 
 	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 
@@ -47,7 +51,10 @@ public class ballMethod {
 		if(findRobot)
 			webcam_image = roboMat;
 		else
+		{
+			pictureToMat2("billed0.png");
 			webcam_image = ballMat;
+		}
 
 		Mat circles = new Mat();
 		if( !webcam_image.empty() )  
@@ -56,20 +63,20 @@ public class ballMethod {
 			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);
 
 			webcam_image.convertTo(webcam_image, CvType.CV_8UC1);
-
+			
 
 			Highgui.imwrite("TEST.png", webcam_image);
 
 			// load image
-			IplImage img = cvLoadImage("TEST.png");
+			//IplImage img = cvLoadImage("TEST.png");
 
 			// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
-			IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
+			//IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
 
 			// convert image to grayscale
-			cvCvtColor(img, imageGray, CV_BGR2GRAY);
+			//cvCvtColor(img, imageGray, CV_BGR2GRAY);
 
-			cvSaveImage("TEST.png", imageGray);
+			//cvSaveImage("TEST.png", img);
 
 			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
 
@@ -88,26 +95,106 @@ public class ballMethod {
 				}
 
 			}
-
 			//-- 5. Display the image  
 
 			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
+			
 
+			if(findRobot)
+				roboCoordi = Coordi;
+			else
+			{
+				ballCoordi = Coordi;
+			}
 		}  
 		else  
 		{  
 			System.out.println(" --(!) No captured frame -- Break!"); 
 		}
+	}
+	
+	public void pictureToMat2(String image) {
 
-		if (findRobot)
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		
+		random = new Random();
+
+		Mat pic0 = Highgui.imread(image);
+		ballMat = pic0.clone();
+		roboMat = pic0.clone();
+		
+		CvPoint onRoboPoint = new CvPoint(roboBagPunkt.x() + (roboFrontPunkt.x() - roboBagPunkt.x())/2, roboBagPunkt.y() + (roboFrontPunkt.y() - roboBagPunkt.y())/2);
+		//!! TEST
+		onRoboPoint.x(onRoboPoint.x() + 15);
+		onRoboPoint.y(onRoboPoint.y() + 15);
+		//!! TEST SLUT
+		
+		double[] whiteCompare = pic0.get(onRoboPoint.y(), onRoboPoint.x());
+		double whiteCompareR = whiteCompare[2];
+		double whiteCompareG = whiteCompare[1];
+		double whiteCompareB = whiteCompare[0];
+		
+		System.out.println("---------------------------------------");
+		System.out.println("RED compare: " + whiteCompareR);
+		System.out.println("GREEN compare: " + whiteCompareG);
+		System.out.println("BLUE compare: " + whiteCompareB);
+		System.out.println("---------------------------------------");
+
+		paintPoint(pic0, onRoboPoint, 255, 0, 0,20);
+		
+		double randRed, randGreen, randBlue;
+
+		try
 		{
-			roboCoordi=Coordi;
+			for (int j = 0; j < pic0.rows(); j++) {
+				
+				randRed = random.nextInt(80);
+				randGreen= random.nextInt(80);
+				randBlue = random.nextInt(80);
+				
+				for (int b = 0; b < pic0.cols(); b++) {
+					double[] rgb = pic0.get(j, b);
+					for (int i = 0; i < rgb.length; i = i + 3) {
+						double blue = rgb[i];
+						double green = rgb[i + 1];
+						double red = rgb[i + 2];
+						
+						if(whiteCompareR/red < 2.2 && whiteCompareG/green < 2.2 && whiteCompareB/blue < 2.2)
+						{
+							//ballMat.put(j, b, 255, 255, 255);
+						}
+						else
+						{
+							ballMat.put(j, b, randRed, randGreen, randBlue);
+						}
+						
+					}
+				}
+			}
 		}
-		else 
-		{
-			ballCoordi=Coordi;		
+		catch (Exception e) {
+			System.out.println("Could not convert image properly");
 		}
 
+		Highgui.imwrite("BOT.png", pic0);
+	}
+	
+	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
+		for (int a = 0; a < size; a++)
+		{
+			for (int b = 0; b < size; b++)
+			{
+				try
+				{
+					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KR�VER Y F�R X
+				}
+				catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					System.out.println("Could not paint requested point");
+				}
+			}
+		}
 	}
 
 
@@ -128,14 +215,9 @@ public class ballMethod {
 						double blue = rgb[i];
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
-						/*	
-<<<<<<< HEAD
+						/*
 						// Til fremhÃ¦vning af robot
-						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grÃ¸n
-=======
-						// Til fremhævning af robot
-						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
->>>>>>> branch 'master' of https://github.com/emilhein/CDIOROBOT.git
+						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder gr�n
 							roboMat.put(j, b, 0, 255, 0);
 							break;
 						}

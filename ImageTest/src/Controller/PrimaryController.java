@@ -52,7 +52,7 @@ public class PrimaryController {
 
 	public void start() {
 		
-		takepic.takePicture();
+		//takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 	}
@@ -64,7 +64,7 @@ public class PrimaryController {
 
 		do {
 
-						takepic.takePicture();	
+						//takepic.takePicture();	
 
 			//				#################  Pic to Mat  ############
 
@@ -84,9 +84,6 @@ public class PrimaryController {
 
 		}
 		while (balls.determineDirection()==false);
-
-		balls.changePerspective(calliData.getPoV());
-		balls.calculateRotationPoint();
 		
 		
 		//				################### Find Balls #####################################
@@ -103,6 +100,9 @@ public class PrimaryController {
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 
 		//				################### Nearest Ball #######################################
+
+		balls.changePerspective(calliData.getPoV());
+		balls.calculateRotationPoint();
 
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
@@ -236,7 +236,7 @@ public class PrimaryController {
 
 
 		//				#############################################################
-		
+		/*!!
 		if(deliverButtom == 1){
 			deliverBalls(calliData);
 		}
@@ -258,7 +258,7 @@ public class PrimaryController {
 			send(calliData); 
 
 		}
-		
+		!!*/
 		return calliData;
 	}
 
