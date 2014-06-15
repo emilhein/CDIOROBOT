@@ -172,8 +172,8 @@ public class CallibratorGUI {
 		txtCirkleDIst.setText("10");
 		txtParameter1.setText("40");
 		txtParameter2.setText("16");
-		txtMinradius.setText("13");
-		txtMaxradius.setText("18");
+		txtMinradius.setText("8");
+		txtMaxradius.setText("14");
 		// ROBOT
 		txtRoboDP.setText("1");
 		txtromin.setText("30");

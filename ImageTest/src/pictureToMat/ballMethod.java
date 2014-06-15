@@ -11,6 +11,7 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.core.CvType;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
+import com.googlecode.javacv.cpp.opencv_core.CvRect;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 
@@ -37,7 +39,7 @@ public class ballMethod {
 	private CvPoint roboBagPunkt;
 	private Random random;
 
-	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
+	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot, CvPoint corner1, CvPoint corner4){ 
 
 		ArrayList<Float> Coordi = new ArrayList<Float>();
 
@@ -52,7 +54,7 @@ public class ballMethod {
 			webcam_image = roboMat;
 		else
 		{
-			pictureToMat2("billed0.png");
+			pictureToMat2("billed0.png", corner1, corner4);
 			webcam_image = ballMat;
 		}
 
@@ -113,7 +115,7 @@ public class ballMethod {
 		}
 	}
 	
-	public void pictureToMat2(String image) {
+	public void pictureToMat2(String image, CvPoint corner1, CvPoint corner4) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
@@ -159,7 +161,11 @@ public class ballMethod {
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
 						
-						if(whiteCompareR/red < 2.2 && whiteCompareG/green < 2.2 && whiteCompareB/blue < 2.2)
+						if(b < corner1.x() || corner4.x() < b || j < corner1.y() || corner4.y() < j)
+						{
+							ballMat.put(j, b, randRed, randGreen, randBlue);
+						}
+						else if(whiteCompareR/red < 2.2 && whiteCompareG/green < 2.2 && whiteCompareB/blue < 2.2)
 						{
 							//ballMat.put(j, b, 255, 255, 255);
 						}
@@ -186,7 +192,7 @@ public class ballMethod {
 			{
 				try
 				{
-					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
+					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRï¿½VER Y Fï¿½R X
 				}
 				catch (Exception e)
 				{
@@ -217,7 +223,7 @@ public class ballMethod {
 						double red = rgb[i + 2];
 						/*
 						// Til fremhÃƒÂ¦vning af robot
-						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
+						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grï¿½n
 							roboMat.put(j, b, 0, 255, 0);
 							break;
 						}

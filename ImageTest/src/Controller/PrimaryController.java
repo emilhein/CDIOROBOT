@@ -64,8 +64,20 @@ public class PrimaryController {
 		/*
 		 * char firstRun = 'a'; int ballCount = 0; int count = 0;
 		 */
+	
+		//################# Calculate corners ########################
+		
+		int intppcm = (int)(Math.round(ppcm));
+		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
+		//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
+		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
+		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
+		//CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
+		
+		
+		//################## Take picture until robot is found #########
 		do {
-			takepic.takePicture();
+			takepic.takePicture();	
 
 			// ################# Pic to Mat ############
 
@@ -80,7 +92,7 @@ public class PrimaryController {
 					calliData.getIntJlroboDP(),
 					calliData.getIntJlroboMinDist(),
 					calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),
-					"robo", true);
+					"robo", true, corner1, corner4);
 
 		} while (balls.determineDirection() == false);
 
@@ -91,7 +103,8 @@ public class PrimaryController {
 				calliData.getIntJlcircleMaxRadius(),
 				calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),
 				calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),
-				"balls", false);
+				
+				"balls", false, corner1, corner4);
 
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 
@@ -110,23 +123,14 @@ public class PrimaryController {
 
 		// ##########################################################################
 
-		int intppcm = (int) (Math.round(ppcm));
-		// CvPoint middle = new
-		// CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y());
-		// // in the middle of field
-		// CvPoint corner3 = new
-		// CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
-		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(), findEdge
-				.getGoalB().y() - (60 * intppcm));// 1
-		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(), findEdge
-				.getGoalA().y() + (60 * intppcm));// 4
-		// CvPoint corner2 = new
-		// CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2
+	
 
-		int l1 = corner1.y() + (int) (5 * ppcm);
-		int l2 = corner4.y() - (int) (5 * ppcm);
-		int l3 = corner1.x() + (int) (5 * ppcm);
-		int l4 = corner4.x() - (int) (5 * ppcm);
+
+		int l1 = corner1.y()+(int)(5*ppcm); 
+		int l2 = corner4.y()-(int)(5*ppcm);
+		int l3 = corner1.x()+(int)(5*ppcm);
+		int l4 = corner4.x()-(int)(5*ppcm);
+
 
 		/*
 		 * System.out.println(minPunkt.x() + " minPunkt " + minPunkt.y());
@@ -201,8 +205,14 @@ public class PrimaryController {
 
 		// #############################################################
 
-		if (deliverButtom == 1) {
-			if (toGoal == 0) {
+	
+
+		//				#############################################################
+
+		
+	
+		if(deliverButtom == 1){
+			if(toGoal == 0){
 				toGoal = 1;
 				goalA = findEdge.getGoalA();
 
@@ -257,6 +267,8 @@ public class PrimaryController {
 		}
 
 		send(calliData);
+
+			
 		return calliData;
 	}
 
