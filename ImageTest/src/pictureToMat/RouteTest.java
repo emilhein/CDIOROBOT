@@ -71,7 +71,7 @@ public class RouteTest {
 		}
 		xCoor.clear();yCoor.clear();
 
-		paintPoint(frame, new CvPoint(minPunkt.x()+10, minPunkt.y()+10), 255, 0, 0,20); // farver tætteste bold rød
+		paintPoint(frame, new CvPoint(minPunkt.x(), minPunkt.y()), 255, 0, 0,20); // farver tætteste bold rød
 
 		paintPoint(frame,new CvPoint(roboBagPunkt.x(), roboBagPunkt.y()), 0, 128, 255,20); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,60); // farver robot forpunkt
@@ -83,7 +83,6 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
 		//********************* Draw the corners of the world ***************************
-		System.out.println("coordinates := +" + north.x()+north.y()+south.x()+south.y()+east.x()+east.y()+west.x()+west.y());
 		
 		paintPoint(frame,new CvPoint(north.x(), north.y()), 0 ,0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(south.x(), south.y()), 0, 0, 0,40); // farver robot bagpunkt

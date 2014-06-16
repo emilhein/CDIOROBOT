@@ -303,30 +303,22 @@ public class DetectRects {
 		int margin = (int)(8*pixPerCm);
 
 		miner1 = obstruction.x()- margin;
-		setMiner1(miner1);
 		miner2 = obstruction.x()+obstruction.width()+margin;
-		setMiner2(miner2);
 		miner3 = obstruction.y()-margin;
-		setMiner3(miner3);
 		miner4 = obstruction.y()+obstruction.height()+margin;
-		setMiner4(miner4);
 		System.out.println("miners = " + miner1+miner2+miner3+miner4);
 	}
 
 	public void findMajors () {
 		int margin = ((int)(8*pixPerCm));
 		
-		north = new CvPoint (miner1+(miner2-miner1/2),(miner3-margin)); 
-		setNorth(new CvPoint (miner1+(miner2-miner1/2),(miner3-margin)));
+		north = new CvPoint (miner1+((miner2-miner1)/2),(miner3-margin)); 
 		
-		south = new CvPoint (miner1+(miner2-miner1/2),(miner4+margin)); 
-		setSouth( new CvPoint (miner1+(miner2-miner1/2),(miner4+margin)));
+		south = new CvPoint (miner1+((miner2-miner1)/2),(miner4+margin)); 
 
-		east = new CvPoint (miner2+margin,miner3+(miner4-miner3/2));
-		setEast( new CvPoint (miner2+margin,miner3+(miner4-miner3/2)));
+		east = new CvPoint (miner2+margin,miner3+((miner4-miner3)/2));
 		
-		west =  new CvPoint (miner1-margin,miner3+(miner4-miner3/2));
-		setWest( new CvPoint (miner1-margin,miner3+(miner4-miner3/2)));
+		west =  new CvPoint (miner1-margin,miner3+((miner4-miner3)/2));
 	}
 	
 }
