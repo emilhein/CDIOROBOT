@@ -312,7 +312,6 @@ public class PrimaryController {
 			roboBagPunkt.y(roboBagPunkt.y()+diffY);
 			angleCal(calliData, minPunkt);
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
-			
 			backMove = 2; } 
 		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)&& moveBack == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
