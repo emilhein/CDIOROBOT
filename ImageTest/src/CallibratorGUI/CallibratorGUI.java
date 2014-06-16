@@ -132,7 +132,8 @@ public class CallibratorGUI {
 		txtmaxblå = new JTextField(10);								txtmaxrød = new JTextField(10);
 		txtminrød = new JTextField(10);								txtvinkel = new JTextField(10);
 		txtlm = new JTextField(10);									txtluk = new JTextField(10);						
-
+		txtpov = new JTextField(10);
+		
 		// BOLDE
 		txtDP.setText("1");																						
 		txtCirkleDIst.setText("10");
