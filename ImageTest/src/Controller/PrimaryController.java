@@ -132,9 +132,7 @@ public class PrimaryController {
 				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
-		// ##########################################################################
-
-
+		
 		// ############################# Calc Angle ###################
 		String text1 = "Antal bolde fundet: " + (ballCoor.size() / 3);
 		JTextArea txtArea1 = new JTextArea(text1, 1, 1);
@@ -144,15 +142,7 @@ public class PrimaryController {
 		lbltxt.setText(text1);
 
 		calliData.setLbltxt(lbltxt);
-
-		// #############################################################
-
-	
-
-		//				#############################################################
-		
-		
-	
+			
 		if(deliverButtom == 1){
 			if(toGoal == 0){
 				toGoal = 1;
