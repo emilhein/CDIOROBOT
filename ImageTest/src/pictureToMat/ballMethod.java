@@ -169,10 +169,10 @@ public class ballMethod {
 						{
 							//ballMat.put(j, b, 255, 255, 255);
 						}
-						/*else
+						else
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
-						}*/
+						}
 						
 					}
 				}
