@@ -284,7 +284,7 @@ public class PrimaryController {
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()+(25*intppcm));
 			System.out.println("corner1"); 
 			angleCal(calliData, tempPoint);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
 			moveBack = 2; } 
@@ -292,7 +292,7 @@ public class PrimaryController {
 			CvPoint tempPoint = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
 			System.out.println("corner2"); 
 			angleCal(calliData, tempPoint);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
 			moveBack = 2; } 
@@ -300,7 +300,7 @@ public class PrimaryController {
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
 			System.out.println("corner3"); 
 			angleCal(calliData, tempPoint);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
 			moveBack = 2; }
@@ -308,7 +308,7 @@ public class PrimaryController {
 			CvPoint tempPoint = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
 			System.out.println("corner4");
 			angleCal(calliData, tempPoint);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
 			moveBack = 2; }
