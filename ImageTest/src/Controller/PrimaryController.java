@@ -69,10 +69,10 @@ public class PrimaryController {
 		
 		int intppcm = (int)(Math.round(ppcm));
 		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
-		//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
+		CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
 		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
 		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
-		//CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
+		CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
 		
 		
 		//################## Take picture until robot is found #########
@@ -270,7 +270,28 @@ public class PrimaryController {
 
 		}
 
+		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm) && moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()+(25*intppcm));
+			System.out.println("corner1"); 
+			moveBack = 1; } 
+		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(18*intppcm)&& moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
+			System.out.println("corner2"); 
+			moveBack = 1; } 
+		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)&& moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
+			System.out.println("corner3"); 
+			moveBack = 1; }
+		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (18*intppcm)&& moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
+			System.out.println("corner4");
+			moveBack = 1; }
+		else if(moveBack ==	1){
+			moveBack++; 
+		}
+		
 		else {
+			moveBack = 0;
 			angleCal(calliData, minPunkt);
 		}
 
