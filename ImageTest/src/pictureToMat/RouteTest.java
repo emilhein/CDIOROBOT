@@ -38,7 +38,7 @@ public class RouteTest {
 			{
 				for (int g = 0; g < 20; g++)
 				{
-					frame.put(((Math.round(Coordi.get(c+1))) + i), ((Math.round(Coordi.get(c))) + g), 0, 0, 0);
+					frame.put(((Math.round(Coordi.get(c+1))-10) + i), ((Math.round(Coordi.get(c))-10) + g), 0, 0, 0);
 
 				}
 			}

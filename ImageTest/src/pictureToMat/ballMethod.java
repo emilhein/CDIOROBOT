@@ -192,7 +192,7 @@ public class ballMethod {
 			{
 				try
 				{
-					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRÆVER Y FØR X
+					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KRï¿½VER Y Fï¿½R X
 				}
 				catch (Exception e)
 				{
@@ -223,7 +223,7 @@ public class ballMethod {
 						double red = rgb[i + 2];
 						/*
 						// Til fremhÃƒÂ¦vning af robot
-						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grøn
+						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder grï¿½n
 							roboMat.put(j, b, 0, 255, 0);
 							break;
 						}
