@@ -29,7 +29,7 @@ public class PrimaryController {
 	private DetectRects findEdge;
 	private TakePicture takepic;
 	private ballMethod balls;
-	private CalcDist dist;
+//	private CalcDist dist;
 	private final OutputStream dos;
 	private RouteTest route;
 	private int moveBack = 0;
@@ -39,16 +39,16 @@ public class PrimaryController {
 		this.findEdge = findEdge;
 		takepic = new TakePicture();
 		balls = new ballMethod();
-		dist = new CalcDist();
+	//	dist = new CalcDist();
 		route = new RouteTest();
 
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");// robot nr
 																	// 2
 		NXTConnector connt = new NXTConnector();
-		// System.out.println("trying to connect");
+		System.out.println("trying to connect");
 		connt.connectTo(nxtInfo, NXTComm.LCP);
-		// System.out.println("connected"); // forbundet
+		 System.out.println("connected"); // forbundet
 		// åbner streams}
 		dos = connt.getOutputStream();
 	}
@@ -58,6 +58,9 @@ public class PrimaryController {
 		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
+		findEdge.findMiners();
+		findEdge.findMajors();
+
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -78,7 +81,7 @@ public class PrimaryController {
 		System.out.println("Corner2: (" + corner2.x() + "," + corner2.y() + ")");
 		System.out.println("Corner3: (" + corner3.x() + "," + corner3.y() + ")");
 		System.out.println("Corner4: (" + corner4.x() + "," + corner4.y() + ")");
-		
+
 		
 		//################## Take picture until robot is found #########
 		do {
@@ -121,6 +124,8 @@ public class PrimaryController {
 
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
+
+		System.out.println("coordinates 0 := +" + findEdge.getNorth().x()+findEdge.getNorth().y()+findEdge.getSouth().x()+findEdge.getSouth().y()+findEdge.getEast().x()+findEdge.getEast().y()+findEdge.getWest().x()+findEdge.getWest().y());
 
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
 				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
@@ -275,7 +280,28 @@ public class PrimaryController {
 
 		}
 
+		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm) && moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()+(25*intppcm));
+			System.out.println("corner1"); 
+			moveBack = 1; } 
+		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(18*intppcm)&& moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
+			System.out.println("corner2"); 
+			moveBack = 1; } 
+		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)&& moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
+			System.out.println("corner3"); 
+			moveBack = 1; }
+		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (18*intppcm)&& moveBack == 0){ 
+			minPunkt = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
+			System.out.println("corner4");
+			moveBack = 1; }
+		else if(moveBack ==	1){
+			moveBack++; 
+		}
+		
 		else {
+			moveBack = 0;
 			angleCal(calliData, minPunkt);
 		}
 

@@ -83,11 +83,13 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
 		//********************* Draw the corners of the world ***************************
-		paintPoint(frame,new CvPoint(north.x(), north.y()), 70 , 128, 255,20); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(south.x(), south.y()), 70, 128, 255,20); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(east.x(),east.y()), 70, 128, 255,20); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(west.x(), west.y()), 70, 128, 255,20); // farver robot bagpunkt
-
+		System.out.println("coordinates := +" + north.x()+north.y()+south.x()+south.y()+east.x()+east.y()+west.x()+west.y());
+		
+		paintPoint(frame,new CvPoint(north.x(), north.y()), 0 ,0, 0,40); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(south.x(), south.y()), 0, 0, 0,40); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(east.x(),east.y()), 0, 0, 0,40); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
+	
 		
 	/*	DetectRects findEdge = new DetectRects();
 		float ppcm = findEdge.getPixPerCm();
