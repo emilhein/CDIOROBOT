@@ -264,8 +264,6 @@ public class DetectRects {
     	    cvLine(edge, goalA, goalB, CV_RGB(0,200,255), 3,0,0);
     	    
     	    
-    	    
-    	    
     	    // ----- Detect obstruction
     	    
     	    ptr = new CvSeq();
@@ -291,7 +289,6 @@ public class DetectRects {
     	    }
     	    
     	    
-        	
         	cvSaveImage("BrownThreshold2.png", thresholdImg);
         	cvSaveImage("edge.png", edge);
         } catch (IOException e) {
@@ -300,6 +297,7 @@ public class DetectRects {
 	}
 
 	public void findMiners () {
+
 		int margin = (int)(8*pixPerCm);
 
 		miner1 = obstruction.x()- margin;
