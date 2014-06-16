@@ -134,76 +134,7 @@ public class PrimaryController {
 
 		// ##########################################################################
 
-	
-		System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
 
-		int l1 = corner1.y()+(int)(5*ppcm); 
-		int l2 = corner4.y()-(int)(5*ppcm);
-		int l3 = corner1.x()+(int)(5*ppcm);
-		int l4 = corner4.x()-(int)(5*ppcm);
-
-
-		/*
-		 * System.out.println(minPunkt.x() + " minPunkt " + minPunkt.y());
-		 * if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() +
-		 * (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() <
-		 * corner1.y() + (18*intppcm) && moveBack == 0){ minPunkt = new CvPoint
-		 * (minPunkt.x()+(25*intppcm),minPunkt.y()+(25*intppcm));
-		 * System.out.println("corner1"); moveBack = 1; } else if(minPunkt.x() <
-		 * corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) &&
-		 * minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +
-		 * (18*intppcm)&& moveBack == 0){ minPunkt = new CvPoint
-		 * (minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
-		 * System.out.println("corner2"); moveBack = 1; } else if(minPunkt.x() >
-		 * corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&
-		 * minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -
-		 * (18*intppcm)&& moveBack == 0){ minPunkt = new CvPoint
-		 * (minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
-		 * System.out.println("corner3"); moveBack = 1; } else if(minPunkt.x() <
-		 * corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) &&
-		 * minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() -
-		 * (18*intppcm)&& moveBack == 0){ minPunkt = new CvPoint
-		 * (minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
-		 * System.out.println("corner4"); moveBack = 1; } else if(moveBack ==
-		 * 1)moveBack++; else moveBack = 0;
-		 * 
-		 * if(minPunkt.x() > corner1.x() + (18*intppcm) && minPunkt.x() <
-		 * corner2.x() - (18*intppcm) && minPunkt.y() > corner1.y() &&
-		 * minPunkt.y() < corner1.y() + (18*intppcm)) { minPunkt = new
-		 * CvPoint(minPunkt.x(), minPunkt.y()+(36*intppcm));
-		 * System.out.println("side A"); } else if(minPunkt.x() > corner3.x() +
-		 * (18*intppcm) && minPunkt.x() < corner4.x() - (18*intppcm) &&
-		 * minPunkt.y() > corner3.y() && minPunkt.y() < corner3.y() -
-		 * (18*intppcm)) { minPunkt = new CvPoint(minPunkt.x(),
-		 * minPunkt.y()-(36*intppcm)); System.out.println("side B"); } else
-		 * if(minPunkt.x() > corner1.y() + (18*intppcm) && minPunkt.y() <
-		 * corner3.y() - (18*intppcm) && minPunkt.x() > corner1.x() &&
-		 * minPunkt.x() < corner1.x() + (18*intppcm)) { minPunkt = new
-		 * CvPoint(minPunkt.y(), minPunkt.x()+(36*intppcm));
-		 * System.out.println("side C"); } else if(minPunkt.x() > corner2.y() +
-		 * (18*intppcm) && minPunkt.y() < corner4.y() - (18*intppcm) &&
-		 * minPunkt.x() > corner2.x() && minPunkt.x() <
-		 * corner2.x()-(18*intppcm)) { minPunkt = new CvPoint(minPunkt.y(),
-		 * minPunkt.x()-(36*intppcm)); System.out.println("side D"); }
-		 */
-		/*
-		 * if(firstRun == 'a'){ ballCount = (ballCoor.size() / 3); firstRun =
-		 * 'b'; } int tempCount = (ballCoor.size() / 3);
-		 * //System.out.println("tempcount = " + tempCount);
-		 * //System.out.println("Ballcount = " + ballCount);
-		 * 
-		 * if (tempCount == ballCount - 1) { System.out.println("HEJ1");
-		 * count++; ballCount = tempCount; if (count == 2) {
-		 * System.out.println("HEJ2");
-		 * 
-		 * goalA = findEdge.getGoalA();
-		 * 
-		 * minPunkt.x(goalA.x()); minPunkt.y(goalA.y()); count = 0;
-		 * System.out.println("koordinaterne til Minpunkt er ("+ minPunkt.x() +
-		 * "," + minPunkt.y() + ")");
-		 * 
-		 * } }
-		 */
 		// ############################# Calc Angle ###################
 		String text1 = "Antal bolde fundet: " + (ballCoor.size() / 3);
 		JTextArea txtArea1 = new JTextArea(text1, 1, 1);
@@ -232,7 +163,7 @@ public class PrimaryController {
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
-
+				
 				send(calliData);
 			} else {
 				toGoal = 2;
@@ -252,13 +183,24 @@ public class PrimaryController {
 		}
 
 		// ***************************** Avoid edge*******************************
+		
+		System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
+
+		int l1 = corner1.y()+(int)(5*ppcm); 
+		int l2 = corner4.y()-(int)(5*ppcm);
+		int l3 = corner1.x()+(int)(5*ppcm);
+		int l4 = corner4.x()-(int)(5*ppcm);
+
+
+
 		if (minPunkt.x() < l1 || minPunkt.x() > l4 || minPunkt.y() < l3|| minPunkt.y() > l2) {
 			// bold under L1!
 			CvPoint tempPoint = new CvPoint(balls.getRoboBagPunkt().x()	- (balls.getRoboBagPunkt().x() - minPunkt.x()), balls.getRoboBagPunkt().y());
 			angleCal(calliData, tempPoint);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
-			send(calliData);
+			System.out.println("Før send 1");
+			send(calliData); // robot skal gerne være kørt til temporary point (vinkelret på bolden og kanten)
 			calliData.setTurnAngle(90F);
 
 			if( minPunkt.y() > l2){
@@ -288,6 +230,14 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
+			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
+			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+			roboFrontPunkt.x(tempPoint.x());
+			roboFrontPunkt.y(tempPoint.x());
+			roboBagPunkt.x(roboBagPunkt.x()+diffX);
+			roboBagPunkt.y(roboBagPunkt.y()+diffY);
+			angleCal(calliData, minPunkt);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
 			backMove = 2; } 
 		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(18*intppcm)&& moveBack == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
@@ -296,6 +246,14 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
+			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
+			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+			roboFrontPunkt.x(tempPoint.x());
+			roboFrontPunkt.y(tempPoint.x());
+			roboBagPunkt.x(roboBagPunkt.x()+diffX);
+			roboBagPunkt.y(roboBagPunkt.y()+diffY);
+			angleCal(calliData, minPunkt);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
 			backMove = 2; } 
 		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)&& moveBack == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
@@ -304,7 +262,15 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
-			backMove = 2; }
+			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
+			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+			roboFrontPunkt.x(tempPoint.x());
+			roboFrontPunkt.y(tempPoint.x());
+			roboBagPunkt.x(roboBagPunkt.x()+diffX);
+			roboBagPunkt.y(roboBagPunkt.y()+diffY);
+			angleCal(calliData, minPunkt);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			backMove = 2; } 
 		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (18*intppcm)&& moveBack == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
 			System.out.println("corner4");
@@ -312,7 +278,15 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
 			send(calliData);
-			backMove = 2; }
+			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
+			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+			roboFrontPunkt.x(tempPoint.x());
+			roboFrontPunkt.y(tempPoint.x());
+			roboBagPunkt.x(roboBagPunkt.x()+diffX);
+			roboBagPunkt.y(roboBagPunkt.y()+diffY);
+			angleCal(calliData, minPunkt);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			backMove = 2; } 
 		else if(backMove ==	2){
 			backMove--; 
 		}
@@ -321,6 +295,7 @@ public class PrimaryController {
 			backMove = 0;
 			angleCal(calliData, minPunkt);
 		}
+		System.out.println("Før send 2");
 
 		send(calliData);
 
@@ -423,9 +398,9 @@ public class PrimaryController {
 			dos.flush();
 			System.out.println(" Efter kørfrem");
 
-			Thread.sleep((int) Math.round((Float.parseFloat(""
-					+ route.getMinLength()))
-					* Float.parseFloat("" + calliData.getclose())));
+			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
+			System.out.println("Efter en wait");
+			
 			/*
 			 * if(toGoal < 1){ // samler bold op dos.write(51); dos.flush();
 			 * dos.write(51); dos.flush(); Thread.sleep(1200); }
@@ -467,7 +442,7 @@ public class PrimaryController {
 				Thread.sleep(1200);
 				moveBack = 0;
 			}
-
+			System.out.println("I slut send");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -477,7 +452,7 @@ public class PrimaryController {
 		}
 	}
 
-	public void deliverBalls(GUIInfo calliData) {
+	//public void deliverBalls(GUIInfo calliData) {
 		// if(toGoal == 0){
 		// toGoal = 1;
 		// goalA = findEdge.getGoalA();
@@ -490,5 +465,5 @@ public class PrimaryController {
 		// minPunkt.y(goalA.y());
 		// }
 		// angleCal(calliData, minPunkt);
-	}
+	//}
 }
