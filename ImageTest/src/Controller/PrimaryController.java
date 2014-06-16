@@ -220,8 +220,7 @@ public class PrimaryController {
 				minPunkt.y(goalA.y());
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
-				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()
-						- minPunkt.x()));
+				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
 
 				send(calliData);
 			} else {
@@ -252,12 +251,21 @@ public class PrimaryController {
 			calliData.setTurnAngle(90F);
 
 			if( minPunkt.y() > l2){
-				System.out.println("WHAT");
+				System.out.println("BALL IS IN L2");
 				calliData.setTurnAngle(-90F);
 			}
+			if( minPunkt.y() > l3){
+				System.out.println("BALL IS IN L3");
+			}
+			if( minPunkt.x() > l4){
+				System.out.println("BALL IS IN L4");
+			}
+			if( minPunkt.x() > l1){
+				System.out.println("BALL IS IN L1");
+			}
+			
 			calliData.setTurnAngle(90F);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()
-					- minPunkt.y()));
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()- minPunkt.y()));
 			moveBack = 1;
 
 		}
