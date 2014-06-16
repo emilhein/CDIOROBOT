@@ -20,7 +20,7 @@ public class RouteTest {
 	CvPoint minPunkt = new CvPoint(300,450);
 
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west) {
 		CalcDist dist = new CalcDist();
 		minLength = 100000;
 
@@ -73,9 +73,8 @@ public class RouteTest {
 
 		paintPoint(frame, new CvPoint(minPunkt.x()+10, minPunkt.y()+10), 255, 0, 0,20); // farver tætteste bold rød
 
-		paintPoint(frame,new CvPoint(roboBagPunkt.x(), roboBagPunkt.y()), 0, 128, 255,20); //
-		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,60); //
-
+		paintPoint(frame,new CvPoint(roboBagPunkt.x(), roboBagPunkt.y()), 0, 128, 255,20); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,60); // farver robot forpunkt
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
 		
@@ -83,6 +82,13 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint(1600/2, 900/2), 0, 128, 128,30); // midten af billedet
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
+		//********************* Draw the corners of the world ***************************
+		paintPoint(frame,new CvPoint(north.x(), north.y()), 70 , 128, 255,20); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(south.x(), south.y()), 70, 128, 255,20); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(east.x(),east.y()), 70, 128, 255,20); // farver robot bagpunkt
+		paintPoint(frame,new CvPoint(west.x(), west.y()), 70, 128, 255,20); // farver robot bagpunkt
+
+		
 	/*	DetectRects findEdge = new DetectRects();
 		float ppcm = findEdge.getPixPerCm();
 		int height = findEdge.getInnerRect().height() + (60 * (int)ppcm);

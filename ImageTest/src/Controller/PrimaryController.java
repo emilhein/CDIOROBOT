@@ -64,15 +64,20 @@ public class PrimaryController {
 		/*
 		 * char firstRun = 'a'; int ballCount = 0; int count = 0;
 		 */
-	
+		
 		//################# Calculate corners ########################
 		
 		int intppcm = (int)(Math.round(ppcm));
 		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
-		//CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
+		CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
 		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
 		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
-		//CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
+		CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
+		
+		System.out.println("Corner1: (" + corner1.x() + "," + corner1.y() + ")");
+		System.out.println("Corner2: (" + corner2.x() + "," + corner2.y() + ")");
+		System.out.println("Corner3: (" + corner3.x() + "," + corner3.y() + ")");
+		System.out.println("Corner4: (" + corner4.x() + "," + corner4.y() + ")");
 		
 		
 		//################## Take picture until robot is found #########
@@ -118,13 +123,13 @@ public class PrimaryController {
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
 
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
-				findEdge.getGoalA(), ppcm); // tegner dem i testprogrammet
+				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
 		// ##########################################################################
 
 	
-
+		System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
 
 		int l1 = corner1.y()+(int)(5*ppcm); 
 		int l2 = corner4.y()-(int)(5*ppcm);
@@ -208,7 +213,7 @@ public class PrimaryController {
 	
 
 		//				#############################################################
-
+		
 		
 	
 		if(deliverButtom == 1){
@@ -276,7 +281,7 @@ public class PrimaryController {
 
 		send(calliData);
 
-			
+		
 		return calliData;
 	}
 
@@ -365,7 +370,7 @@ public class PrimaryController {
 				distance -= 6 * ppcm; // for at lande foran bolden
 			}
 			Thread.sleep(600);
-
+			System.out.println(" Efter iftemp");
 			dos.write(81);
 			dos.flush();
 			if (angle > 180)
@@ -373,6 +378,7 @@ public class PrimaryController {
 			i = distance / 10;
 			dos.write(i);
 			dos.flush();
+			System.out.println(" Efter kørfrem");
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""
 					+ route.getMinLength()))
