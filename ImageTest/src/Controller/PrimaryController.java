@@ -279,25 +279,41 @@ public class PrimaryController {
 			moveBack = 1;
 
 		}
-
+		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm) && moveBack == 0){ 
-			minPunkt = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()+(25*intppcm));
+			CvPoint tempPoint = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()+(25*intppcm));
 			System.out.println("corner1"); 
-			moveBack = 1; } 
+			angleCal(calliData, tempPoint);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			ifTemp = 1;
+			send(calliData);
+			moveBack = 2; } 
 		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(18*intppcm)&& moveBack == 0){ 
-			minPunkt = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
+			CvPoint tempPoint = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()+(25*intppcm));
 			System.out.println("corner2"); 
-			moveBack = 1; } 
+			angleCal(calliData, tempPoint);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			ifTemp = 1;
+			send(calliData);
+			moveBack = 2; } 
 		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)&& moveBack == 0){ 
-			minPunkt = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
+			CvPoint tempPoint = new CvPoint(minPunkt.x()+(25*intppcm),minPunkt.y()-(25*intppcm));
 			System.out.println("corner3"); 
-			moveBack = 1; }
+			angleCal(calliData, tempPoint);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			ifTemp = 1;
+			send(calliData);
+			moveBack = 2; }
 		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (18*intppcm)&& moveBack == 0){ 
-			minPunkt = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
+			CvPoint tempPoint = new CvPoint(minPunkt.x()-(25*intppcm),minPunkt.y()-(25*intppcm));
 			System.out.println("corner4");
-			moveBack = 1; }
-		else if(moveBack ==	1){
-			moveBack++; 
+			angleCal(calliData, tempPoint);
+			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+			ifTemp = 1;
+			send(calliData);
+			moveBack = 2; }
+		else if(moveBack ==	2){
+			moveBack--; 
 		}
 		
 		else {
