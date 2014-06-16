@@ -678,7 +678,7 @@ public class CallibratorGUI {
 		} catch (IllegalAccessException e) {
 		} catch (UnsupportedLookAndFeelException e) {
 		}
-
+//GUI klassen er gjort flottere
 	}
 
 
