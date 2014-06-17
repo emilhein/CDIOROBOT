@@ -29,7 +29,7 @@ public class RouteTest {
 	CvPoint minPunkt = new CvPoint(300,450);
 
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west, int rotationAngle, CvPoint midPoint) {
 		CalcDist dist = new CalcDist();
 		minLength = 10000;
 
@@ -92,26 +92,29 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
 		//********************* Draw the corners of the world ***************************
-		
+		if(north.x() != 0){
 		paintPoint(frame,new CvPoint(north.x(), north.y()), 0 ,0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(south.x(), south.y()), 0, 0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(east.x(),east.y()), 0, 0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
-	
+		}
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
-		/*!!
+
 		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
-		File imageFile = new File("RouteTest3.png");
+/*!!		File imageFile = new File("RouteTest3.png");
         BufferedImage img;
 		try {
 			img = ImageIO.read(imageFile);
 			   Graphics2D graph = img.createGraphics();
 //		       
 		       
-		        graph.rotate(Math.toRadians(45), 1055, 435);
+		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
 		        graph.setColor(Color.BLACK);
-		        graph.fillRect(820, 150, (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
+		       // graph.fillRect(midPoint.x() - (int)Math.round(15*ppcm), midPoint.y() - (int)Math.round(7.5*ppcm), (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
+		        System.out.println("Mx: " + midPoint.x());
+		        System.out.println("My: " + midPoint.y());
+		        graph.fillRect(midPoint.x() - (int)Math.round(15.75*ppcm), midPoint.y() - (int)Math.round(8.15*ppcm), (int)(31.5*ppcm), (int)(16.3*ppcm));// Draw robo rect
 		        
 		        graph.dispose();
 		        

@@ -38,7 +38,7 @@ public class PrimaryController {
 
 	public PrimaryController(DetectRects findEdge) {
 		this.findEdge = findEdge;
-//!!		takepic = new TakePicture();
+		takepic = new TakePicture();
 		balls = new ballMethod();
 	//	dist = new CalcDist();
 		route = new RouteTest();
@@ -116,6 +116,19 @@ public class PrimaryController {
 
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 
+		// ################### Calc midpoint and rotation point
+		
+		CalcAngle angleCalculator = new CalcAngle();
+		
+		CvPoint midPoint = new CvPoint();
+		int diffX = (int) ((balls.getRoboFrontPunkt().x()-balls.getRoboBagPunkt().x())/2);
+		int diffY = (int) ((balls.getRoboFrontPunkt().y()-balls.getRoboBagPunkt().y())/2);
+		midPoint.x(balls.getRoboBagPunkt().x()+diffX);
+		midPoint.y(balls.getRoboBagPunkt().y()+diffY);
+		
+		Float rotationAngle = angleCalculator.Calcangle(midPoint, balls.getRoboFrontPunkt());
+		
+		
 		// ################### Nearest Ball
 		
 		balls.changePerspective(calliData.getPoV());
@@ -127,7 +140,7 @@ public class PrimaryController {
 		System.out.println("coordinates 0 := +" + findEdge.getNorth().x()+findEdge.getNorth().y()+findEdge.getSouth().x()+findEdge.getSouth().y()+findEdge.getEast().x()+findEdge.getEast().y()+findEdge.getWest().x()+findEdge.getWest().y());
 
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
-				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
+				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest(), (int)Math.round(rotationAngle), midPoint); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
 		/*!!

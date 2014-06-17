@@ -22,6 +22,7 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -142,16 +143,14 @@ public class ballMethod {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		random = new Random();
-
-		Mat pic0 = Highgui.imread(image);
+		
+		Mat pic0 = Highgui.imread("billed0.png");
 		ballMat = pic0.clone();
-		roboMat = pic0.clone();
 		
 		CvPoint onRoboPoint = new CvPoint(roboBagPunkt.x() + (roboFrontPunkt.x() - roboBagPunkt.x())/2, roboBagPunkt.y() + (roboFrontPunkt.y() - roboBagPunkt.y())/2);
-		//!! TEST
+
 		onRoboPoint.x(onRoboPoint.x() + 15);
 		onRoboPoint.y(onRoboPoint.y() + 15);
-		//!! TEST SLUT
 		
 		double[] whiteCompare = pic0.get(onRoboPoint.y(), onRoboPoint.x());
 		double whiteCompareR = whiteCompare[2];
@@ -167,13 +166,13 @@ public class ballMethod {
 		paintPoint(pic0, onRoboPoint, 255, 0, 0,20);
 		
 		double randRed, randGreen, randBlue;
+		
+		Highgui.imwrite("pixToMat.png", ballMat);
 
-		ArrayList<CvPoint> robotCorners = new ArrayList<>();
-		ArrayList<Float> cornerDistances = new ArrayList<>();
-		CalcDist distCalculator = new CalcDist();
-		float distBagPunkt, distFrontPunkt, distCollected;
-		CvPoint currentPoint = new CvPoint();
-		boolean addPoint = true;
+		rotateRobot(pixPerCm);
+		
+		pic0 = Highgui.imread("pixToMat.png");
+		
 		
 		try
 		{
@@ -190,95 +189,15 @@ public class ballMethod {
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
 					
-						/*
-						if ((((blue - red)/red) > 1.2) && (((blue - green)/green) > 0.3) && blue > 50) // finder blå
-						{ 
-							
-							currentPoint.x(b);
-							currentPoint.y(j);
-							distBagPunkt = distCalculator.Calcdist(currentPoint, roboBagPunkt);
-							distFrontPunkt = distCalculator.Calcdist(currentPoint, roboFrontPunkt);
-							
-							addPoint = true;
-							
-							
-							if(distBagPunkt <= 9.3 * pixPerCm)
-							{	
-								for(int ia = 0; ia < robotCorners.size(); ia++)
-								{
-									CvPoint collectedPoint = robotCorners.get(ia);
-									
-									if(collectedPoint != null)
-									{
-										distCollected = distCalculator.Calcdist(collectedPoint, currentPoint);
-										if(distCollected <= 2 * pixPerCm)
-										{
-											if(distBagPunkt > cornerDistances.get(ia))
-											{
-												robotCorners.set(ia, currentPoint);
-												cornerDistances.set(ia, distBagPunkt);
-												addPoint = false;
-												break;
-											}
-										}
-									}
-									else
-									{
-										break;
-									}
-								}
-
-								if(addPoint)
-								{
-									robotCorners.add(currentPoint);
-									cornerDistances.add(distBagPunkt);
-								}
-							}
-							else if(distFrontPunkt <= 9.3 * pixPerCm)
-							{	
-								for(int ia = 0; ia < robotCorners.size(); ia++)
-								{
-									CvPoint collectedPoint = robotCorners.get(ia);
-									
-									if(collectedPoint != null)
-									{
-										distCollected = distCalculator.Calcdist(collectedPoint, currentPoint);
-										if(distCollected <= 2 * pixPerCm)
-										{
-											if(distFrontPunkt > cornerDistances.get(ia))
-											{
-												robotCorners.set(ia, currentPoint);
-												cornerDistances.set(ia, distFrontPunkt);
-												addPoint = false;
-												break;
-											}
-										}
-									}
-									else
-									{
-										break;
-									}
-								}
-
-								if(addPoint)
-								{
-									robotCorners.add(currentPoint);
-									cornerDistances.add(distFrontPunkt);
-								}
-							}
-							
-							ballMat.put(j, b, 0, 255, 0);
-						}
-						*/
 						if(b < corner1.x() || corner4.x() < b || j < corner1.y() || corner4.y() < j)
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
-						else if(whiteCompareR/red < 2.2 && whiteCompareG/green < 2.2 && whiteCompareB/blue < 2.2)
+						else if(Math.abs(green - blue) > 50 || Math.abs(green - red) > 50 || Math.abs(blue - red) > 50)
 						{
-							//ballMat.put(j, b, 255, 255, 255);
+							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
-						else
+						else if(whiteCompareR/red >= 2.2 && whiteCompareG/green >= 2.2 && whiteCompareB/blue >= 2.2)
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
@@ -289,48 +208,11 @@ public class ballMethod {
 		catch (Exception e) {
 			System.out.println("Could not convert image properly");
 		}
-
-		Highgui.imwrite("BOT.png", pic0);
-		calcRobotCorners2();
-		
-		/*!!
-		try {
-			BufferedImage buffTest = ImageIO.read(new File("billed0.png"));
-			Graphics2D g2dTest = buffTest.createGraphics();
-			g2dTest.setBackground(Color.red);
-			g2dTest.setColor(Color.cyan);
-			
-			Polygon polygon = new Polygon();
-			
-			for(CvPoint corner: robotCorners)
-			{
-				polygon.addPoint(corner.x(), corner.y());
-			}
-			
-			polygon.addPoint(231, 643);
-			polygon.addPoint(800, 23);
-			polygon.addPoint(732, 111);
-			polygon.addPoint(321, 402);
-			g2dTest.drawPolygon(polygon);
-			g2dTest.fillPolygon(polygon);
-			
-			g2dTest.dispose();
-			
-			IplImage ipTest = IplImage.createFrom(buffTest);
-			cvSaveImage("firkantTest.png", ipTest);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		!!*/
 	}
 	
-	public void calcRobotCorners2()
+	public void rotateRobot(float pixPerCm)
 	{
-		float constPpcm = 6.7F;
 		CvPoint midPoint = new CvPoint();
-		CvPoint corner1, corner2, corner3, corner4 = new CvPoint();
 		CalcAngle angleCalculator = new CalcAngle();
 		
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2);
@@ -340,38 +222,26 @@ public class ballMethod {
 		
 		Float rotationAngle = angleCalculator.Calcangle(midPoint, roboFrontPunkt);
 		
-		System.out.println("rotation ANGLE: " + rotationAngle);
-		System.out.println("1: " + (rotationAngle - 25));
-		System.out.println("2: " + (rotationAngle + 25));
-		System.out.println("3: " + (rotationAngle + 180 - 25));
-		System.out.println("1: " + (rotationAngle + 180 + 25));
-		
-		System.out.println();
-		
-		/*corner1 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle - 30);
-		corner2 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 30);
-		corner3 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 - 30);
-		corner4 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 + 30);*/
-		
 		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
-		File imageFile = new File("billed0.png");
+		File imageFile = new File("pixToMat.png");
         BufferedImage img;
 		try {
 			img = ImageIO.read(imageFile);
 			   Graphics2D graph = img.createGraphics();
 //		       
-		       System.out.println("MID" + midPoint.x());
-		       System.out.println("MID" + midPoint.y());
-		       System.out.println("Ro" + rotationAngle);
+		       
 		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
 		        graph.setColor(Color.BLACK);
-		        graph.fillRect(820, 150, (int)(15.5*constPpcm), (int)(30*constPpcm));// Draw robo rect
+		       // graph.fillRect(midPoint.x() - (int)Math.round(15*ppcm), midPoint.y() - (int)Math.round(7.5*ppcm), (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
+		        System.out.println("Mx: " + midPoint.x());
+		        System.out.println("My: " + midPoint.y());
+		        graph.fillRect(midPoint.x() - (int)Math.round(16*pixPerCm), midPoint.y() - (int)Math.round(8.4*pixPerCm), (int)(32*pixPerCm), (int)(16.8*pixPerCm));// Draw robo rect
 		        
 		        graph.dispose();
 		        
-		        ImageIO.write(img, "png", new File("dow.png"));
+		        ImageIO.write(img, "png", new File("pixToMat.png"));
 
-		        System.out.println("HHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY");
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
