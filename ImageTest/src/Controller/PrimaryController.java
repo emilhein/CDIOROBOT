@@ -135,7 +135,6 @@ public class PrimaryController {
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
 
-		System.out.println("coordinates 0 := +" + findEdge.getNorth().x()+findEdge.getNorth().y()+findEdge.getSouth().x()+findEdge.getSouth().y()+findEdge.getEast().x()+findEdge.getEast().y()+findEdge.getWest().x()+findEdge.getWest().y());
 
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
 				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
@@ -187,8 +186,8 @@ public class PrimaryController {
 
 		// ***************************** Avoid edge*******************************
 		
-		System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
-
+		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
+/*
 		int l1 = corner1.y()+(int)(5*ppcm); 
 		int l2 = corner4.y()-(int)(5*ppcm);
 		int l3 = corner1.x()+(int)(5*ppcm);
@@ -221,12 +220,13 @@ public class PrimaryController {
 				System.out.println("BALL IS IN L1");
 				calliData.setTurnAngle(-90F);
 			}
-			*/
+			
 			calliData.setTurnAngle(90F);
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()- minPunkt.y()));
 			moveBack = 1;
 
 		}
+		*/
 		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
