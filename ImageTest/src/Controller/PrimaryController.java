@@ -165,8 +165,8 @@ public class PrimaryController {
 
 				minPunkt.x(goalA.x() - 180);
 				minPunkt.y(goalA.y());
-				calPosition(roboFrontPunkt,roboBagPunkt,tempGoal);
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
+				calPosition(roboFrontPunkt,roboBagPunkt,tempGoal);
 				angleCal(calliData, tempGoal);
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
