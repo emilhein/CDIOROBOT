@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
+import CallibratorGUI.CallibratorGUI;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
@@ -24,6 +25,7 @@ import pictureToMat.ballMethod;
 public class PrimaryController {
 	CvPoint goalA;
 	CvPoint minPunkt;
+	CvPoint tempGoal;
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
@@ -56,12 +58,25 @@ public class PrimaryController {
 
 	public void start() {
 
-//!!		takepic.takePicture();
+		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
 		findEdge.findMajors();
+		CallibratorGUI GUI = new CallibratorGUI();
+		try {
+			GUI.startGUI();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*
+		if(first)
+		{
 
+			control.start();						
+			first = false;
+		}
+	*/
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -86,7 +101,7 @@ public class PrimaryController {
 		
 		//################## Take picture until robot is found #########
 		do {
-//!!			takepic.takePicture();	
+			takepic.takePicture();	
 
 			// ################# Pic to Mat ############
 
@@ -115,18 +130,6 @@ public class PrimaryController {
 				"balls", false, corner1, corner4, ppcm);
 
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
-
-		// ################### Calc midpoint and rotation point
-		
-		CalcAngle angleCalculator = new CalcAngle();
-		
-		CvPoint midPoint = new CvPoint();
-		int diffX = (int) ((balls.getRoboFrontPunkt().x()-balls.getRoboBagPunkt().x())/2);
-		int diffY = (int) ((balls.getRoboFrontPunkt().y()-balls.getRoboBagPunkt().y())/2);
-		midPoint.x(balls.getRoboBagPunkt().x()+diffX);
-		midPoint.y(balls.getRoboBagPunkt().y()+diffY);
-		
-		Float rotationAngle = angleCalculator.Calcangle(midPoint, balls.getRoboFrontPunkt());
 		
 		
 		// ################### Nearest Ball
@@ -140,10 +143,9 @@ public class PrimaryController {
 		System.out.println("coordinates 0 := +" + findEdge.getNorth().x()+findEdge.getNorth().y()+findEdge.getSouth().x()+findEdge.getSouth().y()+findEdge.getEast().x()+findEdge.getEast().y()+findEdge.getWest().x()+findEdge.getWest().y());
 
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
-				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest(), (int)Math.round(rotationAngle), midPoint); // tegner dem i testprogrammet
+				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
-		/*!!
 		// ############################# Calc Angle ###################
 		String text1 = "Antal bolde fundet: " + (ballCoor.size() / 3);
 		JTextArea txtArea1 = new JTextArea(text1, 1, 1);
@@ -234,7 +236,6 @@ public class PrimaryController {
 			moveBack = 1;
 
 		}*/
-		/*!!
 		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
@@ -331,7 +332,6 @@ public class PrimaryController {
 		System.out.println("Før send 2");
 
 		send(calliData);
-!!*/
 		
 		return calliData;
 	}
@@ -357,7 +357,7 @@ public class PrimaryController {
 			calliData.setTurnAngle(calliData.getTurnAngle() - 360);
 		}
 		if (calliData.getTurnAngle() < -180) {
-			calliData.setTurnAngle(calliData.getTurnAngle() + 360);
+			calliData.setTurnAngle(calliData.	getTurnAngle() + 360);
 		}
 
 		calliData.setBallAngle(BallAngle);
@@ -476,19 +476,15 @@ public class PrimaryController {
 			e1.printStackTrace();
 		}
 	}
-
-	//public void deliverBalls(GUIInfo calliData) {
-		// if(toGoal == 0){
-		// toGoal = 1;
-		// goalA = findEdge.getGoalA();
-		// minPunkt.x(goalA.x()-500);
-		// minPunkt.y(goalA.y());
-		// }
-		// else{ toGoal = 2;
-		// minPunkt.x(goalA.x()-180);
-		//
-		// minPunkt.y(goalA.y());
-		// }
-		// angleCal(calliData, minPunkt);
-	//}
+	public void calPosition(CvPoint roboFrontPunkt, CvPoint roboBagPunkt,CvPoint tempPoint) {
+		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
+		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+		roboFrontPunkt.x(tempPoint.x());
+		roboFrontPunkt.y(tempPoint.y());
+		roboBagPunkt.x(tempPoint.x()-Math.abs(diffX));
+		roboBagPunkt.y(tempPoint.y()-Math.abs(diffY));
+		System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
+		System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
+			
+		}
 }

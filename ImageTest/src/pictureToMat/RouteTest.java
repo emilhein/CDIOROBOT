@@ -29,7 +29,7 @@ public class RouteTest {
 	CvPoint minPunkt = new CvPoint(300,450);
 
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west, int rotationAngle, CvPoint midPoint) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west) {
 		CalcDist dist = new CalcDist();
 		minLength = 10000;
 
@@ -99,45 +99,6 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
 		}
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
-
-
-		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
-/*!!		File imageFile = new File("RouteTest3.png");
-        BufferedImage img;
-		try {
-			img = ImageIO.read(imageFile);
-			   Graphics2D graph = img.createGraphics();
-//		       
-		       
-		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
-		        graph.setColor(Color.BLACK);
-		       // graph.fillRect(midPoint.x() - (int)Math.round(15*ppcm), midPoint.y() - (int)Math.round(7.5*ppcm), (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
-		        System.out.println("Mx: " + midPoint.x());
-		        System.out.println("My: " + midPoint.y());
-		        graph.fillRect(midPoint.x() - (int)Math.round(15.75*ppcm), midPoint.y() - (int)Math.round(8.15*ppcm), (int)(31.5*ppcm), (int)(16.3*ppcm));// Draw robo rect
-		        
-		        graph.dispose();
-		        
-		        ImageIO.write(img, "png", new File("RouteTest3.png"));
-
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}!!*/
-		
-     
-
-		//Core.rectangle(frame, new Point(100,100), new Point(250,150),new Scalar(200, 120, 45),4);
-		
-	/*	DetectRects findEdge = new DetectRects();
-		float ppcm = findEdge.getPixPerCm();
-		int height = findEdge.getInnerRect().height() + (60 * (int)ppcm);
-		int width = findEdge.getInnerRect().width() + (90 * (int)ppcm);
-		
-		paintPoint(frame,new CvPoint(width, height), 0, 128, 128,30); // midten af banen
-*/
-
 
 		return minPunkt;
 	}
