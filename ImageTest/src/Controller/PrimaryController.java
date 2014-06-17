@@ -24,6 +24,7 @@ import pictureToMat.ballMethod;
 public class PrimaryController {
 	CvPoint goalA;
 	CvPoint minPunkt;
+	CvPoint tempGoal;
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
@@ -151,9 +152,10 @@ public class PrimaryController {
 
 				minPunkt.x(goalA.x() - 500);
 				minPunkt.y(goalA.y());
-				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
+				tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
-				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
+				CalcDist dist = new CalcDist();
+				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)));
 				System.out.println("4");
 				send(calliData);
 				System.out.println("5");
@@ -163,11 +165,18 @@ public class PrimaryController {
 
 				minPunkt.x(goalA.x() - 180);
 				minPunkt.y(goalA.y());
-
+				int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
+				int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+				roboFrontPunkt.x(tempGoal.x());
+				roboFrontPunkt.y(tempGoal.y());
+				roboBagPunkt.x(tempGoal.x()+Math.abs(diffX));
+				roboBagPunkt.y(tempGoal.y()+Math.abs(diffY));
+				System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
+				System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
-				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()
-						- minPunkt.x()));
+				CalcDist dist = new CalcDist();
+				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
 				System.out.println("7");
 				send(calliData);
 				System.out.println("7");
