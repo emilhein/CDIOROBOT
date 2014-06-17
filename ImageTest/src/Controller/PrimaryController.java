@@ -104,7 +104,7 @@ public class PrimaryController {
 					"robo", true, corner1, corner4);
 
 		} while (balls.determineDirection() == false);
-		
+
 		// ################### Find Balls #####################################
 		balls.findCircle(
 
@@ -154,7 +154,6 @@ public class PrimaryController {
 				minPunkt.y(goalA.y());
 				tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
-				calliData.setTurnAngle(calliData.getTurnAngle());
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)));
 				System.out.println("4");
@@ -168,7 +167,6 @@ public class PrimaryController {
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				//calPosition(roboFrontPunkt,roboBagPunkt,tempGoal);
 				angleCal(calliData, tempGoal);
-				calliData.setTurnAngle(calliData.getTurnAngle());
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)));
 				System.out.println("7");
@@ -317,7 +315,7 @@ public class PrimaryController {
 			calliData.setTurnAngle(calliData.getTurnAngle() - 360);
 		}
 		if (calliData.getTurnAngle() < -180) {
-			calliData.setTurnAngle(calliData.getTurnAngle() + 360);
+			calliData.setTurnAngle(calliData.	getTurnAngle() + 360);
 		}
 
 		calliData.setBallAngle(BallAngle);
