@@ -163,6 +163,7 @@ public class PrimaryController {
 				minPunkt.y(goalA.y());
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
+				calliData.setTurnAngle(calliData.getTurnAngle());
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
 				System.out.println("4");
 				send(calliData);
@@ -176,6 +177,7 @@ public class PrimaryController {
 
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
+				calliData.setTurnAngle(calliData.getTurnAngle());
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)+10));
 				System.out.println("7");
@@ -232,7 +234,7 @@ public class PrimaryController {
 
 		}*/
 		// ***************************** Corner*******************************
-		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)){ 
+		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)&&toGoal == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
 			System.out.println("corner1"); 
 			angleCal(calliData, tempPoint);
@@ -240,21 +242,14 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempPoint)));
 			ifTemp = 1;
 			send(calliData);
-			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
-			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
-			roboFrontPunkt.x(tempPoint.x());
-			roboFrontPunkt.y(tempPoint.y());
-			roboBagPunkt.x(tempPoint.x()+Math.abs(diffX));
-			roboBagPunkt.y(tempPoint.y()+Math.abs(diffY));
-			System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
-			System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
+			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
 			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
 			backMove = 1; 
 			ifTemp = 0;
 			} 
-		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(18*intppcm)){ 
+		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (18*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(18*intppcm)&&toGoal == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()-(15*intppcm),minPunkt.y()+(15*intppcm));
 			System.out.println("corner2"); 
 			angleCal(calliData, tempPoint);
@@ -262,42 +257,28 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempPoint)));
 			ifTemp = 1;
 			send(calliData);
-			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
-			int diffY = (int) ((roboFrontPunkt.y()+roboBagPunkt.y())/2.4);
-			roboFrontPunkt.x(tempPoint.x());
-			roboFrontPunkt.y(tempPoint.y());
-			roboBagPunkt.x(tempPoint.x()+Math.abs(diffX));
-			roboBagPunkt.y(tempPoint.y()-Math.abs(diffY));
-			System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
-			System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
+			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
 			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
 			backMove = 1; 
 			ifTemp = 0;
 			} 
-		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (10*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)){ 
+		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (10*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)&&toGoal == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()-(15*intppcm));
 			System.out.println("corner3"); 
 			angleCal(calliData, tempPoint);
 			route.setMinLength(Math.abs((balls.getRoboBagPunkt().x() - Math.abs(tempPoint.x()))));
 			ifTemp = 1;
 			send(calliData);
-			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
-			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
-			roboFrontPunkt.x(tempPoint.x());
-			roboFrontPunkt.y(tempPoint.y());
-			roboBagPunkt.x(tempPoint.x()+Math.abs(diffX));
-			roboBagPunkt.y(tempPoint.y()-Math.abs(diffY));
-			System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
-			System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
+			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
 			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(Math.abs((balls.getRoboBagPunkt().x() - minPunkt.x())+65));
 			backMove = 1; 
 			ifTemp = 0;
 			} 
-		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (18*intppcm)){ 
+		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (18*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (18*intppcm)&&toGoal == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()-(15*intppcm),minPunkt.y()-(15*intppcm));
 			System.out.println("corner4");
 			angleCal(calliData, tempPoint);
@@ -305,14 +286,7 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempPoint)));
 			ifTemp = 1;
 			send(calliData);
-			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
-			int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
-			roboFrontPunkt.x(tempPoint.x());
-			roboFrontPunkt.y(tempPoint.y());
-			roboBagPunkt.x(tempPoint.x()-Math.abs(diffX));
-			roboBagPunkt.y(tempPoint.y()-Math.abs(diffY));
-			System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
-			System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
+			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
 			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
