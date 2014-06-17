@@ -9,8 +9,8 @@ public class CalcDist {
 		this.p1 = punkt1;
 		this.p2 = punkt2;
 
-		float length = (int) Math.sqrt((p1.x()-p2.x()) * (p1.x()-p2.x())+
-								  (p1.y()-p2.y()) * (p1.y()-p2.y()));
+		float length = (int) Math.abs(Math.sqrt((p1.x()-p2.x()) * (p1.x()-p2.x())+
+								  (p1.y()-p2.y()) * (p1.y()-p2.y())));
 
 		return length;
 	}
