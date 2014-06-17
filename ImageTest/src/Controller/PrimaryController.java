@@ -157,7 +157,6 @@ public class PrimaryController {
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)));
 				System.out.println("4");
-				send(calliData);
 				System.out.println("5");
 			} else {
 				System.out.println("6");
@@ -171,7 +170,6 @@ public class PrimaryController {
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
 				System.out.println("7");
-				send(calliData);
 				System.out.println("7");
 
 			}
