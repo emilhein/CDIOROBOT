@@ -112,7 +112,7 @@ public class RouteTest {
 		             graph.transform(at);
 		        
 		        graph.setColor(Color.red);
-		        graph.rotate(Math.PI/4);
+		        graph.rotate(Math.toDegrees(45));
 		        
 		        
 		        graph.fillRect(820, 150, 100, 200);// Finally draw a black rectangle on it
