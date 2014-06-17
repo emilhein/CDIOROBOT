@@ -129,6 +129,7 @@ public class ballMethod {
 				roboCoordi = Coordi;
 			else
 			{
+				System.out.println("Balls found: " + Coordi.size()/3);
 				ballCoordi = Coordi;
 			}
 		}  
@@ -172,15 +173,31 @@ public class ballMethod {
 		rotateRobot(pixPerCm);
 		
 		pic0 = Highgui.imread("pixToMat.png");
+		ballMat = pic0.clone();
 		
 		
 		try
 		{
 			for (int j = 0; j < pic0.rows(); j++) {
 				
-				randRed = random.nextInt(80);
-				randGreen= random.nextInt(80);
-				randBlue = random.nextInt(80);
+				if(j % 3 == 0)
+				{
+					randRed = 180;//random.nextInt(60);
+					randGreen= 0;//random.nextInt(60);
+					randBlue = 0;//random.nextInt(60);
+				}
+				else if(j % 3 == 1)
+				{
+					randRed = 0;//random.nextInt(60);
+					randGreen= 0;//random.nextInt(60);
+					randBlue = 180;//random.nextInt(60);					
+				}
+				else
+				{
+					randRed = 0;//random.nextInt(60);
+					randGreen= 180;//random.nextInt(60);
+					randBlue = 0;//random.nextInt(60);
+				}
 				
 				for (int b = 0; b < pic0.cols(); b++) {
 					double[] rgb = pic0.get(j, b);
@@ -197,10 +214,10 @@ public class ballMethod {
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
-						else if(whiteCompareR/red >= 2.2 && whiteCompareG/green >= 2.2 && whiteCompareB/blue >= 2.2)
+						/*else if(whiteCompareR/red >= 2.05 && whiteCompareG/green >= 2.05 && whiteCompareB/blue >= 2.05)
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
-						}
+						}*/
 					}
 				}
 			}
@@ -334,7 +351,7 @@ public class ballMethod {
 		double green2= 0;
 		double red2= 0;
 
-		System.out.println("Balls found: " + roboCoordi.size());
+		
 		if (roboCoordi.size() >= 6){
 
 			roboFrontPunkt = new CvPoint(-1,-1);
