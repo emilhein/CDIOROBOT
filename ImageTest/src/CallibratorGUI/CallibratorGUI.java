@@ -100,7 +100,7 @@ public class CallibratorGUI {
 		btnConnect.setBackground(Color.PINK);
 		btnApply.setBackground(Color.PINK);
 		btnDeliver.setBackground(Color.PINK);
-		btnQuit.setBackground(Color.PINK);
+		btnQuit.setBackground(Color.RED);
 		
 		txtArea1 = new JTextArea(1, 1);								lbltxt = new JLabel();
 		lbltxtBallAngle = new JLabel();								lbltxtRoboAngle = new JLabel();
