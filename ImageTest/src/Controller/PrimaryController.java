@@ -56,7 +56,7 @@ public class PrimaryController {
 
 	public void start() {
 
-		//takepic.takePicture();
+		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
@@ -86,14 +86,13 @@ public class PrimaryController {
 		
 		//################## Take picture until robot is found #########
 		do {
-			//takepic.takePicture();	
+			takepic.takePicture();	
 
 			// ################# Pic to Mat ############
 
 			balls.pictureToMat("billed0.png");
 
-			// ################### Find Robot
-			// #######################################
+			// ################### Find Robot #######################################
 
 			balls.findCircle(
 
@@ -142,8 +141,11 @@ public class PrimaryController {
 
 		calliData.setLbltxt(lbltxt);
 			
+		System.out.println("1");
 		if(deliverButtom == 1){
+			System.out.println("2");
 			if(toGoal == 0){
+				System.out.println("3");
 				toGoal = 1;
 				goalA = findEdge.getGoalA();
 
@@ -152,9 +154,11 @@ public class PrimaryController {
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
-				
+				System.out.println("4");
 				send(calliData);
+				System.out.println("5");
 			} else {
+				System.out.println("6");
 				toGoal = 2;
 
 				minPunkt.x(goalA.x() - 180);
@@ -164,11 +168,14 @@ public class PrimaryController {
 				angleCal(calliData, tempGoal);
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()
 						- minPunkt.x()));
-
+				System.out.println("7");
 				send(calliData);
+				System.out.println("7");
 
 			}
+			System.out.println("9");
 			angleCal(calliData, minPunkt);
+			System.out.println("10");
 		}
 
 		// ***************************** Avoid edge*******************************
