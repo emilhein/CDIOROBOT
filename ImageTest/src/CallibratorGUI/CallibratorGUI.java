@@ -41,15 +41,15 @@ public class CallibratorGUI {
 	txtRoboDP, txtCirkleDIst, txtParameter1, txtParameter2,
 	txtMinradius, txtMaxradius, txtromin, txtromax, txtRoboMinDist,
 	txtRoboPar1, txtRoboPar2, txtvinkel, txtlm, txtluk, txtpov;
-//	private ImageIcon img, findb, bh, edge;
+	//	private ImageIcon img, findb, bh, edge;
 	private Insets insets;
 	private JTextArea txtArea1;
 
 	//private int TurnAngle = 0;
-//	private Float minLength;
-//	private float ppcm = 0;
-//	private ArrayList<Float> RoboCoor;
-//	private ArrayList<Float> ballCoor;
+	//	private Float minLength;
+	//	private float ppcm = 0;
+	//	private ArrayList<Float> RoboCoor;
+	//	private ArrayList<Float> ballCoor;
 	//private int BallAngle;
 	//private int RoboAngle;
 
@@ -136,20 +136,22 @@ public class CallibratorGUI {
 		txtlm = new JTextField(10);									txtluk = new JTextField(10);						
 		txtpov = new JTextField(10);
 
+		Float ppcm = (float) 6.2;
+		if (findEdge.getPixPerCm() > 0) {
+			ppcm = findEdge.getPixPerCm();
+		}
+System.out.println("PPCM "+ppcm);
 		
-		Float ppcm = findEdge.getPixPerCm();
 		
-		ppcm = (float) 6.2;
-		
-//		udregning af diverse for bolde
+		//		udregning af diverse for bolde
 		int ballsMinRadius = (int)(1.5*ppcm);
 		int ballsMaxRadius = (int)(2.1*ppcm);
-		
-//		udregning af diverse for robot
+
+		//		udregning af diverse for robot
 		int roboMinRadius = (int)(4.8*ppcm);
 		int roboMaxRadius = (int)(5.5*ppcm);
-		
-		
+
+
 		// BOLDE
 		txtDP.setText("1");																						
 		txtCirkleDIst.setText("10");
@@ -571,7 +573,7 @@ public class CallibratorGUI {
 
 				//				Lige i starten, når robotten kører første runde.
 				System.out.println("Før start");
-//				Lige i starten, når robotten kører første runde.
+				//				Lige i starten, når robotten kører første runde.
 
 				if(first)
 				{
