@@ -55,7 +55,7 @@ public class PrimaryController {
 
 	public void start() {
 
-		takepic.takePicture();
+		//!!takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 	}
@@ -77,7 +77,7 @@ public class PrimaryController {
 		
 		//################## Take picture until robot is found #########
 		do {
-			takepic.takePicture();	
+			//!!takepic.takePicture();	
 
 			// ################# Pic to Mat ############
 
@@ -92,7 +92,7 @@ public class PrimaryController {
 					calliData.getIntJlroboDP(),
 					calliData.getIntJlroboMinDist(),
 					calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),
-					"robo", true, corner1, corner4);
+					"robo", true, corner1, corner4, ppcm);
 
 		} while (balls.determineDirection() == false);
 
@@ -104,7 +104,7 @@ public class PrimaryController {
 				calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),
 				calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),
 				
-				"balls", false, corner1, corner4);
+				"balls", false, corner1, corner4, ppcm);
 
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 
@@ -209,7 +209,7 @@ public class PrimaryController {
 
 		//				#############################################################
 
-		
+		/*!!
 	
 		if(deliverButtom == 1){
 			if(toGoal == 0){
@@ -267,7 +267,7 @@ public class PrimaryController {
 		}
 
 		send(calliData);
-
+		!!*/
 			
 		return calliData;
 	}

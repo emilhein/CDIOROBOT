@@ -12,8 +12,26 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
 
+
+
+
+
+
+
+
+
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -28,6 +46,9 @@ import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 import com.googlecode.javacv.cpp.opencv_core.CvRect;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+import dist.CalcAngle;
+import dist.CalcDist;
+
 
 public class ballMethod {
 
@@ -39,7 +60,7 @@ public class ballMethod {
 	private CvPoint roboBagPunkt;
 	private Random random;
 
-	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot, CvPoint corner1, CvPoint corner4){ 
+	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot, CvPoint corner1, CvPoint corner4, float pixPerCm){ 
 
 		ArrayList<Float> Coordi = new ArrayList<Float>();
 
@@ -54,7 +75,7 @@ public class ballMethod {
 			webcam_image = roboMat;
 		else
 		{
-			pictureToMat2("billed0.png", corner1, corner4);
+			pictureToMat2("billed0.png", corner1, corner4, pixPerCm);
 			webcam_image = ballMat;
 		}
 
@@ -115,7 +136,7 @@ public class ballMethod {
 		}
 	}
 	
-	public void pictureToMat2(String image, CvPoint corner1, CvPoint corner4) {
+	public void pictureToMat2(String image, CvPoint corner1, CvPoint corner4, float pixPerCm) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
@@ -146,6 +167,13 @@ public class ballMethod {
 		
 		double randRed, randGreen, randBlue;
 
+		ArrayList<CvPoint> robotCorners = new ArrayList<>();
+		ArrayList<Float> cornerDistances = new ArrayList<>();
+		CalcDist distCalculator = new CalcDist();
+		float distBagPunkt, distFrontPunkt, distCollected;
+		CvPoint currentPoint = new CvPoint();
+		boolean addPoint = true;
+		
 		try
 		{
 			for (int j = 0; j < pic0.rows(); j++) {
@@ -160,7 +188,87 @@ public class ballMethod {
 						double blue = rgb[i];
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
-						
+					
+						/*
+						if ((((blue - red)/red) > 1.2) && (((blue - green)/green) > 0.3) && blue > 50) // finder blå
+						{ 
+							
+							currentPoint.x(b);
+							currentPoint.y(j);
+							distBagPunkt = distCalculator.Calcdist(currentPoint, roboBagPunkt);
+							distFrontPunkt = distCalculator.Calcdist(currentPoint, roboFrontPunkt);
+							
+							addPoint = true;
+							
+							
+							if(distBagPunkt <= 9.3 * pixPerCm)
+							{	
+								for(int ia = 0; ia < robotCorners.size(); ia++)
+								{
+									CvPoint collectedPoint = robotCorners.get(ia);
+									
+									if(collectedPoint != null)
+									{
+										distCollected = distCalculator.Calcdist(collectedPoint, currentPoint);
+										if(distCollected <= 2 * pixPerCm)
+										{
+											if(distBagPunkt > cornerDistances.get(ia))
+											{
+												robotCorners.set(ia, currentPoint);
+												cornerDistances.set(ia, distBagPunkt);
+												addPoint = false;
+												break;
+											}
+										}
+									}
+									else
+									{
+										break;
+									}
+								}
+
+								if(addPoint)
+								{
+									robotCorners.add(currentPoint);
+									cornerDistances.add(distBagPunkt);
+								}
+							}
+							else if(distFrontPunkt <= 9.3 * pixPerCm)
+							{	
+								for(int ia = 0; ia < robotCorners.size(); ia++)
+								{
+									CvPoint collectedPoint = robotCorners.get(ia);
+									
+									if(collectedPoint != null)
+									{
+										distCollected = distCalculator.Calcdist(collectedPoint, currentPoint);
+										if(distCollected <= 2 * pixPerCm)
+										{
+											if(distFrontPunkt > cornerDistances.get(ia))
+											{
+												robotCorners.set(ia, currentPoint);
+												cornerDistances.set(ia, distFrontPunkt);
+												addPoint = false;
+												break;
+											}
+										}
+									}
+									else
+									{
+										break;
+									}
+								}
+
+								if(addPoint)
+								{
+									robotCorners.add(currentPoint);
+									cornerDistances.add(distFrontPunkt);
+								}
+							}
+							
+							ballMat.put(j, b, 0, 255, 0);
+						}
+						*/
 						if(b < corner1.x() || corner4.x() < b || j < corner1.y() || corner4.y() < j)
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
@@ -173,7 +281,6 @@ public class ballMethod {
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
-						
 					}
 				}
 			}
@@ -183,9 +290,274 @@ public class ballMethod {
 		}
 
 		Highgui.imwrite("BOT.png", pic0);
+		calcRobotCorners2();
+		
+		/*!!
+		try {
+			BufferedImage buffTest = ImageIO.read(new File("billed0.png"));
+			Graphics2D g2dTest = buffTest.createGraphics();
+			g2dTest.setBackground(Color.red);
+			g2dTest.setColor(Color.cyan);
+			
+			Polygon polygon = new Polygon();
+			
+			for(CvPoint corner: robotCorners)
+			{
+				polygon.addPoint(corner.x(), corner.y());
+			}
+			
+			polygon.addPoint(231, 643);
+			polygon.addPoint(800, 23);
+			polygon.addPoint(732, 111);
+			polygon.addPoint(321, 402);
+			g2dTest.drawPolygon(polygon);
+			g2dTest.fillPolygon(polygon);
+			
+			g2dTest.dispose();
+			
+			IplImage ipTest = IplImage.createFrom(buffTest);
+			cvSaveImage("firkantTest.png", ipTest);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		!!*/
 	}
 	
-	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
+	public void calcRobotCorners2()
+	{
+		float constPpcm = 6.7F;
+		CvPoint midPoint = new CvPoint();
+		CvPoint corner1, corner2, corner3, corner4 = new CvPoint();
+		CalcAngle angleCalculator = new CalcAngle();
+		
+		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2);
+		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2);
+		midPoint.x(roboBagPunkt.x()+diffX);
+		midPoint.y(roboBagPunkt.y()+diffY);
+		
+		Float rotationAngle = angleCalculator.Calcangle(midPoint, roboFrontPunkt);
+		
+		System.out.println("rotation ANGLE: " + rotationAngle);
+		System.out.println("1: " + (rotationAngle - 25));
+		System.out.println("2: " + (rotationAngle + 25));
+		System.out.println("3: " + (rotationAngle + 180 - 25));
+		System.out.println("1: " + (rotationAngle + 180 + 25));
+		
+		System.out.println();
+		
+		corner1 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle - 30);
+		corner2 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 30);
+		corner3 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 - 30);
+		corner4 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 + 30);
+		
+		
+		try {
+			BufferedImage buffTest = ImageIO.read(new File("billed0.png"));
+			Graphics2D g2dTest = buffTest.createGraphics();
+			g2dTest.setBackground(Color.red);
+			g2dTest.setColor(Color.cyan);
+			
+			Polygon polygon = new Polygon();
+			
+			polygon.addPoint(corner1.x(), corner1.y());
+			polygon.addPoint(corner2.x(), corner2.y());
+			polygon.addPoint(corner3.x(), corner3.y());
+			polygon.addPoint(corner4.x(), corner4.y());
+			g2dTest.drawPolygon(polygon);
+			g2dTest.fillPolygon(polygon);
+			
+			g2dTest.dispose();
+			
+			IplImage ipTest = IplImage.createFrom(buffTest);
+			cvSaveImage("firkantTest.png", ipTest);
+			
+			Mat pic0 = Highgui.imread("firkantTest.png");
+			
+			paintPoint(pic0, corner4, 255, 0, 0, 10);
+			//paintPoint(pic0, corner2, 200, 0, 0, 10);
+			//paintPoint(pic0, corner3, 100, 0, 0, 10);
+			//paintPoint(pic0, corner4, 55, 0, 0, 10);
+			
+			Highgui.imwrite("firkantTest.png", pic0);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void calcRobotCorners(float pixPerCm)
+	{
+		CalcAngle angleCalculater = new CalcAngle();
+		
+		CvPoint robotCorner1, robotCorner2, robotCorner3, robotCorner4, center1, center2;
+		
+		int cornerToMidAngle = 125;
+		int directionUpDown = 1;
+		int directionLeftRight = 1;
+		
+		int angle;
+		
+		float propertionA = Math.abs(angleCalculater.Calcangle(roboFrontPunkt, roboBagPunkt));
+		float propertionB = 180 - propertionA - 90;
+		
+		if(roboFrontPunkt.y() == roboBagPunkt.y())		// Vandret
+		{
+			if(roboFrontPunkt.x() > roboBagPunkt.x())		// Øst
+			{
+				center1 = roboBagPunkt;
+				center2 = roboFrontPunkt;
+			}
+			else											// Vest
+			{
+				center1 = roboFrontPunkt;
+				center2 = roboBagPunkt;
+			}
+			robotCorner1 = calcRobotCorner(center1, 9.3 * pixPerCm, 125F);
+			robotCorner2 = calcRobotCorner(center2, 9.3 * pixPerCm, 55F); //180-125
+			robotCorner3 = calcRobotCorner(center1, 9.3 * pixPerCm, -125F);
+			robotCorner4 = calcRobotCorner(center2, 9.3 * pixPerCm, 55F);
+		}
+		else if(roboFrontPunkt.x() == roboBagPunkt.x())	// Lodret
+		{
+			if(roboFrontPunkt.y() > roboBagPunkt.y())		// Syd
+			{
+				center1 = roboFrontPunkt;
+				center2 = roboBagPunkt;
+			}
+			else											// Nord
+			{
+				center1 = roboBagPunkt;
+				center2 = roboFrontPunkt;				
+			}
+			robotCorner1 = calcRobotCorner(center1, 9.3 * pixPerCm, 215F); //90+125
+			robotCorner2 = calcRobotCorner(center1, 9.3 * pixPerCm, 35F); //125-90
+			robotCorner3 = calcRobotCorner(center2, 9.3 * pixPerCm, 145F); //90+(180-125)
+			robotCorner4 = calcRobotCorner(center2, 9.3 * pixPerCm, 35F); //125-90
+		}
+		else if(roboFrontPunkt.x() > roboBagPunkt.x())
+		{
+			if(roboFrontPunkt.y() > roboBagPunkt.y())		// Syd-øst
+			{
+				center1 = roboBagPunkt;
+				center2 = roboFrontPunkt;
+				
+				float roboAngle = Math.abs(angleCalculater.Calcangle(roboBagPunkt, roboFrontPunkt));
+				float roboAngle2 = 180-roboAngle;
+				
+				robotCorner1 = calcRobotCorner(center1, 9.3 * pixPerCm, -(125+roboAngle2));
+				if(roboAngle2 > 125)
+				{
+					robotCorner2 = calcRobotCorner(center2, 9.3 * pixPerCm, roboAngle2-125);
+				}
+				else
+				{
+					robotCorner2 = calcRobotCorner(center2, 9.3 * pixPerCm, -(125-roboAngle2));
+				}
+				robotCorner3 = calcRobotCorner(center2, 9.3 * pixPerCm, roboAngle + 90);
+				robotCorner4 = calcRobotCorner(center2, 9.3 * pixPerCm, roboAngle2 + 125);
+			}
+			else											// Nord-øst
+			{
+				
+			}
+		}
+		else
+		{
+			if(roboFrontPunkt.y() > roboBagPunkt.y())		// Syd-vest
+			{
+				
+			}
+			else											// Nord-vest
+			{
+				
+			}
+		}
+		
+		
+
+		
+		/*if(roboBagPunkt.x() < roboFrontPunkt.x())
+		{
+			
+		}*/
+	}
+	
+	public CvPoint calcRobotCorner(CvPoint startPoint, double length, float angle)
+	{
+		CvPoint corner = new CvPoint();
+		
+		if(angle <= 90)
+		{
+			System.out.println(1);
+			System.out.println(startPoint.x());
+			System.out.println(startPoint.y());
+			corner.x((int)Math.round(startPoint.x() + length * Math.cos(angle)));
+			corner.y((int)Math.round(startPoint.y() + length * Math.sin(angle)));
+			System.out.println(corner.x());
+			System.out.println(corner.y());
+		}
+		else if(90 < angle && angle <= 180)
+		{
+			System.out.println(2);
+			System.out.println(startPoint.x());
+			System.out.println(startPoint.y());
+			angle -= 90;
+			corner.x((int)Math.round(startPoint.x() - length * Math.sin(angle)));
+			corner.y((int)Math.round(startPoint.y() + length * Math.cos(angle)));
+			System.out.println(corner.x());
+			System.out.println(corner.y());
+		}
+		else if(180 < angle && angle <= 270)
+		{
+			System.out.println(3);
+			System.out.println(startPoint.x());
+			System.out.println(startPoint.y());
+			angle -= 180;
+			corner.x((int)Math.round(startPoint.x() - length * Math.cos(angle)));
+			corner.y((int)Math.round(startPoint.y() - length * Math.sin(angle)));
+			System.out.println(corner.x());
+			System.out.println(corner.y());
+		}
+		else if(270 < angle && angle <= 360)
+		{
+			System.out.println(4);
+			System.out.println(startPoint.x());
+			System.out.println(startPoint.y());
+			angle -= 270;
+			corner.x((int)Math.round(startPoint.x() + length * Math.cos(angle)));
+			corner.y((int)Math.round(startPoint.y() - length * Math.sin(angle)));
+			System.out.println(corner.x());
+			System.out.println(corner.y());
+		}
+		else
+		{
+			System.out.println(5);
+			System.out.println(corner.x());
+			System.out.println(corner.y());
+			angle -= 360;
+			corner.x((int)Math.round(startPoint.x() + length * Math.cos(angle)));
+			corner.y((int)Math.round(startPoint.y() + length * Math.sin(angle)));
+			System.out.println(corner.x());
+			System.out.println(corner.y());
+		}
+
+		
+		return corner;
+	}
+	
+/*	public void calcRobotCorner(CvPoint mainCenter, CvPoint centerReference, CvPoint corner, int signOfAngle, int signOfPropertion)
+	{
+		
+		float propertion = angleCalculater.Calcangle(mainCenter, centerReference);
+		
+		System.out.println(propertion);
+	}*/
+	
+	public void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
 		for (int a = 0; a < size; a++)
 		{
 			for (int b = 0; b < size; b++)
