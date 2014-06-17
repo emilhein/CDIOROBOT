@@ -2,8 +2,17 @@ package pictureToMat;
 
 import dist.CalcDist;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -78,7 +87,6 @@ public class RouteTest {
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
 		
-		
 //		Core.rectangle(frame, new Point(100,100), new Point(300,300), null, 1);
 		paintPoint(frame,new CvPoint(1600/2, 900/2), 0, 128, 128,30); // midten af billedet
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
@@ -90,6 +98,33 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint(east.x(),east.y()), 0, 0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
 	
+		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
+
+		File imageFile = new File("RouteTest3.png");
+        BufferedImage img;
+		try {
+			img = ImageIO.read(imageFile);
+			   Graphics2D graph = img.createGraphics();
+//		       graph.fillRect(50, 50, 50, 100);// Finally draw a black rectangle on it
+		        AffineTransform at = new AffineTransform();
+		             graph.transform(at);
+		        
+		        graph.setColor(Color.red);
+		        graph.rotate(Math.toDegrees(45));
+		        
+		        
+		        graph.fillRect(820, 150, 100, 200);// Finally draw a black rectangle on it
+		        ImageIO.write(img, "png", new File("RouteTest3.png"));
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+     
+
+		//Core.rectangle(frame, new Point(100,100), new Point(250,150),new Scalar(200, 120, 45),4);
 		
 	/*	DetectRects findEdge = new DetectRects();
 		float ppcm = findEdge.getPixPerCm();
@@ -98,7 +133,6 @@ public class RouteTest {
 		
 		paintPoint(frame,new CvPoint(width, height), 0, 128, 128,30); // midten af banen
 */
-		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
 
 		return minPunkt;
