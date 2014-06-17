@@ -69,15 +69,15 @@ public class CallibratorGUI {
 
 		// Opretter rammen
 		frame1 = new JFrame("CallibratorGUI");
-		
+
 		// Sætter størrelsen af rammen i pixelx
 		frame1.setSize(1300, 718);
-		
-		
+
+
 		// Gør panelet klar
 		pane = frame1.getContentPane();
 		insets = pane.getInsets();
-		
+
 		pane.setLayout (null);
 		pane.setBackground(Color.LIGHT_GRAY);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -135,7 +135,7 @@ public class CallibratorGUI {
 		txtminrød = new JTextField(10);								txtvinkel = new JTextField(10);
 		txtlm = new JTextField(10);									txtluk = new JTextField(10);						
 		txtpov = new JTextField(10);
-		
+
 		// BOLDE
 		txtDP.setText("1");																						
 		txtCirkleDIst.setText("10");
@@ -160,7 +160,7 @@ public class CallibratorGUI {
 		txtlm.setText("2.48");
 		txtluk.setText("5.5");
 		txtpov.setText("0.05");		
-		
+
 		// Tilføjer alle komponenter i panelet
 		pane.add(jlcircleDP);							pane.add(jlcircleDist);
 		pane.add(jlcirclePar1);							pane.add(jlcirclePar2);
@@ -200,7 +200,7 @@ public class CallibratorGUI {
 		pane.add(txtlm);								pane.add(txtluk);
 
 		// Placerer alle kompoenter og tildeler actionPerformed
-		
+
 		lblmaxgrøn.setBounds(lblmaxgrøn.getX() + lblmaxgrøn.getWidth() + 1010, insets.top + 236, lblmaxgrøn.getPreferredSize().width, lblmaxgrøn.getPreferredSize().height);
 		txtmaxgrøn.setBounds(txtmaxgrøn.getX() + txtmaxgrøn.getWidth() + 1010, insets.top + 251, txtmaxgrøn.getPreferredSize().width, txtmaxgrøn.getPreferredSize().height);
 
@@ -543,7 +543,7 @@ public class CallibratorGUI {
 				jlPoV.setText(input20);
 				jlPoV.setBounds(1155, insets.top + 551, jlPoV.getPreferredSize().width, jlPoV.getPreferredSize().height);
 
-//				Benytter sig af de setter metoder der er oprettet i GUIInfo
+				//				Benytter sig af de setter metoder der er oprettet i GUIInfo
 				info.setJlcircleDP(jlcircleDP);									info.setJlcircleDist(jlcircleDist);
 				info.setJlcirclePar1(jlcirclePar1);								info.setJlcirclePar2(jlcirclePar2);
 				info.setJlcircleMinRadius(jlcircleMinRadius);					info.setJlcircleMaxRadius(jlcircleMaxRadius);
@@ -554,12 +554,14 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
+
+				//				Lige i starten, når robotten kører første runde.
 				System.out.println("Før start");
 //				Lige i starten, når robotten kører første runde.
 
 				if(first)
 				{
-					
+
 					control.start();						
 					first = false;
 				}
@@ -585,11 +587,13 @@ public class CallibratorGUI {
 				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
 				lbltxtTurnAngle.setText("TurnAngle = " + info.getTurnAngle());
 
-				ImageIcon edge = new ImageIcon("edge.png");
-				Image image5 = edge.getImage(); // transform it
-				Image edimage = image5.getScaledInstance(300, 169,
+				ImageIcon img = new ImageIcon("RouteTest3.png");
+				Image image2 = img.getImage(); // transform it
+				Image dimage = image2.getScaledInstance(400, 225,
 						java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-				edge = new ImageIcon(edimage); // transform it back
+				img = new ImageIcon(dimage); // transform it back
+				// lblimg = new JLabel (img, JLabel.CENTER);
+
 
 				ImageIcon findb = new ImageIcon("robo.png");
 				Image image3 = findb.getImage(); // transform it
@@ -605,18 +609,18 @@ public class CallibratorGUI {
 				bh = new ImageIcon(acimage); // transform it back
 				// lblbh = new JLabel (bh, JLabel.CENTER);
 
-
-				ImageIcon img = new ImageIcon("RouteTest3.png");
-				Image image2 = img.getImage(); // transform it
-				Image dimage = image2.getScaledInstance(400, 225,
+				ImageIcon edge = new ImageIcon("edge.png");
+				Image image5 = edge.getImage(); // transform it
+				Image edimage = image5.getScaledInstance(300, 169,
 						java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-				img = new ImageIcon(dimage); // transform it back
-				// lblimg = new JLabel (img, JLabel.CENTER);
+				edge = new ImageIcon(edimage); // transform it back
 
-				lbledge.setIcon(edge);
+
+				lblimg.setIcon(img);
 				lblfindb.setIcon(findb);
 				lblbh.setIcon(bh);
-				lblimg.setIcon(img);
+				lbledge.setIcon(edge);
+
 
 				lblimg.setBounds(200, insets.top + 6,
 						lblimg.getPreferredSize().width,
@@ -658,7 +662,8 @@ public class CallibratorGUI {
 		frame1.add(lblimg);						frame1.add(lblbh);
 		frame1.add(lbltxt);						frame1.add(lbltxtBallAngle);
 		frame1.add(lbltxtRoboAngle);			frame1.add(lbltxtTurnAngle);
-		frame1.add(txtArea1);
+		frame1.add(txtArea1);					frame1.add(lblfindb);
+		frame1.add(lbledge);
 
 		btnDeliver.setBounds(btnDeliver.getX() + btnDeliver.getWidth() + 5, insets.top + 590, btnDeliver.getPreferredSize().width, btnDeliver.getPreferredSize().height);
 
@@ -689,36 +694,6 @@ public class CallibratorGUI {
 		} catch (InstantiationException e) {
 		} catch (IllegalAccessException e) {
 		} catch (UnsupportedLookAndFeelException e) {
-		}
-//GUI klassen er gjort flottere
-	}
-
-
-	//	Bliver PT ikke brugt i CallibratorGUI
-	public void determineDirection(ArrayList<Float> RoboCoor,double blue,double green, double red,double blue2, double green2, double red2, CvPoint roboFrontPunkt, CvPoint roboBagPunkt) {
-
-
-		double PovM = Double.parseDouble(jlPoV.getText());
-		CvPoint midpunkt = new CvPoint(800,450);
-		int PovFrontX = roboFrontPunkt.x() - midpunkt.x();
-		int PovFrontY = roboFrontPunkt.y() - midpunkt.y();
-		int PovBagX = roboBagPunkt.x() - midpunkt.x();
-		int PovBagY = roboBagPunkt.y() - midpunkt.y();
-		if(PovFrontX < 0){
-			if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
-			else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()+(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
-		}
-		else{
-			if(PovFrontY<0)roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()+(int)(PovM*Math.abs(PovFrontY)));
-			else roboFrontPunkt = new CvPoint(roboFrontPunkt.x()-(int)(PovM*Math.abs(PovFrontX)),roboFrontPunkt.y()-(int)(PovM*Math.abs(PovFrontY)));
-		}
-		if(PovBagX < 0){
-			if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
-			else roboBagPunkt = new CvPoint(roboBagPunkt.x()+(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
-		}
-		else{
-			if(PovBagY<0)roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()+(int)(PovM*Math.abs(PovBagY)));
-			else roboBagPunkt = new CvPoint(roboBagPunkt.x()-(int)(PovM*Math.abs(PovBagX)),roboBagPunkt.y()-(int)(PovM*Math.abs(PovBagY)));	
 		}
 	}
 }
