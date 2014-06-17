@@ -136,6 +136,8 @@ public class CallibratorGUI {
 		txtlm = new JTextField(10);									txtluk = new JTextField(10);						
 		txtpov = new JTextField(10);
 		
+		Float ppcm = findEdge.getPixPerCm();
+		
 		// BOLDE
 		txtDP.setText("1");																						
 		txtCirkleDIst.setText("10");
