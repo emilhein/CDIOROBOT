@@ -145,8 +145,6 @@ public class CallibratorGUI {
 		txtRoboDP.setText("1");
 		txtromin.setText("30");
 		txtromax.setText("38");
-		txtRoboMinDist.setText("10");
-		txtromax.setText("42");
 		txtRoboMinDist.setText("15");
 		txtRoboPar1.setText("40");
 		txtRoboPar2.setText("18");
