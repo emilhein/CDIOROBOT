@@ -366,8 +366,7 @@ public class PrimaryController {
 			System.out.println("minmulti " + route.getMinLength());
 			System.out.println("ppcm  " + findEdge.getPixPerCm());
 */
-			int distance = (int) ((route.getMinLength()
-					* Math.round(calliData.getlengthMultiply()) / findEdge
+			int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / findEdge
 					.getPixPerCm())); // længde konvertering
 
 			
