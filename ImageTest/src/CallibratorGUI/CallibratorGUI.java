@@ -130,11 +130,10 @@ public class CallibratorGUI {
 		if (findEdge.getPixPerCm() > 0) {
 			ppcm = findEdge.getPixPerCm();
 		}
-		System.out.println("PPCM "+ppcm);
 		
 		
 		//		udregning af diverse for bolde
-		int ballsMinRadius = (int)(1.5*ppcm);
+		int ballsMinRadius = (int)(1.15*ppcm);
 		int ballsMaxRadius = (int)(2.1*ppcm);
 
 		//		udregning af diverse for robot
@@ -148,8 +147,8 @@ public class CallibratorGUI {
 
 		// BOLDE
 		txtDP.setText("1");																						
-		txtCirkleDIst.setText("10");
-		txtParameter1.setText("40");
+		txtCirkleDIst.setText("12");
+		txtParameter1.setText("35");
 		txtParameter2.setText("16");
 	
 		// ROBOT
