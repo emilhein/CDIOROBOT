@@ -17,7 +17,7 @@ public class CallibratorGUI {
 
 	private JFrame frame1;
 	private Container pane;
-	private JButton btnApply, btnConnect, btnDeliver;
+	private JButton btnApply, btnConnect, btnDeliver, btnQuit;
 	private JLabel lblDP, lblmaxgrøn, lblmaxblå, lblmaxrød, lblminrød,
 	lblCirkleDIst, jlcolorMaxGreen, jlcolorMaxBlue, jlcolorMaxRed, jlColorMinRed, lblParameter1, lblRoboDP,
 	jlsep, lblParameter2, lblMinradius, lblMaxradius, lblRoboMinDist,
@@ -95,11 +95,13 @@ public class CallibratorGUI {
 		lblmaxrød = new JLabel("MaxRød");							lblminrød = new JLabel("MinRød");
 		lblvinkel = new JLabel("Vinkel");							lbllm = new JLabel("LM");
 		lblluk = new JLabel("Luk");									lblpov = new JLabel("PowM");
+		btnQuit = new JButton("Quit");
 
 		btnConnect.setBackground(Color.PINK);
 		btnApply.setBackground(Color.PINK);
 		btnDeliver.setBackground(Color.PINK);
-
+		btnQuit.setBackground(Color.PINK);
+		
 		txtArea1 = new JTextArea(1, 1);								lbltxt = new JLabel();
 		lbltxtBallAngle = new JLabel();								lbltxtRoboAngle = new JLabel();
 		lbltxtTurnAngle = new JLabel();								jlcircleDP = new JLabel();
@@ -204,7 +206,8 @@ public class CallibratorGUI {
 		pane.add(jlLengthMultiply);						pane.add(jlClose);
 		pane.add(jlPoV);								pane.add(txtvinkel);
 		pane.add(txtlm);								pane.add(txtluk);
-
+		pane.add(btnQuit);
+		
 		// Placerer alle kompoenter og tildeler actionPerformed
 
 		lblmaxgrøn.setBounds(lblmaxgrøn.getX() + lblmaxgrøn.getWidth() + 1010, insets.top + 236, lblmaxgrøn.getPreferredSize().width, lblmaxgrøn.getPreferredSize().height);
@@ -678,6 +681,15 @@ public class CallibratorGUI {
 			}
 		});
 
+		btnQuit.setBounds(btnQuit.getX() + btnQuit.getWidth() + 85, insets.top + 590, btnQuit.getPreferredSize().width, btnQuit.getPreferredSize().height);
+		
+		btnQuit.addActionListener (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+			
+		});
+		
 		btnConnect.setBounds(btnConnect.getX() + btnConnect.getWidth() + 80, insets.top + 550, btnConnect.getPreferredSize().width, btnConnect.getPreferredSize().height);
 
 		btnConnect.addActionListener(new ActionListener() {
