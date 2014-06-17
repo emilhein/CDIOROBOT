@@ -31,7 +31,7 @@ public class RouteTest {
 	
 	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west) {
 		CalcDist dist = new CalcDist();
-		minLength = 1000;
+		minLength = 10000;
 
 		
 
@@ -100,20 +100,21 @@ public class RouteTest {
 	
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
+		
+		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
 		File imageFile = new File("RouteTest3.png");
         BufferedImage img;
 		try {
 			img = ImageIO.read(imageFile);
 			   Graphics2D graph = img.createGraphics();
-//		       graph.fillRect(50, 50, 50, 100);// Finally draw a black rectangle on it
-		        AffineTransform at = new AffineTransform();
-		             graph.transform(at);
+//		       
+		       
+		        graph.rotate(Math.toRadians(45), 1055, 435);
+		        graph.setColor(Color.BLACK);
+		        graph.fillRect(820, 150, (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
 		        
-		        graph.setColor(Color.red);
-		        graph.rotate(Math.toDegrees(45));
+		        graph.dispose();
 		        
-		        
-		        graph.fillRect(820, 150, 100, 200);// Finally draw a black rectangle on it
 		        ImageIO.write(img, "png", new File("RouteTest3.png"));
 
 
