@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
+import CallibratorGUI.CallibratorGUI;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
@@ -62,7 +63,20 @@ public class PrimaryController {
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
 		findEdge.findMajors();
+		CallibratorGUI GUI = new CallibratorGUI();
+		try {
+			GUI.startGUI();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*
+		if(first)
+		{
 
+			control.start();						
+			first = false;
+		}
+	*/
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -148,7 +162,7 @@ public class PrimaryController {
 			if(toGoal == 0){
 				System.out.println("3");
 				toGoal = 1;
-				goalA = findEdge.getGoalB();
+				goalA = findEdge.getGoalA();
 
 				minPunkt.x(goalA.x() - 220);
 				minPunkt.y(goalA.y());

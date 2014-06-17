@@ -140,7 +140,7 @@ public class CallibratorGUI {
 		if (findEdge.getPixPerCm() > 0) {
 			ppcm = findEdge.getPixPerCm();
 		}
-System.out.println("PPCM "+ppcm);
+		System.out.println("PPCM "+ppcm);
 		
 		
 		//		udregning af diverse for bolde
@@ -150,19 +150,21 @@ System.out.println("PPCM "+ppcm);
 		//		udregning af diverse for robot
 		int roboMinRadius = (int)(4.8*ppcm);
 		int roboMaxRadius = (int)(5.5*ppcm);
-
+		
+		txtMinradius.setText("" + ballsMinRadius);
+		txtMaxradius.setText("" + ballsMaxRadius);
+		txtromin.setText("" + roboMinRadius);
+		txtromax.setText("" + roboMaxRadius);
 
 		// BOLDE
 		txtDP.setText("1");																						
 		txtCirkleDIst.setText("10");
 		txtParameter1.setText("40");
 		txtParameter2.setText("16");
-		txtMinradius.setText("" + ballsMinRadius);
-		txtMaxradius.setText("" + ballsMaxRadius);
+	
 		// ROBOT
 		txtRoboDP.setText("1");
-		txtromin.setText("" + roboMinRadius);
-		txtromax.setText("" + roboMaxRadius);
+	
 		txtRoboMinDist.setText("15");
 		txtRoboPar1.setText("40");
 		txtRoboPar2.setText("18");
@@ -572,8 +574,6 @@ System.out.println("PPCM "+ppcm);
 
 
 				//				Lige i starten, når robotten kører første runde.
-				System.out.println("Før start");
-				//				Lige i starten, når robotten kører første runde.
 
 				if(first)
 				{
@@ -581,17 +581,15 @@ System.out.println("PPCM "+ppcm);
 					control.start();						
 					first = false;
 				}
-
-				System.out.println("Efter start");
+				
 
 				//				while (true){
 				//	for(int i = 1;i<3;i++){
 
-				System.out.println("Før loopround");
 
 				info = control.loopRound(info,0);
-				System.out.println("Efter loopround");
-
+				
+			
 				//if(i%2 == 0){
 				//	info = control.loopRound(info,1); // kører til punkt foran mål
 				//	info = control.loopRound(info,1); // aflevere i mål.
