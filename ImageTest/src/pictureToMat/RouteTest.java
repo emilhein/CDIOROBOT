@@ -92,12 +92,12 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
 		//********************* Draw the corners of the world ***************************
-		
+		if(north.x() != 0){
 		paintPoint(frame,new CvPoint(north.x(), north.y()), 0 ,0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(south.x(), south.y()), 0, 0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(east.x(),east.y()), 0, 0, 0,40); // farver robot bagpunkt
 		paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
-	
+		}
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
 		
