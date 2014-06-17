@@ -56,7 +56,7 @@ public class PrimaryController {
 
 	public void start() {
 
-		//takepic.takePicture();
+		takepic.takePicture();
 		findEdge.detectAllRects();
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
@@ -86,7 +86,7 @@ public class PrimaryController {
 		
 		//################## Take picture until robot is found #########
 		do {
-			//takepic.takePicture();	
+			takepic.takePicture();	
 
 			// ################# Pic to Mat ############
 
