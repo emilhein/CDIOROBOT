@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -32,7 +31,7 @@ public class RouteTest {
 	
 	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west) {
 		CalcDist dist = new CalcDist();
-		minLength = 100000;
+		minLength = 10000;
 
 		
 
@@ -88,7 +87,7 @@ public class RouteTest {
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
 		
-		
+//		Core.rectangle(frame, new Point(100,100), new Point(300,300), null, 1);
 		paintPoint(frame,new CvPoint(1600/2, 900/2), 0, 128, 128,30); // midten af billedet
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
