@@ -304,7 +304,6 @@ public class DetectRects {
 		miner2 = obstruction.x()+obstruction.width()+margin;
 		miner3 = obstruction.y()-margin;
 		miner4 = obstruction.y()+obstruction.height()+margin;
-		System.out.println("miners = " + miner1+miner2+miner3+miner4);
 	}
 
 	public void findMajors () {

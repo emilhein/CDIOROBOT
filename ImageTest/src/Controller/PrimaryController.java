@@ -87,12 +87,12 @@ public class PrimaryController {
 		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
 		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
 		CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
-		
+		/*
 		System.out.println("Corner1: (" + corner1.x() + "," + corner1.y() + ")");
 		System.out.println("Corner2: (" + corner2.x() + "," + corner2.y() + ")");
 		System.out.println("Corner3: (" + corner3.x() + "," + corner3.y() + ")");
 		System.out.println("Corner4: (" + corner4.x() + "," + corner4.y() + ")");
-
+		*/
 		
 		//################## Take picture until robot is found #########
 		do {
@@ -151,11 +151,8 @@ public class PrimaryController {
 
 		calliData.setLbltxt(lbltxt);
 			
-		System.out.println("1");
 		if(deliverButtom == 1){
-			System.out.println("2");
 			if(toGoal == 0){
-				System.out.println("3");
 				toGoal = 1;
 				goalA = findEdge.getGoalA();
 
@@ -166,7 +163,7 @@ public class PrimaryController {
 				calliData.setTurnAngle(calliData.getTurnAngle());
 				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- minPunkt.x()));
 				System.out.println("4");
-				send(calliData);
+				//send(calliData);
 				System.out.println("5");
 			} else {
 				System.out.println("6");
@@ -181,7 +178,7 @@ public class PrimaryController {
 				CalcDist dist = new CalcDist();
 				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)+10));
 				System.out.println("7");
-				send(calliData);
+				//send(calliData);
 				System.out.println("7");
 
 			}
@@ -198,8 +195,7 @@ public class PrimaryController {
 		int l2 = corner4.y()-(int)(5*ppcm);
 		int l3 = corner1.x()+(int)(5*ppcm);
 		int l4 = corner4.x()-(int)(5*ppcm);
-
-/*
+		
 
 		if (minPunkt.x() < l1 || minPunkt.x() > l4 || minPunkt.y() < l3|| minPunkt.y() > l2) {
 			// bold under L1!
@@ -207,9 +203,9 @@ public class PrimaryController {
 			angleCal(calliData, tempPoint);
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
 			ifTemp = 1;
-			System.out.println("Før send 1");
 			send(calliData); // robot skal gerne være kørt til temporary point (vinkelret på bolden og kanten)
-			calliData.setTurnAngle(90F);
+	//		calliData.setTurnAngle(90F);
+			/*
 
 			if( minPunkt.y() > l2){
 				System.out.println("BALL IS IN L2");
@@ -227,12 +223,12 @@ public class PrimaryController {
 				System.out.println("BALL IS IN L1");
 				calliData.setTurnAngle(-90F);
 			}
-			
+			*/
 			calliData.setTurnAngle(90F);
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()- minPunkt.y()));
 			moveBack = 1;
 
-		}*/
+		}
 		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)&&toGoal == 0){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
@@ -336,6 +332,7 @@ public class PrimaryController {
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
+		
 		System.out.println("TurnAngle = " + calliData.getTurnAngle());
 
 		int angle = (int) Math.round(Float.parseFloat(""
@@ -375,11 +372,11 @@ public class PrimaryController {
 
 			Thread.sleep(1200);
 			// kører robot frem
-
+/*
 			System.out.println("Lenghtmulti " + calliData.getlengthMultiply());
 			System.out.println("minmulti " + route.getMinLength());
 			System.out.println("ppcm  " + findEdge.getPixPerCm());
-
+*/
 			int distance = (int) ((route.getMinLength()
 					* Math.round(calliData.getlengthMultiply()) / findEdge
 					.getPixPerCm())); // længde konvertering
@@ -387,7 +384,6 @@ public class PrimaryController {
 			
 			System.out.println("dist = " + distance);
 			if(ifTemp == 0 ){
-				System.out.println(" Efter iftemp");
 				distance -= 6 * ppcm; // for at lande foran bolden
 			}
 			Thread.sleep(600);
@@ -396,10 +392,8 @@ public class PrimaryController {
 			i = distance / 10;
 			dos.write(i);
 			dos.flush();
-			System.out.println(" Efter kørfrem");
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
-			System.out.println("Efter en wait");
 			
 			/*
 			 * if(toGoal < 1){ // samler bold op dos.write(51); dos.flush();
@@ -434,7 +428,6 @@ public class PrimaryController {
 				moveBack = 0;
 				backMove = 0;
 			}
-			System.out.println("I slut send");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

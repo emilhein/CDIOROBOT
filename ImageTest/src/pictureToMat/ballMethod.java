@@ -156,12 +156,7 @@ public class ballMethod {
 		double whiteCompareR = whiteCompare[2];
 		double whiteCompareG = whiteCompare[1];
 		double whiteCompareB = whiteCompare[0];
-		
-		System.out.println("---------------------------------------");
-		System.out.println("RED compare: " + whiteCompareR);
-		System.out.println("GREEN compare: " + whiteCompareG);
-		System.out.println("BLUE compare: " + whiteCompareB);
-		System.out.println("---------------------------------------");
+	
 
 		paintPoint(pic0, onRoboPoint, 255, 0, 0,20);
 		
