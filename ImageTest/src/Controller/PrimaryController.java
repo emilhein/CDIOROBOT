@@ -58,8 +58,16 @@ public class PrimaryController {
 
 	public void start() {
 
+		long timePicStart = System.currentTimeMillis();
 		takepic.takePicture();
+		long timePicSlut = System.currentTimeMillis();
+		System.out.println("take picture tid: " + (timePicSlut-timePicStart));
+		
+		long timeFindEdgeStart = System.currentTimeMillis();
 		findEdge.detectAllRects();
+		long timeFindEdgeSlut = System.currentTimeMillis();
+		System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
+		
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
 		findEdge.findMajors();
