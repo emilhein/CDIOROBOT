@@ -118,8 +118,7 @@ public class PrimaryController {
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 
 		// ################### Nearest Ball
-		// #######################################
-
+		
 		balls.changePerspective(calliData.getPoV());
 		balls.calculateRotationPoint();
 
@@ -199,12 +198,15 @@ public class PrimaryController {
 			}
 			if( minPunkt.y() > l3){
 				System.out.println("BALL IS IN L3");
+				calliData.setTurnAngle(-90F);
 			}
 			if( minPunkt.x() > l4){
 				System.out.println("BALL IS IN L4");
+				calliData.setTurnAngle(-90F);
 			}
 			if( minPunkt.x() > l1){
 				System.out.println("BALL IS IN L1");
+				calliData.setTurnAngle(-90F);
 			}
 			
 			calliData.setTurnAngle(90F);
@@ -261,8 +263,7 @@ public class PrimaryController {
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()-(15*intppcm));
 			System.out.println("corner3"); 
 			angleCal(calliData, tempPoint);
-			CalcDist dist = new CalcDist();
-			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempPoint)));
+			route.setMinLength(Math.abs((balls.getRoboBagPunkt().x() - Math.abs(tempPoint.x()))));
 			ifTemp = 1;
 			send(calliData);
 			int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
@@ -275,7 +276,7 @@ public class PrimaryController {
 			System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
 			angleCal(calliData, minPunkt);
 			calliData.setTurnAngle(calliData.getTurnAngle());
-			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
+			route.setMinLength(Math.abs((balls.getRoboBagPunkt().x() - minPunkt.x())+65));
 			backMove = 1; 
 			ifTemp = 0;
 			} 
@@ -393,13 +394,13 @@ public class PrimaryController {
 					* Math.round(calliData.getlengthMultiply()) / findEdge
 					.getPixPerCm())); // længde konvertering
 
+			
 			System.out.println("dist = " + distance);
-
 			if(ifTemp == 0 ){
+				System.out.println(" Efter iftemp");
 				distance -= 6 * ppcm; // for at lande foran bolden
 			}
 			Thread.sleep(600);
-			System.out.println(" Efter iftemp");
 			dos.write(81);
 			dos.flush();
 			if (angle > 180)
