@@ -32,7 +32,7 @@ public class PrimaryController {
 	private TakePicture takepic;
 	private ballMethod balls;
 //	private CalcDist dist;
-//	private final OutputStream dos;
+	private final OutputStream dos;
 	private RouteTest route;
 	private int moveBack = 0;
 	private int backMove = 0;
@@ -45,7 +45,7 @@ public class PrimaryController {
 	//	dist = new CalcDist();
 		route = new RouteTest();
 
-	/*	NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");// robot nr
 																	// 2
 		NXTConnector connt = new NXTConnector();
@@ -53,30 +53,25 @@ public class PrimaryController {
 		connt.connectTo(nxtInfo, NXTComm.LCP);
 		 System.out.println("connected"); // forbundet
 		// åbner streams}
-		dos = connt.getOutputStream();*/
+		dos = connt.getOutputStream();
 	}
 
 	public void start() {
 
-//		takepic.takePicture();
+		long timePicStart = System.currentTimeMillis();
+		takepic.takePicture();
+		long timePicSlut = System.currentTimeMillis();
+		System.out.println("take picture tid: " + (timePicSlut-timePicStart));
+		
+		long timeFindEdgeStart = System.currentTimeMillis();
 		findEdge.detectAllRects();
+		long timeFindEdgeSlut = System.currentTimeMillis();
+		System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
+		
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
 		findEdge.findMajors();
-		CallibratorGUI GUI = new CallibratorGUI();
-		try {
-			GUI.startGUI();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		/*
-		if(first)
-		{
-
-			control.start();						
-			first = false;
-		}
-	*/
+		
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -101,7 +96,7 @@ public class PrimaryController {
 		
 		//################## Take picture until robot is found #########
 		do {
-//			takepic.takePicture();	
+			takepic.takePicture();	
 
 			// ################# Pic to Mat ############
 
@@ -145,7 +140,7 @@ public class PrimaryController {
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
 				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
-/*
+
 		// ############################# Calc Angle ###################
 		String text1 = "Antal bolde fundet: " + (ballCoor.size() / 3);
 		JTextArea txtArea1 = new JTextArea(text1, 1, 1);
@@ -164,7 +159,7 @@ public class PrimaryController {
 				toGoal = 1;
 				goalA = findEdge.getGoalA();
 
-				minPunkt.x(goalA.x() - 500);
+				minPunkt.x(goalA.x() - 300);
 				minPunkt.y(goalA.y());
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
@@ -181,8 +176,8 @@ public class PrimaryController {
 
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
-				route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()
-						- minPunkt.x()));
+				CalcDist dist = new CalcDist();
+				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)+10));
 				System.out.println("7");
 				send(calliData);
 				System.out.println("7");
@@ -201,7 +196,7 @@ public class PrimaryController {
 		int l2 = corner4.y()-(int)(5*ppcm);
 		int l3 = corner1.x()+(int)(5*ppcm);
 		int l4 = corner4.x()-(int)(5*ppcm);
-*/
+
 /*
 
 		if (minPunkt.x() < l1 || minPunkt.x() > l4 || minPunkt.y() < l3|| minPunkt.y() > l2) {
@@ -235,7 +230,7 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()- minPunkt.y()));
 			moveBack = 1;
 
-		}*//*
+		}*/
 		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
@@ -281,7 +276,7 @@ public class PrimaryController {
 			backMove = 1; 
 			ifTemp = 0;
 			} 
-		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (100*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)){ 
+		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (10*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(18*intppcm)){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()-(15*intppcm));
 			System.out.println("corner3"); 
 			angleCal(calliData, tempPoint);
@@ -332,7 +327,7 @@ public class PrimaryController {
 		System.out.println("Før send 2");
 
 		send(calliData);
-		*/
+		
 		return calliData;
 	}
 
@@ -363,7 +358,7 @@ public class PrimaryController {
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
 	}
-/*
+
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
@@ -424,8 +419,6 @@ public class PrimaryController {
 			Thread.sleep(600);
 			dos.write(81);
 			dos.flush();
-			if (angle > 180)
-				distance -= 30;
 			i = distance / 10;
 			dos.write(i);
 			dos.flush();
@@ -433,12 +426,12 @@ public class PrimaryController {
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
 			System.out.println("Efter en wait");
-			*/
+			
 			/*
 			 * if(toGoal < 1){ // samler bold op dos.write(51); dos.flush();
 			 * dos.write(51); dos.flush(); Thread.sleep(1200); }
 			 */
-/*
+
 				if (toGoal == 0 && ifTemp == 0) {
 					// samler bold op
 					dos.write(41);
@@ -475,7 +468,7 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}*/
+	}
 	public void calPosition(CvPoint roboFrontPunkt, CvPoint roboBagPunkt,CvPoint tempPoint) {
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
