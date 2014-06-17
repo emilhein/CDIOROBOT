@@ -21,6 +21,7 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -347,41 +348,30 @@ public class ballMethod {
 		
 		System.out.println();
 		
-		corner1 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle - 30);
+		/*corner1 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle - 30);
 		corner2 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 30);
 		corner3 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 - 30);
-		corner4 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 + 30);
+		corner4 = calcRobotCorner(midPoint, 17 * constPpcm, rotationAngle + 180 + 30);*/
 		
-		
+		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
+		File imageFile = new File("billed0.png");
+        BufferedImage img;
 		try {
-			BufferedImage buffTest = ImageIO.read(new File("billed0.png"));
-			Graphics2D g2dTest = buffTest.createGraphics();
-			g2dTest.setBackground(Color.red);
-			g2dTest.setColor(Color.cyan);
-			
-			Polygon polygon = new Polygon();
-			
-			polygon.addPoint(corner1.x(), corner1.y());
-			polygon.addPoint(corner2.x(), corner2.y());
-			polygon.addPoint(corner3.x(), corner3.y());
-			polygon.addPoint(corner4.x(), corner4.y());
-			g2dTest.drawPolygon(polygon);
-			g2dTest.fillPolygon(polygon);
-			
-			g2dTest.dispose();
-			
-			IplImage ipTest = IplImage.createFrom(buffTest);
-			cvSaveImage("firkantTest.png", ipTest);
-			
-			Mat pic0 = Highgui.imread("firkantTest.png");
-			
-			paintPoint(pic0, corner4, 255, 0, 0, 10);
-			//paintPoint(pic0, corner2, 200, 0, 0, 10);
-			//paintPoint(pic0, corner3, 100, 0, 0, 10);
-			//paintPoint(pic0, corner4, 55, 0, 0, 10);
-			
-			Highgui.imwrite("firkantTest.png", pic0);
-			
+			img = ImageIO.read(imageFile);
+			   Graphics2D graph = img.createGraphics();
+//		       
+		       System.out.println("MID" + midPoint.x());
+		       System.out.println("MID" + midPoint.y());
+		       System.out.println("Ro" + rotationAngle);
+		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
+		        graph.setColor(Color.BLACK);
+		        graph.fillRect(820, 150, (int)(15.5*constPpcm), (int)(30*constPpcm));// Draw robo rect
+		        
+		        graph.dispose();
+		        
+		        ImageIO.write(img, "png", new File("dow.png"));
+
+		        System.out.println("HHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
