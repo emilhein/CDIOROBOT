@@ -100,42 +100,6 @@ public class RouteTest {
 		}
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
-		
-		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
-		File imageFile = new File("RouteTest3.png");
-        BufferedImage img;
-		try {
-			img = ImageIO.read(imageFile);
-			   Graphics2D graph = img.createGraphics();
-//		       
-		       
-		        graph.rotate(Math.toRadians(45), 1055, 435);
-		        graph.setColor(Color.BLACK);
-		        graph.fillRect(820, 150, (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
-		        
-		        graph.dispose();
-		        
-		        ImageIO.write(img, "png", new File("RouteTest3.png"));
-
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-     
-
-		//Core.rectangle(frame, new Point(100,100), new Point(250,150),new Scalar(200, 120, 45),4);
-		
-	/*	DetectRects findEdge = new DetectRects();
-		float ppcm = findEdge.getPixPerCm();
-		int height = findEdge.getInnerRect().height() + (60 * (int)ppcm);
-		int width = findEdge.getInnerRect().width() + (90 * (int)ppcm);
-		
-		paintPoint(frame,new CvPoint(width, height), 0, 128, 128,30); // midten af banen
-*/
-
-
 		return minPunkt;
 	}
 

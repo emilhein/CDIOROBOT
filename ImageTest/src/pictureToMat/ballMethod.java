@@ -12,8 +12,28 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -28,6 +48,9 @@ import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 import com.googlecode.javacv.cpp.opencv_core.CvRect;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+import dist.CalcAngle;
+import dist.CalcDist;
+
 
 public class ballMethod {
 
@@ -39,7 +62,7 @@ public class ballMethod {
 	private CvPoint roboBagPunkt;
 	private Random random;
 
-	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot, CvPoint corner1, CvPoint corner4){ 
+	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot, CvPoint corner1, CvPoint corner4, float pixPerCm){ 
 
 		ArrayList<Float> Coordi = new ArrayList<Float>();
 
@@ -54,7 +77,7 @@ public class ballMethod {
 			webcam_image = roboMat;
 		else
 		{
-			pictureToMat2("billed0.png", corner1, corner4);
+			pictureToMat2("billed0.png", corner1, corner4, pixPerCm);
 			webcam_image = ballMat;
 		}
 
@@ -115,21 +138,19 @@ public class ballMethod {
 		}
 	}
 	
-	public void pictureToMat2(String image, CvPoint corner1, CvPoint corner4) {
+	public void pictureToMat2(String image, CvPoint corner1, CvPoint corner4, float pixPerCm) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		random = new Random();
-
-		Mat pic0 = Highgui.imread(image);
+		
+		Mat pic0 = Highgui.imread("billed0.png");
 		ballMat = pic0.clone();
-		roboMat = pic0.clone();
 		
 		CvPoint onRoboPoint = new CvPoint(roboBagPunkt.x() + (roboFrontPunkt.x() - roboBagPunkt.x())/2, roboBagPunkt.y() + (roboFrontPunkt.y() - roboBagPunkt.y())/2);
-		//!! TEST
+
 		onRoboPoint.x(onRoboPoint.x() + 15);
 		onRoboPoint.y(onRoboPoint.y() + 15);
-		//!! TEST SLUT
 		
 		double[] whiteCompare = pic0.get(onRoboPoint.y(), onRoboPoint.x());
 		double whiteCompareR = whiteCompare[2];
@@ -145,7 +166,14 @@ public class ballMethod {
 		paintPoint(pic0, onRoboPoint, 255, 0, 0,20);
 		
 		double randRed, randGreen, randBlue;
+		
+		Highgui.imwrite("pixToMat.png", ballMat);
 
+		rotateRobot(pixPerCm);
+		
+		pic0 = Highgui.imread("pixToMat.png");
+		
+		
 		try
 		{
 			for (int j = 0; j < pic0.rows(); j++) {
@@ -160,20 +188,19 @@ public class ballMethod {
 						double blue = rgb[i];
 						double green = rgb[i + 1];
 						double red = rgb[i + 2];
-						
+					
 						if(b < corner1.x() || corner4.x() < b || j < corner1.y() || corner4.y() < j)
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
-						else if(whiteCompareR/red < 2.2 && whiteCompareG/green < 2.2 && whiteCompareB/blue < 2.2)
-						{
-							//ballMat.put(j, b, 255, 255, 255);
-						}
-						else
+						else if(Math.abs(green - blue) > 50 || Math.abs(green - red) > 50 || Math.abs(blue - red) > 50)
 						{
 							ballMat.put(j, b, randRed, randGreen, randBlue);
 						}
-						
+						else if(whiteCompareR/red >= 2.2 && whiteCompareG/green >= 2.2 && whiteCompareB/blue >= 2.2)
+						{
+							ballMat.put(j, b, randRed, randGreen, randBlue);
+						}
 					}
 				}
 			}
@@ -181,11 +208,49 @@ public class ballMethod {
 		catch (Exception e) {
 			System.out.println("Could not convert image properly");
 		}
-
-		Highgui.imwrite("BOT.png", pic0);
 	}
 	
-	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
+	public void rotateRobot(float pixPerCm)
+	{
+		CvPoint midPoint = new CvPoint();
+		CalcAngle angleCalculator = new CalcAngle();
+		
+		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2);
+		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2);
+		midPoint.x(roboBagPunkt.x()+diffX);
+		midPoint.y(roboBagPunkt.y()+diffY);
+		
+		Float rotationAngle = angleCalculator.Calcangle(midPoint, roboFrontPunkt);
+		
+		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
+		File imageFile = new File("pixToMat.png");
+        BufferedImage img;
+		try {
+			img = ImageIO.read(imageFile);
+			   Graphics2D graph = img.createGraphics();
+//		       
+		       
+		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
+		        graph.setColor(Color.BLACK);
+		       // graph.fillRect(midPoint.x() - (int)Math.round(15*ppcm), midPoint.y() - (int)Math.round(7.5*ppcm), (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
+		        System.out.println("Mx: " + midPoint.x());
+		        System.out.println("My: " + midPoint.y());
+		        graph.fillRect(midPoint.x() - (int)Math.round(16*pixPerCm), midPoint.y() - (int)Math.round(8.4*pixPerCm), (int)(32*pixPerCm), (int)(16.8*pixPerCm));// Draw robo rect
+		        
+		        graph.dispose();
+		        
+		        ImageIO.write(img, "png", new File("pixToMat.png"));
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	
+	public void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
 		for (int a = 0; a < size; a++)
 		{
 			for (int b = 0; b < size; b++)
