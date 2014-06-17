@@ -554,7 +554,11 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
+
 				//				Lige i starten, når robotten kører første runde.
+				System.out.println("Før start");
+//				Lige i starten, når robotten kører første runde.
+
 				if(first)
 				{
 
@@ -562,10 +566,16 @@ public class CallibratorGUI {
 					first = false;
 				}
 
+				System.out.println("Efter start");
+
 				//				while (true){
 				//	for(int i = 1;i<3;i++){
 
+				System.out.println("Før loopround");
+
 				info = control.loopRound(info,0);
+				System.out.println("Efter loopround");
+
 				//if(i%2 == 0){
 				//	info = control.loopRound(info,1); // kører til punkt foran mål
 				//	info = control.loopRound(info,1); // aflevere i mål.
