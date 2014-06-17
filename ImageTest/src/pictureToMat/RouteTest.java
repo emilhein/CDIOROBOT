@@ -31,7 +31,7 @@ public class RouteTest {
 	
 	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west) {
 		CalcDist dist = new CalcDist();
-		minLength = 1000;
+		minLength = 10000;
 
 		
 
