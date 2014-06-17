@@ -2,25 +2,13 @@ package CallibratorGUI;
 
 import javax.swing.*;
 
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
-
-import com.googlecode.javacv.cpp.opencv_core.CvPoint;
-
 import data.GUIInfo;
-import dist.CalcAngle;
-import dist.CalcDist;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
 
-import lejos.pc.comm.NXTComm;
-import lejos.pc.comm.NXTConnector;
-import lejos.pc.comm.NXTInfo;
 import pictureToMat.*;
 import Controller.PrimaryController;
 
