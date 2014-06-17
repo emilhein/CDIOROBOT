@@ -144,6 +144,9 @@ public class GUIInfo {
 	public Float getPoV () {
 		return Float.parseFloat(jlPoV.getText());
 	}
+	public void setPoV (Float PoV){
+		this.PoV = PoV;
+	}
 	public void setJlPoV(JLabel jlPoV) {
 		this.jlPoV = jlPoV;
 	}
