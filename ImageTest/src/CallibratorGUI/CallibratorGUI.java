@@ -62,22 +62,24 @@ public class CallibratorGUI {
 
 	public void startGUI() throws IOException {
 
+		//Opretter objekter af andre klasser
 		info = new GUIInfo();
 		findEdge = new DetectRects();
 		control = new PrimaryController(findEdge);
 
 		// Opretter rammen
 		frame1 = new JFrame("CallibratorGUI");
-
+		
 		// Sætter størrelsen af rammen i pixelx
 		frame1.setSize(1300, 718);
-		frame1.setBackground(Color.lightGray);
-
-		// Prepare panel
+		
+		
+		// Gør panelet klar
 		pane = frame1.getContentPane();
 		insets = pane.getInsets();
-
-		// pane.setLayout (null);
+		
+		pane.setLayout (null);
+		pane.setBackground(Color.LIGHT_GRAY);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ImageIcon edge = new ImageIcon("edge.png");
@@ -159,7 +161,7 @@ public class CallibratorGUI {
 		txtluk.setText("5.5");
 		txtpov.setText("0.05");		
 		
-		// Tilføjer alle komponenter
+		// Tilføjer alle komponenter i panelet
 		pane.add(jlcircleDP);							pane.add(jlcircleDist);
 		pane.add(jlcirclePar1);							pane.add(jlcirclePar2);
 		pane.add(jlcircleMinRadius);					pane.add(jlcircleMaxRadius);
@@ -197,8 +199,8 @@ public class CallibratorGUI {
 		pane.add(jlPoV);								pane.add(txtvinkel);
 		pane.add(txtlm);								pane.add(txtluk);
 
-		// //Placerer alle kompoenter
-
+		// Placerer alle kompoenter og tildeler actionPerformed
+		
 		lblmaxgrøn.setBounds(lblmaxgrøn.getX() + lblmaxgrøn.getWidth() + 1010, insets.top + 236, lblmaxgrøn.getPreferredSize().width, lblmaxgrøn.getPreferredSize().height);
 		txtmaxgrøn.setBounds(txtmaxgrøn.getX() + txtmaxgrøn.getWidth() + 1010, insets.top + 251, txtmaxgrøn.getPreferredSize().width, txtmaxgrøn.getPreferredSize().height);
 
@@ -541,6 +543,7 @@ public class CallibratorGUI {
 				jlPoV.setText(input20);
 				jlPoV.setBounds(1155, insets.top + 551, jlPoV.getPreferredSize().width, jlPoV.getPreferredSize().height);
 
+//				Benytter sig af de setter metoder der er oprettet i GUIInfo
 				info.setJlcircleDP(jlcircleDP);									info.setJlcircleDist(jlcircleDist);
 				info.setJlcirclePar1(jlcirclePar1);								info.setJlcirclePar2(jlcirclePar2);
 				info.setJlcircleMinRadius(jlcircleMinRadius);					info.setJlcircleMaxRadius(jlcircleMaxRadius);
@@ -551,8 +554,10 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
+//				Lige i starten, når robotten kører første runde.
 				if(first)
 				{
+					
 					control.start();						
 					first = false;
 				}
