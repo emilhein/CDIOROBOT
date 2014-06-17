@@ -63,20 +63,7 @@ public class PrimaryController {
 		ppcm = findEdge.getPixPerCm();
 		findEdge.findMiners();
 		findEdge.findMajors();
-		CallibratorGUI GUI = new CallibratorGUI();
-		try {
-			GUI.startGUI();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		/*
-		if(first)
-		{
-
-			control.start();						
-			first = false;
-		}
-	*/
+		
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -164,7 +151,7 @@ public class PrimaryController {
 				toGoal = 1;
 				goalA = findEdge.getGoalA();
 
-				minPunkt.x(goalA.x() - 220);
+				minPunkt.x(goalA.x() - 300);
 				minPunkt.y(goalA.y());
 				tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
@@ -182,7 +169,7 @@ public class PrimaryController {
 				//calPosition(roboFrontPunkt,roboBagPunkt,tempGoal);
 				angleCal(calliData, tempGoal);
 				CalcDist dist = new CalcDist();
-				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)));
+				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal)+10));
 				System.out.println("7");
 				System.out.println("7");
 
@@ -396,8 +383,6 @@ public class PrimaryController {
 			Thread.sleep(600);
 			dos.write(81);
 			dos.flush();
-			if (angle > 180)
-				distance -= 30;
 			i = distance / 10;
 			dos.write(i);
 			dos.flush();
