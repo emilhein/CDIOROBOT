@@ -234,9 +234,8 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempPoint)));
 			ifTemp = 1;
 			send(calliData);
-			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
+			calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
-			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
 			backMove = 1; 
 			ifTemp = 0;
@@ -248,9 +247,8 @@ public class PrimaryController {
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempPoint)));
 			ifTemp = 1;
 			send(calliData);
-			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
+			calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
-			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)));
 			backMove = 1; 
 			ifTemp = 0;
@@ -262,9 +260,8 @@ public class PrimaryController {
 			route.setMinLength((balls.getRoboBagPunkt().x() - Math.abs(tempPoint.x())));
 			ifTemp = 1;
 			send(calliData);
-			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
+			calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
-			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength((balls.getRoboBagPunkt().x() - minPunkt.x())+65);
 			backMove = 1; 
 			ifTemp = 0;
@@ -276,9 +273,8 @@ public class PrimaryController {
 			route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint));
 			ifTemp = 1;
 			send(calliData);
-			calPosition( roboFrontPunkt,  roboBagPunkt, tempPoint);
+			calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint);
 			angleCal(calliData, minPunkt);
-			calliData.setTurnAngle(calliData.getTurnAngle());
 			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt));
 			backMove = 1; 
 			ifTemp = 0;
