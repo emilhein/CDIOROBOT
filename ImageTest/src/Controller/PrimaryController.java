@@ -177,7 +177,7 @@ public class PrimaryController {
 				
 			}
 		
-			angleCal(calliData, minPunkt);
+//			angleCal(calliData, minPunkt);
 	
 		}
 
@@ -421,12 +421,12 @@ public class PrimaryController {
 		}
 	}
 	public void calPosition(CvPoint roboFrontPunkt, CvPoint roboBagPunkt,CvPoint tempPoint) {
-		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
-		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+		int diffX = (int) (roboFrontPunkt.x()-roboBagPunkt.x());
+		int diffY = (int) (roboFrontPunkt.y()-roboBagPunkt.y());
 		roboFrontPunkt.x(tempPoint.x());
 		roboFrontPunkt.y(tempPoint.y());
-		roboBagPunkt.x(tempPoint.x()-Math.abs(diffX));
-		roboBagPunkt.y(tempPoint.y()-Math.abs(diffY));
+		roboBagPunkt.x(tempPoint.x()+diffX);
+		roboBagPunkt.y(tempPoint.y()+diffY);
 		System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
 		System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
 			
