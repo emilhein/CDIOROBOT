@@ -83,9 +83,9 @@ public class RouteTest {
 		paintPoint(frame, new CvPoint(minPunkt.x(), minPunkt.y()), 255, 0, 0,20); // farver tætteste bold rød
 
 		paintPoint(frame,new CvPoint(roboBagPunkt.x(), roboBagPunkt.y()), 0, 128, 255,20); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,60); // farver robot forpunkt
-		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() + 10, roboFrontPunkt.y() + 10),	new Scalar(27, 12, 45), 4);
-		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x() +10, minPunkt.y() + 10),	new Scalar(200, 120, 45), 4);
+		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,40); // farver robot forpunkt
+		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() , roboFrontPunkt.y()),	new Scalar(27, 12, 45), 4);
+		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x(), minPunkt.y() ),	new Scalar(200, 120, 45), 4);
 		
 //		Core.rectangle(frame, new Point(100,100), new Point(300,300), null, 1);
 		paintPoint(frame,new CvPoint(1600/2, 900/2), 0, 128, 128,30); // midten af billedet

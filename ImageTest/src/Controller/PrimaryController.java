@@ -23,7 +23,7 @@ import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
 
 public class PrimaryController {
-	CvPoint goalA;
+	CvPoint goalB;
 	CvPoint minPunkt;
 	CvPoint tempGoal;
 	private int toGoal = 0;
@@ -82,25 +82,24 @@ public class PrimaryController {
 		//################# Calculate corners ########################
 		
 		int intppcm = (int)(Math.round(ppcm));
-		//CvPoint middle = new CvPoint(findEdge.getGoalB().x()+(90*intppcm),findEdge.getGoalB().y()); // in the middle of field
-		CvPoint corner3 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()+(60*intppcm));//3
-		CvPoint corner1 = new CvPoint(findEdge.getGoalB().x(),findEdge.getGoalB().y()-(60*intppcm));//1
-		CvPoint corner4 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()+(60*intppcm));//4
-		CvPoint corner2 = new CvPoint(findEdge.getGoalA().x(),findEdge.getGoalA().y()-(60*intppcm));//2 
-		/*
-		System.out.println("Corner1: (" + corner1.x() + "," + corner1.y() + ")");
-		System.out.println("Corner2: (" + corner2.x() + "," + corner2.y() + ")");
-		System.out.println("Corner3: (" + corner3.x() + "," + corner3.y() + ")");
-		System.out.println("Corner4: (" + corner4.x() + "," + corner4.y() + ")");
-		*/
+
+		CvPoint corner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		CvPoint corner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
+		CvPoint corner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		CvPoint corner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
 		
 		//################## Take picture until robot is found #########
 		do {
 			takepic.takePicture();	
 
-			// ################# Pic to Mat ############
-
-			balls.pictureToMat("billed0.png");
+			// ################## Cut image ####################################
+			balls.pictureToMat2(corner1, corner4, ppcm);
+			findEdge.adjustToCuttedImg(ppcm, 2, 4);
+			
+			corner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+			corner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
+			corner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+			corner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
 
 			// ################### Find Robot #######################################
 
@@ -114,6 +113,9 @@ public class PrimaryController {
 
 		} while (balls.determineDirection() == false);
 
+		balls.rotateRobot(ppcm);
+		balls.eliminateObstruction(findEdge.getObstruction(), ppcm);
+		
 		// ################### Find Balls #####################################
 		balls.findCircle(
 
@@ -128,9 +130,9 @@ public class PrimaryController {
 		
 		
 		// ################### Nearest Ball
-		
-		balls.changePerspective(calliData.getPoV());
 		balls.calculateRotationPoint();
+		balls.changePerspective(calliData.getPoV());
+		
 
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
@@ -153,10 +155,9 @@ public class PrimaryController {
 		if(deliverButtom == 1){
 			if(toGoal == 0){
 				toGoal = 1;
-				goalA = findEdge.getGoalA();
-
-				minPunkt.x(goalA.x() - 400);
-				minPunkt.y(goalA.y());
+				goalB = findEdge.getGoalB();
+				minPunkt.x(goalB.x()+400);
+				minPunkt.y(goalB.y());
 				System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
 				System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
@@ -167,8 +168,8 @@ public class PrimaryController {
 			} else {
 				toGoal = 2;
 
-				minPunkt.x(goalA.x() - 120);
-				minPunkt.y(goalA.y());
+				minPunkt.x(goalB.x() + 120);
+				minPunkt.y(goalB.y());
 
 				CvPoint tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
 				
@@ -184,7 +185,7 @@ public class PrimaryController {
 
 		// ***************************** Avoid edge*******************************
 		
-		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
+		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());*/
 /*
 		int l1 = corner1.y()+(int)(5*ppcm); 
 		int l2 = corner4.y()-(int)(5*ppcm);
@@ -383,7 +384,7 @@ public class PrimaryController {
 			dos.flush();
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
-			
+		
 			/*
 			 * if(toGoal < 1){ // samler bold op dos.write(51); dos.flush();
 			 * dos.write(51); dos.flush(); Thread.sleep(1200); }
