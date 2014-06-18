@@ -75,23 +75,25 @@ public class PrimaryController {
 		/*
 		 * char firstRun = 'a'; int ballCount = 0; int count = 0;
 		 */
+		CvPoint corner1, corner2, corner3, corner4;
+		
 		CalcDist dist = new CalcDist();
 
 		//################# Calculate corners ########################
 		
 		int intppcm = (int)(Math.round(ppcm));
 
-		CvPoint corner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		CvPoint corner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
-		CvPoint corner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		CvPoint corner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		//CvPoint originalCorner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		CvPoint originalCorner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
+		CvPoint originalCorner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		//CvPoint originalCorner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
 		
 		//################## Take picture until robot is found #########
 		do {
 			takepic.takePicture();	
 
 			// ################## Cut image ####################################
-			balls.pictureToMat2(corner1, corner4, ppcm);
+			balls.pictureToMat2(originalCorner1, originalCorner4, ppcm);
 			findEdge.adjustToCuttedImg(ppcm, 2, 4);
 			
 			corner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
