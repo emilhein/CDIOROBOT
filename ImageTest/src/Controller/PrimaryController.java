@@ -186,7 +186,7 @@ public class PrimaryController {
 
 		// ***************************** Avoid edge*******************************
 		
-		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());
+		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());*/
 /*
 		int l1 = corner1.y()+(int)(5*ppcm); 
 		int l2 = corner4.y()-(int)(5*ppcm);
@@ -385,7 +385,7 @@ public class PrimaryController {
 			dos.flush();
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
-			
+		
 			/*
 			 * if(toGoal < 1){ // samler bold op dos.write(51); dos.flush();
 			 * dos.write(51); dos.flush(); Thread.sleep(1200); }
