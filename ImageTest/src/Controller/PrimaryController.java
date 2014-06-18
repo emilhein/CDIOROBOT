@@ -23,7 +23,7 @@ import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
 
 public class PrimaryController {
-	CvPoint goalA;
+	CvPoint goalB;
 	CvPoint minPunkt;
 	CvPoint tempGoal;
 	private int toGoal = 0;
@@ -128,9 +128,9 @@ public class PrimaryController {
 		
 		
 		// ################### Nearest Ball
-		
-		balls.changePerspective(calliData.getPoV());
 		balls.calculateRotationPoint();
+		balls.changePerspective(calliData.getPoV());
+		
 
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
 		CvPoint roboFrontPunkt = balls.getRoboFrontPunkt();
@@ -153,10 +153,9 @@ public class PrimaryController {
 		if(deliverButtom == 1){
 			if(toGoal == 0){
 				toGoal = 1;
-				goalA = findEdge.getGoalA();
-
-				minPunkt.x(goalA.x() - 400);
-				minPunkt.y(goalA.y());
+				goalB = findEdge.getGoalB();
+				minPunkt.x(goalB.x()+400);
+				minPunkt.y(goalB.y());
 				System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
 				System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
@@ -167,8 +166,8 @@ public class PrimaryController {
 			} else {
 				toGoal = 2;
 
-				minPunkt.x(goalA.x() - 120);
-				minPunkt.y(goalA.y());
+				minPunkt.x(goalB.x() + 120);
+				minPunkt.y(goalB.y());
 
 				CvPoint tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
 				
