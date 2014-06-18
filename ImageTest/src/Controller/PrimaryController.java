@@ -155,14 +155,13 @@ public class PrimaryController {
 				toGoal = 1;
 				goalA = findEdge.getGoalA();
 
-				minPunkt.x(goalA.x() - 300);
+				minPunkt.x(goalA.x() - 400);
 				minPunkt.y(goalA.y());
 				System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
 				System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
-
 				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 				angleCal(calliData, tempGoal);
-				float minl = dist.Calcdist(roboBagPunkt, minPunkt)+6 * ppcm;
+				float minl = dist.Calcdist(roboBagPunkt, minPunkt)+20 * ppcm;
 				route.setMinLength(minl);
 				//send(calliData);
 			} else {
@@ -335,6 +334,8 @@ public class PrimaryController {
 		System.out.println("TurnAngle = " + calliData.getTurnAngle());
 		
 		try {
+			System.out.println("ANGLE!!!!! = " + angle);
+
 			if (Math.abs(angle) < 250) {
 				if (angle > 0) // vælger retning der skal drejes
 					Case = 21;
@@ -348,7 +349,7 @@ public class PrimaryController {
 					Case = 12;
 				dos.write(Case); // sender case
 				dos.flush();
-				dos.write(angle); // sender vinkel
+				dos.write(Math.abs(angle)); // sender vinkel
 				dos.flush();
 				Thread.sleep(700);
 			}
