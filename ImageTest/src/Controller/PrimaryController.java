@@ -68,8 +68,6 @@ public class PrimaryController {
 		System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
 		
 		ppcm = findEdge.getPixPerCm();
-		findEdge.findMiners();
-		findEdge.findMajors();
 		
 	}
 
@@ -131,7 +129,7 @@ public class PrimaryController {
 		
 		// ################### Nearest Ball
 		balls.calculateRotationPoint();
-		balls.changePerspective(calliData.getPoV());
+		balls.changePerspective(calliData.getPoV(), findEdge.getMidOfImg());
 		
 
 		CvPoint roboBagPunkt = balls.getRoboBagPunkt();
@@ -139,7 +137,7 @@ public class PrimaryController {
 
 
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
-				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest()); // tegner dem i testprogrammet
+				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest(), findEdge.getMidOfImg()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
 		// ############################# Calc Angle ###################

@@ -296,9 +296,8 @@ public class ballMethod {
 
 	}
 
-	public void changePerspective (Float PoV) {
+	public void changePerspective (Float PoV, CvPoint midpunkt) {
 		
-		CvPoint midpunkt = new CvPoint(800,450);
 		int diffXFront = midpunkt.x() - roboFrontPunkt.x();
 		int diffYFront = midpunkt.y() - roboFrontPunkt.y();
 		int diffXBag = midpunkt.x() - roboBagPunkt.x();

@@ -36,6 +36,7 @@ public class DetectRects {
 	private float innerWidth = 180;
 	CvPoint goalA;
 	CvPoint goalB;
+	CvPoint midOfImg = new CvPoint();
 	private float pixPerCm = -1;
 	private CvSeq contoursPointer;
 	private CvSeq contoursPointer2;
@@ -46,6 +47,11 @@ public class DetectRects {
 	private CvPoint east;
 	private CvPoint west;
 	private int miner1, miner2, miner3, miner4;
+	
+	public CvPoint getMidOfImg()
+	{
+		return midOfImg;
+	}
 	
 	public int getMiner1() {
 		return miner1;
@@ -118,7 +124,6 @@ public class DetectRects {
 	{
 		return pixPerCm;
 	}
-	
 	public CvPoint getGoalA()
 	{
 		return goalA;
@@ -313,5 +318,11 @@ public class DetectRects {
 	    
 	    goalB.x(innerRect.x());
 	    goalB.y(innerRect.y() + (innerRect.height()/2));
+	    
+	    midOfImg.x(innerRect.x() + (innerRect.width()/2));
+	    midOfImg.y(innerRect.y() + (innerRect.height()/2));
+	    
+	    findMiners();
+	    findMajors();
 	}
 }
