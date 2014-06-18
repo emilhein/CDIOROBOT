@@ -23,20 +23,21 @@ import pictureToMat.TakePicture;
 import pictureToMat.ballMethod;
 
 public class PrimaryController {
-	CvPoint goalB;
-	CvPoint minPunkt;
-	CvPoint tempGoal;
+	private CvPoint goalB;
+	private CvPoint minPunkt;
+	private CvPoint tempGoal;
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
 	private TakePicture takepic;
 	private ballMethod balls;
 	private CalcDist dist;
-	private final OutputStream dos;
+//	private final OutputStream dos;
 	private RouteTest route;
 	private int moveBack = 0;
 	private int backMove = 0;
 	private int ifTemp = 0;
+	private CvPoint originalCorner1, originalCorner4;
 
 	public PrimaryController(DetectRects findEdge) {
 		this.findEdge = findEdge;
@@ -44,7 +45,7 @@ public class PrimaryController {
 		balls = new ballMethod();
 		route = new RouteTest();
 
-		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
+/*		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");// robot nr
 																	// 2
 		NXTConnector connt = new NXTConnector();
@@ -52,7 +53,7 @@ public class PrimaryController {
 		connt.connectTo(nxtInfo, NXTComm.LCP);
 		 System.out.println("connected"); // forbundet
 		// åbner streams}
-		dos = connt.getOutputStream();
+		dos = connt.getOutputStream();*/
 	}
 
 	public void start() {
@@ -69,6 +70,10 @@ public class PrimaryController {
 		
 		ppcm = findEdge.getPixPerCm();
 		
+		//CvPoint originalCorner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		originalCorner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
+		originalCorner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		//CvPoint originalCorner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
@@ -83,17 +88,16 @@ public class PrimaryController {
 		
 		int intppcm = (int)(Math.round(ppcm));
 
-		//CvPoint originalCorner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		CvPoint originalCorner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
-		CvPoint originalCorner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		//CvPoint originalCorner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		
 		//################## Take picture until robot is found #########
 		do {
 			takepic.takePicture();	
 
 			// ################## Cut image ####################################
 			balls.pictureToMat2(originalCorner1, originalCorner4, ppcm);
+			System.out.println("ORG1.x: " + originalCorner1.x());
+			System.out.println("ORG1.y: " + originalCorner1.y());
+			System.out.println("ORG4.x: " + originalCorner4.x());
+			System.out.println("ORG4.y: " + originalCorner4.y());
 			findEdge.adjustToCuttedImg(ppcm, 2, 4);
 			
 			corner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
@@ -141,7 +145,7 @@ public class PrimaryController {
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
 				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest(), findEdge.getMidOfImg()); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
-
+/*
 		// ############################# Calc Angle ###################
 		String text1 = "Antal bolde fundet: " + (ballCoor.size() / 3);
 		JTextArea txtArea1 = new JTextArea(text1, 1, 1);
@@ -182,7 +186,7 @@ public class PrimaryController {
 			angleCal(calliData, minPunkt);
 	
 		}
-
+*/
 		// ***************************** Avoid edge*******************************
 		
 		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());*/
@@ -225,7 +229,7 @@ public class PrimaryController {
 			moveBack = 1;
 
 		}
-		*/
+		*//*
 		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
@@ -286,7 +290,7 @@ public class PrimaryController {
 		}
 		System.out.println("Før send 2");
 
-		send(calliData);
+		send(calliData);*/
 		
 		return calliData;
 	}
@@ -318,7 +322,7 @@ public class PrimaryController {
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
 	}
-
+/*
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
@@ -357,13 +361,13 @@ public class PrimaryController {
 			dos.write(angle); // sender vinkel
 			dos.flush();
 
-			Thread.sleep(1200);
+			Thread.sleep(1200);*/
 			// kører robot frem
 /*
 			System.out.println("Lenghtmulti " + calliData.getlengthMultiply());
 			System.out.println("minmulti " + route.getMinLength());
 			System.out.println("ppcm  " + findEdge.getPixPerCm());
-*/
+*//*
 			int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / findEdge
 					.getPixPerCm())); // længde konvertering
 
@@ -380,11 +384,11 @@ public class PrimaryController {
 			dos.flush();
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
-		
+		*/
 			/*
 			 * if(toGoal < 1){ // samler bold op dos.write(51); dos.flush();
 			 * dos.write(51); dos.flush(); Thread.sleep(1200); }
-			 */
+			 *//*
 
 				if (toGoal == 0 && ifTemp == 0) {
 					// samler bold op
@@ -421,7 +425,7 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}
+	}*/
 	public void calPosition(CvPoint roboFrontPunkt, CvPoint roboBagPunkt,CvPoint tempPoint) {
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);

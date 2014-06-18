@@ -141,6 +141,12 @@ public class ballMethod {
 		random = new Random();
 		
 		Mat pic0 = Highgui.imread("billed0.png");
+		
+		System.out.println("c1.x " + corner1.x());
+		System.out.println("c1.y " + corner1.y());
+		System.out.println("c4.x " + corner4.x());
+		System.out.println("c4.y " + corner4.y());
+		
 		pic0 = pic0.submat(corner1.y()-(int)(pixPerCm*4), corner4.y()+(int)(pixPerCm*4), corner1.x()-(int)(pixPerCm*2), corner4.x()+(int)(pixPerCm*2));
 
 		Highgui.imwrite("billed0.png", pic0);
