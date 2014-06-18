@@ -34,9 +34,9 @@ public class DetectRects {
 	private float externalWidth = 195;
 	private float innerHeight = 120;
 	private float innerWidth = 180;
-	CvPoint goalA;
-	CvPoint goalB;
-	CvPoint midOfImg = new CvPoint();
+	private CvPoint goalA;
+	private CvPoint goalB;
+	private CvPoint midOfImg = new CvPoint();
 	private float pixPerCm = -1;
 	private CvSeq contoursPointer;
 	private CvSeq contoursPointer2;
