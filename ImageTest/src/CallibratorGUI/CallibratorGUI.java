@@ -14,7 +14,6 @@ import Controller.PrimaryController;
 
 public class CallibratorGUI {
 
-
 	private JFrame frame1;
 	private Container pane;
 	private JButton btnApply, btnConnect, btnDeliver, btnQuit;
