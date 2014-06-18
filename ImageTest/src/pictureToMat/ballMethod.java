@@ -68,7 +68,7 @@ public class ballMethod {
 		System.loadLibrary("opencv_java248");
 		
 		if(findRobot)
-			imgMat = Highgui.imread("billed01.png");
+			imgMat = Highgui.imread("billed0.png");
 		else
 		{
 			imgMat = Highgui.imread("pixToMat.png");
@@ -143,7 +143,7 @@ public class ballMethod {
 		Mat pic0 = Highgui.imread("billed0.png");
 		pic0 = pic0.submat(corner1.y()-(int)(pixPerCm*4), corner4.y()+(int)(pixPerCm*4), corner1.x()-(int)(pixPerCm*2), corner4.x()+(int)(pixPerCm*2));
 		
-		Highgui.imwrite("billed01.png", pic0);
+		Highgui.imwrite("billed0.png", pic0);
 	}
 	
 	public void eliminateObstruction(CvRect obstruction, float ppcm)
@@ -176,7 +176,7 @@ public class ballMethod {
 		Float rotationAngle = angleCalculator.Calcangle(midPoint, roboFrontPunkt);
 		
 		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
-		File imageFile = new File("billed01.png");
+		File imageFile = new File("billed0.png");
         BufferedImage img;
 		try {
 			img = ImageIO.read(imageFile);
