@@ -680,6 +680,7 @@ public class CallibratorGUI {
 			}
 		});
 
+		
 		btnQuit.setBounds(btnQuit.getX() + btnQuit.getWidth() + 85, insets.top + 590, btnQuit.getPreferredSize().width, btnQuit.getPreferredSize().height);
 		
 		btnQuit.addActionListener (new ActionListener() {
