@@ -185,7 +185,7 @@ public class ballMethod {
 		       
 		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
 		        graph.setColor(Color.BLACK);
-		        graph.fillRect(midPoint.x() - (int)Math.round(16*pixPerCm), midPoint.y() - (int)Math.round(8.4*pixPerCm), (int)(32*pixPerCm), (int)(16.8*pixPerCm));// Draw robo rect
+		        graph.fillRect(midPoint.x() - (int)Math.round(17*pixPerCm), midPoint.y() - (int)Math.round(11*pixPerCm), (int)(34*pixPerCm), (int)(22*pixPerCm));// Draw robo rect
 		        
 		        graph.dispose();
 		        
