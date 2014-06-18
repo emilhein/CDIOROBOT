@@ -195,25 +195,6 @@ public class DetectRects {
         	contoursPointer = contours;
         	contoursPointer2 = contours2;
         	
-        //	int red = 0;
-        //	int blue = 0;
-        //	int green = 0;
-        	
-           /* while (contoursPointer != null && !contoursPointer.isNull()) {
-                if (contoursPointer.elem_size() > 0) {
-                	red = (red + 100) % 255;
-                	blue = (blue + 30) % 255;
-                	green = (green + 145) % 255;
-                	System.out.println(red);
-                	System.out.println(green);
-                	System.out.println(blue);
-                	CvSeq points = cvApproxPoly(contoursPointer, Loader.sizeof(CvContour.class),
-                            storage, CV_POLY_APPROX_DP, cvContourPerimeter(contoursPointer)*0.02, 0);
-                    cvDrawContours(thresholdImg, points, CV_RGB(red, green, blue), CV_RGB(red, green, blue), -1, 1, CV_AA);
-                }
-                contoursPointer = contoursPointer.h_next();
-            }*/
-        	
     	    // ----- Detect border
     		
     		CvSeq ptr = new CvSeq();
@@ -318,4 +299,19 @@ public class DetectRects {
 		west =  new CvPoint (miner1-margin,miner3+((miner4-miner3)/2));
 	}
 	
+	public void adjustToCuttedImg(float ppcm, int xFactor, int yFactor)
+	{
+		int xDistToObstruction = obstruction.x() - innerRect.x();
+		int yDistToObstruction = obstruction.y() - innerRect.y();
+		innerRect.x((int)(ppcm*xFactor));
+		innerRect.y((int)(ppcm*yFactor));
+		obstruction.x(innerRect.x() + xDistToObstruction);
+		obstruction.y(innerRect.y() + yDistToObstruction);
+	    
+	    goalA.x(innerRect.x() + innerRect.width());
+	    goalA.y(innerRect.y() + (innerRect.height()/2));
+	    
+	    goalB.x(innerRect.x());
+	    goalB.y(innerRect.y() + (innerRect.height()/2));
+	}
 }
