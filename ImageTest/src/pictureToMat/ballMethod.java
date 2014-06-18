@@ -142,7 +142,7 @@ public class ballMethod {
 		
 		Mat pic0 = Highgui.imread("billed0.png");
 		pic0 = pic0.submat(corner1.y()-(int)(pixPerCm*4), corner4.y()+(int)(pixPerCm*4), corner1.x()-(int)(pixPerCm*2), corner4.x()+(int)(pixPerCm*2));
-		
+
 		Highgui.imwrite("billed0.png", pic0);
 	}
 	

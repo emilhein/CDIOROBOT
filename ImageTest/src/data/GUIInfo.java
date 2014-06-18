@@ -5,7 +5,7 @@ import javax.swing.JTextArea;
 
 public class GUIInfo {
 
-	private JLabel jlcircleDP, jlcircleDist, jlcirclePar1, jlcirclePar2, jlcircleMinRadius, jlcircleMaxRadius, jlroboDP, jlroboMinDist, jlroboPar1, jlroboPar2, jlroboMin, jlroboMax, jlAngle, jlPoV,
+	private JLabel jlcircleDP, jlcircleDist, jlcirclePar1, jlcirclePar2, jlcircleMinRadius, jlcircleMaxRadius, jlroboDP, jlroboMinDist, jlroboPar1, jlroboPar2, jlroboMin, jlroboMax, jlPoV,
 	lbltxt;
 	private JTextArea txtArea1;
 	private Float turnAngle, ballAngle, roboAngle, PoV, lengthMultiply, close;
@@ -119,13 +119,6 @@ public class GUIInfo {
 	public void setJlroboMax(JLabel jlroboMax) {
 		this.jlroboMax = jlroboMax;
 	}
-	public JLabel getJlAngle() {
-		return jlAngle;
-	}
-	public void setJlAngle(JLabel jlAngle) {
-		this.jlAngle = jlAngle;
-	}
-	
 	public Float getlengthMultiply () {
 		return lengthMultiply;
 	}
