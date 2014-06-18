@@ -37,7 +37,7 @@ public class RouteTest {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-		Mat frame = Highgui.imread("billed0.png"); /// SKal bruges til at lave et blank lærred..
+		Mat frame = Highgui.imread("billed01.png"); /// SKal bruges til at lave et blank lærred..
 
 		for (int c = 0; c < Coordi.size(); c = c + 3)
 		{

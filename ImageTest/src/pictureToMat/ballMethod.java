@@ -54,8 +54,7 @@ import dist.CalcDist;
 
 public class ballMethod {
 
-	private Mat ballMat;
-	private Mat roboMat;
+	private Mat imgMat;
 	private ArrayList<Float> roboCoordi;
 	private ArrayList<Float> ballCoordi;
 	private CvPoint roboFrontPunkt;
@@ -66,31 +65,25 @@ public class ballMethod {
 
 		ArrayList<Float> Coordi = new ArrayList<Float>();
 
-		System.loadLibrary("opencv_java248");  
-
-		Mat pic0 = Highgui.imread("billed0.png");
-		ballMat = pic0.clone();
-		roboMat = pic0.clone();
+		System.loadLibrary("opencv_java248");
 		
-		Mat webcam_image;
 		if(findRobot)
-			webcam_image = roboMat;
+			imgMat = Highgui.imread("billed01.png");
 		else
 		{
-			pictureToMat2("billed0.png", corner1, corner4, pixPerCm);
-			webcam_image = ballMat;
+			imgMat = Highgui.imread("pixToMat.png");
 		}
 
 		Mat circles = new Mat();
-		if( !webcam_image.empty() )  
+		if( !imgMat.empty() )  
 		{  
 
-			Mat b8ch1 = new Mat(webcam_image.height(),webcam_image.width(),CvType.CV_8UC1);
+			Mat b8ch1 = new Mat(imgMat.height(),imgMat.width(),CvType.CV_8UC1);
 
-			webcam_image.convertTo(webcam_image, CvType.CV_8UC1);
+			imgMat.convertTo(imgMat, CvType.CV_8UC1);
 			
 
-			Highgui.imwrite("TEST.png", webcam_image);
+			Highgui.imwrite("TEST.png", imgMat);
 
 			// load image
 			//IplImage img = cvLoadImage("TEST.png");
@@ -116,17 +109,19 @@ public class ballMethod {
 					Coordi.add(data2[1]); //y - koordinate
 					Coordi.add(data2[2]); //radius
 					Point center= new Point(data2[0], data2[1]);  
-					Core.ellipse( webcam_image, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
+					Core.ellipse( imgMat, center , new Size(data2[2],data2[2]), 0, 0, 360, new Scalar( 255, 0, 255 ), 4, 8, 0 );  	
 				}
 
 			}
 			//-- 5. Display the image  
 
-			Highgui.imwrite(name+".png", webcam_image); // Gemmer billedet i roden
+			Highgui.imwrite(name+".png", imgMat); // Gemmer billedet i roden
 			
 
 			if(findRobot)
+			{
 				roboCoordi = Coordi;
+			}
 			else
 			{
 				System.out.println("Balls found: " + Coordi.size()/3);
@@ -139,92 +134,33 @@ public class ballMethod {
 		}
 	}
 	
-	public void pictureToMat2(String image, CvPoint corner1, CvPoint corner4, float pixPerCm) {
+	public void pictureToMat2(CvPoint corner1, CvPoint corner4, float pixPerCm) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		random = new Random();
 		
 		Mat pic0 = Highgui.imread("billed0.png");
-		ballMat = pic0.clone();
+		pic0 = pic0.submat(corner1.y()-(int)(pixPerCm*4), corner4.y()+(int)(pixPerCm*4), corner1.x()-(int)(pixPerCm*2), corner4.x()+(int)(pixPerCm*2));
 		
-		CvPoint onRoboPoint = new CvPoint(roboBagPunkt.x() + (roboFrontPunkt.x() - roboBagPunkt.x())/2, roboBagPunkt.y() + (roboFrontPunkt.y() - roboBagPunkt.y())/2);
-
-		onRoboPoint.x(onRoboPoint.x() + 15);
-		onRoboPoint.y(onRoboPoint.y() + 15);
-		
-		double[] whiteCompare = pic0.get(onRoboPoint.y(), onRoboPoint.x());
-		double whiteCompareR = whiteCompare[2];
-		double whiteCompareG = whiteCompare[1];
-		double whiteCompareB = whiteCompare[0];
-		
-		System.out.println("---------------------------------------");
-		System.out.println("RED compare: " + whiteCompareR);
-		System.out.println("GREEN compare: " + whiteCompareG);
-		System.out.println("BLUE compare: " + whiteCompareB);
-		System.out.println("---------------------------------------");
-
-		paintPoint(pic0, onRoboPoint, 255, 0, 0,20);
-		
-		double randRed, randGreen, randBlue;
-		
-		Highgui.imwrite("pixToMat.png", ballMat);
-
-		rotateRobot(pixPerCm);
-		
-		pic0 = Highgui.imread("pixToMat.png");
-		ballMat = pic0.clone();
-		
-		
-		try
+		Highgui.imwrite("billed01.png", pic0);
+	}
+	
+	public void eliminateObstruction(CvRect obstruction, float ppcm)
+	{
+		Mat pic0 = Highgui.imread("pixToMat.png");
+		for(int y = obstruction.y(); y < obstruction.y() + obstruction.height(); y++)
 		{
-			for (int j = 0; j < pic0.rows(); j++) {
-				
-				if(j % 3 == 0)
+			for(int x = obstruction.x(); x < obstruction.x() + obstruction.width(); x++)
+			{
+				if((obstruction.x() + 8.5*ppcm < x && x < obstruction.x() + 11.9*ppcm) || (obstruction.y() + 8.5*ppcm < y && y < obstruction.y() + 11.9*ppcm))
 				{
-					randRed = 180;//random.nextInt(60);
-					randGreen= 0;//random.nextInt(60);
-					randBlue = 0;//random.nextInt(60);
-				}
-				else if(j % 3 == 1)
-				{
-					randRed = 0;//random.nextInt(60);
-					randGreen= 0;//random.nextInt(60);
-					randBlue = 180;//random.nextInt(60);					
-				}
-				else
-				{
-					randRed = 0;//random.nextInt(60);
-					randGreen= 180;//random.nextInt(60);
-					randBlue = 0;//random.nextInt(60);
-				}
-				
-				for (int b = 0; b < pic0.cols(); b++) {
-					double[] rgb = pic0.get(j, b);
-					for (int i = 0; i < rgb.length; i = i + 3) {
-						double blue = rgb[i];
-						double green = rgb[i + 1];
-						double red = rgb[i + 2];
-					
-						if(b < corner1.x() || corner4.x() < b || j < corner1.y() || corner4.y() < j)
-						{
-							ballMat.put(j, b, randRed, randGreen, randBlue);
-						}
-						else if(Math.abs(green - blue) > 50 || Math.abs(green - red) > 50 || Math.abs(blue - red) > 50)
-						{
-							ballMat.put(j, b, randRed, randGreen, randBlue);
-						}
-						/*else if(whiteCompareR/red >= 2.05 && whiteCompareG/green >= 2.05 && whiteCompareB/blue >= 2.05)
-						{
-							ballMat.put(j, b, randRed, randGreen, randBlue);
-						}*/
-					}
+					pic0.put(y, x, 0, 0, 0);
 				}
 			}
 		}
-		catch (Exception e) {
-			System.out.println("Could not convert image properly");
-		}
+		
+		Highgui.imwrite("pixToMat.png", pic0);
 	}
 	
 	public void rotateRobot(float pixPerCm)
@@ -240,7 +176,7 @@ public class ballMethod {
 		Float rotationAngle = angleCalculator.Calcangle(midPoint, roboFrontPunkt);
 		
 		///*************************** SKAL TEGNE EN RECTANGLE over robotten*************
-		File imageFile = new File("pixToMat.png");
+		File imageFile = new File("billed01.png");
         BufferedImage img;
 		try {
 			img = ImageIO.read(imageFile);
@@ -249,9 +185,6 @@ public class ballMethod {
 		       
 		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
 		        graph.setColor(Color.BLACK);
-		       // graph.fillRect(midPoint.x() - (int)Math.round(15*ppcm), midPoint.y() - (int)Math.round(7.5*ppcm), (int)(15.5*ppcm), (int)(30*ppcm));// Draw robo rect
-		        System.out.println("Mx: " + midPoint.x());
-		        System.out.println("My: " + midPoint.y());
 		        graph.fillRect(midPoint.x() - (int)Math.round(16*pixPerCm), midPoint.y() - (int)Math.round(8.4*pixPerCm), (int)(32*pixPerCm), (int)(16.8*pixPerCm));// Draw robo rect
 		        
 		        graph.dispose();
@@ -286,60 +219,6 @@ public class ballMethod {
 	}
 
 
-	public void pictureToMat(String image) {
-
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-		Mat pic0 = Highgui.imread(image);
-		ballMat = pic0.clone();
-		roboMat = pic0.clone();
-
-		try
-		{
-			for (int j = 0; j < pic0.rows(); j++) {
-				for (int b = 0; b < pic0.cols(); b++) {
-					double[] rgb = pic0.get(j, b);
-					for (int i = 0; i < rgb.length; i = i + 3) {
-						double blue = rgb[i];
-						double green = rgb[i + 1];
-						double red = rgb[i + 2];
-						/*
-						// Til fremhÃ¦vning af robot
-						if ((((green - blue)/blue) > 0.3) && (green > red)) { // finder gr�n
-							roboMat.put(j, b, 0, 255, 0);
-							break;
-						}
-						else if ((((red - blue)/blue) > 1.4) && (red > green)) { // finder rÃ¸d
-							roboMat.put(j, b, 0, 0, 255);
-							break;
-						}
-						//else if (blue + red + green > 500 && blue > 120 && green > 120 && red > 120) { // finder hvid
-						//	roboMat.put(j, b, 255, 255, 255);
-						//	break;
-						//}
-						else {
-							roboMat.put(j, b, 0, 0, 0); // resten bliver sort
-						}
-
-						
-
-						// Til fremhÃ¦vning af bolde
-
-
-						// Til fremhævning af bolde
-						if ((blue > 100 || green > 100 || red > 100) && !(blue > 130 && green > 130 && red > 130)) {
-							ballMat.put(j, b, 0, 0, 0);
-							break;
-						} */
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			System.out.println("Could not convert image properly");
-		}
-	}
-
 
 	public boolean determineDirection(){
 
@@ -357,14 +236,13 @@ public class ballMethod {
 			roboFrontPunkt = new CvPoint(-1,-1);
 			roboBagPunkt = new CvPoint(-1,-1);
 
-
 			try {
-				double[] front = roboMat.get(Math.round(roboCoordi.get(1)),	Math.round(roboCoordi.get(0))); // /Y OG X ER BYTTET OM
+				double[] front = imgMat.get(Math.round(roboCoordi.get(1)),	Math.round(roboCoordi.get(0))); // /Y OG X ER BYTTET OM
 				blue = front[0];
 				green = front[1];
 				red = front[2];
 
-				double[] back = roboMat.get(Math.round(roboCoordi.get(4)),	Math.round(roboCoordi.get(3))); // /
+				double[] back = imgMat.get(Math.round(roboCoordi.get(4)),	Math.round(roboCoordi.get(3))); // /
 
 				blue2 = back[0];
 				green2 = back[1];
@@ -411,7 +289,10 @@ public class ballMethod {
 				return true;
 			}
 		}
-		else return false;
+		else
+		{
+			return false;
+		}
 
 	}
 
@@ -435,9 +316,6 @@ public class ballMethod {
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
 		roboBagPunkt.x(roboBagPunkt.x()+diffX);
 		roboBagPunkt.y(roboBagPunkt.y()+diffY);
-
-		System.out.println("Robot frontpunkt = (" + roboFrontPunkt.x() + "," + roboFrontPunkt.y() +")");
-		System.out.println("Robot bagpunkt = (" + roboBagPunkt.x() + "," + roboBagPunkt.y() +")");
 	}
 
 	public ArrayList<Float> getBallCoordi () {
