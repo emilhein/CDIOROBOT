@@ -143,14 +143,14 @@ public class PrimaryController {
 		
 		// ***************************** Deliver balls *******************************
 		if(deliverButtom == 1){	
-			deliverBalls(calliData, dist);
+			deliverBalls(calliData, dist, middelX, middelY);
 		}
 		// ***************************** Avoid cross *******************************
-		else if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)||movingAround != 0){
+		/*else if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)||movingAround != 0){
 			System.out.println("trying to move around because true");
 			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
 			findWayAround(calliData, dist, middelX, middelY);
-		}		
+		}*/		
 
 		// ***************************** Avoid edge*******************************
 		else if (minPunkt.x() > corner1.x() + (int)(6 *ppcm)&& minPunkt.x() < corner2.x() - (int)(6 * ppcm)&& minPunkt.y() > corner1.y()	&& minPunkt.y() < corner1.y() + (int)(9 * ppcm)) 
@@ -199,10 +199,24 @@ public class PrimaryController {
 			ifTemp = 0;
 			angleCal(calliData, minPunkt); // udregner vinkel 
 		}
+		
+		//tjekker om forhindringen er imellem robot og bold,mål,temppoint etc.
+		if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)||movingAround != 0){
+			System.out.println("trying to move around because true");
+			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
+			findWayAround(calliData, dist, middelX, middelY);
+		}
+		else
+		{
+			System.out.println("NOT BLOCKING");
+		}
+		
 		send(calliData);	
 		return calliData;
 	}
-	private void deliverBalls(GUIInfo calliData, CalcDist dist) {
+	private void deliverBalls(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
+		
+		
 		if(toGoal == 0){
 			toGoal = 1;
 			goalA = pitch.getGoalA();
@@ -254,21 +268,25 @@ public class PrimaryController {
 	}
 	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
 		angleCal(calliData, tempPoint);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+12*ppcm);
+		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
 		ifTemp = 1; //betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 	}
 	public void tempCalculater(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
+		if(ifTemp ==0){
 		angleCal(calliData, tempPoint);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
 		ifTemp = 1; //betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
-		send(calliData); // kører til første punkt
-		calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint); // udregner destination på robot efter den er kørt til temp
+		}
+		//send(calliData); // kører til første punkt
+		else{
+		//calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint); // udregner destination på robot efter den er kørt til temp
 		angleCal(calliData, minPunkt);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)-2*ppcm);
 		ifTemp = 0;
-		backMove = 1; 	
+		backMove = 1;
+		}
 	}
 	public void angleCal(GUIInfo calliData, CvPoint destination) { /// calculates angel between robo bagpunkt and destination
 		CalcAngle Angle = new CalcAngle();

@@ -166,7 +166,7 @@ public class RouteTest {
 				return true;
 			}
 		}
-		else if (northSouthCollition >= pitch.getMiner1().x() && northSouthCollition <= pitch.getMiner4().x()) 
+		if (northSouthCollition >= pitch.getMiner1().x() && northSouthCollition <= pitch.getMiner4().x()) 
 		{
 			CvPoint northCollition = new CvPoint(northSouthCollition, pitch.getMiner1().y());
 			CvPoint southCollition = new CvPoint(northSouthCollition, pitch.getMiner4().y());
