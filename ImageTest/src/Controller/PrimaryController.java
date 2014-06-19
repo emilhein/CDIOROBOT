@@ -83,7 +83,7 @@ public class PrimaryController {
 
 		//################# Calculate corners ########################
 		
-		int intppcm = (int)(Math.round(ppcm));
+		int intppcm = Math.round(ppcm);
 
 		//################## Take picture until robot is found #########
 		do {
@@ -94,13 +94,7 @@ public class PrimaryController {
 			pitch.adjustToCut(xFactorOfCut, yFactorOfCut);
 			// ################### Find Robot #######################################
 
-			balls.findCircle(
-
-			calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),
-					calliData.getIntJlroboDP(),
-					calliData.getIntJlroboMinDist(),
-					calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),
-					"robo", true);
+			balls.findCircle(calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),	calliData.getIntJlroboDP(),calliData.getIntJlroboMinDist(),calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),"robo", true);
 
 		} while (balls.determineDirection() == false);
 
@@ -209,7 +203,7 @@ public class PrimaryController {
 		}
 		else
 		{
-			System.out.println("NOT BLOCKING");
+			System.out.println("PATH NOT BLOCKED BY OBSTACLE");
 		}
 		
 		send(calliData);	
