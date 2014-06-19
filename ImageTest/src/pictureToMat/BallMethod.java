@@ -108,7 +108,7 @@ public class BallMethod {
 		}
 	}
 	
-/*	public void eliminateObstruction()
+	public void eliminateObstruction()
 	{
 		CvRect obstruction = pitch.getObstruction();
 		float ppcm = pitch.getPixPerCm();
@@ -126,7 +126,7 @@ public class BallMethod {
 		}
 		
 		Highgui.imwrite("pixToMat.png", pic0);
-	}*/
+	}
 	
 	
 	public void rotateRobot()
@@ -176,10 +176,9 @@ public class BallMethod {
 		double green2= 0;
 		double red2= 0;
 
-		System.out.println(1);
-		if (roboCoordi.size() >= 6){
+			if (roboCoordi.size() >= 6){
 
-			System.out.println(2);
+		
 			roboFrontPunkt = new CvPoint(-1,-1);
 			roboBagPunkt = new CvPoint(-1,-1);
 
