@@ -206,7 +206,10 @@ public class PrimaryController {
 			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
 			findWayAround(calliData, dist, middelX, middelY);
 		}
-		
+		else
+		{
+			System.out.println("NOT BLOCKING");
+		}
 		
 		send(calliData);	
 		return calliData;
@@ -265,7 +268,7 @@ public class PrimaryController {
 	}
 	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
 		angleCal(calliData, tempPoint);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+12*ppcm);
+		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
 		ifTemp = 1; //betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 	}
