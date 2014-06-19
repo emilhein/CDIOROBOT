@@ -283,7 +283,7 @@ public class PrimaryController {
 		ifTemp = 0;
 		backMove = 1; 	
 	}
-	public void angleCal(GUIInfo calliData, CvPoint destination) {
+	public void angleCal(GUIInfo calliData, CvPoint destination) { /// calculates angel between robo bagpunkt and destination
 		CalcAngle Angle = new CalcAngle();
 		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()- roboBagPunkt.x(), roboFrontPunkt.y()- roboBagPunkt.y());
 		CvPoint nyRoboBag = new CvPoint(0, 0);
@@ -302,6 +302,7 @@ public class PrimaryController {
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
 	}
+	
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
