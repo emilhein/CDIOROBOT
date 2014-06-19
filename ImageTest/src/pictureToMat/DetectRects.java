@@ -26,6 +26,8 @@ import com.googlecode.javacv.cpp.opencv_core.CvSeq;
 import com.googlecode.javacv.cpp.opencv_core.CvSize;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+import data.Pitch;
+
 
 
 public class DetectRects {
@@ -34,56 +36,7 @@ public class DetectRects {
 	private float externalWidth = 195;
 	private float innerHeight = 120;
 	private float innerWidth = 180;
-	private CvPoint goalA;
-	private CvPoint goalB;
-	private CvPoint midOfImg = new CvPoint();
-	private float pixPerCm = -1;
-	private CvSeq contoursPointer;
-	private CvSeq contoursPointer2;
-	private CvRect obstruction;
-	private CvRect innerRect;
-	private CvPoint north;
-	private CvPoint south;
-	private CvPoint east;
-	private CvPoint west;
-	private int miner1, miner2, miner3, miner4;
 	
-	public CvPoint getMidOfImg()
-	{
-		return midOfImg;
-	}
-	
-	public int getMiner1() {
-		return miner1;
-	}
-	public void setMiner1(int miner1) {
-		this.miner1 = miner1;
-	}
-
-	public int getMiner2() {
-		return miner2;
-	}
-
-	public void setMiner2(int miner2) {
-		this.miner2 = miner2;
-	}
-
-	public int getMiner3() {
-		return miner3;
-	}
-
-	public void setMiner3(int miner3) {
-		this.miner3 = miner3;
-	}
-
-	public int getMiner4() {
-		return miner4;
-	}
-
-	public void setMiner4(int miner4) {
-		this.miner4 = miner4;
-	}
-
 	
 	public float pixPerCm(int pixBorderWidth, int pixBorderHeight)
 	{
@@ -96,55 +49,7 @@ public class DetectRects {
 	}
 	
 	
-	public CvPoint getNorth () {
-		return north;
-	}
-	public void setNorth (CvPoint north) {
-		this.north = north;
-	}
-	public CvPoint getSouth () {
-		return south;
-	}
-	public void setSouth (CvPoint south) {
-		this.south = south;
-	}
-	public CvPoint getEast () {
-		return east;
-	}
-	public void setEast (CvPoint east) {
-		this.east = east;
-	}
-	public CvPoint getWest () {
-		return west;
-	}
-	public void setWest (CvPoint west) {
-		this.west = west;
-	}
-	public float getPixPerCm()
-	{
-		return pixPerCm;
-	}
-	public CvPoint getGoalA()
-	{
-		return goalA;
-	}
-	
-	public CvPoint getGoalB()
-	{
-		return goalB;
-	}
-	
-	public CvRect getInnerRect()
-	{
-		return innerRect;
-	}
-	
-	public CvRect getObstruction()
-	{ 
-		return obstruction;
-	}
-	
-	public void detectAllRects()
+	public Pitch detectPitch()
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
@@ -197,8 +102,8 @@ public class DetectRects {
         	cvFindContours(grayImg, storage, contours, Loader.sizeof(CvContour.class), CV_RETR_CCOMP, CV_CHAIN_APPROX_NONE, new CvPoint(0,0));
         	cvFindContours(grayImg2, storage2, contours2, Loader.sizeof(CvContour.class), CV_RETR_CCOMP, CV_CHAIN_APPROX_NONE, new CvPoint(0,0));
         	
-        	contoursPointer = contours;
-        	contoursPointer2 = contours2;
+        	CvSeq contoursPointer = contours;
+        	CvSeq contoursPointer2 = contours2;
         	
     	    // ----- Detect border
     		
@@ -225,9 +130,9 @@ public class DetectRects {
         	
     	    cvRectangle(edge, p1,p2, CV_RGB(0, 255, 0), 2, 8, 0);
 
-    	    pixPerCm = pixPerCm(greatest.width(), greatest.height());
+    	    float pixPerCm = pixPerCm(greatest.width(), greatest.height());
     	    
-    	    innerRect = new CvRect(0,0,0,0);
+    	    CvRect innerRect = new CvRect(0,0,0,0);
     	    int widthDifference = greatest.width() - (int)(innerWidth * pixPerCm);
     	    int heightDifference = greatest.height() - (int)(innerHeight * pixPerCm);
     	    innerRect.width(greatest.width() - widthDifference);
@@ -242,10 +147,8 @@ public class DetectRects {
     	    
     	    cvRectangle(edge, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
     	    
-          // cnvs.showImage(img);
-    	    
-    	    goalA = new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
-    	    goalB = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
+    	    CvPoint goalA = new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
+    	    CvPoint goalB = new CvPoint(innerRect.x(), innerRect.y() + (innerRect.height()/2));
     	    
     	    cvLine(edge, goalA, goalB, CV_RGB(0,200,255), 3,0,0);
     	    
@@ -255,7 +158,7 @@ public class DetectRects {
     	    ptr = new CvSeq();
     		p1 = new CvPoint(0,0);
     		p2 = new CvPoint(0,0);
-    	    obstruction = new CvRect(0,0,0,0);
+    	    CvRect obstruction = new CvRect(0,0,0,0);
     	    CvRect sq;
 
 
@@ -263,66 +166,25 @@ public class DetectRects {
 
     	    	sq = cvBoundingRect(ptr, 0);
 
-    	        if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
-    	        {
+    	        //if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
+    	        //{
     	        	obstruction = sq;
     	            p1.x(sq.x());
     	            p2.x(sq.x()+sq.width());
     	            p1.y(sq.y());
     	            p2.y(sq.y()+sq.height());
     	            cvRectangle(edge, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
-    	        }
+    	        //}
     	    }
-    	    
     	    
         	cvSaveImage("BrownThreshold2.png", thresholdImg);
         	cvSaveImage("edge.png", edge);
+        	
+        	return new Pitch(pixPerCm, innerRect, obstruction);
         } catch (IOException e) {
         	e.printStackTrace();
+        	return null;
         }
 	}
 
-	public void findMiners () {
-
-		int margin = (int)(8*pixPerCm);
-
-		miner1 = obstruction.x()- margin;
-		miner2 = obstruction.x()+obstruction.width()+margin;
-		miner3 = obstruction.y()-margin;
-		miner4 = obstruction.y()+obstruction.height()+margin;
-	}
-
-	public void findMajors () {
-		int margin = ((int)(8*pixPerCm));
-		
-		north = new CvPoint (miner1+((miner2-miner1)/2),(miner3-margin)); 
-		
-		south = new CvPoint (miner1+((miner2-miner1)/2),(miner4+margin)); 
-
-		east = new CvPoint (miner2+margin,miner3+((miner4-miner3)/2));
-		
-		west =  new CvPoint (miner1-margin,miner3+((miner4-miner3)/2));
-	}
-	
-	public void adjustToCuttedImg(float ppcm, int xFactor, int yFactor)
-	{
-		int xDistToObstruction = obstruction.x() - innerRect.x();
-		int yDistToObstruction = obstruction.y() - innerRect.y();
-		innerRect.x((int)(ppcm*xFactor));
-		innerRect.y((int)(ppcm*yFactor));
-		obstruction.x(innerRect.x() + xDistToObstruction);
-		obstruction.y(innerRect.y() + yDistToObstruction);
-	    
-	    goalA.x(innerRect.x() + innerRect.width());
-	    goalA.y(innerRect.y() + (innerRect.height()/2));
-	    
-	    goalB.x(innerRect.x());
-	    goalB.y(innerRect.y() + (innerRect.height()/2));
-	    
-	    midOfImg.x(innerRect.x() + (innerRect.width()/2));
-	    midOfImg.y(innerRect.y() + (innerRect.height()/2));
-	    
-	    findMiners();
-	    findMajors();
-	}
 }

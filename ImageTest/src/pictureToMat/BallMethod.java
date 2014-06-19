@@ -23,6 +23,7 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 
 
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -48,11 +49,12 @@ import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 import com.googlecode.javacv.cpp.opencv_core.CvRect;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
+import data.Pitch;
 import dist.CalcAngle;
 import dist.CalcDist;
 
 
-public class ballMethod {
+public class BallMethod {
 
 	private Mat imgMat;
 	private ArrayList<Float> roboCoordi;
@@ -60,8 +62,16 @@ public class ballMethod {
 	private CvPoint roboFrontPunkt;
 	private CvPoint roboBagPunkt;
 	private Random random;
+	private Pitch pitch;
+	
+	
+	public BallMethod(Pitch pitch)
+	{
+		this.pitch = pitch;
+	}
+	
 
-	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot, CvPoint corner1, CvPoint corner4, float pixPerCm){ 
+	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 
 		ArrayList<Float> Coordi = new ArrayList<Float>();
 
@@ -77,24 +87,12 @@ public class ballMethod {
 		Mat circles = new Mat();
 		if( !imgMat.empty() )  
 		{  
-
+			
 			Mat b8ch1 = new Mat(imgMat.height(),imgMat.width(),CvType.CV_8UC1);
 
 			imgMat.convertTo(imgMat, CvType.CV_8UC1);
-			
 
 			Highgui.imwrite("TEST.png", imgMat);
-
-			// load image
-			//IplImage img = cvLoadImage("TEST.png");
-
-			// create grayscale IplImage of the same dimensions, 8-bit and 1 channel
-			//IplImage imageGray = cvCreateImage(cvSize(img.width(), img.height()), IPL_DEPTH_8U, 1);
-
-			// convert image to grayscale
-			//cvCvtColor(img, imageGray, CV_BGR2GRAY);
-
-			//cvSaveImage("TEST.png", img);
 
 			b8ch1 = Highgui.imread("TEST.png", CvType.CV_8UC1);
 
@@ -134,32 +132,17 @@ public class ballMethod {
 		}
 	}
 	
-	public void pictureToMat2(CvPoint corner1, CvPoint corner4, float pixPerCm) {
-
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
-		random = new Random();
-		
-		Mat pic0 = Highgui.imread("billed0.png");
-		
-		System.out.println("c1.x " + corner1.x());
-		System.out.println("c1.y " + corner1.y());
-		System.out.println("c4.x " + corner4.x());
-		System.out.println("c4.y " + corner4.y());
-		
-		pic0 = pic0.submat(corner1.y()-(int)(pixPerCm*4), corner4.y()+(int)(pixPerCm*4), corner1.x()-(int)(pixPerCm*2), corner4.x()+(int)(pixPerCm*2));
-
-		Highgui.imwrite("billed0.png", pic0);
-	}
-	
-	public void eliminateObstruction(CvRect obstruction, float ppcm)
+/*	public void eliminateObstruction()
 	{
+		CvRect obstruction = pitch.getObstruction();
+		float ppcm = pitch.getPixPerCm();
+		
 		Mat pic0 = Highgui.imread("pixToMat.png");
 		for(int y = obstruction.y(); y < obstruction.y() + obstruction.height(); y++)
 		{
 			for(int x = obstruction.x(); x < obstruction.x() + obstruction.width(); x++)
 			{
-				if((obstruction.x() + 8.5*ppcm < x && x < obstruction.x() + 11.9*ppcm) || (obstruction.y() + 8.5*ppcm < y && y < obstruction.y() + 11.9*ppcm))
+				if((obstruction.x() + 8.4*ppcm < x && x < obstruction.x() + 11.6*ppcm) || (obstruction.y() + 8.4*ppcm < y && y < obstruction.y() + 11.6*ppcm))
 				{
 					pic0.put(y, x, 0, 0, 0);
 				}
@@ -167,10 +150,12 @@ public class ballMethod {
 		}
 		
 		Highgui.imwrite("pixToMat.png", pic0);
-	}
+	}*/
 	
-	public void rotateRobot(float pixPerCm)
+	
+	public void rotateRobot()
 	{
+		float pixPerCm = pitch.getPixPerCm();
 		CvPoint midPoint = new CvPoint();
 		CalcAngle angleCalculator = new CalcAngle();
 		
@@ -205,29 +190,8 @@ public class ballMethod {
 		
 	}
 
-	
-	public void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
-		for (int a = 0; a < size; a++)
-		{
-			for (int b = 0; b < size; b++)
-			{
-				try
-				{
-					frame.put(((p.y() - size/2) + a), ((p.x() + b) - size/2), bl, gr, re);///KR�VER Y F�R X
-				}
-				catch (Exception e)
-				{
-					// TODO Auto-generated catch block
-					System.out.println("Could not paint requested point");
-				}
-			}
-		}
-	}
-
-
 
 	public boolean determineDirection(){
-
 
 		double green = 0;
 		double red= 0;
@@ -236,9 +200,10 @@ public class ballMethod {
 		double green2= 0;
 		double red2= 0;
 
-		
+		System.out.println(1);
 		if (roboCoordi.size() >= 6){
 
+			System.out.println(2);
 			roboFrontPunkt = new CvPoint(-1,-1);
 			roboBagPunkt = new CvPoint(-1,-1);
 
@@ -302,7 +267,10 @@ public class ballMethod {
 
 	}
 
-	public void changePerspective (Float PoV, CvPoint midpunkt) {
+	
+	public void changePerspective (Float PoV) {
+		
+		CvPoint midpunkt = pitch.getMidOfImg();
 		
 		int diffXFront = midpunkt.x() - roboFrontPunkt.x();
 		int diffYFront = midpunkt.y() - roboFrontPunkt.y();
@@ -315,6 +283,7 @@ public class ballMethod {
 		roboBagPunkt.y(roboBagPunkt.y() + (int)(diffYBag * PoV));
 	}
 	
+	
 	public void calculateRotationPoint()
 	{
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
@@ -323,12 +292,17 @@ public class ballMethod {
 		roboBagPunkt.y(roboBagPunkt.y()+diffY);
 	}
 
+	
 	public ArrayList<Float> getBallCoordi () {
 		return ballCoordi;
 	}
+	
+	
 	public CvPoint getRoboFrontPunkt(){
 		return roboFrontPunkt;
 	}
+	
+	
 	public CvPoint getRoboBagPunkt(){
 		return roboBagPunkt;
 	}
