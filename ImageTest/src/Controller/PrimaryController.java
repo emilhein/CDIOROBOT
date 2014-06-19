@@ -78,43 +78,34 @@ public class PrimaryController {
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
 		int xFactorOfCut = 2;
 		int yFactorOfCut = 4;
-
 		CalcDist dist = new CalcDist();
 
 		//################# Calculate corners ########################
 		
-		int intppcm = (int)(Math.round(ppcm));
+		int intppcm = Math.round(ppcm);
 
 		//################## Take picture until robot is found #########
 		do {
 			takepic.takePicture();	
-
 			// ################## Cut image ####################################
 			pitch.cutOrigImg();
 			pitch.adjustToCut(xFactorOfCut, yFactorOfCut);
 			// ################### Find Robot #######################################
-
-			balls.findCircle(
-
-			calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),
-					calliData.getIntJlroboDP(),
-					calliData.getIntJlroboMinDist(),
-					calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),
-					"robo", true);
+			balls.findCircle(calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),	calliData.getIntJlroboDP(),calliData.getIntJlroboMinDist(),calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),"robo", true);
 
 		} while (balls.determineDirection() == false);
 
-		balls.rotateRobot();
-		balls.eliminateObstruction();
+		balls.rotateRobot(); // tegner over robotten, så bolde ikke findes der
+		balls.eliminateObstruction(); // tegner over forhindring, så bolde ikke findes der
 		
 		// ################### Find Balls #####################################
 		balls.findCircle(calliData.getIntJlcircleMinRadius(),calliData.getIntJlcircleMaxRadius(),calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),"balls", false);
 
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 		
-		// ################### Nearest Ball
+		// ################### Nearest Ball ####################################
 		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
-		balls.calculateRotationPoint();
+		balls.calculateRotationPoint(); // udregn hvor bolden 
 		balls.changePerspective(calliData.getPoV());
 		
 		//System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
@@ -197,7 +188,6 @@ public class PrimaryController {
 			System.out.println("corner4");
 			tempCalculater(calliData, dist, tempPoint);
 			} 
-		
 		else {
 			backMove = 0;
 			ifTemp = 0;
@@ -213,7 +203,7 @@ public class PrimaryController {
 		}
 		else
 		{
-			System.out.println("NOT BLOCKING");
+			System.out.println("PATH NOT BLOCKED BY OBSTACLE");
 		}
 		
 		send(calliData);	
