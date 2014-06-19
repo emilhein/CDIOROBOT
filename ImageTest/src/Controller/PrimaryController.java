@@ -205,6 +205,7 @@ public class PrimaryController {
 			System.out.println("trying to move around because true");
 			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
 			findWayAround(calliData, dist, middelX, middelY);
+			toGoal = 0;
 		}
 		else
 		{
