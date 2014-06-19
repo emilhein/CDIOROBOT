@@ -260,8 +260,8 @@ public class BallMethod {
 	
 	public void calculateRotationPoint()
 	{
-		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.4);
-		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.4);
+		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.42);
+		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.42);
 		roboBagPunkt.x(roboBagPunkt.x()+diffX);
 		roboBagPunkt.y(roboBagPunkt.y()+diffY);
 	}
