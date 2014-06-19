@@ -147,23 +147,52 @@ public class RouteTest {
 		a = (float)(minPunkt.y()-roboBagPunkt.y())/(float)(minPunkt.x()-roboBagPunkt.x());
 		b = (float)(roboBagPunkt.y()-a*roboBagPunkt.x());
 
-		int northCollition;
-		int westCollition;
+		int northSouthCollition;
+		int westEastCollition;
 
-		westCollition = (int) (a*pitch.getMiner1().x()+b);
-		northCollition = (int) ((pitch.getMiner1().y()-b)/a);
+		westEastCollition = (int) (a*pitch.getMiner1().x()+b);
+		northSouthCollition = (int) ((pitch.getMiner1().y()-b)/a);
 
-		if (westCollition >= pitch.getMiner1().y() && westCollition <= pitch.getMiner4().y()) 
+		if (westEastCollition >= pitch.getMiner1().y() && westEastCollition <= pitch.getMiner4().y()) 
 		{
-			return true;
+			CvPoint westCollition = new CvPoint(pitch.getMiner1().x(), westEastCollition);
+			CvPoint eastCollition = new CvPoint(pitch.getMiner4().x(), westEastCollition);
+			
+			if(insideRect(westCollition, roboBagPunkt, minPunkt) || insideRect(eastCollition, roboBagPunkt, minPunkt))
+			{
+				return true;
+			}
 		}
-		
-		else if (northCollition >= pitch.getMiner1().x() && northCollition <= pitch.getMiner4().x()) 
+		else if (northSouthCollition >= pitch.getMiner1().x() && northSouthCollition <= pitch.getMiner4().x()) 
 		{
-			return true;
+			CvPoint northCollition = new CvPoint(northSouthCollition, pitch.getMiner1().y());
+			CvPoint southCollition = new CvPoint(northSouthCollition, pitch.getMiner4().y());
+			
+			if(insideRect(northCollition, roboBagPunkt, minPunkt) || insideRect(southCollition, roboBagPunkt, minPunkt))
+			{
+				return true;
+			}
 		}
-
-		else return false;		
+		return false;		
+	}
+	
+	public boolean insideRect(CvPoint point, CvPoint cornerA, CvPoint cornerB)
+	{
+		if(cornerA.x() < point.x() && point.x() < cornerB.x())
+		{
+			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			{
+				return true;
+			}
+		}
+		else if(cornerB.x() < point.x() && point.x() < cornerA.x())
+		{
+			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
