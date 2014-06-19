@@ -24,7 +24,7 @@ public class TakePicture {
 
         		Mat frame = new Mat();	
     	    	camera.read(frame);
-        		System.out.println("Frame Obtained");
+        		//System.out.println("Frame Obtained");
         		System.out.println("Captured Frame Width " + 
         		frame.width() + " Height " + frame.height());
         		
@@ -35,8 +35,8 @@ public class TakePicture {
 
             		Highgui.imwrite("billed0.png", frame);
 
-        	    	System.out.println("Picture saved");
-        	    	System.out.println();
+        	    	//System.out.println("Picture saved");
+        	    	//System.out.println();
         	    	
         	    	break;
         		}
