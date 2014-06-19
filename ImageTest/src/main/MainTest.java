@@ -1,5 +1,4 @@
 package main;
-import pictureToMat.DetectRects2;
 import pictureToMat.TakePicture;
 
 public class MainTest {
@@ -8,7 +7,7 @@ public class MainTest {
 	{
 		TakePicture tk = new TakePicture();
 
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 100; i++)
 		{
 			tk.takePicture();
 		}

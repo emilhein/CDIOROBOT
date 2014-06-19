@@ -363,7 +363,7 @@ public class PrimaryController {
 
 			if (moveBack == 1 || backMove ==1) {
 				Case = 80;
-				i = 80;
+				i = 5;
 				dosSend(Case, i);
 				Thread.sleep(1200);
 				moveBack = 0;
