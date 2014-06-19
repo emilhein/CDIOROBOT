@@ -193,7 +193,6 @@ public class PrimaryController {
 			System.out.println("corner4");
 			tempCalculater(calliData, dist, tempPoint);
 			} 
-		
 		else {
 			backMove = 0;
 			ifTemp = 0;

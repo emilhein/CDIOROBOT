@@ -14,8 +14,8 @@ public class MainTest {
 		
 		RouteTest route = new RouteTest(pitch);
 		
-		CvPoint minPunkt = new CvPoint(861,416);
-		CvPoint roboBagPunkt = new CvPoint(1000,416);
+		CvPoint minPunkt = new CvPoint(1003,193);
+		CvPoint roboBagPunkt = new CvPoint(299,670);
 		CvPoint minor1 = new CvPoint(692,355);
 		CvPoint minor4 = new CvPoint(813,484);		
 		

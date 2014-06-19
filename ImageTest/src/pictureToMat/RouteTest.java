@@ -142,7 +142,7 @@ public class RouteTest {
 		}
 	}
 
-	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt) {
+	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt, CvPoint miner1, CvPoint miner4) {
 
 		Float a;
 		Float b;
@@ -153,23 +153,23 @@ public class RouteTest {
 		int northSouthCollition;
 		int westEastCollition;
 
-		westEastCollition = (int) (a*pitch.getMiner1().x()+b);
-		northSouthCollition = (int) ((pitch.getMiner1().y()-b)/a);
+		westEastCollition = (int) (a*miner1.x()+b);
+		northSouthCollition = (int) ((miner1.y()-b)/a);
 
-		if (westEastCollition >= pitch.getMiner1().y() && westEastCollition <= pitch.getMiner4().y()) 
+		if (westEastCollition >= miner1.y() && westEastCollition <= miner4.y()) 
 		{
-			CvPoint westCollition = new CvPoint(pitch.getMiner1().x(), westEastCollition);
-			CvPoint eastCollition = new CvPoint(pitch.getMiner4().x(), westEastCollition);
+			CvPoint westCollition = new CvPoint(miner1.x(), westEastCollition);
+			CvPoint eastCollition = new CvPoint(miner4.x(), westEastCollition);
 			
 			if(insideRect(westCollition, roboBagPunkt, minPunkt) || insideRect(eastCollition, roboBagPunkt, minPunkt))
 			{
 				return true;
 			}
 		}
-		if (northSouthCollition >= pitch.getMiner1().x() && northSouthCollition <= pitch.getMiner4().x()) 
+		else if (northSouthCollition >= miner1.x() && northSouthCollition <= miner4.x()) 
 		{
-			CvPoint northCollition = new CvPoint(northSouthCollition, pitch.getMiner1().y());
-			CvPoint southCollition = new CvPoint(northSouthCollition, pitch.getMiner4().y());
+			CvPoint northCollition = new CvPoint(northSouthCollition, miner1.y());
+			CvPoint southCollition = new CvPoint(northSouthCollition, miner4.y());
 			
 			if(insideRect(northCollition, roboBagPunkt, minPunkt) || insideRect(southCollition, roboBagPunkt, minPunkt))
 			{
