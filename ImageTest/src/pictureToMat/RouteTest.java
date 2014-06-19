@@ -143,6 +143,8 @@ public class RouteTest {
 	}
 
 	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt) {
+		System.out.println("Bagpunkt: " + roboBagPunkt.x()+","+roboBagPunkt.y());
+		System.out.println("MinPunktt: " + minPunkt.x()+","+minPunkt.y());
 
 		Float a;
 		Float b;
