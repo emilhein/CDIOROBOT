@@ -5,9 +5,9 @@ import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;        
         
 public class TakePicture {
-
-	public  void takePicture()
-	{
+	
+	public void takePicture()
+	{		
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
     	VideoCapture camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)

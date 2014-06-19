@@ -15,12 +15,13 @@ import CallibratorGUI.CallibratorGUI;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
 import data.GUIInfo;
+import data.Pitch;
 import dist.CalcAngle;
 import dist.CalcDist;
 import pictureToMat.DetectRects;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
-import pictureToMat.ballMethod;
+import pictureToMat.BallMethod;
 
 public class PrimaryController {
 	private CvPoint goalB;
@@ -32,20 +33,18 @@ public class PrimaryController {
 	private Float ppcm;
 	private DetectRects findEdge;
 	private TakePicture takepic;
-	private ballMethod balls;
+	private BallMethod balls;
 	private CalcDist dist;
 	private final OutputStream dos;
 	private RouteTest route;
 	private int moveBack = 0;
 	private int backMove = 0;
 	private int ifTemp = 0;
-	private CvPoint originalCorner1, originalCorner4;
+	private Pitch pitch;
 
 	public PrimaryController(DetectRects findEdge) {
 		this.findEdge = findEdge;
 		takepic = new TakePicture();
-		balls = new ballMethod();
-		route = new RouteTest();
 
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");// robot nr
@@ -59,30 +58,28 @@ public class PrimaryController {
 	}
 
 	public void start() {
-
 		long timePicStart = System.currentTimeMillis();
 		takepic.takePicture();
 		long timePicSlut = System.currentTimeMillis();
 		System.out.println("take picture tid: " + (timePicSlut-timePicStart));
 		
 		long timeFindEdgeStart = System.currentTimeMillis();
-		findEdge.detectAllRects();
+		pitch = findEdge.detectPitch();
 		long timeFindEdgeSlut = System.currentTimeMillis();
 		System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
 		
-		ppcm = findEdge.getPixPerCm();
-		
-		//CvPoint originalCorner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		originalCorner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
-		originalCorner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-		//CvPoint originalCorner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+		ppcm = pitch.getPixPerCm();
+
+		balls = new BallMethod(pitch);
+		route = new RouteTest(pitch);
 	}
 
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
 		/*
 		 * char firstRun = 'a'; int ballCount = 0; int count = 0;
 		 */
-		CvPoint corner1, corner2, corner3, corner4;
+		int xFactorOfCut = 2;
+		int yFactorOfCut = 4;
 		
 		CalcDist dist = new CalcDist();
 
@@ -95,17 +92,8 @@ public class PrimaryController {
 			takepic.takePicture();	
 
 			// ################## Cut image ####################################
-			balls.pictureToMat2(originalCorner1, originalCorner4, ppcm);
-			System.out.println("ORG1.x: " + originalCorner1.x());
-			System.out.println("ORG1.y: " + originalCorner1.y());
-			System.out.println("ORG4.x: " + originalCorner4.x());
-			System.out.println("ORG4.y: " + originalCorner4.y());
-			findEdge.adjustToCuttedImg(ppcm, 2, 4);
-			
-			corner3 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-			corner1 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y());
-			corner4 = new CvPoint(findEdge.getInnerRect().x() + findEdge.getInnerRect().width(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
-			corner2 = new CvPoint(findEdge.getInnerRect().x(), findEdge.getInnerRect().y() + findEdge.getInnerRect().height());
+			pitch.cutOrigImg();
+			pitch.adjustToCut(xFactorOfCut, yFactorOfCut);
 
 			// ################### Find Robot #######################################
 
@@ -115,12 +103,12 @@ public class PrimaryController {
 					calliData.getIntJlroboDP(),
 					calliData.getIntJlroboMinDist(),
 					calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),
-					"robo", true, corner1, corner4, ppcm);
+					"robo", true);
 
 		} while (balls.determineDirection() == false);
 
-		balls.rotateRobot(ppcm);
-		balls.eliminateObstruction(findEdge.getObstruction(), ppcm);
+		balls.rotateRobot();
+		//balls.eliminateObstruction();
 		
 		// ################### Find Balls #####################################
 		balls.findCircle(
@@ -130,23 +118,25 @@ public class PrimaryController {
 				calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),
 				calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),
 				
-				"balls", false, corner1, corner4, ppcm);
+				"balls", false);
 
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 		
 		
 		// ################### Nearest Ball
 		balls.calculateRotationPoint();
-		balls.changePerspective(calliData.getPoV(), findEdge.getMidOfImg());
+		balls.changePerspective(calliData.getPoV());
 		
 
 		roboBagPunkt = balls.getRoboBagPunkt();
 		roboFrontPunkt = balls.getRoboFrontPunkt();
 
 
-		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
-				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest(), findEdge.getMidOfImg()); // tegner dem i testprogrammet
+		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
+		
+		
+		
 
 		// ############################# Calc Angle ###################
 		String text1 = "Antal bolde fundet: " + (ballCoor.size() / 3);
@@ -161,7 +151,7 @@ public class PrimaryController {
 		if(deliverButtom == 1){
 			if(toGoal == 0){
 				toGoal = 1;
-				goalB = findEdge.getGoalB();
+				goalB = pitch.getGoalB();
 				minPunkt.x(goalB.x()+400);
 				minPunkt.y(goalB.y());
 				System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
@@ -192,46 +182,17 @@ public class PrimaryController {
 		// ***************************** Avoid edge*******************************
 		
 		//System.out.println("obstruction is at: " + findEdge.getObstruction().x() +"," + findEdge.getObstruction().y());*/
+		
+		CvPoint corner1 = pitch.getCorner1();
+		CvPoint corner2 = pitch.getCorner2();
+		CvPoint corner3 = pitch.getCorner3();
+		CvPoint corner4 = pitch.getCorner4();
 
 		int l1 = corner1.y()+(int)(5*ppcm); 
 		int l2 = corner4.y()-(int)(5*ppcm);
 		int l3 = corner1.x()+(int)(5*ppcm);
 		int l4 = corner4.x()-(int)(5*ppcm);
-		/*		
 
-		if (minPunkt.x() < l1 || minPunkt.x() > l4 || minPunkt.y() < l3|| minPunkt.y() > l2) {
-			// bold under L1!
-			CvPoint tempPoint = new CvPoint(balls.getRoboBagPunkt().x()	- (balls.getRoboBagPunkt().x() - minPunkt.x()), balls.getRoboBagPunkt().y());
-			angleCal(calliData, tempPoint);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().x()	- tempPoint.x()));
-			ifTemp = 1;
-			send(calliData); // robot skal gerne være kørt til temporary point (vinkelret på bolden og kanten)
-	//		calliData.setTurnAngle(90F);
-			/*
-
-			if( minPunkt.y() > l2){
-				System.out.println("BALL IS IN L2");
-				calliData.setTurnAngle(-90F);
-			}
-			if( minPunkt.y() > l3){
-				System.out.println("BALL IS IN L3");
-				calliData.setTurnAngle(-90F);
-			}
-			if( minPunkt.x() > l4){
-				System.out.println("BALL IS IN L4");
-				calliData.setTurnAngle(-90F);
-			}
-			if( minPunkt.x() > l1){
-				System.out.println("BALL IS IN L1");
-				calliData.setTurnAngle(-90F);
-			}
-			
-			calliData.setTurnAngle(90F);
-			route.setMinLength(Math.abs(balls.getRoboBagPunkt().y()- minPunkt.y()));
-			moveBack = 1;
-
-		}
-		*/
 		// ***************************** Corner*******************************
 		if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (18*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (18*intppcm)){ 
 			CvPoint tempPoint = new CvPoint(minPunkt.x()+(15*intppcm),minPunkt.y()+(15*intppcm));
@@ -351,8 +312,7 @@ public class PrimaryController {
 			System.out.println("minmulti " + route.getMinLength());
 			System.out.println("ppcm  " + findEdge.getPixPerCm());
 */
-			int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / findEdge
-					.getPixPerCm())); // længde konvertering
+			int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm())); // længde konvertering
 
 			
 			System.out.println("dist = " + distance);
@@ -373,7 +333,7 @@ public class PrimaryController {
 			 * dos.write(51); dos.flush(); Thread.sleep(1200); }
 			 */
 
-				if (toGoal == 0 && ifTemp == 0) {
+			if (toGoal == 0 && ifTemp == 0) {
 					// samler bold op
 					dos.write(41);
 					dos.flush();

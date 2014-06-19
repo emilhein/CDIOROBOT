@@ -1,5 +1,6 @@
 package pictureToMat;
 
+import data.Pitch;
 import dist.CalcDist;
 
 import java.awt.Color;
@@ -26,14 +27,27 @@ public class RouteTest {
 	private List<Integer> xCoor = new ArrayList<Integer>();
 	private List<Integer> yCoor = new ArrayList<Integer>();
 	private float minLength;
+	private Pitch pitch;
 	CvPoint minPunkt = new CvPoint(300,450);
+	
+	
+	public RouteTest(Pitch pitch)
+	{
+		this.pitch = pitch;
+	}
 
 	
-	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west, CvPoint midOfImg) {
+	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt) {
 		CalcDist dist = new CalcDist();
 		minLength = 10000;
-
 		
+		CvPoint goalA = pitch.getGoalA();
+		CvPoint midOfImg = pitch.getMidOfImg();
+		CvPoint south = pitch.getSouth();
+		CvPoint north = pitch.getNorth();
+		CvPoint east = pitch.getEast();
+		CvPoint west = pitch.getWest();
+		float ppcm = pitch.getPixPerCm();
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 

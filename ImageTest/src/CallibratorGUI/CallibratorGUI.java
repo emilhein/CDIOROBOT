@@ -119,9 +119,9 @@ public class CallibratorGUI {
 		txtpov = new JTextField(10);
 
 		Float ppcm = (float) 6.2;
-		if (findEdge.getPixPerCm() > 0) {
+		/*if (findEdge.getPixPerCm() > 0) {
 			ppcm = findEdge.getPixPerCm();
-		}
+		}*/
 		
 		
 		//		udregning af diverse for bolde
