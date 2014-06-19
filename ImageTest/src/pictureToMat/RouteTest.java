@@ -4,8 +4,10 @@ import data.Pitch;
 import dist.CalcDist;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 import org.opencv.core.Core;
@@ -15,6 +17,7 @@ import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 public class RouteTest {
 	private List<Integer> xCoor = new ArrayList<Integer>();
@@ -184,10 +187,19 @@ public class RouteTest {
 			{
 				return true;
 			}
+			else if(cornerB.y() < point.y() && point.y() < cornerA.y())
+			{
+				return true;
+			}
 		}
 		else if(cornerB.x() < point.x() && point.x() < cornerA.x())
 		{
+			System.out.println(3);
 			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			{
+				return true;
+			}
+			else if(cornerB.y() < point.y() && point.y() < cornerB.y())
 			{
 				return true;
 			}
