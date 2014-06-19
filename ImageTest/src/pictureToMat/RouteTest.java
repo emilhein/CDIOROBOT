@@ -139,7 +139,7 @@ public class RouteTest {
 		}
 	}
 
-	public boolean blockingObstruction (CvPoint miner1, CvPoint miner4, CvPoint roboBagPunkt, CvPoint minPunkt) {
+	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt) {
 
 		Float a;
 		Float b;
@@ -150,15 +150,15 @@ public class RouteTest {
 		int northCollition;
 		int westCollition;
 
-		westCollition = (int) (a*miner1.x()+b);
-		northCollition = (int) ((miner1.y()-b)/a);
+		westCollition = (int) (a*pitch.getMiner1().x()+b);
+		northCollition = (int) ((pitch.getMiner1().y()-b)/a);
 
-		if (westCollition >= miner1.y() && westCollition <= miner4.y()) 
+		if (westCollition >= pitch.getMiner1().y() && westCollition <= pitch.getMiner4().y()) 
 		{
 			return true;
 		}
 		
-		else if (northCollition >= miner1.x() && northCollition <= miner4.x()) 
+		else if (northCollition >= pitch.getMiner1().x() && northCollition <= pitch.getMiner4().x()) 
 		{
 			return true;
 		}
