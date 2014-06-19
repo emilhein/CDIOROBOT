@@ -89,7 +89,7 @@ public class PrimaryController {
 			takepic.takePicture();	
 
 			// ################## Cut image ####################################
-			balls.pictureToMat2(originalCorner1, originalCorner4, ppcm);
+			balls.pictureToMat2(originalCorner1, originalCorner4, intppcm);
 			System.out.println("ORG1.x: " + originalCorner1.x());
 			System.out.println("ORG1.y: " + originalCorner1.y());
 			System.out.println("ORG4.x: " + originalCorner4.x());
@@ -134,11 +134,19 @@ public class PrimaryController {
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 		
 		// ################### Nearest Ball
+		System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
 		balls.calculateRotationPoint();
+		System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
 		balls.changePerspective(calliData.getPoV(), findEdge.getMidOfImg());
-		
+		System.out.println("Robobagpunkt after perspective change: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
+
 		roboBagPunkt = balls.getRoboBagPunkt();
 		roboFrontPunkt = balls.getRoboFrontPunkt();
+		
+		/*
+		* Her skal bagpunktet gerne være rykket frem, da den grønne cirkel ikke er lige over drejningspunktet
+		* Derudover skal punktet også være rykket i forhold til perspektivet. 
+		*/
 		
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt,
 				findEdge.getGoalA(), ppcm,findEdge.getNorth(),findEdge.getSouth(), findEdge.getEast(), findEdge.getWest(), findEdge.getMidOfImg()); // tegner dem i testprogrammet
