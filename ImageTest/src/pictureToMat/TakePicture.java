@@ -10,7 +10,7 @@ public class TakePicture {
 	{		
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-    	VideoCapture camera = new VideoCapture(1);// us 1 if two cameras a connected (including integrated webcam)
+    	VideoCapture camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)
     	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600); /* width of camera image */
     	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900); /* height of camera image */
 	

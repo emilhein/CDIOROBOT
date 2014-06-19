@@ -1,29 +1,5 @@
 package pictureToMat;
 
-import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
-import static com.googlecode.javacv.cpp.opencv_core.cvCreateImage;
-import static com.googlecode.javacv.cpp.opencv_core.cvSize;
-import static com.googlecode.javacv.cpp.opencv_highgui.cvLoadImage;
-import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
