@@ -274,16 +274,20 @@ public class PrimaryController {
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 	}
 	public void tempCalculater(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
+		if(ifTemp ==0){
 		angleCal(calliData, tempPoint);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
 		ifTemp = 1; //betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
-		send(calliData); // kører til første punkt
-		calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint); // udregner destination på robot efter den er kørt til temp
+		}
+		//send(calliData); // kører til første punkt
+		else{
+		//calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint); // udregner destination på robot efter den er kørt til temp
 		angleCal(calliData, minPunkt);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)-2*ppcm);
 		ifTemp = 0;
-		backMove = 1; 	
+		backMove = 1;
+		}
 	}
 	public void angleCal(GUIInfo calliData, CvPoint destination) { /// calculates angel between robo bagpunkt and destination
 		CalcAngle Angle = new CalcAngle();
