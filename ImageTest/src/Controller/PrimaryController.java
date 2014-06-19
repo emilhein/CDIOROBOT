@@ -94,7 +94,6 @@ public class PrimaryController {
 			// ################## Cut image ####################################
 			pitch.cutOrigImg();
 			pitch.adjustToCut(xFactorOfCut, yFactorOfCut);
-
 			// ################### Find Robot #######################################
 
 			balls.findCircle(
@@ -123,15 +122,20 @@ public class PrimaryController {
 		ArrayList<Float> ballCoor = balls.getBallCoordi();
 		
 		// ################### Nearest Ball
+		System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
 		balls.calculateRotationPoint();
 		balls.changePerspective(calliData.getPoV());
 		
+		System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
 		roboBagPunkt = balls.getRoboBagPunkt();
 		roboFrontPunkt = balls.getRoboFrontPunkt();
 
-
-
 		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+		
+		/*
+		* Her skal bagpunktet gerne være rykket frem, da den grønne cirkel ikke er lige over drejningspunktet
+		* Derudover skal punktet også være rykket i forhold til perspektivet. 
+		*/
 
 		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 		
@@ -310,7 +314,7 @@ public class PrimaryController {
 		ifTemp = 0;
 		backMove = 1; 	
 	}
-	public void angleCal(GUIInfo calliData, CvPoint destination) {
+	public void angleCal(GUIInfo calliData, CvPoint destination) { /// calculates angel between robo bagpunkt and destination
 		CalcAngle Angle = new CalcAngle();
 		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()- roboBagPunkt.x(), roboFrontPunkt.y()- roboBagPunkt.y());
 		CvPoint nyRoboBag = new CvPoint(0, 0);
@@ -329,6 +333,7 @@ public class PrimaryController {
 		calliData.setBallAngle(BallAngle);
 		calliData.setRoboAngle(RoboAngle);
 	}
+	
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
