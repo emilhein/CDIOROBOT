@@ -24,7 +24,7 @@ import pictureToMat.TakePicture;
 import pictureToMat.BallMethod;
 
 public class PrimaryController {
-	private CvPoint goalB;
+	private CvPoint goalA;
 	private CvPoint minPunkt;
 	private CvPoint roboBagPunkt;
 	private CvPoint roboFrontPunkt;
@@ -152,35 +152,7 @@ public class PrimaryController {
 		calliData.setLbltxt(lbltxt);
 			
 		// ***************************** Deliver balls *******************************
-		if(deliverButtom == 1){
-			if(toGoal == 0){
-				toGoal = 1;
-				goalB = pitch.getGoalB();
-				minPunkt.x(goalB.x()+400);
-				minPunkt.y(goalB.y());
-				System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
-				System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
-				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
-				angleCal(calliData, tempGoal);
-				float minl = dist.Calcdist(roboBagPunkt, minPunkt)+20 * ppcm;
-				route.setMinLength(minl);
-				//send(calliData);
-			} else {
-				toGoal = 2;
-
-				minPunkt.x(goalB.x() + 120);
-				minPunkt.y(goalB.y());
-
-				CvPoint tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
-				
-				angleCal(calliData, tempGoal2);
-
-				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal2)+6 * ppcm));
-				
-			}
-		
-//			angleCal(calliData, minPunkt);
-	
+		if(deliverButtom == 1){	
 			deliverBalls(calliData, dist);
 		}
 		
@@ -249,18 +221,18 @@ public class PrimaryController {
 	private void deliverBalls(GUIInfo calliData, CalcDist dist) {
 		if(toGoal == 0){
 			toGoal = 1;
-			goalB = pitch.getGoalB();
-			minPunkt.x(goalB.x()+400);
-			minPunkt.y(goalB.y());
+			goalA = pitch.getGoalA();
+			minPunkt.x(goalA.x()-400);
+			minPunkt.y(goalA.y());
 			System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
 			System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
 			CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
 			angleCal(calliData, tempGoal);
-			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+20 * ppcm);
+			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+26 * ppcm);
 		} else {
 			toGoal = 2;
-			minPunkt.x(goalB.x() + 120);
-			minPunkt.y(goalB.y());
+			minPunkt.x(goalA.x() - 120);
+			minPunkt.y(goalA.y());
 			CvPoint tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
 			angleCal(calliData, tempGoal2);
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal2)+6 * ppcm));	
@@ -399,7 +371,7 @@ public class PrimaryController {
 
 			if (moveBack == 1 || backMove ==1) {
 				Case = 80;
-				i = 80;
+				i = 5;
 				dosSend(Case, i);
 				Thread.sleep(1200);
 				moveBack = 0;
