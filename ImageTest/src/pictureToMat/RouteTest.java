@@ -21,12 +21,12 @@ public class RouteTest {
 	private float minLength;
 	CvPoint minPunkt = new CvPoint(300,450);
 
-	
+
 	public CvPoint drawBallMap(ArrayList<Float> Coordi, CvPoint roboBagPunkt, CvPoint roboFrontPunkt, CvPoint goalA, float ppcm, CvPoint north, CvPoint south, CvPoint east, CvPoint west, CvPoint midOfImg) {
 		CalcDist dist = new CalcDist();
 		minLength = 10000;
 
-		
+
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
@@ -34,7 +34,7 @@ public class RouteTest {
 
 		for (int c = 0; c < Coordi.size(); c = c + 3)
 		{
-		
+
 			// tegner firkant på koordinatplads i sort
 			for (int i = 0; i < 20; i++)
 			{
@@ -79,17 +79,17 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,40); // farver robot forpunkt
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() , roboFrontPunkt.y()),	new Scalar(27, 12, 45), 4);
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x(), minPunkt.y() ),	new Scalar(200, 120, 45), 4);
-		
-//		Core.rectangle(frame, new Point(100,100), new Point(300,300), null, 1);
+
+		//		Core.rectangle(frame, new Point(100,100), new Point(300,300), null, 1);
 		paintPoint(frame,new CvPoint(midOfImg.x(), midOfImg.y()), 0, 128, 128,30); // midten af billedet
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
 		//********************* Draw the corners of the world ***************************
 		if(north.x() != 0){
-		paintPoint(frame,new CvPoint(north.x(), north.y()), 0 ,0, 0,40); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(south.x(), south.y()), 0, 0, 0,40); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(east.x(),east.y()), 0, 0, 0,40); // farver robot bagpunkt
-		paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
+			paintPoint(frame,new CvPoint(north.x(), north.y()), 0 ,0, 0,40); // farver robot bagpunkt
+			paintPoint(frame,new CvPoint(south.x(), south.y()), 0, 0, 0,40); // farver robot bagpunkt
+			paintPoint(frame,new CvPoint(east.x(),east.y()), 0, 0, 0,40); // farver robot bagpunkt
+			paintPoint(frame,new CvPoint(west.x(), west.y()), 0, 0, 0,40); // farver robot bagpunkt
 		}
 		Highgui.imwrite("RouteTest3.png", frame); // Gemmer billedet i roden
 
@@ -108,9 +108,7 @@ public class RouteTest {
 		this.minLength = minLength;
 	}
 
-
-
-	public static void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
+	public void paintPoint(Mat frame, CvPoint p, int re, int gr, int bl, int size) {
 		for (int a = 0; a < size; a++)
 		{
 			for (int b = 0; b < size; b++)
@@ -126,4 +124,32 @@ public class RouteTest {
 			}
 		}
 	}
+
+	public boolean blockingObstruction (CvPoint miner1, CvPoint miner4, CvPoint roboBagPunkt, CvPoint minPunkt) {
+
+		Float a;
+		Float b;
+
+		a = (float)(minPunkt.y()-roboBagPunkt.y())/(float)(minPunkt.x()-roboBagPunkt.x());
+		b = (float)(roboBagPunkt.y()-a*roboBagPunkt.x());
+
+		int northCollition;
+		int westCollition;
+
+		westCollition = (int) (a*miner1.x()+b);
+		northCollition = (int) ((miner1.y()-b)/a);
+
+		if (westCollition >= miner1.y() && westCollition <= miner4.y()) 
+		{
+			return true;
+		}
+		
+		else if (northCollition >= miner1.x() && northCollition <= miner4.x()) 
+		{
+			return true;
+		}
+
+		else return false;		
+	}
+
 }
