@@ -21,7 +21,7 @@ public class Pitch {
 	private CvPoint goalB = new CvPoint();
 	private CvPoint midOfImg = new CvPoint();
 	private final CvPoint origCorner1, origCorner4;
-	private int miner1, miner2, miner3, miner4;
+	private CvPoint miner1, miner2, miner3, miner4;
 	
 	public Pitch(float pixPerCm, CvRect border, CvRect obstruction)
 	{
@@ -77,19 +77,19 @@ public class Pitch {
 		return midOfImg;
 	}
 
-	public int getMiner1() {
+	public CvPoint getMiner1() {
 		return miner1;
 	}
 
-	public int getMiner2() {
+	public CvPoint getMiner2() {
 		return miner2;
 	}
 
-	public int getMiner3() {
+	public CvPoint getMiner3() {
 		return miner3;
 	}
 
-	public int getMiner4() {
+	public CvPoint getMiner4() {
 		return miner4;
 	}
 
@@ -139,19 +139,19 @@ public class Pitch {
 
 		int margin = (int)(8*pixPerCm);
 
-		miner1 = obstruction.x()-margin;
-		miner2 = obstruction.x()+obstruction.width()+margin;
-		miner3 = obstruction.y()-margin;
-		miner4 = obstruction.y()+obstruction.height()+margin;
+		miner1 = new CvPoint(obstruction.x()-margin, obstruction.y()-margin);
+		miner2 = new CvPoint(obstruction.x()+obstruction.width()+margin, obstruction.y()-margin);
+		miner3 = new CvPoint(obstruction.x()-margin, obstruction.y()+obstruction.height()+margin);
+		miner4 = new CvPoint(obstruction.x()+obstruction.width()+margin, obstruction.y()+obstruction.height()+margin);
 	}
 
 	public void findMajors() {
 		int margin = ((int)(8*pixPerCm));
 		
-		north = new CvPoint (miner1+((miner2-miner1)/2),(miner3-margin)); 
-		south = new CvPoint (miner1+((miner2-miner1)/2),(miner4+margin));
-		east = new CvPoint (miner2+margin,miner3+((miner4-miner3)/2));
-		west =  new CvPoint (miner1-margin,miner3+((miner4-miner3)/2));
+		north = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner3.y()-margin)); 
+		south = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner4.y()+margin));
+		east = new CvPoint (miner2.x()+margin,miner3.y()+((miner4.y()-miner3.y())/2));
+		west =  new CvPoint (miner1.x()-margin,miner3.y()+((miner4.y()-miner3.y())/2));
 	}
 	
 	public void cutOrigImg() {
