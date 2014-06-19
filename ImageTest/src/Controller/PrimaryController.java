@@ -38,6 +38,8 @@ public class PrimaryController {
 	private int moveBack = 0;
 	private int backMove = 0;
 	private int ifTemp = 0;
+	private int behindCross = 0;
+	private int movingAround = 0;
 	private CvPoint originalCorner1, originalCorner4;
 	
 	public PrimaryController(DetectRects findEdge) {
@@ -151,26 +153,17 @@ public class PrimaryController {
 
 		calliData.setLbltxt(lbltxt);
 			
+		// ***************************** Deliver balls *******************************
 		if(deliverButtom == 1){
-			if(toGoal == 0){
-				toGoal = 1;
-				goalB = findEdge.getGoalB();
-				minPunkt.x(goalB.x()+400);
-				minPunkt.y(goalB.y());
-				System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
-				System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
-				CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
-				angleCal(calliData, tempGoal);
-				route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+20 * ppcm);
-			} else {
-				toGoal = 2;
-				minPunkt.x(goalB.x() + 120);
-				minPunkt.y(goalB.y());
-				CvPoint tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
-				angleCal(calliData, tempGoal2);
-				route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal2)+6 * ppcm));	
-			}
+			deliverBalls(calliData, dist);
 		}
+		
+		// ***************************** Avoid cross *******************************
+		int middelX = (findEdge.getObstruction().position()+findEdge.getObstruction().width());
+		int middelY = (findEdge.getObstruction().position()+findEdge.getObstruction().height());
+		if(behindCross == 1){
+			findWayAround(calliData, dist, middelX, middelY);
+		}		
 
 		// ***************************** Avoid edge*******************************
 		
@@ -221,6 +214,62 @@ public class PrimaryController {
 		}
 		send(calliData);	
 		return calliData;
+	}
+	private void deliverBalls(GUIInfo calliData, CalcDist dist) {
+		if(toGoal == 0){
+			toGoal = 1;
+			goalB = findEdge.getGoalB();
+			minPunkt.x(goalB.x()+400);
+			minPunkt.y(goalB.y());
+			System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
+			System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
+			CvPoint tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
+			angleCal(calliData, tempGoal);
+			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+20 * ppcm);
+		} else {
+			toGoal = 2;
+			minPunkt.x(goalB.x() + 120);
+			minPunkt.y(goalB.y());
+			CvPoint tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
+			angleCal(calliData, tempGoal2);
+			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal2)+6 * ppcm));	
+		}
+	}
+	private void findWayAround(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
+		if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)||movingAround ==4){
+			System.out.println("robo near corner 1, moving around cross");
+			CvPoint tempPoint = new CvPoint (findEdge.getNorth().x(),findEdge.getNorth().y());
+			aroundCross(calliData, dist, tempPoint);
+			if(movingAround ==4)movingAround =0;
+			else movingAround = 1;
+		}
+		else if((roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)||movingAround == 1){
+			System.out.println("robo near corner 2, moving around cross");
+			CvPoint tempPoint = new CvPoint (findEdge.getEast().x(),findEdge.getEast().y());
+			aroundCross(calliData, dist, tempPoint);
+			if(movingAround ==1)movingAround =0;
+			else movingAround = 2;
+		}
+		else if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)||movingAround ==2){
+			System.out.println("robo near corner 3, moving around cross");
+			CvPoint tempPoint = new CvPoint (findEdge.getSouth().x(),findEdge.getSouth().y());
+			aroundCross(calliData, dist, tempPoint);
+			if(movingAround ==2)movingAround =0;
+			else movingAround = 3;
+		}
+		else if((roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)||movingAround ==3){
+			System.out.println("robo near corner 4, moving around cross");
+			CvPoint tempPoint = new CvPoint (findEdge.getWest().x(),findEdge.getWest().y());
+			aroundCross(calliData, dist, tempPoint);
+			if(movingAround ==3)movingAround =0;
+			else movingAround = 4;
+		}
+	}
+	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
+		angleCal(calliData, tempPoint);
+		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
+		ifTemp = 1; //betyder den skal ikke grappe
+		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 	}
 	public void tempCalculater(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
 		angleCal(calliData, tempPoint);
