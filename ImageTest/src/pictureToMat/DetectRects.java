@@ -166,15 +166,15 @@ public class DetectRects {
 
     	    	sq = cvBoundingRect(ptr, 0);
 
-    	        //if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
-    	        //{
+    	        if(sq.width() > (20 * pixPerCm - 20) && sq.width() < (20 * pixPerCm + 20) && sq.height() > (20 * pixPerCm - 20) && sq.height() < (20 * pixPerCm + 20))
+    	        {
     	        	obstruction = sq;
     	            p1.x(sq.x());
     	            p2.x(sq.x()+sq.width());
     	            p1.y(sq.y());
     	            p2.y(sq.y()+sq.height());
     	            cvRectangle(edge, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
-    	        //}
+    	        }
     	    }
     	    
         	cvSaveImage("BrownThreshold2.png", thresholdImg);
