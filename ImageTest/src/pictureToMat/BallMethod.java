@@ -176,9 +176,8 @@ public class BallMethod {
 		double green2= 0;
 		double red2= 0;
 
-			if (roboCoordi.size() >= 6){
+		if (roboCoordi.size() >= 6){
 
-		
 			roboFrontPunkt = new CvPoint(-1,-1);
 			roboBagPunkt = new CvPoint(-1,-1);
 
