@@ -18,7 +18,7 @@ public class TakePicture {
     	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900);
   	}*/
 
-
+	
 	public void takePicture(){
 		long timeStartLib = System.currentTimeMillis();
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
