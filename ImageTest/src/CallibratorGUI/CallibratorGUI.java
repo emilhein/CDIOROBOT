@@ -326,7 +326,7 @@ public class CallibratorGUI {
 					control.start();						
 					first = false;
 				}
-			
+				while(true){
 				info = control.loopRound(info,0);
 
 
@@ -388,10 +388,11 @@ public class CallibratorGUI {
 						lbltxtRoboAngle.getPreferredSize().width, 10);
 				lbltxtTurnAngle.setBounds(200, insets.top + 545,
 						lbltxtTurnAngle.getPreferredSize().width, 10);
-
+				// Gør rammen synlig
+				frame1.setVisible(true);
 				//				}
 			}
-			
+			}
 		});
 
 		frame1.add(jlcircleDP);					frame1.add(jlcircleDist);

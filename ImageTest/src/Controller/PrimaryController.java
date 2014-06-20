@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 
 
+
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
@@ -17,6 +18,7 @@ import data.Pitch;
 import dist.CalcAngle;
 import dist.CalcDist;
 import pictureToMat.DetectRects;
+import pictureToMat.NewTakepicture;
 import pictureToMat.RouteTest;
 import pictureToMat.TakePicture;
 import pictureToMat.BallMethod;
@@ -27,14 +29,12 @@ public class PrimaryController {
 	private CvPoint roboBagPunkt;
 	private CvPoint roboFrontPunkt;
 	private CvPoint tempPoint = new CvPoint();
-//	private CvPoint tempGoal= new CvPoint();
-//	private CvPoint tempGoal2 = new CvPoint();
+
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
-	private TakePicture takepic;
+	private NewTakepicture takepic;
 	private BallMethod balls;
-	private CalcDist dist;
 	private final OutputStream dos;
 	private RouteTest route;
 	private int moveBack = 0;
@@ -44,11 +44,12 @@ public class PrimaryController {
 	private int movingAround = 0;
 	private boolean minIsTemp = false;
 	private ArrayList<Float> ballCoor = new ArrayList<Float>();
+	private int NGrabs = 0;
 	
 	
 	public PrimaryController(DetectRects findEdge) {
 		this.findEdge = findEdge;
-		takepic = new TakePicture();
+		takepic = new NewTakepicture();
 
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
 		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");// robot nr 2
@@ -64,12 +65,12 @@ public class PrimaryController {
 		long timePicStart = System.currentTimeMillis();
 		takepic.takePicture();
 		long timePicSlut = System.currentTimeMillis();
-		//System.out.println("take picture tid: " + (timePicSlut-timePicStart));
+		System.out.println("take picture tid: " + (timePicSlut-timePicStart));
 		
 		long timeFindEdgeStart = System.currentTimeMillis();
 		pitch = findEdge.detectPitch();
 		long timeFindEdgeSlut = System.currentTimeMillis();
-		//System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
+		System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
 		ppcm = pitch.getPixPerCm();
 
 		balls = new BallMethod(pitch);
@@ -79,8 +80,7 @@ public class PrimaryController {
 		int xFactorOfCut = 2;
 		int yFactorOfCut = 4;
 		tempPoint = new CvPoint();
-	//	tempGoal= new CvPoint();
-	//	tempGoal2 = new CvPoint();
+
 		CalcDist dist = new CalcDist();
 		System.out.println("temppoint: " + tempPoint.x()+","+tempPoint.y());
 //		System.out.println("tempgoal: " + tempGoal.x()+","+tempGoal.y());
@@ -103,7 +103,7 @@ public class PrimaryController {
 	
 		
 		// ################### Find Balls #####################################
-		if(!minIsTemp && deliverButtom == 0){
+		if(!minIsTemp && NGrabs != 3){
 			balls.rotateRobot(); // tegner over robotten, så bolde ikke findes der
 			balls.eliminateObstruction(); // tegner over forhindring, så bolde ikke findes der
 			balls.findCircle(calliData.getIntJlcircleMinRadius(),calliData.getIntJlcircleMaxRadius(),calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),"balls", false);
@@ -120,12 +120,21 @@ public class PrimaryController {
 		
 
 		
-		if(deliverButtom == 1){	
+		if(NGrabs == 3){	
 			// ***************************** Deliver balls *******************************
+			if(ifTemp == 0){
 			deliverBalls(calliData, dist); // pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
+			ifTemp = 1;
+			}
+			else {
+				deliverBalls(calliData, dist); // pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
+				ifTemp = 0;
+				NGrabs = 0;
+			}
+			
 		}
 		
-		if(!minIsTemp && deliverButtom == 0){
+		if(!minIsTemp && NGrabs != 3){
 			minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 			System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 			
@@ -349,6 +358,7 @@ public class PrimaryController {
 					dosSend(Case, i);
 					Thread.sleep(1200);
 					ifTemp = 0;
+					NGrabs++;
 				}
 
 			if (toGoal == 2) {
