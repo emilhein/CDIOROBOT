@@ -56,17 +56,17 @@ public class PrimaryController {
 	}
 
 	public void start() {
-		long timePicStart = System.currentTimeMillis();
+//		long timePicStart = System.currentTimeMillis();
 		takepic.takePicture();
-		long timePicSlut = System.currentTimeMillis();
-		long totalPic = timePicSlut - timePicStart;
-		System.out.println("take picture tid: " + (totalPic));
+//		long timePicSlut = System.currentTimeMillis();
+//		long totalPic = timePicSlut - timePicStart;
+//		System.out.println("take picture tid: " + (totalPic));
 		long timeFindEdgeStart = System.currentTimeMillis();
 		pitch = findEdge.detectPitch();
 		long timeFindEdgeSlut = System.currentTimeMillis();
 		long totalEdge =timeFindEdgeSlut-timeFindEdgeStart;
 		System.out.println("find edge tid: " + (totalEdge));
-		System.out.println("total time " +(totalPic+totalEdge)/1000);
+//		System.out.println("total time " +(totalPic+totalEdge)/1000);
 		
 		ppcm = pitch.getPixPerCm();
 
