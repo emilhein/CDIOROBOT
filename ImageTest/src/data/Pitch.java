@@ -172,7 +172,7 @@ public class Pitch {
 	}
 
 	public void findMajors() {
-		int margin = ((int)(8*pixPerCm));
+		int margin = ((int)(10*pixPerCm));
 		
 		north = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner1.y()-margin)); 
 		south = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner4.y()+margin));

@@ -326,7 +326,7 @@ public class CallibratorGUI {
 					control.start();						
 					first = false;
 				}
-				while(true){
+			
 				info = control.loopRound(info,0);
 
 
@@ -391,7 +391,7 @@ public class CallibratorGUI {
 
 				//				}
 			}
-			}
+			
 		});
 
 		frame1.add(jlcircleDP);					frame1.add(jlcircleDist);
