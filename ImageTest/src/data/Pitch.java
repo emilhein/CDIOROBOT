@@ -34,6 +34,16 @@ public class Pitch {
 		origCorner4 = new CvPoint(border.x() + border.width(), border.y() + border.height());
 	}
 	
+	public void setMinor1(CvPoint minor1)
+	{
+		this.miner1 = minor1;
+	}
+	
+	public void setMinor4(CvPoint minor4)
+	{
+		this.miner4 = minor4;
+	}
+	
 	public float getPixPerCm() {
 		return pixPerCm;
 	}

@@ -3,59 +3,66 @@ package pictureToMat;
 import org.opencv.core.*;
 import org.opencv.highgui.Highgui;        
 import org.opencv.highgui.VideoCapture;        
-        
+
 public class TakePicture {
-	
+
 	private VideoCapture camera;
-	
-/*	public TakePicture()
+
+	/*	public TakePicture()
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
+
 		camera = new VideoCapture(0);
-		
+
     	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600);
     	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900);
   	}*/
-	
-	public void takePicture()
-	{	
+
+
+	public void takePicture(){
+		long timeStartLib = System.currentTimeMillis();
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
-		camera = new VideoCapture(0);
-		
-    	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600); /* width of camera image */
-    	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900); /* height of camera image */
-		
-    	if(!camera.isOpened()){
-    		System.out.println("Error");
-    	}
-    	else {
-    		
-    		while(true)
-    		{
+		long timeEndLib = System.currentTimeMillis();
+		System.out.println("loading time1: " + (timeEndLib-timeStartLib));
 
-        		Mat frame = new Mat();	
-    	    	camera.read(frame);
-        		//System.out.println("Frame Obtained");
-        		System.out.println("Captured Frame Width " + 
-        		frame.width() + " Height " + frame.height());
-        		
-        		if(frame.empty())
-        			System.out.println("NULL BILLEDE");
-        		else
-        		{
 
-            		Highgui.imwrite("billed0.png", frame);
+		long timeStartCam = System.currentTimeMillis();
 
-        	    	//System.out.println("Picture saved");
-        	    	//System.out.println();
-        	    	
-        	    	break;
-        		}
-    		}
-    		
-    		camera.release();
-    	}	
+		camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)
+		camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600); /* width of camera image */
+		camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900); /* height of camera image */
+		long timeEndCam = System.currentTimeMillis();
+		System.out.println("loading time2: " + (timeEndCam-timeStartCam));
+
+		if(!camera.isOpened()){
+			System.out.println("ErroRRRRRRRRRR");
+		}
+		else {
+
+			while(true)
+			{
+
+				Mat frame = new Mat();	
+				camera.read(frame);
+				//System.out.println("Frame Obtained");
+				System.out.println("Captured Frame Width " + 
+						frame.width() + " Height " + frame.height());
+
+				if(frame.empty())
+					System.out.println("NULL BILLEDE");
+				else
+				{
+
+					Highgui.imwrite("billed0.png", frame);
+
+					//System.out.println("Picture saved");
+					//System.out.println();
+
+					break;
+				}
+			}
+
+			camera.release();
+		}
 	}
 }

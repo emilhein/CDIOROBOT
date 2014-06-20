@@ -243,6 +243,7 @@ public class CallibratorGUI {
 
 		btnApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 
 				String input1 = txtDP.getText();
 				jlcircleDP.setText(input1);
@@ -320,25 +321,14 @@ public class CallibratorGUI {
 				info.setclose(Float.parseFloat(jlClose.getText()));
 				info.setlengthMultiply(Float.parseFloat(jlLengthMultiply.getText()));
 
-				//				Lige i starten, når robotten kører første runde.
-
 				if(first)
 				{
 					control.start();						
 					first = false;
 				}
-
-				//				while (true){
-				//	for(int i = 1;i<3;i++){
-
+				while(true){
 				info = control.loopRound(info,0);
-			
-				//if(i%2 == 0){
-				//	info = control.loopRound(info,1); // kører til punkt foran mål
-				//	info = control.loopRound(info,1); // aflevere i mål.
-				//}
-				//}
-				//				info = control.loopRound(info,0);
+
 
 				lbltxtBallAngle.setText("BallAngle = " + info.getBallAngle());
 				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
@@ -401,7 +391,7 @@ public class CallibratorGUI {
 
 				//				}
 			}
-
+			}
 		});
 
 		frame1.add(jlcircleDP);					frame1.add(jlcircleDist);
