@@ -122,7 +122,7 @@ public class PrimaryController {
 		
 		if(deliverButtom == 1){	
 			// ***************************** Deliver balls *******************************
-			deliverBalls(calliData, dist, pitch.getMidOfImg().x(), pitch.getMidOfImg().y());
+			deliverBalls(calliData, dist); // pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
 		}
 		
 		if(!minIsTemp && deliverButtom == 0){
@@ -136,7 +136,7 @@ public class PrimaryController {
 		if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)/*|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)*/||movingAround != 0){
 			System.out.println("trying to move around because true");
 			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
-			findWayAround(calliData, dist, pitch.getMidOfImg().x(), pitch.getMidOfImg().y());
+			findWayAround(calliData, dist, pitch.getMidOfObs().x(), pitch.getMidOfObs().y());
 			toGoal = 0;
 		}
 		else
@@ -204,7 +204,7 @@ public class PrimaryController {
 			angleCal(calliData, minPunkt); // udregner vinkel 
 		}
 	}
-	private void deliverBalls(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
+	private void deliverBalls(GUIInfo calliData, CalcDist dist) { // , int middelX, int middelY
 	
 		
 		if(toGoal == 0){

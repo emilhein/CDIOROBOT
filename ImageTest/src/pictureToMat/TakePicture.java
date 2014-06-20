@@ -6,14 +6,27 @@ import org.opencv.highgui.VideoCapture;
         
 public class TakePicture {
 	
-	public void takePicture()
-	{		
+	private VideoCapture camera;
+	
+/*	public TakePicture()
+	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-    	VideoCapture camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)
+		camera = new VideoCapture(0);
+		
+    	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600);
+    	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900);
+  	}*/
+	
+	public void takePicture()
+	{	
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		
+		camera = new VideoCapture(0);
+		
     	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600); /* width of camera image */
     	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900); /* height of camera image */
-	
+		
     	if(!camera.isOpened()){
     		System.out.println("Error");
     	}
@@ -41,8 +54,8 @@ public class TakePicture {
         	    	break;
         		}
     		}
+    		
+    		camera.release();
     	}	
-    	
-    	camera.release();
 	}
 }

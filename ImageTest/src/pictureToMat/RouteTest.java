@@ -147,7 +147,6 @@ public class RouteTest {
 		System.out.println("Bagpunkt: " + roboBagPunkt.x()+","+roboBagPunkt.y());
 		System.out.println("MinPunkt: " + minPunkt.x()+","+minPunkt.y());
 		if(minPunkt.x() == 0 && minPunkt.y() == 0){
-			
 			return false;
 		}
 		Float a;

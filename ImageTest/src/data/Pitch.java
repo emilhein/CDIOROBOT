@@ -20,6 +20,7 @@ public class Pitch {
 	private CvPoint goalA = new CvPoint();
 	private CvPoint goalB = new CvPoint();
 	private CvPoint midOfImg = new CvPoint();
+	private CvPoint midOfObs = new CvPoint();
 	private final CvPoint origCorner1, origCorner4;
 	private CvPoint miner1, miner2, miner3, miner4;
 
@@ -76,6 +77,10 @@ public class Pitch {
 	public CvPoint getMidOfImg() {
 		return midOfImg;
 	}
+	
+	public CvPoint getMidOfObs() {
+		return midOfImg;
+	}
 
 	public CvPoint getMiner1() {
 		return miner1;
@@ -129,7 +134,8 @@ public class Pitch {
 	    goalB.x(border.x());
 	    goalB.y(border.y() + (border.height()/2));
 	    
-	    midOfImg = new CvPoint(obstruction.x() + (obstruction.width()/2), obstruction.y() + (obstruction.height()/2));
+	    midOfObs = new CvPoint(obstruction.x() + (obstruction.width()/2), obstruction.y() + (obstruction.height()/2));
+	    midOfImg = new CvPoint(border.x() + (border.width()/2), border.y() + (border.height()/2));
 	    
 	    findMiners();
 	    findMajors();
