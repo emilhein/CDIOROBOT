@@ -184,25 +184,24 @@ public class RouteTest {
 	
 	public boolean insideRect(CvPoint point, CvPoint cornerA, CvPoint cornerB)
 	{
-		if(cornerA.x() < point.x() && point.x() < cornerB.x())
+		if(cornerA.x() <= point.x() && point.x() <= cornerB.x())
 		{
-			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			if(cornerA.y() <= point.y() && point.y() <= cornerB.y())
 			{
 				return true;
 			}
-			else if(cornerB.y() < point.y() && point.y() < cornerA.y())
+			else if(cornerB.y() <= point.y() && point.y() <= cornerA.y())
 			{
 				return true;
 			}
 		}
-		else if(cornerB.x() < point.x() && point.x() < cornerA.x())
+		else if(cornerB.x() <= point.x() && point.x() <= cornerA.x())
 		{
-			System.out.println(3);
-			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			if(cornerA.y() <= point.y() && point.y() <= cornerB.y())
 			{
 				return true;
 			}
-			else if(cornerB.y() < point.y() && point.y() < cornerB.y())
+			else if(cornerB.y() <= point.y() && point.y() <= cornerA.y())
 			{
 				return true;
 			}
