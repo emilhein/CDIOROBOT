@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
+
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
-import CallibratorGUI.CallibratorGUI;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
@@ -28,9 +26,9 @@ public class PrimaryController {
 	private CvPoint minPunkt;
 	private CvPoint roboBagPunkt;
 	private CvPoint roboFrontPunkt;
-	private CvPoint tempPoint;
-	private CvPoint tempGoal;
-	private CvPoint tempGoal2;
+	private CvPoint tempPoint = new CvPoint();
+//	private CvPoint tempGoal= new CvPoint();
+//	private CvPoint tempGoal2 = new CvPoint();
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
@@ -44,6 +42,9 @@ public class PrimaryController {
 	private int ifTemp = 0;
 	private Pitch pitch;
 	private int movingAround = 0;
+	private boolean minIsTemp = false;
+	private ArrayList<Float> ballCoor = new ArrayList<Float>();
+	
 	
 	public PrimaryController(DetectRects findEdge) {
 		this.findEdge = findEdge;
@@ -69,7 +70,6 @@ public class PrimaryController {
 		pitch = findEdge.detectPitch();
 		long timeFindEdgeSlut = System.currentTimeMillis();
 		//System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
-		
 		ppcm = pitch.getPixPerCm();
 
 		balls = new BallMethod(pitch);
@@ -78,8 +78,13 @@ public class PrimaryController {
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
 		int xFactorOfCut = 2;
 		int yFactorOfCut = 4;
+		tempPoint = new CvPoint();
+	//	tempGoal= new CvPoint();
+	//	tempGoal2 = new CvPoint();
 		CalcDist dist = new CalcDist();
-
+		System.out.println("temppoint: " + tempPoint.x()+","+tempPoint.y());
+//		System.out.println("tempgoal: " + tempGoal.x()+","+tempGoal.y());
+//		System.out.println("tempgoal: " + tempGoal2.x()+","+tempGoal2.y());
 		//################# Calculate corners ########################
 		
 		int intppcm = Math.round(ppcm);
@@ -95,56 +100,65 @@ public class PrimaryController {
 
 		} while (balls.determineDirection() == false);
 
-		balls.rotateRobot(); // tegner over robotten, så bolde ikke findes der
-		balls.eliminateObstruction(); // tegner over forhindring, så bolde ikke findes der
+	
 		
 		// ################### Find Balls #####################################
-		balls.findCircle(calliData.getIntJlcircleMinRadius(),calliData.getIntJlcircleMaxRadius(),calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),"balls", false);
-
-		ArrayList<Float> ballCoor = balls.getBallCoordi();
-		
+		if(!minIsTemp && deliverButtom == 0){
+			balls.rotateRobot(); // tegner over robotten, så bolde ikke findes der
+			balls.eliminateObstruction(); // tegner over forhindring, så bolde ikke findes der
+			balls.findCircle(calliData.getIntJlcircleMinRadius(),calliData.getIntJlcircleMaxRadius(),calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),"balls", false);
+			ballCoor = balls.getBallCoordi();
+		}
 		// ################### Nearest Ball ####################################
 		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
-		balls.calculateRotationPoint(); // udregn hvor bolden 
+		balls.calculateRotationPoint(); 
 		balls.changePerspective(calliData.getPoV());
 		
 		//System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
 		roboBagPunkt = balls.getRoboBagPunkt();
 		roboFrontPunkt = balls.getRoboFrontPunkt();
+		
 
-		minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 		
-		/*
-		* Her skal bagpunktet gerne være rykket frem, da den grønne cirkel ikke er lige over drejningspunktet
-		* Derudover skal punktet også være rykket i forhold til perspektivet. 
-		*/
-
-		System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
-	
-		CvPoint corner1 = pitch.getCorner1();
-		CvPoint corner2 = pitch.getCorner2();
-		CvPoint corner3 = pitch.getCorner3();
-		CvPoint corner4 = pitch.getCorner4();
-		
-		tempPoint = new CvPoint(roboFrontPunkt.x(),roboFrontPunkt.y());
-		tempGoal = new CvPoint(roboFrontPunkt.x(),roboFrontPunkt.y());	
-		tempGoal2 = new CvPoint(roboFrontPunkt.x(),roboFrontPunkt.y());	
-		int middelX = (pitch.getObstruction().x()+(pitch.getObstruction().width()/2));
-		int middelY = (pitch.getObstruction().y()+(pitch.getObstruction().height()/2));
-		
-		// ***************************** Deliver balls *******************************
 		if(deliverButtom == 1){	
-			deliverBalls(calliData, dist, middelX, middelY);
+			// ***************************** Deliver balls *******************************
+			deliverBalls(calliData, dist, pitch.getMidOfImg().x(), pitch.getMidOfImg().y());
 		}
-		// ***************************** Avoid cross *******************************
-		/*else if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)||movingAround != 0){
+		
+		if(!minIsTemp && deliverButtom == 0){
+			minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
+			System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
+			
+					}
+	
+				
+		//tjekker om forhindringen er imellem robot og bold,mål,temppoint etc.
+		if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)/*|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)*/||movingAround != 0){
 			System.out.println("trying to move around because true");
 			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
-			findWayAround(calliData, dist, middelX, middelY);
-		}*/		
+			findWayAround(calliData, dist, pitch.getMidOfImg().x(), pitch.getMidOfImg().y());
+			toGoal = 0;
+		}
+		else
+		{
+			System.out.println("PATH NOT BLOCKED BY OBSTACLE");
+			CvPoint corner1 = pitch.getCorner1();
+			CvPoint corner2 = pitch.getCorner2();
+			CvPoint corner3 = pitch.getCorner3();
+			CvPoint corner4 = pitch.getCorner4();
+			// ***************************** Avoid cross *******************************
 
-		// ***************************** Avoid edge*******************************
-		else if (minPunkt.x() > corner1.x() + (int)(6 *ppcm)&& minPunkt.x() < corner2.x() - (int)(6 * ppcm)&& minPunkt.y() > corner1.y()	&& minPunkt.y() < corner1.y() + (int)(9 * ppcm)) 
+			edgeCheck(calliData, dist, intppcm, corner1, corner2, corner3,corner4); //
+
+		}
+		
+		send(calliData);	
+		return calliData;
+	}
+
+	public void edgeCheck(GUIInfo calliData, CalcDist dist, int intppcm,
+			CvPoint corner1, CvPoint corner2, CvPoint corner3, CvPoint corner4) {
+		if (minPunkt.x() > corner1.x() + (int)(6 *ppcm)&& minPunkt.x() < corner2.x() - (int)(6 * ppcm)&& minPunkt.y() > corner1.y()	&& minPunkt.y() < corner1.y() + (int)(9 * ppcm)) 
 		{
 			tempPoint = new CvPoint(minPunkt.x(),(minPunkt.y()+(int)(30*ppcm)));
 			tempCalculater(calliData, dist, tempPoint);
@@ -189,72 +203,56 @@ public class PrimaryController {
 			ifTemp = 0;
 			angleCal(calliData, minPunkt); // udregner vinkel 
 		}
-		
-		//tjekker om forhindringen er imellem robot og bold,mål,temppoint etc.
-		if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)||movingAround != 0){
-			System.out.println("trying to move around because true");
-			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
-			findWayAround(calliData, dist, middelX, middelY);
-			toGoal = 0;
-		}
-		else
-		{
-			System.out.println("PATH NOT BLOCKED BY OBSTACLE");
-		}
-		
-		send(calliData);	
-		return calliData;
 	}
 	private void deliverBalls(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
-		
+	
 		
 		if(toGoal == 0){
 			toGoal = 1;
 			goalA = pitch.getGoalA();
-			minPunkt.x(goalA.x()-400);
+			minPunkt.x(goalA.x()-250);
 			minPunkt.y(goalA.y());
 			System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
 			System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
-			tempGoal = new CvPoint(minPunkt.x(), minPunkt.y());
-			angleCal(calliData, tempGoal);
+			angleCal(calliData, minPunkt);
 			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+26 * ppcm);
 		} else {
 			toGoal = 2;
 			minPunkt.x(goalA.x() - 120);
 			minPunkt.y(goalA.y());
-			tempGoal2 = new CvPoint(minPunkt.x(), minPunkt.y());
-			angleCal(calliData, tempGoal2);
-			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, tempGoal2)+6 * ppcm));	
+			angleCal(calliData, minPunkt);
+			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+6 * ppcm));	
 		}
+		
 	}
 	private void findWayAround(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
-		if(movingAround == 3||(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)){
+		if(/*movingAround == 3||*/(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)){
 			System.out.println("robo near corner 1, moving around cross");
 			tempPoint = new CvPoint (pitch.getNorth().x(),pitch.getNorth().y());
 			aroundCross(calliData, dist, tempPoint);
-			if(movingAround ==3)movingAround =0;
-			else movingAround = 1;
+//			if(movingAround ==3)movingAround =0;
+//			else movingAround = 1;
 		}
-		else if(movingAround == 1||(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)){
+		else if(/*movingAround == 1||*/(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)){
 			System.out.println("robo near corner 2, moving around cross");
 			tempPoint = new CvPoint (pitch.getEast().x(),pitch.getEast().y());
 			aroundCross(calliData, dist, tempPoint);
-			if(movingAround ==1)movingAround =0;
-			else movingAround = 2;
+//			if(movingAround ==1)movingAround =0;
+//			else movingAround = 2;
 		}
-		else if(movingAround == 4||(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)){
+		else if(/*movingAround == 4||*/(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)){
 			System.out.println("robo near corner 3, moving around cross");
 			tempPoint = new CvPoint (pitch.getWest().x(),pitch.getWest().y());
 			aroundCross(calliData, dist, tempPoint);
-			if(movingAround ==4)movingAround =0;
-			else movingAround = 3;
+//			if(movingAround ==4)movingAround =0;
+//			else movingAround = 3;
 		}
-		else if(movingAround ==2||(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)){
+		else if(/*movingAround ==2||*/(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)){
 			System.out.println("robo near corner 4, moving around cross");
 			tempPoint = new CvPoint (pitch.getSouth().x(),pitch.getSouth().y());
 			aroundCross(calliData, dist, tempPoint);
-			if(movingAround ==2)movingAround =0;
-			else movingAround = 4;
+//			if(movingAround ==2)movingAround =0;
+//			else movingAround = 4;
 		}
 	}
 	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {

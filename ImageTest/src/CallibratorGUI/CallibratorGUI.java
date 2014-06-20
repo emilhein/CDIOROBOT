@@ -425,6 +425,8 @@ public class CallibratorGUI {
 				System.out.println("Delivering balls");
 
 				info = control.loopRound(info,1);
+				info = control.loopRound(info,1);
+
 
 			}
 		});
