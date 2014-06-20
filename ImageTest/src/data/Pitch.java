@@ -22,7 +22,7 @@ public class Pitch {
 	private CvPoint midOfImg = new CvPoint();
 	private final CvPoint origCorner1, origCorner4;
 	private CvPoint miner1, miner2, miner3, miner4;
-	
+
 	public Pitch(float pixPerCm, CvRect border, CvRect obstruction)
 	{
 		this.pixPerCm = pixPerCm;
@@ -139,7 +139,7 @@ public class Pitch {
 	    goalB.x(border.x());
 	    goalB.y(border.y() + (border.height()/2));
 	    
-	    midOfImg = new CvPoint(border.x() + (border.width()/2), border.y() + (border.height()/2));
+	    midOfImg = new CvPoint(obstruction.x() + (obstruction.width()/2), obstruction.y() + (obstruction.height()/2));
 	    
 	    findMiners();
 	    findMajors();
@@ -181,4 +181,6 @@ public class Pitch {
 		
 		Highgui.imwrite("billed0.png", pic0);
 	}
+	
+	
 }

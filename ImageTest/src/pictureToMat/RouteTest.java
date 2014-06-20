@@ -145,8 +145,10 @@ public class RouteTest {
 
 	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt) {
 		System.out.println("Bagpunkt: " + roboBagPunkt.x()+","+roboBagPunkt.y());
-		System.out.println("MinPunktt: " + minPunkt.x()+","+minPunkt.y());
-
+		System.out.println("MinPunkt: " + minPunkt.x()+","+minPunkt.y());
+		if(minPunkt.x() == 0 && minPunkt.y() == 0){
+			return false;
+		}
 		Float a;
 		Float b;
 
@@ -166,6 +168,7 @@ public class RouteTest {
 			
 			if(insideRect(westCollition, roboBagPunkt, minPunkt) || insideRect(eastCollition, roboBagPunkt, minPunkt))
 			{
+				System.out.println("Returning true");
 				return true;
 			}
 		}
@@ -176,9 +179,13 @@ public class RouteTest {
 			
 			if(insideRect(northCollition, roboBagPunkt, minPunkt) || insideRect(southCollition, roboBagPunkt, minPunkt))
 			{
+				System.out.println("Returning true");
+
 				return true;
 			}
 		}
+		System.out.println("Returning false");
+
 		return false;		
 	}
 	
