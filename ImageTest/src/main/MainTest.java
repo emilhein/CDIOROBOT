@@ -12,13 +12,17 @@ public class MainTest {
 	{
 		Pitch pitch = new Pitch(6.7F, new CvRect(), new CvRect());
 		
+		CvPoint minor1 = new CvPoint(692,355);
+		CvPoint minor4 = new CvPoint(813,484);	
+		
+		pitch.setMinor1(minor1);
+		pitch.setMinor4(minor4);
+		
 		RouteTest route = new RouteTest(pitch);
 		
-		CvPoint minPunkt = new CvPoint(1003,193);
-		CvPoint roboBagPunkt = new CvPoint(299,670);
-		CvPoint minor1 = new CvPoint(692,355);
-		CvPoint minor4 = new CvPoint(813,484);		
+		CvPoint minPunkt = new CvPoint(229,400);
+		CvPoint roboBagPunkt = new CvPoint(1004,425);	
 		
-		System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt, minor1, minor4));
+		System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
 	}
 }

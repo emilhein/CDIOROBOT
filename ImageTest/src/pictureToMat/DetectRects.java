@@ -177,7 +177,6 @@ public class DetectRects {
     	        }
     	    }
     	    
-        	cvSaveImage("BrownThreshold2.png", thresholdImg);
         	cvSaveImage("edge.png", edge);
         	
         	return new Pitch(pixPerCm, innerRect, obstruction);

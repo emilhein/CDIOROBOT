@@ -6,16 +6,29 @@ import org.opencv.highgui.VideoCapture;
         
 public class TakePicture {
 	
-	public void takePicture()
-	{		
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
-    	VideoCapture camera = new VideoCapture(1);// us 1 if two cameras a connected (including integrated webcam)
-    	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1000); /* width of camera image */
-    	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 550); /* height of camera image */
+	private VideoCapture camera; 
 	
+	public TakePicture(){
+		long timeStartLib = System.currentTimeMillis();
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		long timeEndLib = System.currentTimeMillis();
+		System.out.println("loading time1: " + (timeEndLib-timeStartLib));
+		 
+		 
+		long timeStartCam = System.currentTimeMillis();
+
+	    	camera = new VideoCapture(0);// us 1 if two cameras a connected (including integrated webcam)
+	    	camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 1600); /* width of camera image */
+	    	camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 900); /* height of camera image */
+	    	long timeEndCam = System.currentTimeMillis();
+	    	System.out.println("loading time2: " + (timeEndCam-timeStartCam));
+	    	
+	}
+	
+	public void takePicture()
+	{
     	if(!camera.isOpened()){
-    		System.out.println("Error");
+    		System.out.println("ErroRRRRRRRRRR");
     	}
     	else {
     		
@@ -43,6 +56,6 @@ public class TakePicture {
     		}
     	}	
     	
-    	camera.release();
+    //	camera.release();
 	}
 }

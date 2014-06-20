@@ -145,8 +145,10 @@ public class RouteTest {
 
 	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt) {
 		System.out.println("Bagpunkt: " + roboBagPunkt.x()+","+roboBagPunkt.y());
-		System.out.println("MinPunktt: " + minPunkt.x()+","+minPunkt.y());
-
+		System.out.println("MinPunkt: " + minPunkt.x()+","+minPunkt.y());
+		if(minPunkt.x() == 0 && minPunkt.y() == 0){
+			return false;
+		}
 		Float a;
 		Float b;
 
@@ -166,6 +168,7 @@ public class RouteTest {
 			
 			if(insideRect(westCollition, roboBagPunkt, minPunkt) || insideRect(eastCollition, roboBagPunkt, minPunkt))
 			{
+				System.out.println("Returning true");
 				return true;
 			}
 		}
@@ -176,33 +179,36 @@ public class RouteTest {
 			
 			if(insideRect(northCollition, roboBagPunkt, minPunkt) || insideRect(southCollition, roboBagPunkt, minPunkt))
 			{
+				System.out.println("Returning true");
+
 				return true;
 			}
 		}
+		System.out.println("Returning false");
+
 		return false;		
 	}
 	
 	public boolean insideRect(CvPoint point, CvPoint cornerA, CvPoint cornerB)
 	{
-		if(cornerA.x() < point.x() && point.x() < cornerB.x())
+		if(cornerA.x() <= point.x() && point.x() <= cornerB.x())
 		{
-			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			if(cornerA.y() <= point.y() && point.y() <= cornerB.y())
 			{
 				return true;
 			}
-			else if(cornerB.y() < point.y() && point.y() < cornerA.y())
+			else if(cornerB.y() <= point.y() && point.y() <= cornerA.y())
 			{
 				return true;
 			}
 		}
-		else if(cornerB.x() < point.x() && point.x() < cornerA.x())
+		else if(cornerB.x() <= point.x() && point.x() <= cornerA.x())
 		{
-			System.out.println(3);
-			if(cornerA.y() < point.y() && point.y() < cornerB.y())
+			if(cornerA.y() <= point.y() && point.y() <= cornerB.y())
 			{
 				return true;
 			}
-			else if(cornerB.y() < point.y() && point.y() < cornerB.y())
+			else if(cornerB.y() <= point.y() && point.y() <= cornerA.y())
 			{
 				return true;
 			}
