@@ -63,12 +63,15 @@ public class PrimaryController {
 		long timePicStart = System.currentTimeMillis();
 		takepic.takePicture();
 		long timePicSlut = System.currentTimeMillis();
-		//System.out.println("take picture tid: " + (timePicSlut-timePicStart));
+		long totalPic = timePicSlut - timePicStart;
+		System.out.println("take picture tid: " + (totalPic));
 		
 		long timeFindEdgeStart = System.currentTimeMillis();
 		pitch = findEdge.detectPitch();
 		long timeFindEdgeSlut = System.currentTimeMillis();
-		//System.out.println("find edge tid: " + (timeFindEdgeSlut-timeFindEdgeStart));
+		long totalEdge =timeFindEdgeSlut-timeFindEdgeStart;
+		System.out.println("find edge tid: " + (totalEdge));
+		System.out.println("total time " +(totalPic+totalEdge)/1000);
 		
 		ppcm = pitch.getPixPerCm();
 
@@ -206,7 +209,7 @@ public class PrimaryController {
 			System.out.println("PATH NOT BLOCKED BY OBSTACLE");
 		}
 		
-		send(calliData);	
+		//send(calliData);	
 		return calliData;
 	}
 	private void deliverBalls(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
