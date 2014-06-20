@@ -328,7 +328,11 @@ public class CallibratorGUI {
 				}
 				while(true){
 				info = control.loopRound(info,0);
-
+				
+				pane.repaint();
+			
+				pane.add(lblimg);								pane.add(lblfindb);
+				pane.add(lblbh);
 
 				lbltxtBallAngle.setText("BallAngle = " + info.getBallAngle());
 				lbltxtRoboAngle.setText("RoboAngle = " + info.getRoboAngle());
@@ -388,26 +392,27 @@ public class CallibratorGUI {
 						lbltxtRoboAngle.getPreferredSize().width, 10);
 				lbltxtTurnAngle.setBounds(200, insets.top + 545,
 						lbltxtTurnAngle.getPreferredSize().width, 10);
-				// Gør rammen synlig
+				frame1.add(jlcircleDP);					frame1.add(jlcircleDist);
+				frame1.add(jlcirclePar1);				frame1.add(jlcirclePar2);
+				frame1.add(jlcircleMinRadius);			frame1.add(jlcircleMaxRadius);
+				frame1.add(jlroboDP);					frame1.add(jlroboMinDist);
+				frame1.add(jlroboPar1);					frame1.add(jlroboPar2);
+				frame1.add(jlroboMin);					frame1.add(jlroboMax);
+//				frame1.add(jlLengthMultiply); // lenght
+				frame1.add(jlClose); // luk				frame1.add(jlPoV); //pov
+				frame1.add(lblimg);						frame1.add(lblbh);
+				frame1.add(lbltxt);						frame1.add(lbltxtBallAngle);
+				frame1.add(lbltxtRoboAngle);			frame1.add(lbltxtTurnAngle);
+				frame1.add(txtArea1);					frame1.add(lblfindb);
+				frame1.add(lbledge);
+
+				
 				frame1.setVisible(true);
-				//				}
+
 			}
 			}
 		});
 
-		frame1.add(jlcircleDP);					frame1.add(jlcircleDist);
-		frame1.add(jlcirclePar1);				frame1.add(jlcirclePar2);
-		frame1.add(jlcircleMinRadius);			frame1.add(jlcircleMaxRadius);
-		frame1.add(jlroboDP);					frame1.add(jlroboMinDist);
-		frame1.add(jlroboPar1);					frame1.add(jlroboPar2);
-		frame1.add(jlroboMin);					frame1.add(jlroboMax);
-//		frame1.add(jlLengthMultiply); // lenght
-		frame1.add(jlClose); // luk				frame1.add(jlPoV); //pov
-		frame1.add(lblimg);						frame1.add(lblbh);
-		frame1.add(lbltxt);						frame1.add(lbltxtBallAngle);
-		frame1.add(lbltxtRoboAngle);			frame1.add(lbltxtTurnAngle);
-		frame1.add(txtArea1);					frame1.add(lblfindb);
-		frame1.add(lbledge);
 
 		btnDeliver.setBounds(btnDeliver.getX() + btnDeliver.getWidth() + 5, insets.top + 590, btnDeliver.getPreferredSize().width, btnDeliver.getPreferredSize().height);
 

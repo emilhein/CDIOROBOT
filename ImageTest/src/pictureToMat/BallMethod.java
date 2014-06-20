@@ -98,6 +98,7 @@ public class BallMethod {
 			}
 			else
 			{
+				System.out.println("Finding BALLS");
 				System.out.println("Balls found: " + Coordi.size()/3);
 				ballCoordi = Coordi;
 			}

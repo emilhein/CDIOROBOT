@@ -39,7 +39,6 @@ public class PrimaryController {
 	private RouteTest route;
 	private int moveBack = 0;
 	private int backMove = 0;
-	private int ifTemp = 0;
 	private Pitch pitch;
 	private int movingAround = 0;
 	private boolean minIsTemp = false;
@@ -109,6 +108,8 @@ public class PrimaryController {
 			balls.findCircle(calliData.getIntJlcircleMinRadius(),calliData.getIntJlcircleMaxRadius(),calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),"balls", false);
 			ballCoor = balls.getBallCoordi();
 		}
+		System.out.println("minIsTemp: " + minIsTemp);
+		System.out.println("NGrabs: " + NGrabs);
 		// ################### Nearest Ball ####################################
 		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
 		balls.calculateRotationPoint(); 
@@ -122,14 +123,16 @@ public class PrimaryController {
 		
 		if(NGrabs == 3){	
 			// ***************************** Deliver balls *******************************
-			if(ifTemp == 0){
+			if(!minIsTemp){
 			deliverBalls(calliData, dist); // pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
-			ifTemp = 1;
+			minIsTemp = true;
+			System.out.println("RoBOT HAS GRABBED 3 TIMES");
 			}
 			else {
 				deliverBalls(calliData, dist); // pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
-				ifTemp = 0;
+				minIsTemp = false;
 				NGrabs = 0;
+				System.out.println("SHOULD DELIVER");
 			}
 			
 		}
@@ -209,7 +212,7 @@ public class PrimaryController {
 			} 
 		else {
 			backMove = 0;
-			ifTemp = 0;
+			minIsTemp = false;
 			angleCal(calliData, minPunkt); // udregner vinkel 
 		}
 	}
@@ -230,7 +233,8 @@ public class PrimaryController {
 			minPunkt.x(goalA.x() - 120);
 			minPunkt.y(goalA.y());
 			angleCal(calliData, minPunkt);
-			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+6 * ppcm));	
+			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+6 * ppcm));
+			minIsTemp = false;
 		}
 		
 	}
@@ -267,14 +271,14 @@ public class PrimaryController {
 	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
 		angleCal(calliData, tempPoint);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
-		ifTemp = 1; //betyder den skal ikke grappe
+		minIsTemp = true; //betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 	}
 	public void tempCalculater(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
-		if(ifTemp ==0){
+		if(!minIsTemp){
 		angleCal(calliData, tempPoint);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
-		ifTemp = 1; //betyder den skal ikke grappe
+		minIsTemp = true; //betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 		}
 		//send(calliData); // kører til første punkt
@@ -282,7 +286,7 @@ public class PrimaryController {
 		//calPosition(roboFrontPunkt,  roboBagPunkt, tempPoint); // udregner destination på robot efter den er kørt til temp
 		angleCal(calliData, minPunkt);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)-2*ppcm);
-		ifTemp = 0;
+		minIsTemp = false;
 		backMove = 1;
 		}
 	}
@@ -341,7 +345,7 @@ public class PrimaryController {
 			int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm())); // længde konvertering
 			
 			System.out.println("dist = " + distance);
-			if(ifTemp == 0){
+			if(!minIsTemp){
 				distance -= 6 * ppcm; // for at lande foran bolden
 			}
 			Thread.sleep(600);
@@ -351,13 +355,12 @@ public class PrimaryController {
 
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
 
-			if (toGoal == 0 && ifTemp == 0) {
+			if (toGoal == 0 && !minIsTemp) {
 					// samler bold op
 					Case = 41;
 					i = 41;
 					dosSend(Case, i);
 					Thread.sleep(1200);
-					ifTemp = 0;
 					NGrabs++;
 				}
 
@@ -367,6 +370,7 @@ public class PrimaryController {
 				dosSend(Case, i);
 				Thread.sleep(1200);
 				toGoal = 0;
+				minIsTemp = false;
 			}
 
 			if (moveBack == 1 || backMove ==1) {
