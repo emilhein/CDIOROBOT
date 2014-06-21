@@ -149,7 +149,7 @@ public class Pitch {
 	    
 	    findMiners();
 	    findMajors();
-	    
+	    /*
 	    System.out.println("miner1 : " + miner1.x() +"," + miner1.y());
 	    System.out.println("miner2 : " + miner2.x() +"," + miner2.y());
 	    System.out.println("miner3 : " + miner3.x() +"," + miner3.y());
@@ -158,7 +158,7 @@ public class Pitch {
 	    System.out.println("South : " + south.x() +"," + south.y());
 	    System.out.println("West : " + west.x() +"," + west.y());
 	    System.out.println("East : " + east.x() +"," + east.y());
-	    
+	    */
 	}
 	
 	public void findMiners() {
@@ -172,12 +172,13 @@ public class Pitch {
 	}
 
 	public void findMajors() {
-		int margin = ((int)(10*pixPerCm));
+		int marginX = ((int)(13*pixPerCm));
+		int marginY = ((int)(10*pixPerCm));
 		
-		north = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner1.y()-margin)); 
-		south = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner4.y()+margin));
-		east = new CvPoint (miner2.x()+margin,miner2.y()+((miner4.y()-miner2.y())/2));
-		west =  new CvPoint (miner1.x()-margin,miner3.y()+((miner1.y()-miner3.y())/2));
+		north = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner1.y()-marginY)); 
+		south = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner4.y()+marginY));
+		east = new CvPoint (miner2.x()+marginX,miner2.y()+((miner4.y()-miner2.y())/2));
+		west =  new CvPoint (miner1.x()-marginX,miner3.y()+((miner1.y()-miner3.y())/2));
 	}
 	
 	public void cutOrigImg() {

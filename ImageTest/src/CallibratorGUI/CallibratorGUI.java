@@ -405,7 +405,8 @@ public class CallibratorGUI {
 				frame1.add(lbltxtRoboAngle);			frame1.add(lbltxtTurnAngle);
 				frame1.add(txtArea1);					frame1.add(lblfindb);
 				frame1.add(lbledge);
-
+				frame1.repaint();
+				pane.repaint();
 				
 				frame1.setVisible(true);
 
