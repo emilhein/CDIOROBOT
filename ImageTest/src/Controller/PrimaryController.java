@@ -394,8 +394,7 @@ public class PrimaryController {
 		}
 	}
 
-	private void turnBeforeGrab(GUIInfo calliData, int angle)
-			throws IOException, InterruptedException {
+	private void turnBeforeGrab(GUIInfo calliData, int angle)throws IOException, InterruptedException {
 		int Case;
 		int i;
 		do {
@@ -417,51 +416,6 @@ public class PrimaryController {
 		
 		angleCal(calliData, minPunkt);
 		angle = Math.round(Float.parseFloat(""+ calliData.getTurnAngle()));// *
-		if (Math.abs(angle) < 250) {
-			if (angle > 0) // vælger retning der skal drejes
-				Case = 21;
-			else
-				Case = 12;
-		} else {
-			angle = angle / 2;
-			if (angle > 0) // vælger retning der skal drejes
-				Case = 21;
-			else
-				Case = 12;
-			angle = Math.abs(angle);
-			i = angle;
-			dosSend(Case, i);
-			Thread.sleep(700);
-		}
-		angle = Math.abs(angle);
-		i = angle;
-		dosSend(Case, i);
-
-		Thread.sleep(1200);
-	}
-
-	private void turnBeforeGrab(GUIInfo calliData, int angle)
-			throws IOException, InterruptedException {
-		int Case;
-		int i;
-		do {
-			takepic.takePicture();	
-			// ################## Cut image ####################################
-			pitch.cutOrigImg();
-			pitch.adjustToCut(2, 4);
-			// ################### Find Robot #######################################
-			balls.findCircle(calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),	calliData.getIntJlroboDP(),calliData.getIntJlroboMinDist(),calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),"robo", true);
-
-		} while (balls.determineDirection() == false);
-		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
-		balls.calculateRotationPoint(); 
-		balls.changePerspective(calliData.getPoV());
-		
-		//System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
-		roboBagPunkt = balls.getRoboBagPunkt();
-		roboFrontPunkt = balls.getRoboFrontPunkt();
-		
-		angleCal(calliData, minPunkt);
 		if (Math.abs(angle) < 250) {
 			if (angle > 0) // vælger retning der skal drejes
 				Case = 21;
