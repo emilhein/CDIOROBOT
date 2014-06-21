@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 
+
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
@@ -356,6 +357,7 @@ public class PrimaryController {
 			Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
 
 			if (toGoal == 0 && !minIsTemp) {
+				turnBeforeGrab(calliData, angle);
 					// samler bold op
 					Case = 41;
 					i = 41;
@@ -386,6 +388,51 @@ public class PrimaryController {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	private void turnBeforeGrab(GUIInfo calliData, int angle)
+			throws IOException, InterruptedException {
+		int Case;
+		int i;
+		do {
+			takepic.takePicture();	
+			// ################## Cut image ####################################
+			pitch.cutOrigImg();
+			pitch.adjustToCut(2, 4);
+			// ################### Find Robot #######################################
+			balls.findCircle(calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),	calliData.getIntJlroboDP(),calliData.getIntJlroboMinDist(),calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),"robo", true);
+
+		} while (balls.determineDirection() == false);
+		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
+		balls.calculateRotationPoint(); 
+		balls.changePerspective(calliData.getPoV());
+		
+		//System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
+		roboBagPunkt = balls.getRoboBagPunkt();
+		roboFrontPunkt = balls.getRoboFrontPunkt();
+		
+		angleCal(calliData, minPunkt);
+		if (Math.abs(angle) < 250) {
+			if (angle > 0) // vælger retning der skal drejes
+				Case = 21;
+			else
+				Case = 12;
+		} else {
+			angle = angle / 2;
+			if (angle > 0) // vælger retning der skal drejes
+				Case = 21;
+			else
+				Case = 12;
+			angle = Math.abs(angle);
+			i = angle;
+			dosSend(Case, i);
+			Thread.sleep(700);
+		}
+		angle = Math.abs(angle);
+		i = angle;
+		dosSend(Case, i);
+
+		Thread.sleep(1200);
 	}
 	public void dosSend(int Case, int i) throws IOException {
 		dos.write(Case);
