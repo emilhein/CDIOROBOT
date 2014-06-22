@@ -29,7 +29,7 @@ public class PrimaryController {
 	private CvPoint minPunkt;
 	private CvPoint roboBagPunkt;
 	private CvPoint roboFrontPunkt;
-	private CvPoint tempPoint = new CvPoint();
+	//private CvPoint tempPoint = new CvPoint();
 
 	private int toGoal = 0;
 	private Float ppcm;
@@ -79,10 +79,10 @@ public class PrimaryController {
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
 		int xFactorOfCut = 2;
 		int yFactorOfCut = 4;
-		tempPoint = new CvPoint();
+//!!		tempPoint = new CvPoint();
 
 		CalcDist dist = new CalcDist();
-		System.out.println("temppoint: " + tempPoint.x()+","+tempPoint.y());
+		System.out.println("temppoint: " + minPunkt.x()+","+minPunkt.y()); //!!
 //		System.out.println("tempgoal: " + tempGoal.x()+","+tempGoal.y());
 //		System.out.println("tempgoal: " + tempGoal2.x()+","+tempGoal2.y());
 		//################# Calculate corners ########################
@@ -144,7 +144,7 @@ public class PrimaryController {
 	
 				
 		//tjekker om forhindringen er imellem robot og bold,mål,temppoint etc.
-		if(route.blockingObstruction(roboBagPunkt, minPunkt) || route.blockingObstruction(roboBagPunkt, tempPoint)/*|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)*/||movingAround != 0){
+		if(route.blockingObstruction(roboBagPunkt, minPunkt)/*!! || route.blockingObstruction(roboBagPunkt, tempPoint)|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)||movingAround != 0*/){
 			System.out.println("trying to move around because true");
 			System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
 			findWayAround(calliData, dist, pitch.getMidOfObs().x(), pitch.getMidOfObs().y());
@@ -314,7 +314,7 @@ public class PrimaryController {
 	public void send(GUIInfo calliData) {
 		int Case;
 		int i;
-		int angle = Math.round(Float.parseFloat(""+ calliData.getTurnAngle()));// *
+		int angle = Math.round(calliData.getTurnAngle());// *
 		System.out.println("TurnAngle = " + calliData.getTurnAngle());
 		try {
 			if (Math.abs(angle) < 250) {
