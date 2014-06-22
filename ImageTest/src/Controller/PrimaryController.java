@@ -6,10 +6,6 @@ import java.util.ArrayList;
 
 import javax.print.attribute.standard.Destination;
 
-
-
-
-
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
