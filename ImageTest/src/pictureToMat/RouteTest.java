@@ -168,7 +168,7 @@ public class RouteTest {
 			
 			if(insideRect(westCollition, roboBagPunkt, minPunkt) || insideRect(eastCollition, roboBagPunkt, minPunkt))
 			{
-				System.out.println("Returning true");
+				System.out.println("Obstacle in the way");
 				return true;
 			}
 		}
