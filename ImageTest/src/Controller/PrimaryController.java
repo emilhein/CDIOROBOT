@@ -220,7 +220,7 @@ public class PrimaryController {
 		if(toGoal == 0){
 			toGoal = 1;
 			goalA = pitch.getGoalA();
-			minPunkt.x(goalA.x()-200);
+			minPunkt.x(goalA.x()-(int)(20*ppcm));
 			minPunkt.y(goalA.y());
 			System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
 			System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
@@ -231,7 +231,7 @@ public class PrimaryController {
 			minIsTemp = true;
 		} else {
 			toGoal = 2;
-			minPunkt.x(goalA.x() - 100);
+			minPunkt.x(goalA.x() - (int)(10*ppcm));
 			minPunkt.y(goalA.y());
 			angleCal(calliData, minPunkt);
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+6 * ppcm));
