@@ -89,7 +89,7 @@ public class Pitch {
 	}
 	
 	public CvPoint getMidOfObs() {
-		return midOfImg;
+		return midOfObs;
 	}
 
 	public CvPoint getMiner1() {
