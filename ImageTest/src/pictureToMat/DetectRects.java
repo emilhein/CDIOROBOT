@@ -124,6 +124,8 @@ public class DetectRects {
     	            p2.y(sq.y()+sq.height());
     	        }
     	    }
+    	    
+    	    
 
     	    BufferedImage buffImg = ImageIO.read(new File("billed0.png"));
         	IplImage edge = IplImage.createFrom(buffImg);
@@ -145,6 +147,9 @@ public class DetectRects {
             p1.y(innerRect.y());
             p2.y(innerRect.y()+innerRect.height());
     	    
+           
+            
+            
     	    cvRectangle(edge, p1,p2, CV_RGB(255, 0, 0), 2, 8, 0);
     	    
     	    CvPoint goalA = new CvPoint(innerRect.x() + innerRect.width(), innerRect.y() + (innerRect.height()/2));
@@ -176,6 +181,10 @@ public class DetectRects {
     	            cvRectangle(edge, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
     	        }
     	    }
+    	    obstruction.x(703);
+    	    obstruction.y(349);
+    	    obstruction.width(138);
+    	    obstruction.height(138);
     	    
         	cvSaveImage("edge.png", edge);
         	

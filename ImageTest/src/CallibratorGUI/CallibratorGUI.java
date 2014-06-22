@@ -326,7 +326,7 @@ public class CallibratorGUI {
 					control.start();						
 					first = false;
 				}
-				while(true){
+				//while(true){
 				info = control.loopRound(info,0);
 				
 				pane.repaint();
@@ -410,7 +410,7 @@ public class CallibratorGUI {
 				
 				frame1.setVisible(true);
 
-			}
+			//}
 			}
 		});
 
