@@ -45,7 +45,8 @@ public class PrimaryController {
 	private boolean minIsTemp = false;
 	private ArrayList<Float> ballCoor = new ArrayList<Float>();
 	private int NGrabs = 0;
-	
+	int middelX;
+	int middelY;
 	
 	public PrimaryController(DetectRects findEdge) {
 		this.findEdge = findEdge;
@@ -338,6 +339,13 @@ public class PrimaryController {
 				Thread.sleep(700);
 			}
 			angle = Math.abs(angle);
+			if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)||(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)||(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)||(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)){
+				if(angle > 60){
+					angle += 180;
+					Case = 11;
+				}
+			}
+			
 			i = angle;
 			dosSend(Case, i);
 
