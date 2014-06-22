@@ -406,14 +406,12 @@ public class PrimaryController {
 					Case = 12;
 				angle = Math.abs(angle);
 				i = angle;
-				turnBeforeGrab(calliData, angle);
 
 				dosSend(Case, i);
 				Thread.sleep(700);
 			}
 			angle = Math.abs(angle);
 			i = angle;
-			turnBeforeGrab(calliData, angle);
 
 			dosSend(Case, i);
 
