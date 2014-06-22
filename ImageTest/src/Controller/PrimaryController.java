@@ -243,8 +243,8 @@ public class PrimaryController {
 	private void findWayAround(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
 		if(/*movingAround == 3||*/(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)){
 			System.out.println("robo near corner 1, moving around cross");
-			tempPoint = new CvPoint (pitch.getNorth().x(),pitch.getNorth().y());
-			aroundCross(calliData, dist, tempPoint);
+			minPunkt = new CvPoint (pitch.getNorth().x(),pitch.getNorth().y()); //!!
+			aroundCross(calliData, dist, minPunkt);
 //			if(movingAround ==3)movingAround =0;
 //			else movingAround = 1;
 		}
