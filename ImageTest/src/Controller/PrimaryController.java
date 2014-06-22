@@ -491,6 +491,5 @@ public class PrimaryController {
 		roboBagPunkt.y(tempPoint.y()+diffY);
 		System.out.println("front " + roboFrontPunkt.x() + " " + roboFrontPunkt.y());
 		System.out.println("bag " + roboBagPunkt.x() + " " + roboBagPunkt.y());
-
 	}
 }
