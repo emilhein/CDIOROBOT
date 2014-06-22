@@ -119,10 +119,10 @@ public class BallMethod {
 		{
 			for(int x = obstruction.x(); x < obstruction.x() + obstruction.width(); x++)
 			{
-				if((obstruction.x() + 8.4*ppcm < x && x < obstruction.x() + 11.6*ppcm) || (obstruction.y() + 8.4*ppcm < y && y < obstruction.y() + 11.6*ppcm))
-				{
+//				if((obstruction.x() + 8.4*ppcm < x && x < obstruction.x() + 11.6*ppcm) || (obstruction.y() + 8.4*ppcm < y && y < obstruction.y() + 11.6*ppcm))
+//				{
 					pic0.put(y, x, 0, 0, 0);
-				}
+				//}
 			}
 		}
 		

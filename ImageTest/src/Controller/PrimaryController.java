@@ -76,7 +76,7 @@ public class PrimaryController {
 
 		CalcDist dist = new CalcDist();
 
-		System.out.println("temppoint: " + minPunkt.x()+","+minPunkt.y());
+//		System.out.println("temppoint: " + minPunkt.x()+","+minPunkt.y());
 //		System.out.println("tempgoal: " + tempGoal.x()+","+tempGoal.y());
 //		System.out.println("tempgoal: " + tempGoal2.x()+","+tempGoal2.y());
 		//################# Calculate corners ########################
@@ -102,6 +102,8 @@ public class PrimaryController {
 			balls.eliminateObstruction(); // tegner over forhindring, så bolde ikke findes der
 			balls.findCircle(calliData.getIntJlcircleMinRadius(),calliData.getIntJlcircleMaxRadius(),calliData.getIntJlcircleDP(), calliData.getIntJlcircleDist(),calliData.getIntJlcirclePar1(), calliData.getIntJlcirclePar2(),"balls", false);
 			ballCoor = balls.getBallCoordi();
+			
+			
 		}
 		System.out.println("minIsTemp: " + minIsTemp);
 		System.out.println("NGrabs: " + NGrabs);
@@ -131,23 +133,7 @@ public class PrimaryController {
 		}
 
 		if(!minIsTemp && NGrabs != 3){
-			System.out.println("Coordi lenght: " + ballCoor.size());
-			for (int i = 0; i < ballCoor.size()-3; i=i+3) {
-				if (Math.round(ballCoor.get(i)) >= pitch.getObstruction().x()
-					&& Math.round(ballCoor.get(i)) <= pitch.getObstruction().x()+ pitch.getObstruction().width()
-					&& Math.round(ballCoor.get(i+1)) >= pitch.getObstruction().y()
-					&& Math.round(ballCoor.get(i+1)) <= pitch.getObstruction().y()+ pitch.getObstruction().height()) { // fjerne blode i krydset
-					
-					System.out.println("balls in the middle:" + i);
-					ballCoor.remove(i);
-					ballCoor.remove(i+1);
-					ballCoor.remove(i+2);
-				}
-			}
 			
-			
-			
-			System.out.println("Coordi lenght after: " + ballCoor.size());
 			minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 			System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
