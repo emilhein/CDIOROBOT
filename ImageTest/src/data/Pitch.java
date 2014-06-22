@@ -149,12 +149,12 @@ public class Pitch {
 	    
 	    findMiners();
 	    findMajors();
-	    
+	    /*
 	    System.out.println("miner1 : " + miner1.x() +"," + miner1.y());
 	    System.out.println("miner2 : " + miner2.x() +"," + miner2.y());
 	    System.out.println("miner3 : " + miner3.x() +"," + miner3.y());
 	    System.out.println("miner4 : " + miner4.x() +"," + miner4.y());
-	    /*
+	    
 	    System.out.println("North : " + north.x() +"," + north.y());
 	    System.out.println("South : " + south.x() +"," + south.y());
 	    System.out.println("West : " + west.x() +"," + west.y());
