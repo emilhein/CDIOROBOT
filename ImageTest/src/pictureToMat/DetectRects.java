@@ -181,11 +181,12 @@ public class DetectRects {
     	            cvRectangle(edge, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
     	        }
     	    }
+    	    /* HARDCODED KORS
     	    obstruction.x(703);
     	    obstruction.y(349);
     	    obstruction.width(138);
     	    obstruction.height(138);
-    	    
+    	    */
         	cvSaveImage("edge.png", edge);
         	
         	return new Pitch(pixPerCm, innerRect, obstruction);

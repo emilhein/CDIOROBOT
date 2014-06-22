@@ -266,7 +266,7 @@ public class PrimaryController {
 			angleCal(calliData, minPunkt);
 			//System.out.println("ppcm: " + ppcm);
 			//System.out.println("dist =:=  "+ dist.Calcdist(roboBagPunkt, minPunkt));
-			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+0 * ppcm); // 26 normalt
+			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm); // 26 normalt
 			minIsTemp = true;
 		} else {
 			toGoal = 2;
@@ -275,7 +275,7 @@ public class PrimaryController {
 			minPunkt.x(pitch.getGoalA().x() - (int)(35*ppcm));
 			minPunkt.y(pitch.getGoalA().y());
 			angleCal(calliData, minPunkt);
-			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+6 * ppcm));
+			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm));
 			minIsTemp = true;
 		}
 
@@ -339,7 +339,7 @@ public class PrimaryController {
 		//send(calliData); // kører til første punkt
 		else{
 		angleCal(calliData, minPunkt);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)-8*ppcm);
+		route.setMinLength((float) (dist.Calcdist(roboBagPunkt, minPunkt)-3.5*ppcm));
 		minIsTemp = false;
 		backMove = 1;
 		System.out.println("IN SECOND TEMPPOINT::::............................_________");
@@ -349,7 +349,7 @@ public class PrimaryController {
 	public void tempCalculater2(GUIInfo calliData, CalcDist dist) {
 		if(!minIsTemp){
 		angleCal(calliData, minPunkt);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt));
+		route.setMinLength((dist.Calcdist(roboBagPunkt, minPunkt))+2*ppcm);
 		minIsTemp = true; //betyder den skal ikke grappe
 		System.out.println("IN FIRST TEMPpoint in calc22222:::::::::::::::::::::::::::");
 //		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
@@ -357,7 +357,7 @@ public class PrimaryController {
 		//send(calliData); // kører til første punkt
 		else{
 		angleCal(calliData, minPunkt);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)-10*ppcm);
+		route.setMinLength(0/*dist.Calcdist(roboBagPunkt, minPunkt)-11*ppcm*/);
 		minIsTemp = false;
 		backMove = 1;
 		System.out.println("IN SECOND TEMPPOINT in calc22222::::............................_________");
@@ -392,7 +392,7 @@ public class PrimaryController {
 		
 		System.out.println("TurnAngle = " + calliData.getTurnAngle());
 		try {
-
+	
 			if (Math.abs(angle) < 250) {
 				if (angle > 0) // vælger retning der skal drejes
 					Case = 21;
@@ -425,9 +425,11 @@ public class PrimaryController {
 			int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm())); // længde konvertering
 
 			System.out.println("dist = " + distance);
-			if(!minIsTemp){
+			if(!minIsTemp && backMove == 0){
 				distance -= 6 * ppcm; // for at lande foran bolden
+				System.out.println("dist after minus = " + distance);
 			}
+			
 			Thread.sleep(600);
 			Case = 81;
 			i = distance / 10;
@@ -435,6 +437,8 @@ public class PrimaryController {
 
 			Thread.sleep(Math.abs((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose()))));
 
+			
+			
 			if (toGoal == 0 && !minIsTemp) {
 				turnBeforeGrab(calliData, angle);
 					// samler bold op
