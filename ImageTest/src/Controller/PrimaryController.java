@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 
+
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
@@ -180,11 +181,15 @@ public class PrimaryController {
 			tempPoint = new CvPoint(minPunkt.x(),(minPunkt.y()-(int)(30*ppcm)));
 			tempCalculater(calliData, dist, tempPoint);
 		}
-		 else if (minPunkt.y() > corner1.y() + (int)(6 * ppcm)	&& minPunkt.y() < corner3.y() - (int)(6 * ppcm)	&& minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (int)(9 * ppcm)) 
+		 else if (minPunkt.y() > corner1.y() + (int)(6 * ppcm) && minPunkt.y() < corner3.y() - (int)(6 * ppcm) && minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (int)(9 * ppcm)&& minPunkt.y() > goalA.y()+ (int)(3 * ppcm) && minPunkt.y() < goalA.y()- (int)(3 * ppcm)) 
 		{
 			System.out.println("side C");
-		} else if (minPunkt.y() > corner2.y() + (int) (6 * ppcm)&& minPunkt.y() < corner4.y() - (int) (6 * ppcm)&& minPunkt.x() < corner2.x()&& minPunkt.x() > corner2.x() - (int) (9 * ppcm)) {
+			tempPoint = new CvPoint(minPunkt.x()+(int)(30*ppcm),(minPunkt.y()));
+			tempCalculater(calliData, dist, tempPoint);
+		} else if (minPunkt.y() > corner2.y() + (int) (6 * ppcm)&& minPunkt.y() < corner4.y() - (int) (6 * ppcm)&& minPunkt.x() < corner2.x()&& minPunkt.x() > corner2.x() - (int) (9 * ppcm)/*&& minPunkt.y() > goalA.y()+ (int)(3 * ppcm) && minPunkt.y() < goalA.y()- (int)(3 * ppcm)*/) {
 			System.out.println("side D");
+			tempPoint = new CvPoint(minPunkt.x()-(int)(30*ppcm),(minPunkt.y()));
+			tempCalculater(calliData, dist, tempPoint);
 		}	
 		
 		// ***************************** Corner*******************************
@@ -393,8 +398,7 @@ public class PrimaryController {
 		}
 	}
 
-	private void turnBeforeGrab(GUIInfo calliData, int angle)
-			throws IOException, InterruptedException {
+	private void turnBeforeGrab(GUIInfo calliData, int angle)throws IOException, InterruptedException {
 		int Case;
 		int i;
 		do {
@@ -435,6 +439,21 @@ public class PrimaryController {
 		angle = Math.abs(angle);
 		i = angle;
 		dosSend(Case, i);
+		
+		CalcDist dist = new CalcDist();
+		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)/*+6*ppcm*/);
+		int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm())); // længde konvertering
+		
+		System.out.println("dist = " + distance);
+		if(!minIsTemp){
+			distance -= 6 * ppcm; // for at lande foran bolden
+		}
+		Thread.sleep(600);
+		Case = 81;
+		i = distance / 10;
+		dosSend(Case, i);
+
+		Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
 
 		Thread.sleep(1200);
 	}
