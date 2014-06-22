@@ -439,6 +439,21 @@ public class PrimaryController {
 		angle = Math.abs(angle);
 		i = angle;
 		dosSend(Case, i);
+		
+		CalcDist dist = new CalcDist();
+		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)/*+6*ppcm*/);
+		int distance = (int) ((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm())); // længde konvertering
+		
+		System.out.println("dist = " + distance);
+		if(!minIsTemp){
+			distance -= 6 * ppcm; // for at lande foran bolden
+		}
+		Thread.sleep(600);
+		Case = 81;
+		i = distance / 10;
+		dosSend(Case, i);
+
+		Thread.sleep((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())));
 
 		Thread.sleep(1200);
 	}
