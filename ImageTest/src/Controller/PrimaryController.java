@@ -3,7 +3,6 @@ package Controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
 import javax.print.attribute.standard.Destination;
 
 import lejos.pc.comm.NXTComm;
@@ -58,7 +57,7 @@ public class PrimaryController {
 
 	public void start() {
 		long timePicStart = System.currentTimeMillis();
-		takepic.takePicture();
+		//takepic.takePicture();
 		long timePicSlut = System.currentTimeMillis();
 		System.out.println("take picture tid: " + (timePicSlut-timePicStart));
 
@@ -86,7 +85,7 @@ public class PrimaryController {
 
 		//################## Take picture until robot is found #########
 		do {
-			takepic.takePicture();	
+			//takepic.takePicture();	
 			// ################## Cut image ####################################
 			pitch.cutOrigImg();
 			pitch.adjustToCut(xFactorOfCut, yFactorOfCut);
@@ -132,6 +131,23 @@ public class PrimaryController {
 		}
 
 		if(!minIsTemp && NGrabs != 3){
+			System.out.println("Coordi lenght: " + ballCoor.size());
+			for (int i = 0; i < ballCoor.size()-3; i=i+3) {
+				if (Math.round(ballCoor.get(i)) >= pitch.getObstruction().x()
+					&& Math.round(ballCoor.get(i)) <= pitch.getObstruction().x()+ pitch.getObstruction().width()
+					&& Math.round(ballCoor.get(i+1)) >= pitch.getObstruction().y()
+					&& Math.round(ballCoor.get(i+1)) <= pitch.getObstruction().y()+ pitch.getObstruction().height()) { // fjerne blode i krydset
+					
+					System.out.println("balls in the middle:" + i);
+					ballCoor.remove(i);
+					ballCoor.remove(i+1);
+					ballCoor.remove(i+2);
+				}
+			}
+			
+			
+			
+			System.out.println("Coordi lenght after: " + ballCoor.size());
 			minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 			System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
 
@@ -421,7 +437,7 @@ public class PrimaryController {
 		int Case;
 		int i;
 		do {
-			takepic.takePicture();	
+			//takepic.takePicture();	
 			// ################## Cut image ####################################
 			pitch.cutOrigImg();
 			pitch.adjustToCut(2, 4);

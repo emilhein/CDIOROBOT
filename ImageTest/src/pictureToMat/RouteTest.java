@@ -46,9 +46,10 @@ public class RouteTest {
 		float ppcm = pitch.getPixPerCm();
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
+		
 		Mat frame = Highgui.imread("billed0.png"); /// SKal bruges til at lave et blank lærred..
-
+		
+		
 		for (int c = 0; c < Coordi.size(); c = c + 3)
 		{
 
@@ -63,8 +64,10 @@ public class RouteTest {
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
 			xCoor.add(Math.round(Coordi.get(c)));
-			yCoor.add(Math.round(Coordi.get(c + 1)));
+			yCoor.add(Math.round(Coordi.get(c + 1)));	
 		}
+		
+		
 
 		//Dette for-loop finder det tætteste ppunkt på robotens front
 		try {
