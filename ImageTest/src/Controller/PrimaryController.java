@@ -180,7 +180,7 @@ public class PrimaryController {
 		{
 			if(!minIsTemp){
 			minPunkt.x(minPunkt.x());
-			minPunkt.y(minPunkt.y()+(int)(23*ppcm)); // 30
+			minPunkt.y(minPunkt.y()+(int)(27.5*ppcm)); // 30
 			}
 			tempCalculater2(calliData, dist);
 			System.out.println("side A");
@@ -190,7 +190,7 @@ public class PrimaryController {
 			System.out.println("side B");
 			if(!minIsTemp){
 			minPunkt.x(minPunkt.x());
-			minPunkt.y(minPunkt.y()-(int)(23*ppcm));
+			minPunkt.y(minPunkt.y()-(int)(27.5*ppcm));
 			}
 			tempCalculater2(calliData, dist);
 		}
@@ -198,15 +198,15 @@ public class PrimaryController {
 		{
 			System.out.println("side C");
 			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()+(int)(23*ppcm));
+			minPunkt.x(minPunkt.x()+(int)(27.5*ppcm));
 			minPunkt.y(minPunkt.y());
 			}
 			tempCalculater2(calliData, dist);
 			
-		} else if (minPunkt.y() > corner2.y() + (int) (20 * ppcm)&& minPunkt.y() < corner4.y() - (int) (20 * ppcm)&& minPunkt.x() < corner2.x()&& minPunkt.x() > corner2.x() - (int) (10 * ppcm)&& minPunkt.y() > pitch.getGoalA().y()+ (int)(2 * ppcm) && minPunkt.y() < pitch.getGoalA().y()- (int)(2 * ppcm)) {
+		} else if (minPunkt.y() > corner2.y() + (int) (20 * ppcm)&& minPunkt.y() < corner4.y() - (int) (20 * ppcm)&& minPunkt.x() < corner2.x()&& minPunkt.x() > corner2.x() - (int) (10 * ppcm)/*&& minPunkt.y() > pitch.getGoalA().y()+ (int)(2 * ppcm) && minPunkt.y() < pitch.getGoalA().y()- (int)(2 * ppcm)*/) {
 			System.out.println("side D");
 			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()-(int)(23*ppcm));
+			minPunkt.x(minPunkt.x()-(int)(27.5*ppcm));
 			minPunkt.y(minPunkt.y());
 			}
 			tempCalculater2(calliData, dist);
@@ -215,32 +215,32 @@ public class PrimaryController {
 		// ***************************** Corner*******************************
 		else if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (20*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (20*intppcm)){ 
 			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()+((int)(20*intppcm)));
-			minPunkt.y(minPunkt.y()+((int)(20*intppcm)));
+			minPunkt.x(minPunkt.x()+((int)(16*intppcm)));
+			minPunkt.y(minPunkt.y()+((int)(16*intppcm)));
 			}
 			tempCalculater(calliData, dist);
 			System.out.println("corner1"); 
 		} 
 		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (20*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(20*intppcm)){ 
 			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()-((int)(20*intppcm)));
-			minPunkt.y(minPunkt.y()+((int)(20*intppcm)));
+			minPunkt.x(minPunkt.x()-((int)(16*intppcm)));
+			minPunkt.y(minPunkt.y()+((int)(16*intppcm)));
 			}
 			tempCalculater(calliData, dist);
 			System.out.println("corner2"); 
 		} 
 		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (20*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(20*intppcm)){ 
 			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()+((int)(20*intppcm)));
-			minPunkt.y(minPunkt.y()-((int)(20*intppcm)));
+			minPunkt.x(minPunkt.x()+((int)(16*intppcm)));
+			minPunkt.y(minPunkt.y()-((int)(16*intppcm)));
 			}
 			tempCalculater(calliData, dist);
 			System.out.println("corner3"); 
 		} 
 		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (20*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (20*intppcm)){ 
 			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()-((int)(20*intppcm)));
-			minPunkt.y(minPunkt.y()-((int)(20*intppcm)));
+			minPunkt.x(minPunkt.x()-((int)(16*intppcm)));
+			minPunkt.y(minPunkt.y()-((int)(16*intppcm)));
 			}
 			tempCalculater(calliData, dist);
 			System.out.println("corner4");
@@ -272,7 +272,7 @@ public class PrimaryController {
 			toGoal = 2;
 			System.out.println(" ____________________________________Driving to second point");
 
-			minPunkt.x(pitch.getGoalA().x() - (int)(35*ppcm));
+			minPunkt.x(pitch.getGoalA().x() - (int)(33*ppcm));
 			minPunkt.y(pitch.getGoalA().y());
 			angleCal(calliData, minPunkt);
 			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm));
@@ -339,7 +339,7 @@ public class PrimaryController {
 		//send(calliData); // kører til første punkt
 		else{
 		angleCal(calliData, minPunkt);
-		route.setMinLength((float) (dist.Calcdist(roboBagPunkt, minPunkt)-3.5*ppcm));
+		route.setMinLength((float) (0/*dist.Calcdist(roboBagPunkt, minPunkt)-4*ppcm*/));
 		minIsTemp = false;
 		backMove = 1;
 		System.out.println("IN SECOND TEMPPOINT::::............................_________");
