@@ -172,47 +172,51 @@ public class PrimaryController {
 			CvPoint corner1, CvPoint corner2, CvPoint corner3, CvPoint corner4) {
 		if (minPunkt.x() > corner1.x() + (int)(6 *ppcm)&& minPunkt.x() < corner2.x() - (int)(6 * ppcm)&& minPunkt.y() > corner1.y()	&& minPunkt.y() < corner1.y() + (int)(9 * ppcm)) 
 		{
-			tempPoint = new CvPoint(minPunkt.x(),(minPunkt.y()+(int)(30*ppcm)));
-			tempCalculater(calliData, dist, tempPoint);
+			minPunkt = new CvPoint(minPunkt.x(),(minPunkt.y()+(int)(30*ppcm)));
+			tempCalculater(calliData, dist, minPunkt);
 			System.out.println("side A");
 			
 		} else if (minPunkt.x() > corner3.x() + (int)(6 * ppcm)	&& minPunkt.x() < corner4.x() - (int)(6 * ppcm) && minPunkt.y() < corner3.y() && minPunkt.y() > corner3.y() - (int)(9 * ppcm)) 
 		{
 			System.out.println("side B");
-			tempPoint = new CvPoint(minPunkt.x(),(minPunkt.y()-(int)(30*ppcm)));
-			tempCalculater(calliData, dist, tempPoint);
+			minPunkt.y(minPunkt.y()-(int)(30*ppcm));
+			tempCalculater(calliData, dist, minPunkt);
 		}
 		 else if (minPunkt.y() > corner1.y() + (int)(6 * ppcm) && minPunkt.y() < corner3.y() - (int)(6 * ppcm) && minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (int)(9 * ppcm)&& minPunkt.y() > goalA.y()+ (int)(3 * ppcm) && minPunkt.y() < goalA.y()- (int)(3 * ppcm)) 
 		{
 			System.out.println("side C");
-			tempPoint = new CvPoint(minPunkt.x()+(int)(30*ppcm),(minPunkt.y()));
-			tempCalculater(calliData, dist, tempPoint);
+			minPunkt.x(minPunkt.x()+(int)(30*ppcm));
+			tempCalculater(calliData, dist, minPunkt);
 		} else if (minPunkt.y() > corner2.y() + (int) (6 * ppcm)&& minPunkt.y() < corner4.y() - (int) (6 * ppcm)&& minPunkt.x() < corner2.x()&& minPunkt.x() > corner2.x() - (int) (9 * ppcm)/*&& minPunkt.y() > goalA.y()+ (int)(3 * ppcm) && minPunkt.y() < goalA.y()- (int)(3 * ppcm)*/) {
 			System.out.println("side D");
-			tempPoint = new CvPoint(minPunkt.x()-(int)(30*ppcm),(minPunkt.y()));
-			tempCalculater(calliData, dist, tempPoint);
+			minPunkt.x(minPunkt.x()-(int)(30*ppcm));
+			tempCalculater(calliData, dist, minPunkt);
 		}	
 		
 		// ***************************** Corner*******************************
 		else if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (6*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (6*intppcm)){ 
-			tempPoint = new CvPoint(minPunkt.x()+(20*intppcm),minPunkt.y()+(20*intppcm));
+			minPunkt.x(minPunkt.x()+(20*intppcm));
+			minPunkt.y(minPunkt.y()+(20*intppcm));
 			System.out.println("corner1"); 
-			tempCalculater(calliData, dist, tempPoint);
+			tempCalculater(calliData, dist, minPunkt);
 			} 
 		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (6*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(6*intppcm)){ 
-			tempPoint = new CvPoint(minPunkt.x()-(20*intppcm),minPunkt.y()+(20*intppcm));
+			minPunkt.x(minPunkt.x()-(20*intppcm));
+			minPunkt.y(minPunkt.y()+(20*intppcm));
 			System.out.println("corner2"); 
-			tempCalculater(calliData, dist, tempPoint);
+			tempCalculater(calliData, dist, minPunkt);
 			} 
 		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (10*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(6*intppcm)){ 
-			tempPoint = new CvPoint(minPunkt.x()+(20*intppcm),minPunkt.y()-(20*intppcm));
+			minPunkt.x(minPunkt.x()+(20*intppcm));
+			minPunkt.y(minPunkt.y()-(20*intppcm));
 			System.out.println("corner3"); 
-			tempCalculater(calliData, dist, tempPoint);
+			tempCalculater(calliData, dist, minPunkt);
 			} 
 		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (6*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (6*intppcm)){ 
-			tempPoint = new CvPoint(minPunkt.x()-(20*intppcm),minPunkt.y()-(20*intppcm));
+			minPunkt.x(minPunkt.x()-(20*intppcm));
+			minPunkt.y(minPunkt.y()-(20*intppcm));
 			System.out.println("corner4");
-			tempCalculater(calliData, dist, tempPoint);
+			tempCalculater(calliData, dist, minPunkt);
 			} 
 		else {
 			backMove = 0;
@@ -255,22 +259,22 @@ public class PrimaryController {
 		}
 		else if(/*movingAround == 1||*/(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)){
 			System.out.println("robo near corner 2, moving around cross");
-			tempPoint = new CvPoint (pitch.getEast().x(),pitch.getEast().y());
-			aroundCross(calliData, dist, tempPoint);
+			minPunkt = new CvPoint (pitch.getEast().x(),pitch.getEast().y());
+			aroundCross(calliData, dist, minPunkt);
 //			if(movingAround ==1)movingAround =0;
 //			else movingAround = 2;
 		}
 		else if(/*movingAround == 4||*/(roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)){
 			System.out.println("robo near corner 3, moving around cross");
-			tempPoint = new CvPoint (pitch.getWest().x(),pitch.getWest().y());
-			aroundCross(calliData, dist, tempPoint);
+			minPunkt = new CvPoint (pitch.getWest().x(),pitch.getWest().y());
+			aroundCross(calliData, dist, minPunkt);
 //			if(movingAround ==4)movingAround =0;
 //			else movingAround = 3;
 		}
 		else if(/*movingAround ==2||*/(roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)){
 			System.out.println("robo near corner 4, moving around cross");
-			tempPoint = new CvPoint (pitch.getSouth().x(),pitch.getSouth().y());
-			aroundCross(calliData, dist, tempPoint);
+			minPunkt = new CvPoint (pitch.getSouth().x(),pitch.getSouth().y());
+			aroundCross(calliData, dist, minPunkt);
 //			if(movingAround ==2)movingAround =0;
 //			else movingAround = 4;
 		}
