@@ -20,8 +20,8 @@ public class MainTest {
 		
 		RouteTest route = new RouteTest(pitch);
 		
-		CvPoint minPunkt = new CvPoint(229,400);
-		CvPoint roboBagPunkt = new CvPoint(1004,425);	
+		CvPoint minPunkt = new CvPoint(298,638);
+		CvPoint roboBagPunkt = new CvPoint(987,302);	
 		
 		System.out.println(route.blockingObstruction(roboBagPunkt, minPunkt));
 	}
