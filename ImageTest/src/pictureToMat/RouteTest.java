@@ -76,7 +76,8 @@ public class RouteTest {
 				float tempLength = 0;	
 				CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
 				tempLength = dist.Calcdist(roboBagPunkt, punkt2);
-
+			if(punkt2.x()>= pitch.getCorner1().x() && punkt2.x()<= pitch.getCorner4().x() &&
+					punkt2.y()>= pitch.getCorner1().y() && punkt2.y()<= pitch.getCorner4().y() 	){
 				if ((tempLength < minLength && curBallEasyer(minPunkt, punkt2)) || i == 0)
 				{
 					minLength = tempLength;
@@ -86,6 +87,7 @@ public class RouteTest {
 				}
 
 			}
+		}
 		}
 		catch (Exception e)
 		{

@@ -164,7 +164,7 @@ public class Pitch {
 	
 	public void findMiners() {
 
-		int margin = (int)(8*pixPerCm);
+		int margin = (int)(10*pixPerCm);
 
 		miner1 = new CvPoint(obstruction.x()-margin, obstruction.y()-margin);
 		miner2 = new CvPoint(obstruction.x()+obstruction.width()+margin, obstruction.y()-margin);
@@ -173,8 +173,8 @@ public class Pitch {
 	}
 
 	public void findMajors() {
-		int marginX = ((int)(17*pixPerCm));
-		int marginY = ((int)(17*pixPerCm));
+		int marginX = ((int)(15*pixPerCm));
+		int marginY = ((int)(15*pixPerCm));
 		
 		north = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner1.y()-marginY)); 
 		south = new CvPoint (miner1.x()+((miner2.x()-miner1.x())/2),(miner4.y()+marginY));
@@ -185,7 +185,7 @@ public class Pitch {
 	public void cutOrigImg() {
 		
 		Mat pic0 = Highgui.imread("billed0.png");
-		pic0 = pic0.submat(origCorner1.y()-(int)(pixPerCm*4), origCorner4.y()+(int)(pixPerCm*4), origCorner1.x()-(int)(pixPerCm*2), origCorner4.x()+(int)(pixPerCm*2));
+		pic0 = pic0.submat(origCorner1.y()-(int)(pixPerCm*8), origCorner4.y()+(int)(pixPerCm*8), origCorner1.x()-(int)(pixPerCm*8), origCorner4.x()+(int)(pixPerCm*8));
 		
 		Highgui.imwrite("billed0.png", pic0);
 	}
