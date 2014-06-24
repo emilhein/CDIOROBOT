@@ -8,11 +8,11 @@ import com.googlecode.javacv.OpenCVFrameGrabber;
 import static com.googlecode.javacv.cpp.opencv_core.cvFlip;
 import static com.googlecode.javacv.cpp.opencv_highgui.cvSaveImage;
 
-public class NewTakepicture {
+public class Takepicture {
 	private FrameGrabber grabber;
 	
 	
-	public NewTakepicture() {
+	public Takepicture() {
 		grabber = new OpenCVFrameGrabber("");
 		grabber.setImageWidth(1600);
 		grabber.setImageHeight(900);
