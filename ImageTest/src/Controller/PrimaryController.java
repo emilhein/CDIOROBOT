@@ -32,7 +32,7 @@ public class PrimaryController {
 	private CvPoint oldRoboFrontPunkt = new CvPoint();
 
 
-	private int isTemp = 0;
+
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
@@ -77,8 +77,8 @@ public class PrimaryController {
 		route = new RouteTest(pitch);
 	}
 	public GUIInfo loopRound(GUIInfo calliData, int deliverButtom) {
-		int xFactorOfCut = 8;
-		int yFactorOfCut = 8;
+		int xFactorOfCut = 2;
+		int yFactorOfCut = 4;
 		//tempPoint = new CvPoint();
 		CalcDist dist = new CalcDist();
 //		System.out.println("tempgoal: " + tempGoal.x()+","+tempGoal.y());
@@ -360,11 +360,10 @@ public class PrimaryController {
 	
 	
 	public void tempCalculater(GUIInfo calliData, CalcDist dist) {
-		if(isTemp==0){
+		if(!minIsTemp){
 		angleCal(calliData, minPunkt);
 		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+1*ppcm);
 		minIsTemp = true; //betyder den skal ikke grappe
-		isTemp = 1;
 		System.out.println("IN FIRST TEMPpoint:::::::::::::::::::::::::::");
 //		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 		}
@@ -373,18 +372,16 @@ public class PrimaryController {
 		angleCal(calliData, minPunkt);
 		route.setMinLength((float) (0/*dist.Calcdist(roboBagPunkt, minPunkt)-4*ppcm*/));
 		minIsTemp = false;
-		isTemp = 0;
 		backMove = 1;
 		System.out.println("IN SECOND TEMPPOINT::::............................_________");
 
 		}
 	}
 	public void tempCalculater2(GUIInfo calliData, CalcDist dist) {
-		if(isTemp==0){
+		if(!minIsTemp){
 		angleCal(calliData, minPunkt);
 		route.setMinLength((dist.Calcdist(roboBagPunkt, minPunkt))+2*ppcm);
 		minIsTemp = true; //betyder den skal ikke grappe
-		isTemp = 1;
 		System.out.println("IN FIRST TEMPpoint in calc22222:::::::::::::::::::::::::::");
 //		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 		}
@@ -393,7 +390,6 @@ public class PrimaryController {
 		angleCal(calliData, minPunkt);
 		route.setMinLength(0/*dist.Calcdist(roboBagPunkt, minPunkt)-11*ppcm*/);
 		minIsTemp = false;
-		isTemp = 0;
 		backMove = 1;
 		System.out.println("IN SECOND TEMPPOINT in calc22222::::............................_________");
 
@@ -455,13 +451,10 @@ public class PrimaryController {
 					Case = 12;
 				angle = Math.abs(angle);
 				
-					if ((roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt
-							.y() < pitch.getMidOfObs().y())
+					if ((roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt.y() < pitch.getMidOfObs().y())
 							|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt.y() < pitch.getMidOfObs().y())
-							|| (roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt
-									.y() > pitch.getMidOfObs().y())
-							|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt
-									.y() > pitch.getMidOfObs().y())) {
+							|| (roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt.y() > pitch.getMidOfObs().y())
+							|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt.y() > pitch.getMidOfObs().y())) {
 						if (angle > 60) {
 							angle = 360 - angle;
 							Case = 11;

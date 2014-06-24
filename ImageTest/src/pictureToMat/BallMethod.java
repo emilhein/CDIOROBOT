@@ -112,12 +112,12 @@ public class BallMethod {
 	public void eliminateObstruction()
 	{
 		CvRect obstruction = pitch.getObstruction();
-		float ppcm = pitch.getPixPerCm();
+		//float ppcm = pitch.getPixPerCm();
 		
 		Mat pic0 = Highgui.imread("pixToMat.png");
-		for(int y = obstruction.y(); y < obstruction.y() + obstruction.height(); y++)
+		for(int y = pitch.getMiner1().y(); y < pitch.getMiner4().y(); y++)
 		{
-			for(int x = obstruction.x(); x < obstruction.x() + obstruction.width(); x++)
+			for(int x = pitch.getMiner1().x(); x < pitch.getMiner4().x(); x++)
 			{
 //				if((obstruction.x() + 8.4*ppcm < x && x < obstruction.x() + 11.6*ppcm) || (obstruction.y() + 8.4*ppcm < y && y < obstruction.y() + 11.6*ppcm))
 //				{
