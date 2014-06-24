@@ -184,7 +184,7 @@ public class Pitch {
 	public void cutOrigImg() {
 		
 		Mat pic0 = Highgui.imread("billed0.png");
-		pic0 = pic0.submat(origCorner1.y()-(int)(pixPerCm*4), origCorner4.y()+(int)(pixPerCm*4), origCorner1.x()-(int)(pixPerCm*2), origCorner4.x()+(int)(pixPerCm*2));
+		pic0 = pic0.submat(origCorner1.y()-(int)(pixPerCm*8), origCorner4.y()+(int)(pixPerCm*8), origCorner1.x()-(int)(pixPerCm*8), origCorner4.x()+(int)(pixPerCm*8));
 		
 		Highgui.imwrite("billed0.png", pic0);
 	}

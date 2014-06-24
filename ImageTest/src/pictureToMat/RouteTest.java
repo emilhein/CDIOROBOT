@@ -63,8 +63,7 @@ public class RouteTest {
 				}
 			}
 			// lægger alle koordinater ind i en liste a x og en liste af y - her blot brugt de fiktive koordinater fra pakken Coordinates.
-			xCoor.add(Math.round(Coordi.get(c)));
-			yCoor.add(Math.round(Coordi.get(c + 1)));	
+  			yCoor.add(Math.round(Coordi.get(c + 1)));	
 		}
 		
 		
@@ -77,7 +76,7 @@ public class RouteTest {
 				CvPoint punkt2 = new CvPoint(xCoor.get(i), yCoor.get(i));
 				tempLength = dist.Calcdist(roboBagPunkt, punkt2);
 
-				if (tempLength < minLength)
+				if (tempLength < minLength && curBallEasyer(minPunkt, punkt2))
 				{
 					minLength = tempLength;
 					minPunkt = punkt2;
@@ -116,6 +115,27 @@ public class RouteTest {
 		return minPunkt;
 	}
 
+	public boolean curBallEasyer(CvPoint minPunkt, CvPoint currentPoint)
+	{
+		if(currentPoint.x() <= pitch.getCorner1().x() + 9*pitch.getPixPerCm() ||
+		   currentPoint.x() >= pitch.getCorner4().x() - 9*pitch.getPixPerCm() ||
+		   currentPoint.y() <= pitch.getCorner1().y() + 9*pitch.getPixPerCm() ||
+		   currentPoint.y() >= pitch.getCorner4().y() - 9*pitch.getPixPerCm())
+		{
+			return false;
+		}
+		else if(minPunkt.x() <= pitch.getCorner1().x() + 9*pitch.getPixPerCm() ||
+				minPunkt.x() >= pitch.getCorner4().x() - 9*pitch.getPixPerCm() ||
+				minPunkt.y() <= pitch.getCorner1().y() + 9*pitch.getPixPerCm() ||
+				minPunkt.y() >= pitch.getCorner4().y() - 9*pitch.getPixPerCm())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 
 	public float getMinLength() {
