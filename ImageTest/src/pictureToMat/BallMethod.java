@@ -243,15 +243,15 @@ public class BallMethod {
 	}
 
 	
-	public void changePerspective (Float PoV) {
+	public void changePerspective (Float PoV) { //udregner hvor robotten står, da kameraet kan se den lidt fra siden.
 		
 		CvPoint midpunkt = pitch.getMidOfImg();
-		
-		int diffXFront = midpunkt.x() - roboFrontPunkt.x();
+		//udregner afstanden fra kameraet
+		int diffXFront = midpunkt.x() - roboFrontPunkt.x();	
 		int diffYFront = midpunkt.y() - roboFrontPunkt.y();
 		int diffXBag = midpunkt.x() - roboBagPunkt.x();
 		int diffYBag = midpunkt.y() - roboBagPunkt.y();
-		
+		//ændre koordianterne for punkterne så de passe med hvor den faktisk er
 		roboFrontPunkt.x(roboFrontPunkt.x() + (int)(diffXFront * PoV));
 		roboFrontPunkt.y(roboFrontPunkt.y() + (int)(diffYFront * PoV));
 		roboBagPunkt.x(roboBagPunkt.x() + (int)(diffXBag * PoV));
@@ -260,7 +260,7 @@ public class BallMethod {
 	
 	
 	public void calculateRotationPoint()
-	{
+	{// udregner bagpunktet af robotten så det sidder over hjulene, hvorfra robotten roterer
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.42);
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.42);
 		roboBagPunkt.x(roboBagPunkt.x()+diffX);

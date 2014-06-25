@@ -51,14 +51,14 @@ public class PrimaryController {
 		this.findEdge = findEdge;
 		takepic = new Takepicture();
 
-		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
-		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");// robot nr 2
+		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");	//info til tilslutning af bluetooth
+		NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");		//robot nr 2
 
 		NXTConnector connt = new NXTConnector();
 		System.out.println("trying to connect");
-		connt.connectTo(nxtInfo, NXTComm.LCP);
-		System.out.println("connected"); // forbundet
-		dos = connt.getOutputStream();// åbner stream
+		connt.connectTo(nxtInfo, NXTComm.LCP);	// venter på forbinelse
+		System.out.println("connected"); 		// forbundet
+		dos = connt.getOutputStream();			// åbner stream
 	}
 
 	public void start() {
@@ -80,7 +80,7 @@ public class PrimaryController {
 		int xFactorOfCut = 2;
 		int yFactorOfCut = 4;
 		//tempPoint = new CvPoint();
-		CalcDist dist = new CalcDist();
+		CalcDist dist = new CalcDist(); // nyt objekt til udregning af længder
 //		System.out.println("tempgoal: " + tempGoal.x()+","+tempGoal.y());
 //		System.out.println("tempgoal: " + tempGoal2.x()+","+tempGoal2.y());
 		//################# Calculate corners ########################
@@ -115,9 +115,9 @@ public class PrimaryController {
 		System.out.println("NGrabs: " + NGrabs);
 		// ################### Nearest Ball ####################################
 		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
-		balls.calculateRotationPoint(); 
-		balls.changePerspective(calliData.getPoV());
-
+		balls.calculateRotationPoint(); //udregner robottens bagpunkt til at være over hjulene, hvor den roterer
+		balls.changePerspective(calliData.getPoV()); //udregner hvor robotten faktisk står, da kameraet kan se den fra siden
+		
 		oldRoboBagPunkt = roboBagPunkt;
 		oldRoboFrontPunkt = roboFrontPunkt;
 		
@@ -127,20 +127,20 @@ public class PrimaryController {
 
 		
 
-		if(NGrabs != 4){
+		if(NGrabs != 4){//hvis robotten ikke skal køre til mål
 			minPunkt = route.drawBallMap(ballCoor, roboBagPunkt, roboFrontPunkt); // tegner dem i testprogrammet
 			System.out.println("minpunkt = " + minPunkt.x() + " " + minPunkt.y());
-		} else if (NGrabs == 4){
+		} else if (NGrabs == 4){//hvis robotten skal køre til mål
 			minPunkt = pitch.getGoalA();
 		}
 		
 
 		//tjekker om forhindringen er imellem robot og bold,mål,temppoint etc.
 		if(route.blockingObstruction(roboBagPunkt, minPunkt)/*|| route.blockingObstruction(roboBagPunkt, tempGoal)|| route.blockingObstruction(roboBagPunkt, tempGoal2)*/){
-			System.out.println("trying to move around because true");
+			System.out.println("trying to move around cross, because true");
 			System.out.println("MIN___:..:_"+route.blockingObstruction(roboBagPunkt, minPunkt));
 
-			findWayAround(calliData, dist, pitch.getMidOfObs().x(), pitch.getMidOfObs().y());
+			findWayAround(calliData, dist, pitch.getMidOfObs().x(), pitch.getMidOfObs().y()); //logik for at køre rundt om kors
 			toGoal = 0;
 		}
 		else
@@ -157,110 +157,112 @@ public class PrimaryController {
 			*/
 			// ***************************** Avoid cross *******************************
 
-			edgeCheck(calliData, dist, pitch.getPixPerCm(), corner1, corner2, corner3,corner4); //
-			if(NGrabs == 4){	
+			edgeCheck(calliData, dist, pitch.getPixPerCm(), corner1, corner2, corner3,corner4); //Tjekker om boldene ligger i kant eller hjørne
+			if(NGrabs == 4){//hvis robotten skal køre til mål
 				// ***************************** Deliver balls *******************************
 				System.out.println("RoBOT HAS GRABBED 3 TIMES");
-				deliverBalls(calliData, dist); // pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
+				deliverBalls(calliData, dist); //logik for at køre til mål 
+				// pitch.getMidOfImg().x(), pitch.getMidOfImg().y()
 			}
 
 		}
 		
 		
 		if(route.blockingObstruction(roboBagPunkt, minPunkt)){
-			System.out.println("trying to move around because true");
+			System.out.println("trying to move around cross, because true");
 			System.out.println("MIN___:..:_"+route.blockingObstruction(roboBagPunkt, minPunkt));
 
-			findWayAround(calliData, dist, pitch.getMidOfObs().x(), pitch.getMidOfObs().y());
+			findWayAround(calliData, dist, pitch.getMidOfObs().x(), pitch.getMidOfObs().y()); //logik for at køre rundt om kors
 			toGoal = 0;
 		}
 		
-		whatToSend(calliData,0);
+		whatToSend(calliData,0); //metode til at sende til robot
 		return calliData;
 	}
 
 	public void edgeCheck(GUIInfo calliData, CalcDist dist, float intppcm,
 			CvPoint corner1, CvPoint corner2, CvPoint corner3, CvPoint corner4) {
 		
-		
+		// ***************************** Sides *******************************
 		if (minPunkt.x() > corner1.x() + (int)(20 *ppcm)&& minPunkt.x() < corner2.x() - (int)(20 * ppcm)&& minPunkt.y() > corner1.y()	&& minPunkt.y() < corner1.y() + (int)(10 * ppcm)) 
 		{
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x());
-			minPunkt.y(minPunkt.y()+(int)(25.5*ppcm)); // 30
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()); 						//sætter midlertidigt punkt lidt ude fra kanten
+			minPunkt.y(minPunkt.y()+(int)(25.5*ppcm));		// 30
 			}
-			tempCalculater2(calliData, dist);
+			tempCalculater2(calliData, dist); 				//logik for at køre til bold i kant
 			System.out.println("side A");
 
 		} else if (minPunkt.x() > corner3.x() + (int)(20 * ppcm)	&& minPunkt.x() < corner4.x() - (int)(20 * ppcm) && minPunkt.y() < corner3.y() && minPunkt.y() > corner3.y() - (int)(10 * ppcm)) 
 		{
 			System.out.println("side B");
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x());
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x());						//sætter midlertidigt punkt lidt ude fra kanten
 			minPunkt.y(minPunkt.y()-(int)(25.5*ppcm));
 			}
-			tempCalculater2(calliData, dist);
+			tempCalculater2(calliData, dist);				//logik for at køre til bold i kant
 		}
 		 else if (minPunkt.y() > corner1.y() + (int)(20 * ppcm) && minPunkt.y() < corner3.y() - (int)(20 * ppcm) && minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (int)(10 * ppcm)/*&& minPunkt.y() > goalA.y()+ (int)(3 * ppcm) && minPunkt.y() < goalA.y()- (int)(3 * ppcm)*/) 
 		{
 			System.out.println("side C");
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()+(int)(25.5*ppcm));
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()+(int)(25.5*ppcm));		//sætter midlertidigt punkt lidt ude fra kanten
 			minPunkt.y(minPunkt.y());
 			}
-			tempCalculater2(calliData, dist);
+			tempCalculater2(calliData, dist);				//logik for at køre til bold i kant
 			
 		} else if (minPunkt.y() > corner2.y() + (int) (20 * ppcm)&& minPunkt.y() < corner4.y() - (int) (20 * ppcm)&& minPunkt.x() < corner2.x()&& minPunkt.x() > corner2.x() - (int) (10 * ppcm)/*&& minPunkt.y() > pitch.getGoalA().y()+ (int)(2 * ppcm) && minPunkt.y() < pitch.getGoalA().y()- (int)(2 * ppcm)*/) {
 			System.out.println("side D");
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()-(int)(25.5*ppcm));
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()-(int)(25.5*ppcm));		//sætter midlertidigt punkt lidt ude fra kanten
 			minPunkt.y(minPunkt.y());
 			}
-			tempCalculater2(calliData, dist);
+			tempCalculater2(calliData, dist);				//logik for at køre til bold i kant
 		}	
 
 		// ***************************** Corner*******************************
 		else if(minPunkt.x() > corner1.x() && minPunkt.x() < corner1.x() + (20*intppcm) && minPunkt.y() > corner1.y() && minPunkt.y() < corner1.y() + (20*intppcm)){ 
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()+((int)(15*intppcm)));
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()+((int)(15*intppcm)));	//sætter midlertidigt punkt lidt ude fra hjørne
 			minPunkt.y(minPunkt.y()+((int)(15*intppcm)));
 			}
-			tempCalculater(calliData, dist);
+			tempCalculater(calliData, dist);				//logik for at køre til bold i hjørne
 			System.out.println("corner1"); 
 		} 
 		else if(minPunkt.x() < corner2.x() && minPunkt.x() > corner2.x() - (20*intppcm) && minPunkt.y() > corner2.y() && minPunkt.y() < corner2.y() +(20*intppcm)){ 
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()-((int)(15*intppcm)));
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()-((int)(15*intppcm)));	//sætter midlertidigt punkt lidt ude fra hjørne
 			minPunkt.y(minPunkt.y()+((int)(15*intppcm)));
 			}
-			tempCalculater(calliData, dist);
+			tempCalculater(calliData, dist);				//logik for at køre til bold i hjørne
 			System.out.println("corner2"); 
 		} 
 		else if(minPunkt.x() > corner3.x() && minPunkt.x() < corner3.x() + (20*intppcm) &&	minPunkt.y()-10 < corner3.y() && minPunkt.y() > corner3.y() -(20*intppcm)){ 
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()+((int)(15*intppcm)));
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()+((int)(15*intppcm)));	//sætter midlertidigt punkt lidt ude fra hjørne
 			minPunkt.y(minPunkt.y()-((int)(15*intppcm)));
 			}
-			tempCalculater(calliData, dist);
+			tempCalculater(calliData, dist);				//logik for at køre til bold i hjørne
 			System.out.println("corner3"); 
 		} 
 		else if(minPunkt.x() <corner4.x() && minPunkt.x() > corner4.x() - (20*intppcm) && minPunkt.y() < corner4.y() && minPunkt.y() > corner4.y() - (20*intppcm)){ 
-			if(!minIsTemp){
-			minPunkt.x(minPunkt.x()-((int)(15*intppcm)));
+			if(!minIsTemp){									//hvis den ikke har været ved et midlertidigt punkt
+			minPunkt.x(minPunkt.x()-((int)(15*intppcm)));	//sætter midlertidigt punkt lidt ude fra hjørne
 			minPunkt.y(minPunkt.y()-((int)(15*intppcm)));
 			}
-			tempCalculater(calliData, dist);
+			tempCalculater(calliData, dist);				//logik for at køre til bold i hjørne
 			System.out.println("corner4");
 		} 
 		
 
 		else {
-			backMove = 0;
-			minIsTemp = false;
-			angleCal(calliData, minPunkt); // udregner vinkel 
+			backMove = 0; 					// skal ikke bakke
+			minIsTemp = false;				// ikke ved et midlertidigt punkt
+			angleCal(calliData, minPunkt); 	// udregner vinkel 
 		}
 	}
-	private void deliverBalls(GUIInfo calliData, CalcDist dist) { // , int middelX, int middelY
+	private void deliverBalls(GUIInfo calliData, CalcDist dist) {// Logik til at aflevere til mål 
+		// , int middelX, int middelY
 
 
 		if(toGoal == 0){
