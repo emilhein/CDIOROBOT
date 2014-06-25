@@ -256,89 +256,80 @@ public class PrimaryController {
 		
 
 		else {
-			backMove = 0; 					// skal ikke bakke
-			minIsTemp = false;				// ikke ved et midlertidigt punkt
-			angleCal(calliData, minPunkt); 	// udregner vinkel 
+			backMove = 0; 					// Skal ikke bakke
+			minIsTemp = false;				// Ikke ved et midlertidigt punkt
+			angleCal(calliData, minPunkt); 	// Udregner vinkel 
 		}
 	}
 	private void deliverBalls(GUIInfo calliData, CalcDist dist) {// Logik til at aflevere til mål 
 		// , int middelX, int middelY
 
 
-		if(toGoal == 0){
+		if(toGoal == 0){										// Hvis det er første gang mod mål
 			toGoal = 1;
 			System.out.println("Driving to first point ____________________________________");
-			minPunkt.x(pitch.getGoalA().x()-(int)(45*ppcm));
+			minPunkt.x(pitch.getGoalA().x()-(int)(45*ppcm)); 	// Sætter første punkt 45 cm fra mål
 			minPunkt.y(pitch.getGoalA().y());
-			//System.out.println("minpunkt x,y: " +minPunkt.x() +","+minPunkt.y() );
-			//System.out.println("robobagpunkt x,y: " +roboBagPunkt.x() +","+roboBagPunkt.y() );
-			angleCal(calliData, minPunkt);
-			//System.out.println("ppcm: " + ppcm);
-			//System.out.println("dist =:=  "+ dist.Calcdist(roboBagPunkt, minPunkt));
-			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm); // 26 normalt
-			minIsTemp = true;
-		} else {
+			angleCal(calliData, minPunkt);						// Udregner vinkler
+			route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm); // Udregner afstand til punkt
+			minIsTemp = true;													// Kører til midlertidigt punkt
+		} else {												// Anden gang mod mål
 			toGoal = 2;
 			System.out.println(" ____________________________________Driving to second point");
-
-			minPunkt.x(pitch.getGoalA().x() - (int)(30*ppcm));
+			minPunkt.x(pitch.getGoalA().x() - (int)(30*ppcm));	// Sætter andet punkt mod mål
 			minPunkt.y(pitch.getGoalA().y());
-			angleCal(calliData, minPunkt);
-			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm));
-			minIsTemp = true;
+			angleCal(calliData, minPunkt);						// Udregner vinkler
+			route.setMinLength(Math.abs(dist.Calcdist(roboBagPunkt, minPunkt)+3 * ppcm));	// Udregner afstand til punkt
+			minIsTemp = true;													// Kører til midlertidigt punkt
 		}
 
 	}
-	private void findWayAround(GUIInfo calliData, CalcDist dist, int middelX, int middelY) {
-		if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)){
+	private void findWayAround(GUIInfo calliData, CalcDist dist, int middelX, int middelY) { // Logik for at køre rundt om kors
+		if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() < middelY)){ // Robot er øverst venstre på bane
 			System.out.println("robo near corner 1, moving around cross");
 			System.out.println("frontpunkt: " + roboFrontPunkt.x() + ","+ roboFrontPunkt.y());
 			System.out.println("middle: " + middelX +"" + middelY);
-
-			minPunkt.x(pitch.getNorth().x());
+			minPunkt.x(pitch.getNorth().x());			// Kører til nord for kors
 			minPunkt.y(pitch.getNorth().y());
-			aroundCross(calliData, dist, minPunkt);
+			aroundCross(calliData, dist, minPunkt);		// Metode for at køre rundt om kors
 
 		}
-		else if((roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)){
+		else if((roboFrontPunkt.x() > middelX && roboFrontPunkt.y() < middelY)){ // Robot er øverst højre på bane
 			System.out.println("robo near corner 2, moving around cross");
-			minPunkt.x(pitch.getEast().x());
+			minPunkt.x(pitch.getEast().x());			// Kører øst for kors
 			minPunkt.y(pitch.getEast().y());
 			System.out.println("frontpunkt: " + roboFrontPunkt.x() + ","+ roboFrontPunkt.y());
 			System.out.println("middle: " + middelX +"" + middelY);
-			aroundCross(calliData, dist, minPunkt);
+			aroundCross(calliData, dist, minPunkt);		// Metode for at køre rundt om kors
 
 		}
-		else if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)){
+		else if((roboFrontPunkt.x() < middelX && roboFrontPunkt.y() > middelY)){ // Robot er nederst venstre på bane
 			System.out.println("robo near corner 3, moving around cross");
-			minPunkt.x(pitch.getWest().x());
+			minPunkt.x(pitch.getWest().x());			// Kører til vest for kors
+			minPunkt.y(pitch.getWest().y());
 			System.out.println("frontpunkt: " + roboFrontPunkt.x() + ","+ roboFrontPunkt.y());
 			System.out.println("middle: " + middelX +"" + middelY);
-			minPunkt.y(pitch.getWest().y());
-
-			
-			aroundCross(calliData, dist, minPunkt);
+			aroundCross(calliData, dist, minPunkt);		// Metode for at køre rundt om kors
 
 		}
-		else if((roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)){
+		else if((roboFrontPunkt.x() > middelX && roboFrontPunkt.y() > middelY)){ // Robot er nederst højre på bane
 			System.out.println("robo near corner 4, moving around cross");
-			minPunkt.x(pitch.getSouth().x());
+			minPunkt.x(pitch.getSouth().x());			// kører til syd
 			minPunkt.y(pitch.getSouth().y());
 			System.out.println("frontpunkt: " + roboFrontPunkt.x() + ","+ roboFrontPunkt.y());
 			System.out.println("middle: " + middelX +"" + middelY);
-			
-			aroundCross(calliData, dist, minPunkt);
+			aroundCross(calliData, dist, minPunkt);		// Metode for at køre rundt om kors
 
 		}
 	}
-	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) {
-		angleCal(calliData, tempPoint);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);
-		minIsTemp = true; //betyder den skal ikke grappe
+	public void aroundCross(GUIInfo calliData, CalcDist dist, CvPoint tempPoint) { // Metode for at køre rundt om kors
+		angleCal(calliData, tempPoint);					// Udregner vinkler
+		route.setMinLength(dist.Calcdist(roboBagPunkt, tempPoint)+6*ppcm);	// Udregner afstand til punkt
+		minIsTemp = true; 								//betyder den skal ikke grappe
 		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 	}
 	public boolean borderIsGrapped(CvPoint currentPoint)
-	{
+	{ // Logik for at se om robot hænger fast i kant
 		System.out.println("BORDER IS GRAPPED!_______________________________");	
 
 		if(currentPoint.x() <= pitch.getCorner1().x() + 6*pitch.getPixPerCm() ||
@@ -361,68 +352,66 @@ public class PrimaryController {
 	
 	
 	
-	public void tempCalculater(GUIInfo calliData, CalcDist dist) {
-		if(!minIsTemp){
-		angleCal(calliData, minPunkt);
-		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+1*ppcm);
-		minIsTemp = true; //betyder den skal ikke grappe
+	public void tempCalculater(GUIInfo calliData, CalcDist dist) { // Metode til at køre til midlertidigt punkt ved hjørne
+		if(!minIsTemp){														// Hvis robot skal til midlertidigt punkt
+		angleCal(calliData, minPunkt);										// Udregner vinkler
+		route.setMinLength(dist.Calcdist(roboBagPunkt, minPunkt)+1*ppcm);	// Udregner afstand til punkt
+		minIsTemp = true; 													// Betyder den skal ikke grappe
 		System.out.println("IN FIRST TEMPpoint:::::::::::::::::::::::::::");
-//		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 		}
-		//send(calliData); // kører til første punkt
 		else{
-		angleCal(calliData, minPunkt);
-		route.setMinLength((float) (0/*dist.Calcdist(roboBagPunkt, minPunkt)-4*ppcm*/));
-		minIsTemp = false;
-		backMove = 1;
+		angleCal(calliData, minPunkt);										// Udregner vinkler
+		route.setMinLength((float) (0));									// Sætter afstand til 0
+		minIsTemp = false;													// Robot skal køre til bold
+		backMove = 1;														// Robot skal bakke ud af hjørne
 		System.out.println("IN SECOND TEMPPOINT::::............................_________");
 
 		}
 	}
-	public void tempCalculater2(GUIInfo calliData, CalcDist dist) {
-		if(!minIsTemp){
-		angleCal(calliData, minPunkt);
-		route.setMinLength((dist.Calcdist(roboBagPunkt, minPunkt))+2*ppcm);
-		minIsTemp = true; //betyder den skal ikke grappe
+	public void tempCalculater2(GUIInfo calliData, CalcDist dist) { // Metode til at køre til midlertidigt punkt ved kant
+		if(!minIsTemp){														// Hvis robot skal til midlertidigt punkt
+		angleCal(calliData, minPunkt);										// Udregner vinkler
+		route.setMinLength((dist.Calcdist(roboBagPunkt, minPunkt))+2*ppcm); // Udregner afstand til punkt
+		minIsTemp = true; 													//betyder den skal ikke grappe
 		System.out.println("IN FIRST TEMPpoint in calc22222:::::::::::::::::::::::::::");
-//		System.out.println("tempPunkt = " + tempPoint.x() + "," + tempPoint.y());
 		}
-		//send(calliData); // kører til første punkt
 		else{
-		angleCal(calliData, minPunkt);
-		route.setMinLength(0/*dist.Calcdist(roboBagPunkt, minPunkt)-11*ppcm*/);
-		minIsTemp = false;
-		backMove = 1;
+		angleCal(calliData, minPunkt);										// Udregner vinkler
+		route.setMinLength((float) (0));									// Sætter afstand til 0
+		minIsTemp = false;													// Robot skal køre til bold
+		backMove = 1;														// Robot skal bakke ud af hjørne
 		System.out.println("IN SECOND TEMPPOINT in calc22222::::............................_________");
 
 		}
 	}
-	public void angleCal(GUIInfo calliData, CvPoint destination) { /// calculates angel between robo bagpunkt and destination
-		CalcAngle Angle = new CalcAngle();
-		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()- roboBagPunkt.x(), roboFrontPunkt.y()- roboBagPunkt.y());
+	public void angleCal(GUIInfo calliData, CvPoint destination) { 	// Metode til at regner vinkel mellem robot og punkt 
+		CalcAngle Angle = new CalcAngle();							// Nyt Vinkel udregnings objekt
+		// Flytter punkter så robot bagpunkt kommer til at ligge i origo
+		CvPoint nyRoboFront = new CvPoint(roboFrontPunkt.x()- roboBagPunkt.x(), roboFrontPunkt.y()- roboBagPunkt.y());	
 		CvPoint nyRoboBag = new CvPoint(0, 0);
 		CvPoint nyMinPunkt = new CvPoint(destination.x()- roboBagPunkt.x(), destination.y()	- roboBagPunkt.y());
-
-		Float BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);
-		Float RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);
-		calliData.setTurnAngle(BallAngle - RoboAngle);
-
+		
+		Float BallAngle = Angle.Calcangle(nyRoboBag, nyMinPunkt);	// Udregner vinkel mellem x-aksen og bold
+		Float RoboAngle = Angle.Calcangle(nyRoboBag, nyRoboFront);	// Udregner vinkel mellem x-aksen og robot
+		calliData.setTurnAngle(BallAngle - RoboAngle);				// Udrenger forskel
+		// Sørger for at robotten ikke drejer mere end 180 grader
 		if (calliData.getTurnAngle() > 180) {
 			calliData.setTurnAngle(calliData.getTurnAngle() - 360);
 		}
 		if (calliData.getTurnAngle() < -180) {
 			calliData.setTurnAngle(calliData.getTurnAngle() + 360);
 		}
+		
 		System.out.println("TURNANGLE_:_:_: " + calliData.getTurnAngle());
-		calliData.setBallAngle(BallAngle);
-		calliData.setRoboAngle(RoboAngle);
+		calliData.setBallAngle(BallAngle); 							// Sætter vinkel
+		calliData.setRoboAngle(RoboAngle);							// Sætter vinkel
 	}
-	public void whatToSend(GUIInfo calliData, int subtractionlenght) {
-		int Case;
-		int i;
+	public void whatToSend(GUIInfo calliData, int subtractionlenght) {	// Metode for at sende til robot
+		int Case;		// Hvilken Case der skal sendes til robot 
+		int i;			// Hvilken eventuel distance/vinkel der skal sendes
 		
 		
-		if(borderIsGrapped(roboFrontPunkt)){
+		if(borderIsGrapped(roboFrontPunkt)){	// Giver slip på kant og bakker
 			try {
 				dosSend(71, 71);
 			} catch (IOException e) {
@@ -432,100 +421,90 @@ public class PrimaryController {
 
 		}else{
 		
-		int angle = Math.round(Float.parseFloat(""+ calliData.getTurnAngle()));// *
-		
-		
-		
+		int angle = Math.round(Float.parseFloat(""+ calliData.getTurnAngle()));// Aflæser vinkel
 		
 		System.out.println("TurnAngle = " + calliData.getTurnAngle());
 		try {
-	
-			if (Math.abs(angle) < 250) {
-				if (angle > 0) // vælger retning der skal drejes
-					Case = 21;
+			if (Math.abs(angle) < 250) { // Hvis vinkel er mindre end 250 grader
+				if (angle > 0) // Vælger retning der skal drejes
+					Case = 21; // Drejer højre
 				else
-					Case = 12;
-			} else {
-				angle = angle / 2;
+					Case = 12; // Drejer venstre
+			} else { // Vinkel over 250 grader sendes 2 gange
+				angle = angle / 2; // Vinkel deles i 2
 				if (angle > 0) // vælger retning der skal drejes
-					Case = 21;
+					Case = 21; // Drejer højre
 				else
-					Case = 12;
-				angle = Math.abs(angle);
+					Case = 12; // Drejer venstre
+				angle = Math.abs(angle); // Tager numerisk størrelse af vinkel
 				
-					if ((roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt.y() < pitch.getMidOfObs().y())
-							|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt.y() < pitch.getMidOfObs().y())
-							|| (roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt.y() > pitch.getMidOfObs().y())
-							|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt.y() > pitch.getMidOfObs().y())) {
-						if (angle > 60) {
-							angle = 360 - angle;
-							Case = 11;
-						}
-					}
+					
 				i = angle;
 
 				dosSend(Case, i);
 				Thread.sleep(700);
 			}
 			angle = Math.abs(angle);
-			i = angle;
-
-			dosSend(Case, i);
+			// Drejer ikke ind i kors
+			if ((roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt.y() < pitch.getMidOfObs().y())
+					|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt.y() < pitch.getMidOfObs().y())
+					|| (roboFrontPunkt.x() < pitch.getMidOfObs().x() && roboFrontPunkt.y() > pitch.getMidOfObs().y())
+					|| (roboFrontPunkt.x() > pitch.getMidOfObs().x() && roboFrontPunkt.y() > pitch.getMidOfObs().y())) {
+				if (angle > 60) {
+					angle = 360 - angle;
+					Case = 11;
+				}
+			}
+			
+			i = angle; // Vinkel sættes til "i" der sendes til robot
+			dosSend(Case, i); // Metode til at sende data
 
 			Thread.sleep(1200);
 			// kører robot frem
-/*
-			System.out.println("Lenghtmulti " + calliData.getlengthMultiply());
-			System.out.println("minmulti " + route.getMinLength());
-			System.out.println("ppcm  " + findEdge.getPixPerCm());
-*/
+
 			int distance = (int) (((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm()))-0.5*ppcm); // længde konvertering
 
 			System.out.println("dist = " + distance);
-			if(!minIsTemp && backMove == 0){
+			if(!minIsTemp && backMove == 0){ // Hvis den skal køre til en bold
 				distance -= 6 * ppcm; // for at lande foran bolden
 				System.out.println("dist after minus = " + distance);
 			}
 			
 			Thread.sleep(600);
-			Case = 81;
-			i = distance / 10;
+			Case = 81; // Sætter Case der skal sendes
+			i = distance / 10; // Sætter distance
 			dosSend(Case, i);
 
-			Thread.sleep(Math.abs((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose()))));
-
+			Thread.sleep(Math.abs((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())))); // Sleep afhængig af hvor langt den skal køre
 			
-			
-			if (toGoal == 0 && !minIsTemp) {
-				turnBeforeGrab(calliData, angle);
+			if (toGoal == 0 && !minIsTemp) { // Hvis den skal køre til bold
+				turnBeforeGrab(calliData, angle); // Drejer til bold inden opsamling
 					// samler bold op
-					Case = 41;
-					i = 41;
-					dosSend(Case, i);
+					Case = 41; // Sætter Case der skal sendes
+					i = 41;	   // Sætter tal 
+					dosSend(Case, i); // Metode til at sende data
 					Thread.sleep(1200);
-					NGrabs++;
+					NGrabs++; // Tæller antal af grabs op, hvis det når 4 skal der køres til mål
 				}
 
-			if (toGoal == 2) {
-				turnBeforeGrab(calliData, angle);
-
-				Case = 31;
-				i = 31;
-				dosSend(Case, i);
+			if (toGoal == 2) { // Hvis der skal køres til mål
+				turnBeforeGrab(calliData, angle); // justerer vinkel
+				Case = 31;		// Sætter Case der skal sendes
+				i = 31;			// Sætter tal
+				dosSend(Case, i);	// Metode til at sende data
 				Thread.sleep(1200);
-				toGoal = 0;
+				toGoal = 0;		// Til mål sættes til 0
 				minIsTemp = false;
-				NGrabs = 0;
+				NGrabs = 0;		// antallet af grabs nulstilles
 
 			}
 
-			if (backMove ==1) {
-				Case = 80;
-				i = 3;
-				dosSend(Case, i);
+			if (backMove ==1) { // hvis den skal bakke
+				Case = 80;	// Sætter case der skal sendes
+				i = 3; 		// Sætter distance
+				dosSend(Case, i);	// Metode til at sende data
 				Thread.sleep(1200);
-				
-				backMove = 0;
+				backMove = 0; // Nulstiller bakke variable
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -538,7 +517,7 @@ public class PrimaryController {
 	private void turnBeforeGrab(GUIInfo calliData, int angle)throws IOException, InterruptedException {
 		int Case;
 		int i;
-		do {
+		do { // Metode der tager et nyt billede og indstiller vinkel inden der skal køre det sidste til punkt
 			takepic.takePicture();	
 			// ################## Cut image ####################################
 			pitch.cutOrigImg();
