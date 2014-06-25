@@ -18,29 +18,27 @@ public class Pc_connect {
 			NXTInfo nxtInfo2 = new NXTInfo(2, "G9 NXT", "00165312B12E");//robot nr 2
 			NXTConnector connt = new NXTConnector();
 			System.out.println("trying to connect");
-			connt.connectTo(nxtInfo, NXTComm.LCP);
+			connt.connectTo(nxtInfo, NXTComm.LCP);	//venter på forbindelse
 			System.out.println("connected");		//forbundet
 	//		åbner streams
 			OutputStream dos = connt.getOutputStream();
-			InputStream dis = connt.getInputStream();
+			//InputStream dis = connt.getInputStream(); ikke længere brugt
 			scan = new Scanner(System.in);			//scanner til manuel input
 	//		test
 			while(true)
 			{							
-				int input = scan.nextInt();
+				int input = scan.nextInt();			//input der skal sendes til robot
 				System.out.println("input = " + input);
 				int i = input;
-				dos.write(i);
-				dos.flush();
+				dos.write(i);						//sender
+				dos.flush();						//flusher
 				System.out.println("send " + i);
-				input = scan.nextInt();
+				input = scan.nextInt();				//input der skal sendes til robot
 				System.out.println("input = " + input);
 				i = input;
-				dos.write(i);
-				dos.flush();
+				dos.write(i);						//sender
+				dos.flush();						//flusher
 				System.out.println("send " + i);
-				int u = dis.read();
-				System.out.println("recived " + u);			
 			}
 		}
 		catch(Exception ex)
