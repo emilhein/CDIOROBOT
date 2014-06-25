@@ -8,11 +8,12 @@ public class CalcAngle {
 	{
 		this.p1 = punkt1;
 		this.p2 = punkt2;
-
-		float delta_x = p2.x() - p1.x();
+		//finder forskellen på punkterne
+		float delta_x = p2.x() - p1.x();	
 		float delta_y = p2.y() - p1.y();
+		//udregner vinklen
 		float angle = (int) Math.toDegrees(Math.atan2(delta_y, delta_x));
-
+		//omregner vinkel
 		if(angle < 0) angle += 360;
 		
 		return angle;

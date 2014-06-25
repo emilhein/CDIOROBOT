@@ -8,7 +8,7 @@ public class CalcDist {
 	{
 		this.p1 = punkt1;
 		this.p2 = punkt2;
-
+		//finder forskellen på punkterne og udregner længden på den forskel
 		float length = (int) Math.abs(Math.sqrt((p1.x()-p2.x()) * (p1.x()-p2.x())+
 								  (p1.y()-p2.y()) * (p1.y()-p2.y())));
 
@@ -22,7 +22,7 @@ public class CalcDist {
 	{
 		this.p1 = punkt1;
 		this.p2 = punkt2;
-
+		//Udregner vinklen fra x aksen og til en linje mellem 2 punkter
 		int delta_x = p2.x() - p1.x();
 		int delta_y = p2.y() - p1.y();
 		int angle = (int) Math.atan2(delta_y, delta_x);
