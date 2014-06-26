@@ -425,23 +425,21 @@ public class PrimaryController {
 		
 		System.out.println("TurnAngle = " + calliData.getTurnAngle());
 		try {
-			if (Math.abs(angle) < 250) { // Hvis vinkel er mindre end 250 grader
-				if (angle > 0) // Vælger retning der skal drejes
-					Case = 21; // Drejer højre
+			if (Math.abs(angle) < 250) { 	// Hvis vinkel er mindre end 250 grader
+				if (angle > 0) 				// Vælger retning der skal drejes
+					Case = 21; 				// Drejer højre
 				else
-					Case = 12; // Drejer venstre
-			} else { // Vinkel over 250 grader sendes 2 gange
-				angle = angle / 2; // Vinkel deles i 2
-				if (angle > 0) // vælger retning der skal drejes
-					Case = 21; // Drejer højre
+					Case = 12; 				// Drejer venstre
+			} else { 						// Vinkel over 250 grader sendes 2 gange
+				angle = angle / 2; 			// Vinkel deles i 2
+				if (angle > 0) 				// vælger retning der skal drejes
+					Case = 21; 				// Drejer højre
 				else
-					Case = 12; // Drejer venstre
-				angle = Math.abs(angle); // Tager numerisk størrelse af vinkel
+					Case = 12; 				// Drejer venstre
+				angle = Math.abs(angle); 	// Tager numerisk størrelse af vinkel
 				
-					
 				i = angle;
-
-				dosSend(Case, i);
+				dosSend(Case, i);			// Metode til at sende data
 				Thread.sleep(700);
 			}
 			angle = Math.abs(angle);
@@ -456,55 +454,55 @@ public class PrimaryController {
 				}
 			}
 			
-			i = angle; // Vinkel sættes til "i" der sendes til robot
-			dosSend(Case, i); // Metode til at sende data
+			i = angle; 			// Vinkel sættes til "i" der sendes til robot
+			dosSend(Case, i); 	// Metode til at sende data
 
 			Thread.sleep(1200);
+			
 			// kører robot frem
-
 			int distance = (int) (((route.getMinLength()* Math.round(calliData.getlengthMultiply()) / pitch.getPixPerCm()))-0.5*ppcm); // længde konvertering
 
 			System.out.println("dist = " + distance);
 			if(!minIsTemp && backMove == 0){ // Hvis den skal køre til en bold
-				distance -= 6 * ppcm; // for at lande foran bolden
+				distance -= 6 * ppcm;		 // for at lande foran bolden
 				System.out.println("dist after minus = " + distance);
 			}
 			
 			Thread.sleep(600);
-			Case = 81; // Sætter Case der skal sendes
-			i = distance / 10; // Sætter distance
-			dosSend(Case, i);
+			Case = 81; 			// Sætter Case der skal sendes
+			i = distance / 10; 	// Sætter distance
+			dosSend(Case, i);	// Metode til at sende data
 
 			Thread.sleep(Math.abs((int) Math.round((Float.parseFloat(""	+ route.getMinLength()))* Float.parseFloat("" + calliData.getclose())))); // Sleep afhængig af hvor langt den skal køre
 			
 			if (toGoal == 0 && !minIsTemp) { // Hvis den skal køre til bold
 				turnBeforeGrab(calliData, angle); // Drejer til bold inden opsamling
 					// samler bold op
-					Case = 41; // Sætter Case der skal sendes
-					i = 41;	   // Sætter tal 
-					dosSend(Case, i); // Metode til at sende data
+					Case = 41; 			// Sætter Case der skal sendes
+					i = 41;	   			// Sætter tal 
+					dosSend(Case, i); 	// Metode til at sende data
 					Thread.sleep(1200);
-					NGrabs++; // Tæller antal af grabs op, hvis det når 4 skal der køres til mål
+					NGrabs++; 			// Tæller antal af grabs op, hvis det når 4 skal der køres til mål
 				}
 
 			if (toGoal == 2) { // Hvis der skal køres til mål
 				turnBeforeGrab(calliData, angle); // justerer vinkel
-				Case = 31;		// Sætter Case der skal sendes
-				i = 31;			// Sætter tal
+				Case = 31;			// Sætter Case der skal sendes
+				i = 31;				// Sætter tal
 				dosSend(Case, i);	// Metode til at sende data
 				Thread.sleep(1200);
-				toGoal = 0;		// Til mål sættes til 0
+				toGoal = 0;			// Til mål sættes til 0
 				minIsTemp = false;
-				NGrabs = 0;		// antallet af grabs nulstilles
+				NGrabs = 0;			// antallet af grabs nulstilles
 
 			}
 
-			if (backMove ==1) { // hvis den skal bakke
-				Case = 80;	// Sætter case der skal sendes
-				i = 3; 		// Sætter distance
+			if (backMove ==1) { 	// hvis den skal bakke
+				Case = 80;			// Sætter case der skal sendes
+				i = 3; 				// Sætter distance
 				dosSend(Case, i);	// Metode til at sende data
 				Thread.sleep(1200);
-				backMove = 0; // Nulstiller bakke variable
+				backMove = 0; 		// Nulstiller bakke variable
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -515,9 +513,10 @@ public class PrimaryController {
 	}
 
 	private void turnBeforeGrab(GUIInfo calliData, int angle)throws IOException, InterruptedException {
+		// Metode der tager et nyt billede og indstiller vinkel inden der skal køre det sidste til punkt
 		int Case;
 		int i;
-		do { // Metode der tager et nyt billede og indstiller vinkel inden der skal køre det sidste til punkt
+		do { // Tager et nyt billede indtil den har fundet robotten
 			takepic.takePicture();	
 			// ################## Cut image ####################################
 			pitch.cutOrigImg();
@@ -526,46 +525,45 @@ public class PrimaryController {
 			balls.findCircle(calliData.getIntJlroboMin(), calliData.getIntJlroboMax(),	calliData.getIntJlroboDP(),calliData.getIntJlroboMinDist(),calliData.getIntJlroboPar1(), calliData.getIntJlroboPar2(),"robo", true);
 
 		} while (balls.determineDirection() == false);
-		//System.out.println("Robobagpunkt before adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
+		// Tilpasser robottens placering
 		balls.calculateRotationPoint(); 
 		balls.changePerspective(calliData.getPoV());
-
-		//System.out.println("Robobagpunkt after adjustment: " + balls.getRoboBagPunkt().x()+","+balls.getRoboBagPunkt().y());
+		// Henter robottens placering ind
 		roboBagPunkt = balls.getRoboBagPunkt();
 		roboFrontPunkt = balls.getRoboFrontPunkt();
-		if(toGoal == 2){
+		if(toGoal == 2){ 		// Udregner vinkel til mål
 			angleCal(calliData, pitch.getGoalA());
-
-		}else{
+		}else{ 					// Udregner vinkel til minPunkt
 		angleCal(calliData, minPunkt);
 		}
-		angle = Math.round(Float.parseFloat(""+ calliData.getTurnAngle()));// *
-		if (Math.abs(angle) < 250) {
-			if (angle > 0) // vælger retning der skal drejes
-				Case = 21;
+		angle = Math.round(Float.parseFloat(""+ calliData.getTurnAngle()));// Klargører angel variablen
+		if (Math.abs(angle) < 250) { // Hvis vinkel er mindre end 250 grader
+			if (angle > 0) 		// Vælger retning der skal drejes
+				Case = 21; 		// Drejer højre
 			else
-				Case = 12;
-		} else {
-			angle = angle / 2;
-			if (angle > 0) // vælger retning der skal drejes
-				Case = 21;
+				Case = 12; 		// Drejer venstre
+		} else { 				// Vinkel over 250 grader sendes 2 gange
+			angle = angle / 2; 	// Vinkel deles i 2
+			if (angle > 0) 		// vælger retning der skal drejes
+				Case = 21; 		// Drejer højre
 			else
-				Case = 12;
-			angle = Math.abs(angle);
+				Case = 12; 		// Drejer venstre
+			angle = Math.abs(angle); // Tager numerisk størrelse af vinkel
+
 			i = angle;
-			dosSend(Case, i);
+			dosSend(Case, i);	// Metode til at sende data
 			Thread.sleep(700);
 		}
-		angle = Math.abs(angle);
+		angle = Math.abs(angle); // Tager numeriske værdi af vinkelen
 		i = angle;
-		dosSend(Case, i);
+		dosSend(Case, i); 		// Metode til at sende data
 
 		Thread.sleep(1200);
 	}
-	public void dosSend(int Case, int i) throws IOException {
-		dos.write(Case);
-		dos.flush();
-		dos.write(i);
-		dos.flush();
+	public void dosSend(int Case, int i) throws IOException { // Metode til at sende data
+		dos.write(Case); // Sender Case robot skal udføre
+		dos.flush();	// Flusher
+		dos.write(i);	// Sender vinkel/distance
+		dos.flush();	// Flusher
 	}
 }
