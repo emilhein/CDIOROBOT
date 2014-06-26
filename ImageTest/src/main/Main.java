@@ -10,9 +10,9 @@ public class Main {
 
 	public static void main (String[] args){
 
-		CallibratorGUI GUI = new CallibratorGUI();
+		CallibratorGUI GUI = new CallibratorGUI();	// Laver nyt GUI objekt
 		try {
-			GUI.startGUI();
+			GUI.startGUI();							// Starter GUI, som starter resten
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
