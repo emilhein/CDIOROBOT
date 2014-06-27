@@ -49,6 +49,10 @@ public class BallMethod {
 
 	public void findCircle(int minRadius, int maxRadius,int dp,int mindist, int param1, int param2, String name, Boolean findRobot){ 
 
+		/*
+		 * Finder bolde/robot alt efter værdien af Boolean findRobot
+		 */
+		
 		ArrayList<Float> Coordi = new ArrayList<Float>();
 
 		System.loadLibrary("opencv_java248");
@@ -98,8 +102,6 @@ public class BallMethod {
 			}
 			else
 			{
-				System.out.println("Finding BALLS");
-				System.out.println("Balls found: " + Coordi.size()/3);
 				ballCoordi = Coordi;
 			}
 		}  
@@ -112,17 +114,13 @@ public class BallMethod {
 	public void eliminateObstruction()
 	{
 		CvRect obstruction = pitch.getObstruction();
-		//float ppcm = pitch.getPixPerCm();
 		
 		Mat pic0 = Highgui.imread("pixToMat.png");
 		for(int y = pitch.getMiner1().y(); y < pitch.getMiner4().y(); y++)
 		{
 			for(int x = pitch.getMiner1().x(); x < pitch.getMiner4().x(); x++)
 			{
-//				if((obstruction.x() + 8.4*ppcm < x && x < obstruction.x() + 11.6*ppcm) || (obstruction.y() + 8.4*ppcm < y && y < obstruction.y() + 11.6*ppcm))
-//				{
 					pic0.put(y, x, 0, 0, 0);
-				//}
 			}
 		}
 		
@@ -149,7 +147,7 @@ public class BallMethod {
 		try {
 			img = ImageIO.read(imageFile);
 			   Graphics2D graph = img.createGraphics();
-//		       
+       
 		       
 		        graph.rotate(Math.toRadians(rotationAngle), midPoint.x(), midPoint.y());
 		        graph.setColor(Color.BLACK);
@@ -176,6 +174,10 @@ public class BallMethod {
 		double blue2 = 0;													
 		double green2= 0;
 		double red2= 0;
+		
+		/*
+		 * Tjekker, at der er fundet det rigtige antal cirkler på robotten i de rigtige farver og sætter så front- og bagPunkt
+		 */
 
 		if (roboCoordi.size() >= 6){
 
@@ -194,7 +196,6 @@ public class BallMethod {
 				green2 = back[1];
 				red2 = back[2];
 			} catch (IndexOutOfBoundsException e1) {
-				System.out.println("INDEX OUT OF BOUND");
 				return false;
 			}
 
@@ -260,7 +261,8 @@ public class BallMethod {
 	
 	
 	public void calculateRotationPoint()
-	{// udregner bagpunktet af robotten så det sidder over hjulene, hvorfra robotten roterer
+	{
+		// udregner bagpunktet af robotten så det sidder over hjulene, hvorfra robotten roterer
 		int diffX = (int) ((roboFrontPunkt.x()-roboBagPunkt.x())/2.42);
 		int diffY = (int) ((roboFrontPunkt.y()-roboBagPunkt.y())/2.42);
 		roboBagPunkt.x(roboBagPunkt.x()+diffX);

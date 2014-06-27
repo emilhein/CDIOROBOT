@@ -419,7 +419,6 @@ public class CallibratorGUI {
 
 		btnDeliver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Delivering balls");
 
 				info = control.loopRound(info,1);
 				info = control.loopRound(info,1);
@@ -440,7 +439,6 @@ public class CallibratorGUI {
 
 		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("SEND BUTTON");
 			}
 		});
 

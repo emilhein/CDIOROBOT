@@ -40,17 +40,24 @@ public class DetectRects {
 	
 	public float pixPerCm(int pixBorderWidth, int pixBorderHeight)
 	{
+		/*
+		 * Beregner forholdet meller pixel og cm
+		 */
+		
 		float widthPixPrCm = pixBorderWidth / externalWidth;
 		float heightPixPrCm = pixBorderHeight / externalHeight;
 		float pixPrCm = (widthPixPrCm + heightPixPrCm) / 2;
 		
 		return pixPrCm;
-		//return (float) 6.761823; // er fastsat for test!
 	}
 	
 	
 	public Pitch detectPitch()
 	{
+		/*
+		 * Opdager statiske elementer på banen og opretter et Pitch objekt herudfra
+		 */
+		
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
     	Mat imgOrig = Highgui.imread("billed0.png");
@@ -180,13 +187,6 @@ public class DetectRects {
     	            p2.y(sq.y()+sq.height());
     	            cvRectangle(edge, p1,p2, CV_RGB(0, 0, 255), 2, 8, 0);
     	        }
-    	    }
-    	    /* HARDCODED KORS
-    	    obstruction.x(703);
-    	    obstruction.y(349);
-    	    obstruction.width(138);
-    	    obstruction.height(138);
-    	    */
         	cvSaveImage("edge.png", edge);
         	
         	return new Pitch(pixPerCm, innerRect, obstruction);

@@ -69,7 +69,7 @@ public class RouteTest {
 		
 		
 
-		//Dette for-loop finder det tætteste ppunkt på robotens front
+		// Dette for-loop finder det tætteste punkt på robotens front (bolde nær kanterne nedprioriteres)
 		try {
 			for (int i = 0; i < xCoor.size(); i++)
 			{
@@ -101,7 +101,6 @@ public class RouteTest {
 		paintPoint(frame,new CvPoint(roboFrontPunkt.x(), roboFrontPunkt.y()), 0, 255, 0,40); // farver robot forpunkt
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(roboFrontPunkt.x() , roboFrontPunkt.y()),	new Scalar(27, 12, 45), 4);
 		Core.line(frame, new Point(roboBagPunkt.x(), roboBagPunkt.y()),	new Point(minPunkt.x(), minPunkt.y() ),	new Scalar(200, 120, 45), 4);
-		//		Core.rectangle(frame, new Point(100,100), new Point(300,300), null, 1);
 		paintPoint(frame,new CvPoint(midOfImg.x(), midOfImg.y()), 0, 128, 128,30); // midten af billedet
 		paintPoint(frame,new CvPoint((goalA.x()-((int)(90*ppcm))), goalA.y()), 39, 127, 255,20); // midten af banen
 
@@ -148,9 +147,12 @@ public class RouteTest {
 
 
 	public boolean blockingObstruction (CvPoint roboBagPunkt, CvPoint minPunkt) {
-		System.out.println("Bagpunkt: " + roboBagPunkt.x()+","+roboBagPunkt.y());
-		System.out.println("MinPunkt: " + minPunkt.x()+","+minPunkt.y());
-		if(minPunkt.x() == 0 || minPunkt.y() == 0 || roboBagPunkt.x() == 0 || roboBagPunkt.y() == 0){
+		/*
+		 * Tjekker, om korset er mellem robot og bold, ved at tjekke om en linje fra robot til bold, ville skære en firkant om korset.
+		 */
+		
+		if(minPunkt.x() == 0 || minPunkt.y() == 0 || roboBagPunkt.x() == 0 || roboBagPunkt.y() == 0)
+		{
 			return false;
 		}
 		Float a;
@@ -172,7 +174,6 @@ public class RouteTest {
 			
 			if(insideRect(westCollition, roboBagPunkt, minPunkt) || insideRect(eastCollition, roboBagPunkt, minPunkt))
 			{
-				System.out.println("Obstacle in the way");
 				return true;
 			}
 		}
@@ -183,18 +184,19 @@ public class RouteTest {
 			
 			if(insideRect(northCollition, roboBagPunkt, minPunkt) || insideRect(southCollition, roboBagPunkt, minPunkt))
 			{
-				System.out.println("Returning true");
-
 				return true;
 			}
 		}
-		System.out.println("Returning false");
-
+		
 		return false;		
 	}
 	
 	public boolean curBallEasyer(CvPoint minPunkt, CvPoint currentPoint)
 	{
+		/*
+		 * Returnerer true, hvis currentPoint er lettere at samle en bold op på en minPunkt.
+		 */
+		
 		if(currentPoint.x() <= pitch.getCorner1().x() + 9*pitch.getPixPerCm() ||
 		   currentPoint.x() >= pitch.getCorner4().x() - 9*pitch.getPixPerCm() ||
 		   currentPoint.y() <= pitch.getCorner1().y() + 9*pitch.getPixPerCm() ||
@@ -217,6 +219,10 @@ public class RouteTest {
 	
 	public boolean insideRect(CvPoint point, CvPoint cornerA, CvPoint cornerB)
 	{
+		/*
+		 * Hjælpefunktion til blockingObstruction()
+		 */
+		
 		if(cornerA.x() <= point.x() && point.x() <= cornerB.x())
 		{
 			if(cornerA.y() <= point.y() && point.y() <= cornerB.y())
