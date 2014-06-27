@@ -12,7 +12,7 @@ import data.Pitch;
 import dist.CalcAngle;
 import dist.CalcDist;
 import pictureToMat.DetectRects;
-import pictureToMat.NewTakepicture;
+import pictureToMat.Takepicture;
 import pictureToMat.RouteTest;
 import pictureToMat.BallMethod;
 
@@ -24,7 +24,7 @@ public class PrimaryController {
 	private int toGoal = 0;
 	private Float ppcm;
 	private DetectRects findEdge;
-	private NewTakepicture takepic;
+	private Takepicture takepic;
 	private BallMethod balls;
 	private final OutputStream dos;
 	private RouteTest route;
@@ -39,7 +39,7 @@ public class PrimaryController {
 	public PrimaryController(DetectRects findEdge) {
 		// opret objekter til kant findning og billedtagning
 		this.findEdge = findEdge;
-		takepic = new NewTakepicture();
+		takepic = new Takepicture();
 
 		// forbereder kommunikation med robot
 		NXTInfo nxtInfo = new NXTInfo(2, "G9 awesome!", "0016530918D4");
